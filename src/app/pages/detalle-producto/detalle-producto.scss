@@ -1,0 +1,49 @@
+page-detalle-producto {
+  .title-page {
+    font-size: 22px;
+    text-align: center;
+    padding: 17px;
+    color: #3b64bf;
+    text-transform: capitalize;
+  }
+
+  .container-images {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    height: 40%;
+    padding: 10px;
+    .principal {
+      display: inline-block;
+      width: 30%;
+      .contorno {
+        height: 100%;
+        img {
+          height: 100%;
+          width: 95%;
+          object-fit: cover;
+          border: 3px solid rgba(1, 1, 1, 0.45);
+        }
+      }
+    }
+    .resto {
+      display: inline-block;
+      width: 68%;
+      text-align: left;
+      .in-resto {
+        display: inline-block;
+        width: 33%;
+        height: 32.6%;
+        .contorno {
+          height: 100%;
+          img {
+            width: 98%;
+            height: 100%;
+            object-fit: cover;
+            border: 3px solid rgba(1, 1, 1, 0.45);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Productos: Filtros</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss(false)">
+        <span color="secundary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="wrapper-frame">
+    <p>Filtra los productos seleccionando lo que más te interese.</p>
+    <div class="block">
+
+      <ion-item>
+        <ion-label floating>Nombre producto</ion-label>
+        <ion-input type="text" [(ngModel)]="filtros.nombre" style="border-bottom: 1px solid #3b64bf;"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Articulos</ion-label>
+        <ion-select [(ngModel)]="filtros.articulo" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+          [selectOptions]="selectOptions">
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Categorías</ion-label>
+        <ion-select [(ngModel)]="filtros.categoria" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+          [selectOptions]="selectOptions">
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Secciones</ion-label>
+        <ion-select [(ngModel)]="filtros.seccion" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+          [selectOptions]="selectOptions">
+        </ion-select>
+      </ion-item>
+
+    </div>
+  </div>
+
+</ion-content>
+<ion-footer class="footer-button">
+  <div class="btn-full" (tap)="dismiss()">
+    <span>Aceptar</span>
+  </div>
+</ion-footer>

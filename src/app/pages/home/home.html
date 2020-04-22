@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <!-- <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button> -->
+    <ion-title>Productos</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="filtro">
+    <button ion-button (click)="openFilters()">
+      <ion-icon ios="ios-options" md="ios-options"></ion-icon>
+    </button>
+  </div>
+
+  <div *ngFor="let producto of productos" class="full-size animated fadeInUp">
+    <ion-card>
+      <div class="favorito">
+        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito"></ion-icon>
+        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #f00;"></ion-icon>
+      </div>
+      <img src="assets/imgs/recursos/no-disponible.png" (click)="viewDetail(producto)" />
+      <div class="card-title">{{producto.nombre}}</div>
+      <div class="card-subtitle">{{producto.descripcion}}</div>
+      <div class="card-price">{{producto.precio | currency}}</div>
+
+
+      <!-- imagenes adicionales -->
+      <div class="info-icons">
+        <div class="square">
+          <p>{{producto.proveedor.nombre}}</p>
+        </div>
+      </div>
+    </ion-card>
+  </div>
+
+</ion-content>

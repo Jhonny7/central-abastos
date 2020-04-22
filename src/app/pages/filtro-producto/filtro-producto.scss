@@ -1,0 +1,70 @@
+page-filtro-producto {
+  
+
+  .item-cover-default {
+    display: block;
+  }
+  .button-inner {
+    color: #a8c6ca;
+    font-size: 90%;
+  }
+  ion-header {
+    padding-top: 0px;
+  }
+  .wrapper-frame {
+    padding: 30px;
+    .block{
+      ion-item {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  p.content-title {
+    color: map-get($colors, primary);
+    font-size: 24px;
+    font-weight: 300;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+  ion-item {
+    padding-left: 0 !important;
+    ion-label {
+      font-size: 16px;
+      color: map-get($colors, light-grey-blue);
+    }
+    .item-inner {
+      border: 0 !important;
+    }
+  }
+
+  @media only screen and (max-width: 360px) and (min-width: 0px) {
+    .with-tabs .scroll-content {
+      margin-top: 56px !important;
+      margin-bottom: 50px;
+    }
+  }
+  @media (width: 411px) {
+    .with-tabs .scroll-content {
+      margin-top: 49px !important;
+      margin-bottom: 50px;
+    }
+  }
+  @media only screen and (max-width: 375px) and (min-width: 361px) {
+    .with-tabs .scroll-content {
+      margin-top: 49px !important;
+      margin-bottom: 50px;
+    }
+  }
+  @media only screen and (max-width: 746px) and (min-width: 376px) {
+    .with-tabs .scroll-content {
+      margin-top: 49px !important;
+      margin-bottom: 50px;
+    }
+  }
+  @media only screen and (max-width: 768px) and (min-width: 747px) {
+    .with-tabs .scroll-content {
+      margin-top: 47px !important;
+      margin-bottom: 50px;
+    }
+  }
+}

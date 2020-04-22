@@ -1,0 +1,7 @@
+{
+  "name": "basic-with-login",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

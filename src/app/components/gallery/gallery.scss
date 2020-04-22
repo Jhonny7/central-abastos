@@ -1,0 +1,417 @@
+cmpt-gallery {
+  .slider-io {
+    position: relative;
+    .arrows-lateral {
+      position: absolute;
+      top: 60px;
+      z-index: 1;
+      width: 100%;
+      padding: 9px;
+      div {
+        display: inline-block;
+        //width: 49%;
+        .icon {
+          color: #ee333e;
+          text-shadow: 1px 1px 1px #ffffff;
+          font-size: 3.5em;
+        }
+      }
+      div:nth-child(1) {
+        //text-align: left;
+        position: absolute;
+        left: 8px;
+      }
+      div:nth-child(2) {
+        //text-align: right;
+        position: absolute;
+        right: 8px;
+      }
+    }
+  }
+  .slide-zoom {
+    height: 100%;
+    img {
+      width: 100%;
+      max-width: 100%;
+      max-height: none;
+    }
+  }
+  .white {
+    color: #ffffff !important;
+  }
+  .resaltado {
+    text-shadow: 1px 1px 1px #123;
+  }
+  .buttonImg {
+    //margin-top: -137px;
+    border-radius: 8px !important;
+    box-shadow: 1px 1px 1px #9c9c9c !important;
+    //height: 2.5em;
+    position: absolute;
+    bottom: 10px;
+    left: calc(50% - 73px);
+    width: 146px;
+  }
+  .elipsis {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .overflow {
+    display: -webkit-inline-box;
+    display: -webkit-box !important;
+    max-width: 400px;
+    height: 28px;
+    margin: 0 auto;
+    font-size: 20px;
+    line-height: 1.4;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  @media only screen and (max-width: 356px) and (min-width: 0px) {
+    .boton-entretenimiento {
+      margin-top: 63px !important;
+    }
+    .titlesAlign {
+      margin-left: -25%;
+      margin-top: -3%;
+    }
+    .ionSlidesAndroid {
+      display: block;
+      width: 100%;
+      height: 200px;
+      //height: 280px;
+      //margin-top: -16%;
+      ion-slide {
+        /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        button {
+          //margin-top: 114px;
+        }
+      }
+    }
+    .textoGana {
+      color: #fff;
+      //margin-top: 11%;
+      position: absolute;
+      text-align: left;
+      left: 10px;
+      top: 20px;
+      //margin-left: -20%;
+      font-weight: 700;
+      font-size: 80%;
+      width: 90%;
+      text-shadow: 1px 1px 1px #123;
+    }
+    .divSpinner {
+      height: 200px;
+      text-align: center;
+      ion-spinner {
+        position: relative;
+        display: inline-block;
+        width: 128px !important;
+        height: 28px;
+        margin-top: 11%;
+      }
+      ion-spinner > svg {
+        color: map-get($colors, red-two);
+      }
+      .spinner-md-crescent circle {
+        stroke: map-get($colors, red-two);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 360px) and (min-width: 357px) {
+    .boton-entretenimiento {
+      margin-top: 63px !important;
+    }
+    .titlesAlign {
+      margin-left: -25%;
+      margin-top: -3%;
+    }
+    .ionSlidesAndroid {
+      display: block;
+      width: 100%;
+      height: 200px;
+      //height: 280px;
+      //margin-top: -11%;
+      ion-slide {
+        /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        button {
+          //margin-top: 142px;
+        }
+      }
+    }
+    .textoGana {
+      color: #fff;
+      //margin-top: 13%;
+      position: absolute;
+      text-align: left;
+      //margin-left: -18%;
+      left: 10px;
+      top: 20px;
+      font-weight: 700;
+      font-size: 80%;
+      width: 90%;
+      text-shadow: 1px 1px 1px #123;
+    }
+    .divSpinner {
+      height: 200px;
+      text-align: center;
+      ion-spinner {
+        position: relative;
+        display: inline-block;
+        width: 128px !important;
+        height: 28px;
+        margin-top: 11%;
+      }
+      ion-spinner > svg {
+        color: map-get($colors, red-two);
+      }
+      .spinner-md-crescent circle {
+        stroke: map-get($colors, red-two);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 375px) and (min-width: 361px) {
+    .boton-entretenimiento {
+      margin-top: 63px !important;
+    }
+    .titlesAlign {
+      margin-left: -17%;
+      margin-top: -3%;
+    }
+    .topTitle {
+      margin-top: 32px;
+    }
+    .truncate {
+      white-space: nowrap;
+      width: 331px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .divSpinner {
+      height: 200px;
+      text-align: center;
+      ion-spinner {
+        position: relative;
+        display: inline-block;
+        width: 128px !important;
+        height: 28px;
+        margin-top: 11%;
+      }
+      ion-spinner > svg {
+        color: map-get($colors, red-two);
+      }
+      .spinner-md-crescent circle {
+        stroke: map-get($colors, red-two);
+      }
+      ion-spinner svg {
+        left: 0;
+        top: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        color: aqua;
+        fill: beige;
+        stroke: map-get($colors, red-two);
+      }
+      .spinner-ios line,
+      .spinner-ios-small line {
+        stroke: map-get($colors, red-two);
+      }
+    }
+    .textoGana {
+      color: #fff;
+      //margin-top: 11%;
+      position: absolute;
+      text-align: left;
+      left: 10px;
+      top: 20px;
+      //margin-left: -17%;
+      font-weight: 700;
+      font-size: 80%;
+      width: 84%;
+      text-shadow: 1px 1px 1px #123;
+    }
+    .ionSlidesAndroid {
+      display: block;
+      width: 100%;
+      /*height: 281px;*/
+      height: 200px;
+      //margin-top: -11%;
+      ion-slide {
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        button {
+          //margin-top: 155px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 746px) and (min-width: 376px) {
+    .boton-entretenimiento {
+      margin-top: 63px !important;
+    }
+    .titlesAlign {
+      margin-left: -25%;
+      margin-top: -3%;
+    }
+    .divSpinner {
+      height: 200px;
+      text-align: center;
+      ion-spinner {
+        position: relative;
+        display: inline-block;
+        width: 128px !important;
+        height: 28px;
+        margin-top: 11%;
+      }
+      ion-spinner > svg {
+        color: map-get($colors, red-two);
+      }
+      .spinner-md-crescent circle {
+        stroke: map-get($colors, red-two);
+      }
+      ion-spinner svg {
+        left: 0;
+        top: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        color: aqua;
+        fill: beige;
+        stroke: map-get($colors, red-two);
+      }
+      .spinner-ios line,
+      .spinner-ios-small line {
+        stroke: map-get($colors, red-two);
+      }
+    }
+    .textoGana {
+      color: #fff;
+      //margin-top: 16%;
+      position: absolute;
+      text-align: left;
+      left: 10px;
+      top: 20px;
+      //margin-left: -14%;
+      font-weight: 700;
+      font-size: 80%;
+      width: 81%;
+      text-shadow: 1px 1px 1px #123;
+    }
+
+    .ionSlidesAndroid {
+      display: block;
+      width: 100%;
+      height: 200px;
+      //height: 321px;
+      //margin-top: -11%;
+      ion-slide {
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+
+        button {
+          //margin-top: 170px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) and (min-width: 747px) {
+    .boton-entretenimiento {
+      margin-top: 63px !important;
+    }
+    .titlesAlign {
+      margin-left: -9%;
+      margin-top: -3%;
+    }
+    .divSpinner {
+      height: 200px;
+      text-align: center;
+      ion-spinner {
+        position: relative;
+        display: inline-block;
+        width: 128px !important;
+        height: 28px;
+        margin-top: 11%;
+      }
+      ion-spinner > svg {
+        color: map-get($colors, red-two);
+      }
+      .spinner-md-crescent circle {
+        stroke: map-get($colors, red-two);
+      }
+      ion-spinner svg {
+        left: 0;
+        top: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        color: aqua;
+        fill: beige;
+        stroke: map-get($colors, red-two);
+      }
+      .spinner-ios line,
+      .spinner-ios-small line {
+        stroke: map-get($colors, red-two);
+      }
+    }
+    .textoGana {
+      color: #fff;
+      //margin-top: 17%;
+      position: absolute;
+      text-align: left;
+      left: 10px;
+      top: 20px;
+      //margin-left: -7%;
+      font-weight: 700;
+      font-size: 116%;
+      width: 62%;
+      text-shadow: 1px 1px 1px #123;
+    }
+    .ionSlidesAndroid {
+      display: block;
+      width: 100%;
+      height: 400px;
+      //margin-top: -2%;
+      ion-slide {
+        /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        button {
+          //margin-top: 351px;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+<ion-icon id="icn-p" name="ios-arrow-back" class="arrow-generada" (click)="regresar()"></ion-icon>
+<ion-content>
+  <div class="title-page">{{producto.nombre}}</div>
+ 
+  <div class="container-images animated bounceInRight" *ngIf="producto.photos.length > 0">
+    <div class="principal">
+      <div class="contorno" (click)="imagesLoaded(0)">
+        <img src="{{producto.photos[0]}}" alt="">
+      </div>
+    </div>
+    <div class="resto">
+      <div *ngFor="let photo of photos; let i=index" class="in-resto">
+        <div class="contorno" (click)="imagesLoaded(i+1)">
+          <img src="{{photo}}" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

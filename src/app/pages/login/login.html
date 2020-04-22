@@ -1,0 +1,23 @@
+<!-- background-color: #258649; -->
+<ion-content class="max-contenedor" padding style="background-image: url(assets/imgs/loginFondo.png);">
+  <section class="container animated rubberBand">
+    <section class="flex">
+      <img src="assets/imgs/logo.png" alt="" class="animated fadeIn">
+
+      <section class="input-section">
+        <input [(ngModel)]="dataLogin.user" type="email" placeholder="{{'EMAIL' | translate}}">
+        <div class="interno">
+          <input [(ngModel)]="dataLogin.password" type="{{configuraciones.visible ? 'text' : 'password'}}" placeholder="{{'PASSWORD' | translate}}">
+          <section (touchstart)="visible()" (touchend)="visible()">
+            <ion-icon ios="ios-eye" md="ios-eye"></ion-icon>
+          </section>
+        </div>
+
+        <button (click)="login()">{{'LOGIN' | translate}}</button>
+      </section>
+      <section class="registrate">
+        <a (click)="goToRegister()">¿Aún no te has registrado?</a>
+      </section>
+    </section>
+  </section>
+</ion-content>
