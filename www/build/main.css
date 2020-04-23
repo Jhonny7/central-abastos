@@ -31315,6 +31315,139 @@ if(carta.activo){
   animation-name: slideOutUp;
 }
 
+@media only screen and (min-width: 768px) {
+  .full-size {
+    display: inline-block;
+    width: 50%;
+  }
+}
+
+ion-card {
+  position: relative;
+  text-align: center;
+  height: 272px;
+}
+
+ion-card img {
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+ion-card .photos {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 1.3em;
+  padding: 5px 5px 0px 5px;
+  background-color: rgba(0, 0, 0, 0.38);
+  border-radius: 5px;
+  color: #fff;
+}
+
+ion-card .photos p {
+  display: inline-block;
+  color: #fff;
+  font-size: 0.9em;
+}
+
+ion-card .photos ion-icon {
+  display: inline-block;
+}
+
+ion-card .favorito {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 2em;
+  color: #3b64bf;
+}
+
+ion-card .card-title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  top: 15%;
+  font-size: 2em;
+  width: 100%;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: 1px 1px 1px #000;
+  color: white;
+  font-weight: 500;
+  font-size: 25px;
+  text-shadow: 2px 2px 6px #000;
+}
+
+ion-card .card-subtitle {
+  font-size: 1.5em;
+  position: absolute;
+  top: 34%;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  text-shadow: 0px 0px 0px #848484;
+  color: white;
+  font-weight: 500;
+  font-size: 25px;
+  text-shadow: 2px 2px 6px #000;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+ion-card .card-price {
+  font-size: 1.5em;
+  position: absolute;
+  top: 58%;
+  width: 100%;
+  color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  text-shadow: 0px 0px 0px #848484;
+  color: white;
+  font-weight: 500;
+  font-size: 25px;
+  text-shadow: 2px 2px 6px #000;
+}
+
+ion-card .info-icons {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.38);
+  border-radius: 5px;
+}
+
+ion-card .info-icons .square {
+  display: inline-block;
+  font-size: 1.2em;
+  text-shadow: 1px 1px 2px #838384;
+}
+
+ion-card .info-icons .square p {
+  color: #fff;
+  font-size: 0.9em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 160px;
+}
+
+ion-card .info-icons .square img {
+  width: 20px;
+}
+
+ion-card .info-icons .square:nth-child(2) {
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
 #ion-diagnostics {
   -webkit-transition: opacity 150ms ease-out;
   transition: opacity 150ms ease-out;
@@ -32222,7 +32355,7 @@ page-detalle-producto .carrito {
   padding-left: 10px;
   padding-top: 10px;
   position: absolute;
-  color: #3b64bf;
+  color: #fff;
   top: -4px;
   height: auto;
   font-size: 2.5em;
@@ -32266,8 +32399,9 @@ page-detalle-producto .title-page {
   font-size: 22px;
   text-align: center;
   padding: 17px;
-  color: #3b64bf;
+  color: #ffffff;
   text-transform: capitalize;
+  background-color: #3b64bf;
 }
 
 page-detalle-producto .container-images {
@@ -32320,6 +32454,10 @@ page-detalle-producto .container-images .resto .in-resto .contorno img {
   -o-object-fit: cover;
   object-fit: cover;
   border: 3px solid rgba(1, 1, 1, 0.45);
+}
+
+page-detalle-producto .arrow-generada {
+  color: #fff;
 }
 
 page-detalle-producto .slider-io {
@@ -32490,137 +32628,21 @@ page-home .filtro {
   z-index: 3;
 }
 
-page-home ion-card {
-  position: relative;
-  text-align: center;
-  height: 272px;
-}
-
-page-home ion-card img {
-  height: 100%;
-  -o-object-fit: cover;
-  object-fit: cover;
-}
-
-page-home ion-card .photos {
+page-home .carrito ion-badge {
   position: absolute;
-  top: 5px;
-  left: 10px;
-  font-size: 1.3em;
-  padding: 5px 5px 0px 5px;
-  background-color: rgba(0, 0, 0, 0.38);
-  border-radius: 5px;
-  color: #fff;
-}
-
-page-home ion-card .photos p {
-  display: inline-block;
-  color: #fff;
-  font-size: 0.9em;
-}
-
-page-home ion-card .photos ion-icon {
-  display: inline-block;
-}
-
-page-home ion-card .favorito {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 2em;
+  top: -0.2rem;
+  right: 7px;
+  opacity: 0.9;
   color: #3b64bf;
+  background-color: #ffffff;
+  border-radius: 50%;
+  font-size: 12px;
+  width: 18px;
+  padding: 3px;
 }
 
-page-home ion-card .card-title {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  position: absolute;
-  top: 15%;
-  font-size: 2em;
-  width: 100%;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.5);
-  color: rgba(255, 255, 255, 0.5);
-  text-shadow: 1px 1px 1px #000;
-  color: white;
-  font-weight: 500;
-  font-size: 25px;
-  text-shadow: 2px 2px 6px #000;
-}
-
-page-home ion-card .card-subtitle {
-  font-size: 1.5em;
-  position: absolute;
-  top: 34%;
-  width: 100%;
-  color: rgba(0, 0, 0, 0.5);
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 500;
-  text-shadow: 0px 0px 0px #848484;
-  color: white;
-  font-weight: 500;
-  font-size: 25px;
-  text-shadow: 2px 2px 6px #000;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 100%;
-}
-
-page-home ion-card .card-price {
-  font-size: 1.5em;
-  position: absolute;
-  top: 58%;
-  width: 100%;
-  color: rgba(0, 0, 0, 0.5);
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 500;
-  text-shadow: 0px 0px 0px #848484;
-  color: white;
-  font-weight: 500;
-  font-size: 25px;
-  text-shadow: 2px 2px 6px #000;
-}
-
-page-home ion-card .info-icons {
-  position: absolute;
-  bottom: 5px;
-  right: 10px;
-  padding: 5px;
-  background-color: rgba(0, 0, 0, 0.38);
-  border-radius: 5px;
-}
-
-page-home ion-card .info-icons .square {
-  display: inline-block;
-  font-size: 1.2em;
-  text-shadow: 1px 1px 2px #838384;
-}
-
-page-home ion-card .info-icons .square p {
-  color: #fff;
-  font-size: 0.9em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 160px;
-}
-
-page-home ion-card .info-icons .square img {
-  width: 20px;
-}
-
-page-home ion-card .info-icons .square:nth-child(2) {
-  margin-left: 7px;
-  margin-right: 7px;
-}
-
-@media only screen and (min-width: 768px) {
-  page-home .full-size {
-    display: inline-block;
-    width: 50%;
-  }
+page-home .carrito ion-badge ~ ion-icon {
+  margin-right: 1.2rem;
 }
 
 page-login .container {

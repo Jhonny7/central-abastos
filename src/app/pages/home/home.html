@@ -5,6 +5,11 @@
     </button> -->
     <ion-title>Productos</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="verCarrito()" class="carrito">
+          <ion-badge>{{productoService.getTotalCarrito()}}</ion-badge>
+        <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
+        
+      </button>
       <button ion-button icon-only (click)="logout()">
         <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
       </button>
@@ -25,13 +30,13 @@
   <div *ngFor="let producto of productos" class="full-size animated fadeInUp">
     <ion-card>
       <div class="favorito">
-        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito"></ion-icon>
-        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #f00;"></ion-icon>
+        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito" (click)="agregarToCarrito(producto)"></ion-icon>
+        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(producto)"></ion-icon>
       </div>
-      <img src="{{env.getImagenIndividual}}{{producto.adjuntoId}}" (click)="viewDetail(producto)" />
-      <div class="card-title" (click)="viewDetail(producto)">{{producto.nombre}}</div>
-      <div class="card-subtitle" (click)="viewDetail(producto)">{{producto.descripcion}}</div>
-      <div class="card-price" (click)="viewDetail(producto)">{{producto.precio | currency}}</div>
+      <img src="{{env.getImagenIndividual}}{{producto.adjuntoId}}" (click)="productoService.viewDetail(producto)" />
+      <div class="card-title" (click)="productoService.viewDetail(producto)">{{producto.nombre}}</div>
+      <div class="card-subtitle" (click)="productoService.viewDetail(producto)">{{producto.descripcion}}</div>
+      <div class="card-price" (click)="productoService.viewDetail(producto)">{{producto.precio | currency}}</div>
 
 
       <!-- imagenes adicionales -->

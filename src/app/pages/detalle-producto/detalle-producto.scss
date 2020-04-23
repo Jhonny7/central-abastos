@@ -3,7 +3,7 @@ page-detalle-producto {
     padding-left: 10px;
     padding-top: 10px;
     position: absolute;
-    color: #3b64bf;
+    color: #fff;
     top: -4px;
     height: auto;
     font-size: 2.5em;
@@ -47,8 +47,9 @@ page-detalle-producto {
     font-size: 22px;
     text-align: center;
     padding: 17px;
-    color: #3b64bf;
+    color: #ffffff;
     text-transform: capitalize;
+    background-color: #3b64bf;
   }
 
   .container-images {
@@ -89,6 +90,10 @@ page-detalle-producto {
         }
       }
     }
+  }
+
+  .arrow-generada{
+    color: #fff;
   }
 
   .slider-io {

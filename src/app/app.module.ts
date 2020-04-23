@@ -24,6 +24,7 @@ import { DetalleProductoPage } from './pages/detalle-producto/detalle-producto';
 import { CarritoComprasPage } from './pages/carrito-compras/carrito-compras';
 import { AltaDireccionesPage } from './pages/alta-direcciones/alta-direcciones';
 import { ScrollHideDirective } from './directives/scroll-hide.directive';
+import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -45,7 +46,8 @@ export function createTranslateLoader(http: HttpClient) {
     DetalleProductoPage,
     CarritoComprasPage,
     AltaDireccionesPage,
-    ScrollHideDirective
+    ScrollHideDirective,
+    ListaCarritoComprasPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ export function createTranslateLoader(http: HttpClient) {
     FiltroProductoPage,
     DetalleProductoPage,
     CarritoComprasPage,
-    AltaDireccionesPage
+    AltaDireccionesPage,
+    ListaCarritoComprasPage
   ],
   providers: [
     StatusBar,

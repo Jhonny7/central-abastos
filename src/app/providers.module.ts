@@ -12,6 +12,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
 import { RequestInterceptorService } from './interceptors/request-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
+import { ProductoService } from './services/producto.service';
 
 @NgModule({
     providers: [
@@ -30,7 +31,8 @@ import { AuthService } from './services/auth.service';
             useClass: RequestInterceptorService,
             multi: true
         },
-        AuthService
+        AuthService,
+        ProductoService
     ]
 })
 export class ProvidersModule { }

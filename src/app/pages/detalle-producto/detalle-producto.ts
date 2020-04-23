@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import PhotoSwipe from 'photoswipe';
 import * as PhotoSwipeUI_Default from "photoswipe/dist/photoswipe-ui-default";
 
@@ -14,6 +14,9 @@ export class DetalleProductoPage {
   public productosTemp: any = [];
   public gallery: any;
 
+  @ViewChild('slides2')
+  slider2: Slides;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams) {
@@ -27,6 +30,17 @@ export class DetalleProductoPage {
         });
       });
     }
+  }
+
+  /**Métodos de navegacion del slide */
+  next1() {
+    console.log("next");
+
+    this.slider2.slideNext();
+  }
+
+  prev1() {
+    this.slider2.slidePrev();
   }
 
   ionViewDidLoad() {

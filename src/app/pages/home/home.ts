@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, ModalController, AlertController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { NavController, ModalController, AlertController, Events } from 'ionic-angular';
 import { FiltroProductoPage } from '../filtro-producto/filtro-producto';
 import { LoadingService } from '../../services/loading.service';
 import { LoginPage } from '../login/login';
@@ -8,16 +8,20 @@ import { environment } from '../../../environments/environment.prod';
 import { GenericService } from '../../services/generic.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { AlertaService } from '../../services/alerta.service';
-
+import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { Seccion } from '../../models/Seccion';
 import { Proveedor } from '../../models/Proveedor';
 import { Categoria } from '../../models/Categoria';
+import { CarritoComprasPage } from '../carrito-compras/carrito-compras';
+import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
+import { User } from '../../models/User';
+import { ProductoService } from '../../services/producto.service';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnDestroy {
 
   public productos: any = [];
 
@@ -40,18 +44,55 @@ export class HomePage {
 
   public env: any = environment;
 
+  public user: User = null;
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
     private loadingService: LoadingService,
     private alertCtrl: AlertController,
     private genericService: GenericService,
-    private alertaService: AlertaService, ) {
+    private alertaService: AlertaService,
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private events: Events,
+    public productoService: ProductoService,
+    private actionSheet: ActionSheet) {
+    /**Obtenci{on de usuario en sesión */
+    this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.cargarProductos();
 
     this.cargarProveedores();
     this.cargarSecciones();
     this.cargarCategorias();
+
+    this.events.subscribe('updateProductos', data => {
+      console.log(data);
+      if (data) {
+        if (data.productoDelete) {
+          this.productos.forEach(element => {
+            if (element.id == data.productoDelete.id) {
+              element.carrito = false;
+            }
+          });
+        }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.events.unsubscribe("updateProductos");
+  }
+
+  verificarCarrito() {
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    if (productosStorage) {
+      productosStorage.forEach(item => {
+        this.productos.forEach(element => {
+          if (item.id == element.id) {
+            element.carrito = true;
+          }
+        });
+      });
+    }
   }
 
   cargarSecciones() {
@@ -93,15 +134,13 @@ export class HomePage {
 
   /**Método para cargar productos en base a especificaciones */
   cargarProductos() {
-    console.log("123");
-
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(environment.productos).subscribe((response: any) => {
         console.log(response);
         //quitar
         this.productos = response;
         console.log(this.productos);
-
+        this.verificarCarrito();
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
@@ -201,21 +240,72 @@ export class HomePage {
     }
   }
 
-  viewDetail(producto: any) {
-    //consumir servicio de imagenes completas
-    this.loadingService.show().then(()=>{
-      this.genericService.sendGetRequest(`${environment.productos}/${producto.id}`).subscribe((response: any) => {
-        console.log(response);
-        this.navCtrl.push(DetalleProductoPage, { producto: response });
-        this.loadingService.hide();
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
+  agregarColeccion() {
+    let colecciones: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-colecciones`);
+    let buttonLabels = [];
+    colecciones.forEach(coleccion => {
+      buttonLabels.push(coleccion.nombre);
     });
-    //
-    
+    const options: ActionSheetOptions = {
+      title: '',
+      subtitle: '',
+      buttonLabels: buttonLabels,
+      addCancelButtonWithLabel: "Cancelar",
+      androidTheme: 1,
+      destructiveButtonLast: true
+    };
+    this.actionSheet.show(options).then((buttonIndex: number) => {
+      let coleccion:any = buttonLabels[buttonIndex];
+      
+    });
+  }
+
+  agregarToCarrito(producto: any) {
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productos: any = [];
+    productos.push(producto);
+    if (productosStorage) {
+      productosStorage.forEach(element => {
+        productos.push(element);
+      });
+    }
+    producto.carrito = true;
+    try {
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productos);
+    } catch (error) {
+      producto.carrito = false;
+    }
+  }
+
+  nombrarColeccion() {
+    let alert = this.alertCtrl.create({
+      title: 'Colecciones',
+      inputs: [
+        {
+          name: 'coleccion',
+          placeholder: 'Nombra tu coleccion'
+        }],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: data => {
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  verCarrito() {
+    this.navCtrl.push(CarritoComprasPage);
   }
 
 }
