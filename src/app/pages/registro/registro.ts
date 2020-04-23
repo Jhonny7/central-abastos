@@ -7,6 +7,11 @@ import { LocalStorageEncryptService } from '../../services/local-storage-encrypt
 import { TranslateService } from '@ngx-translate/core';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { AlertaService } from '../../services/alerta.service';
+import { GenericService } from '../../services/generic.service';
+import { LoadingService } from '../../services/loading.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../environments/environment.prod';
+import * as moment from "moment";
 
 @Component({
   selector: 'page-registro',
@@ -30,11 +35,19 @@ export class RegistroPage {
       value: null
     },
     {
-      name: "Apellido",
+      name: "Apellido paterno",
       required: true,
-      length: 100,
+      length: 50,
       type: "text",
       formName: "ap",
+      value: null
+    },
+    {
+      name: "Apellido materno",
+      required: true,
+      length: 50,
+      type: "text",
+      formName: "am",
       value: null
     },
     {
@@ -66,11 +79,11 @@ export class RegistroPage {
           value: "[--Selecciona--]"
         },
         {
-          id: "Hombre",
+          id: "M",
           value: "Hombre"
         },
         {
-          id: "Mujer",
+          id: "F",
           value: "Mujer"
         }
       ]
@@ -122,7 +135,9 @@ export class RegistroPage {
     private camera: Camera,
     private translatePipe: TranslateService,
     private actionSheet: ActionSheet,
-    private alertaService: AlertaService) {
+    private alertaService: AlertaService,
+    private genericService: GenericService,
+    private loadingService: LoadingService) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
@@ -167,6 +182,7 @@ export class RegistroPage {
   }
 
   ionViewDidLoad() {
+    moment.locale("ES");
   }
 
   regresar() {
@@ -179,16 +195,48 @@ export class RegistroPage {
 
     if(this.objetoRegistro[7].value != this.objetoRegistro[8].value){
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    }else{
+
+      console.log(this.photo_url);
+      
+      let body:any = {
+        login: this.objetoRegistro[6].value,
+        email: this.objetoRegistro[6].value,
+        firstName: this.objetoRegistro[0].value,
+        lastName:this.objetoRegistro[1].value,
+        motherLastName:this.objetoRegistro[2].value,
+  
+        telefono:this.objetoRegistro[4].value,
+        fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("DD/MM/YYYY"),
+  
+        genero: this.objetoRegistro[5].value,
+        password:this.objetoRegistro[7].value,
+  
+  
+        activated: true,// por default en la app
+  
+        adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+          contentType: "image/jpeg",
+          file: this.photo_url,
+          fileName: Math.floor(new Date().getTime()/1000.0).toString(),
+          size:0
+        },
+      };
+
+      this.loadingService.show().then(()=>{
+        this.genericService.sendPostRequest(environment.registro, body).subscribe((response:any)=>{
+          console.log(response);
+          this.loadingService.hide();
+          this.alertaService.successAlertGeneric("Registro exitoso");
+          this.navCtrl.pop();
+        },(error:HttpErrorResponse)=>{
+          this.loadingService.hide();
+          let err:any = error.error;
+          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
+      });
     }
-    let body:any = {
-      login: "",
-      email: "",
-      firstName: "",
-      lastName:"",
-      motherLastName:"",
-      password:"",
-      activated: true// por default en la app
-    };
+    
   }
 
   /**Verifica validaciones */
@@ -238,7 +286,7 @@ export class RegistroPage {
           this.seleccionaImagen();
           break;
         case 3:
-          this.photo_url = "";
+          this.photo_url = null;
           break;
       }
     });

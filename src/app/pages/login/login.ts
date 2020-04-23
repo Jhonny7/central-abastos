@@ -7,6 +7,7 @@ import { HomePage } from '../home/home';
 import { GenericService } from '../../services/generic.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 
 @Component({
   selector: 'page-login',
@@ -27,7 +28,8 @@ export class LoginPage {
     public navParams: NavParams,
     private loadingService: LoadingService,
     private alertaService: AlertaService,
-    private genericService: GenericService) {
+    private genericService: GenericService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
     //this.loadingService.show();  
     //comentario
   }
@@ -46,6 +48,9 @@ export class LoginPage {
       };
       this.genericService.sendPostRequest(environment.login, body).subscribe((response:any)=>{
         console.log(response);
+        //quitar
+        this.loadingService.hide();
+        this.localStorageEncryptService.setToLocalStorage("userSession",response);
         this.navCtrl.setRoot(HomePage);
       },(error:HttpErrorResponse)=>{
         this.loadingService.hide();
@@ -53,7 +58,6 @@ export class LoginPage {
         this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
-    
   }
 
   visible() {

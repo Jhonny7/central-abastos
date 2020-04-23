@@ -6,6 +6,7 @@ import 'rxjs/add/operator/timeout';
 import { catchError, timeout } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Observable, TimeoutError } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export const TIME_OUT = 1000 * 60 * 1; //ultimo número define en minutos
 /**Clase provider que es básicamente un servicio generico para las peticiones a servicios */
@@ -19,8 +20,24 @@ export class GenericService {
     }
 
     /**Método que hace peticiones tipo GET */
-    sendGetRequest(webservice_URL: string) {
-        return this.http.get(webservice_URL);
+    sendGetRequest(webservice_URL: string, clase:any = null) {
+        let observable:any = this.http.get(webservice_URL);
+
+        if(clase){
+            return observable.pipe(map((data: any) => {
+                let arr: any = data;
+        
+                let obj: any = null;
+                if (!Array.isArray(arr)) {
+                  obj = clase.fromJson(arr);
+                } else {
+                  obj = arr.map(item => clase.fromJson(item));
+                }
+                return obj;
+              }))
+        }else{
+            return observable;
+        }
     }
 
     /**Método que hace peticiones tipo GET  con parámetros*/

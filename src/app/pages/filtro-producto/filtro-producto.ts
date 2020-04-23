@@ -7,14 +7,16 @@ import { IonicPage, NavController, NavParams, Events, ViewController } from 'ion
 })
 export class FiltroProductoPage {
 
-  public filtros: any = null;
+  public filtros: any = {};
 
   public selectOptions: any = {
     cssClass: 'action-sheet-class'
   };
 
+
+
   
-  public articulos:any = null;
+  public proveedores:any = null;
   public categorias:any = null;
   public secciones:any = null;
 
@@ -24,6 +26,13 @@ export class FiltroProductoPage {
     public viewCtrl: ViewController,
     private events: Events) {
     this.filtros = navParams.get('dataFilter');
+    
+    let objCombos:any = navParams.get('objCombos');
+    if(objCombos){
+      this.secciones = objCombos.secciones;
+      this.proveedores = objCombos.proveedores;
+      this.categorias = objCombos.categorias;
+    }
     this.events.subscribe('closedAlerts', data => {
       try {
         this.viewCtrl.dismiss();
@@ -33,7 +42,7 @@ export class FiltroProductoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FiltroProductoPage');
+    this.filtros.cambio = 0;
   }
 
   /**Método para cerrar el modal, sin embargo
@@ -48,6 +57,10 @@ export class FiltroProductoPage {
    */
   evaluateAttribute(atributo:boolean){
     atributo = !atributo; 
+  }
+
+  change(){
+    this.filtros.cambio++;
   }
 
 }

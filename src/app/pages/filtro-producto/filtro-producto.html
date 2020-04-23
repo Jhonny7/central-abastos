@@ -17,25 +17,35 @@
 
       <ion-item>
         <ion-label floating>Nombre producto</ion-label>
-        <ion-input type="text" [(ngModel)]="filtros.nombre" style="border-bottom: 1px solid #3b64bf;"></ion-input>
+        <ion-input (keyup)="change()" type="text" [(ngModel)]="filtros.nombre" style="border-bottom: 1px solid #3b64bf;"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label>Articulos</ion-label>
-        <ion-select [(ngModel)]="filtros.articulo" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+        <ion-label>Proveedores</ion-label>
+        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idProveedor" okText="Ok" cancelText="Cancelar" interface="action-sheet"
           [selectOptions]="selectOptions">
+          <ion-option *ngFor="let op of proveedores" [value]="op.id">
+            {{op.nombre}}
+          </ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Categorías</ion-label>
-        <ion-select [(ngModel)]="filtros.categoria" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idCategoria" okText="Ok" cancelText="Cancelar" interface="action-sheet"
           [selectOptions]="selectOptions">
+          <ion-option *ngFor="let op of categorias" [value]="op.id">
+            {{op.nombre}}
+          </ion-option>
         </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Secciones</ion-label>
-        <ion-select [(ngModel)]="filtros.seccion" okText="Ok" cancelText="Cancelar" interface="action-sheet"
+        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idSeccion" okText="Ok" cancelText="Cancelar" interface="action-sheet"
           [selectOptions]="selectOptions">
+          <ion-option *ngFor="let op of secciones" [value]="op.id">
+            <ion-icon name="md-close"></ion-icon>
+            {{op.nombre}}
+          </ion-option>
         </ion-select>
       </ion-item>
 

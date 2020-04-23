@@ -4,6 +4,14 @@ import { FiltroProductoPage } from '../filtro-producto/filtro-producto';
 import { LoadingService } from '../../services/loading.service';
 import { LoginPage } from '../login/login';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
+import { environment } from '../../../environments/environment.prod';
+import { GenericService } from '../../services/generic.service';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { AlertaService } from '../../services/alerta.service';
+
+import { Seccion } from '../../models/Seccion';
+import { Proveedor } from '../../models/Proveedor';
+import { Categoria } from '../../models/Categoria';
 
 @Component({
   selector: 'page-home',
@@ -11,163 +19,159 @@ import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 })
 export class HomePage {
 
-  public productos: any = [{
-    "id": 1,
-    "nombre": "mobile Fish",
-    "descripcion": "Home Loan Account Table Computer",
-    "caracteristicas": "Trace",
-    "precioSinIva": 33370,
-    "precio": 60111,
-    "fechaAlta": "2020-04-20T13:32:18Z",
-    "fechaModificacion": "2020-04-19T23:58:25Z",
-    "adjuntoId": 1,
-    "usuarioAltaId": 1,
-    "usuarioModificacionId": null,
-    "proveedorId": 1,
-    "proveedor": {
-      "id": 1,
-      "nombre": "Developer Shoes Music",
-      "fechaAlta": "2020-04-19T22:38:48Z",
-      "fechaModificacion": "2020-04-20T05:10:07Z",
-      "usuarioAltaId": null,
-      "usuarioModificacionId": null,
-      "empresaId": null
-    },
-    "tipoArticuloId": 1,
-    "tipoArticulo": {
-      "id": 1,
-      "nombre": "Canadian Dollar"
-    },
-    "categoriaId": 1,
-    "categoria": {
-      "id": 1,
-      "nombre": "open-source turn-key",
-      "empresaId": null
-    },
-    "seccionId": 1,
-    "seccion": {
-      "id": 1,
-      "nombre": "bypassing Marketing",
-      "empresaId": null
-    },
-    "estatusId": 1,
-    "estatus": {
-      "id": 1,
-      "tipoEstatus": "ESTATUS_PRODUCTO",
-      "nombre": "target Human withdrawal"
-    },
-    "unidadMedidaId": 1,
-    "unidadMedida": {
-      "id": 1,
-      "nombre": "Small partnerships",
-      "descripcion": "Outdoors"
-    },
-    "empresaId": 1,
-    "empresa": {
-      "id": 1,
-      "nombre": "Intuitive"
-    }
-  },
-  {
-    "id": 1,
-    "nombre": "mobile Fish",
-    "descripcion": "Home Loan Account Table Computer",
-    "caracteristicas": "Trace",
-    "precioSinIva": 33370,
-    "precio": 60111,
-    "fechaAlta": "2020-04-20T13:32:18Z",
-    "fechaModificacion": "2020-04-19T23:58:25Z",
-    "adjuntoId": 1,
-    "usuarioAltaId": 1,
-    "usuarioModificacionId": null,
-    "proveedorId": 1,
-    "proveedor": {
-      "id": 1,
-      "nombre": "Developer Shoes Music",
-      "fechaAlta": "2020-04-19T22:38:48Z",
-      "fechaModificacion": "2020-04-20T05:10:07Z",
-      "usuarioAltaId": null,
-      "usuarioModificacionId": null,
-      "empresaId": null
-    },
-    "tipoArticuloId": 1,
-    "tipoArticulo": {
-      "id": 1,
-      "nombre": "Canadian Dollar"
-    },
-    "categoriaId": 1,
-    "categoria": {
-      "id": 1,
-      "nombre": "open-source turn-key",
-      "empresaId": null
-    },
-    "seccionId": 1,
-    "seccion": {
-      "id": 1,
-      "nombre": "bypassing Marketing",
-      "empresaId": null
-    },
-    "estatusId": 1,
-    "estatus": {
-      "id": 1,
-      "tipoEstatus": "ESTATUS_PRODUCTO",
-      "nombre": "target Human withdrawal"
-    },
-    "unidadMedidaId": 1,
-    "unidadMedida": {
-      "id": 1,
-      "nombre": "Small partnerships",
-      "descripcion": "Outdoors"
-    },
-    "empresaId": 1,
-    "empresa": {
-      "id": 1,
-      "nombre": "Intuitive"
-    }
-  }];
+  public productos: any = [];
 
-  private dataFilter: any = {};
+  public categorias: Categoria[] = [];
+  public proveedores: Proveedor[] = [];
+  public secciones: Seccion[] = [];
+
+  private dataFilter: any = {
+    idProveedor: null,
+    idSeccion: null,
+    idCategoria: null,
+    nombre: null
+  };
+
+  private objCombos: any = {
+    secciones: this.secciones,
+    proveedores: this.proveedores,
+    categorias: this.categorias
+  }
+
+  public env: any = environment;
 
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
     private loadingService: LoadingService,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private genericService: GenericService,
+    private alertaService: AlertaService, ) {
+    this.cargarProductos();
 
+    this.cargarProveedores();
+    this.cargarSecciones();
+    this.cargarCategorias();
+  }
+
+  cargarSecciones() {
+    this.genericService.sendGetRequest(environment.secciones, Seccion)
+      .subscribe((response: any) => {
+        this.secciones = response;
+        this.objCombos.secciones = this.secciones;
+        //quitar
+      }, (error: HttpErrorResponse) => {
+        let err: any = error.error;
+        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+  }
+
+  cargarProveedores() {
+    this.genericService.sendGetRequest(environment.proveedores, Proveedor)
+      .subscribe((response: any) => {
+        this.proveedores = response;
+        this.objCombos.proveedores = this.proveedores;
+
+        //quitar
+      }, (error: HttpErrorResponse) => {
+        let err: any = error.error;
+        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+  }
+
+  cargarCategorias() {
+    this.genericService.sendGetRequest(environment.categorias, Categoria)
+      .subscribe((response: any) => {
+        this.categorias = response;
+        this.objCombos.categorias = this.categorias;
+        //quitar
+      }, (error: HttpErrorResponse) => {
+        let err: any = error.error;
+        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+  }
+
+  /**Método para cargar productos en base a especificaciones */
+  cargarProductos() {
+    console.log("123");
+
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(environment.productos).subscribe((response: any) => {
+        console.log(response);
+        //quitar
+        this.productos = response;
+        console.log(this.productos);
+
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
   }
 
   /**Método que mediante un modal abre una página con los filtros de intereses */
   openFilters() {
-    let modal = this.modalController.create(FiltroProductoPage, { dataFilter: this.dataFilter });
+    let modal = this.modalController.create(FiltroProductoPage, { dataFilter: this.dataFilter, objCombos: this.objCombos });
     modal.present();
     modal.onDidDismiss((data) => {
       if (data) {
         if (data != null) {
           let valores = data.data;
           this.dataFilter = {
-            entretenimiento: valores.entretenimiento,
-            restaurantes: valores.restaurantes,
-            compras: valores.compras,
-            viajes: valores.viajes,
-            wellness: valores.wellness,
+            idProveedor: valores.idProveedor,
+            idSeccion: valores.idSeccion,
+            idCategoria: valores.idCategoria,
+            nombre: valores.nombre
           }
           //Autoclick
-          this.loadingService.show().then(() => {
-            this.buscarPorFiltros();
-          });
+          if (valores.cambio > 0) {
+            this.loadingService.show().then(() => {
+              this.buscarPorFiltros();
+            });
+          }
         }
       }
     });
   }
 
-  buscarPorFiltros(){
-    this.loadingService.hide();
+  buscarPorFiltros() {
+    let params = new HttpParams()
+
+    if (this.dataFilter.idProveedor) {
+      params = params.set('proveedorId', this.dataFilter.idProveedor ? this.dataFilter.idProveedor : "")
+    }
+    if (this.dataFilter.idSeccion) {
+      params = params.set('seccionId', this.dataFilter.idSeccion ? this.dataFilter.idSeccion : "")
+    }
+    if (this.dataFilter.idCategoria) {
+      params = params.set('categoriaId', this.dataFilter.idCategoria ? this.dataFilter.idCategoria : "")
+    }
+    if (this.dataFilter.nombre) {
+      console.log("---");
+
+      params = params.append('nombre', this.dataFilter.nombre);
+    }
+    console.log(params);
+
+
+    this.genericService.sendGetParams(`${environment.productos}/search`, params).subscribe((response: any) => {
+      console.log(response);
+      this.productos = response;
+      this.loadingService.hide();
+    }, (error: HttpErrorResponse) => {
+      this.loadingService.hide();
+      let err: any = error.error;
+      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    });
   }
 
-  logout(){
+  logout() {
     let alert = this.alertCtrl.create({
       title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
       message: "¿Estás segur@ de cerrar sesión?",//this.translatePipe.instant("CONFIRM-LOGOUT"),
+      cssClass: "alerta-two-button",
       buttons: [
         {
           text: "Cancelar",//this.translatePipe.instant("CANCEL"),
@@ -190,18 +194,28 @@ export class HomePage {
     try {
       localStorage.removeItem("userSession");
       this.navCtrl.setRoot(LoginPage);
-      
+
     } catch (error) {
       console.log(error);
 
     }
   }
 
-  viewDetail(producto:any){
+  viewDetail(producto: any) {
     //consumir servicio de imagenes completas
-
+    this.loadingService.show().then(()=>{
+      this.genericService.sendGetRequest(`${environment.productos}/${producto.id}`).subscribe((response: any) => {
+        console.log(response);
+        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
     //
-    this.navCtrl.push(DetalleProductoPage,{producto});
+    
   }
 
 }

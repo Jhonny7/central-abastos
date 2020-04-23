@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar'; 
+import { StatusBar } from '@ionic-native/status-bar';
 import { IonicErrorHandler } from 'ionic-angular';
 import { AlertaService } from './services/alerta.service';
 import { LoadingService } from './services/loading.service';
@@ -9,6 +9,9 @@ import { LocalStorageEncryptService } from './services/local-storage-encrypt.ser
 import { GenericService } from './services/generic.service';
 import { Camera } from '@ionic-native/camera';
 import { ActionSheet } from '@ionic-native/action-sheet';
+import { RequestInterceptorService } from './interceptors/request-interceptor.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
     providers: [
@@ -21,7 +24,13 @@ import { ActionSheet } from '@ionic-native/action-sheet';
         LocalStorageEncryptService,
         GenericService,
         Camera,
-        ActionSheet
+        ActionSheet,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: RequestInterceptorService,
+            multi: true
+        },
+        AuthService
     ]
 })
 export class ProvidersModule { }

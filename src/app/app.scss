@@ -248,6 +248,76 @@
   }
 }
 
+.alerta-one-button {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      .alert-button {
+        background-color: map-get($colors, primary);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+        .button-inner {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.alerta-two-button {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        background-color: #fff;
+        color: map-get($colors, primary);
+        border: 1px solid map-get($colors, primary);
+      }
+    }
+  }
+}
+
 .headerImg{
   width: 44px;
 }

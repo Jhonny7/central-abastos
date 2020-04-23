@@ -12,12 +12,15 @@
   </ion-navbar>
 </ion-header>
 
+<div class="filtro">
+  <button ion-button (click)="openFilters()">
+    <ion-icon ios="ios-options" md="ios-options"></ion-icon>
+  </button>
+</div>
+
 <ion-content padding>
-  <div class="filtro">
-    <button ion-button (click)="openFilters()">
-      <ion-icon ios="ios-options" md="ios-options"></ion-icon>
-    </button>
-  </div>
+
+  <div style="margin-top: 48px"></div>
 
   <div *ngFor="let producto of productos" class="full-size animated fadeInUp">
     <ion-card>
@@ -25,16 +28,16 @@
         <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito"></ion-icon>
         <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #f00;"></ion-icon>
       </div>
-      <img src="assets/imgs/recursos/no-disponible.png" (click)="viewDetail(producto)" />
-      <div class="card-title">{{producto.nombre}}</div>
-      <div class="card-subtitle">{{producto.descripcion}}</div>
-      <div class="card-price">{{producto.precio | currency}}</div>
+      <img src="{{env.getImagenIndividual}}{{producto.adjuntoId}}" (click)="viewDetail(producto)" />
+      <div class="card-title" (click)="viewDetail(producto)">{{producto.nombre}}</div>
+      <div class="card-subtitle" (click)="viewDetail(producto)">{{producto.descripcion}}</div>
+      <div class="card-price" (click)="viewDetail(producto)">{{producto.precio | currency}}</div>
 
 
       <!-- imagenes adicionales -->
       <div class="info-icons">
         <div class="square">
-          <p>{{producto.proveedor.nombre}}</p>
+          <p>{{producto.proveedor?.nombre}}</p>
         </div>
       </div>
     </ion-card>
