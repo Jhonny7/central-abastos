@@ -6,7 +6,7 @@
     <ion-title>Productos</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="verCarrito()" class="carrito">
-          <ion-badge>{{productoService.getTotalCarrito()}}</ion-badge>
+          <ion-badge *ngIf="productoService.getTotalCarrito() > 0">{{productoService.getTotalCarrito()}}</ion-badge>
         <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
         
       </button>
@@ -26,6 +26,30 @@
 <ion-content padding>
 
   <div style="margin-top: 48px"></div>
+
+  <div class="scrolling-wrapper" *ngIf="productos.length > 0">
+      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index">
+        <!-- <div class="tacha">
+          <div class="mini-tacha">
+              <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>
+              <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>
+          </div>
+        </div> -->
+        <div class="container-card">
+  
+          <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />
+        </div>
+        <div class="container-text">{{p.nombre}}</div>
+        <div class="description">{{p.descripcion}}</div>
+        <div class="precio">{{p.precio | currency}}</div>
+
+        <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
+          <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)"><div>-</div></div>
+          <div class="cantidad" *ngIf="p.cantidad > 0"><div>{{p.cantidad}}</div></div>
+          <div class="mas" (click)="incrementa(p)"><div>+</div></div>
+        </div>
+      </div>
+    </div>
 
   <div *ngFor="let producto of productos" class="full-size animated fadeInUp">
     <ion-card>

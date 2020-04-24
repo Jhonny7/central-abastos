@@ -8,6 +8,7 @@ import { GenericService } from '../../services/generic.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -51,7 +52,7 @@ export class LoginPage {
         //quitar
         this.loadingService.hide();
         this.localStorageEncryptService.setToLocalStorage("userSession",response);
-        this.navCtrl.setRoot(HomePage);
+        this.navCtrl.setRoot(TabsPage);
       },(error:HttpErrorResponse)=>{
         this.loadingService.hide();
         let err:any = error.error;

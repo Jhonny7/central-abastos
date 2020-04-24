@@ -1,4 +1,4 @@
-export const pathPrincipal = "http://192.168.0.05:8080/api/";
+export const pathPrincipal = "http://192.168.0.14:8080/api/";
 
 export const environment = {
   production: true,

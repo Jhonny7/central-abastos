@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { NavController, ModalController, AlertController, Events } from 'ionic-angular';
+import { NavController, ModalController, AlertController, Events, App } from 'ionic-angular';
 import { FiltroProductoPage } from '../filtro-producto/filtro-producto';
 import { LoadingService } from '../../services/loading.service';
 import { LoginPage } from '../login/login';
@@ -16,6 +16,7 @@ import { CarritoComprasPage } from '../carrito-compras/carrito-compras';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { User } from '../../models/User';
 import { ProductoService } from '../../services/producto.service';
+import { StringUtilsService } from '../../services/string-utils.service';
 
 @Component({
   selector: 'page-home',
@@ -55,7 +56,9 @@ export class HomePage implements OnDestroy {
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events,
     public productoService: ProductoService,
-    private actionSheet: ActionSheet) {
+    private actionSheet: ActionSheet,
+    private stringUtilsService: StringUtilsService,
+    private app: App) {
     /**Obtenci{on de usuario en sesión */
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.cargarProductos();
@@ -70,7 +73,8 @@ export class HomePage implements OnDestroy {
         if (data.productoDelete) {
           this.productos.forEach(element => {
             if (element.id == data.productoDelete.id) {
-              element.carrito = false;
+              element.carrito = data.productoDelete.carrito;
+              element.cantidad = data.productoDelete.cantidad;
             }
           });
         }
@@ -84,15 +88,30 @@ export class HomePage implements OnDestroy {
 
   verificarCarrito() {
     let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    console.log(productosStorage);
+    
     if (productosStorage) {
       productosStorage.forEach(item => {
         this.productos.forEach(element => {
           if (item.id == element.id) {
             element.carrito = true;
+            element.cantidad = item.cantidad;
           }
         });
       });
     }
+  }
+
+  verificarCarritoModificarCantidad(element:any) {
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    if (productosStorage) {
+      productosStorage.forEach(item => {
+          if (item.id == element.id) {
+            item.cantidad = element.cantidad;
+          }
+      });
+    }
+    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
   }
 
   cargarSecciones() {
@@ -130,6 +149,27 @@ export class HomePage implements OnDestroy {
         let err: any = error.error;
         //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
       });
+  }
+
+  incrementa(p: any) {
+    if (p.cantidad) {
+      p.cantidad++;
+    } else if (p.cantidad == 0) {
+      p.cantidad = 1;
+      this.agregarToCarrito(p);
+    } else {
+      p.cantidad = 1;
+      this.agregarToCarrito(p);
+    }
+    this.verificarCarritoModificarCantidad(p);
+  }
+
+  decrementar(p: any) {
+    p.cantidad--;
+    if (p.cantidad == 0) {
+      this.productoService.deleteFavorito(p);
+    }
+    this.verificarCarritoModificarCantidad(p);
   }
 
   /**Método para cargar productos en base a especificaciones */
@@ -243,6 +283,7 @@ export class HomePage implements OnDestroy {
   agregarColeccion() {
     let colecciones: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-colecciones`);
     let buttonLabels = [];
+    buttonLabels.push("Nueva colección");
     colecciones.forEach(coleccion => {
       buttonLabels.push(coleccion.nombre);
     });
@@ -255,8 +296,11 @@ export class HomePage implements OnDestroy {
       destructiveButtonLast: true
     };
     this.actionSheet.show(options).then((buttonIndex: number) => {
-      let coleccion:any = buttonLabels[buttonIndex];
-      
+      if (buttonIndex != 0) {
+        let coleccion: any = buttonLabels[buttonIndex];
+      } else {
+        this.nombrarColeccion();
+      }
     });
   }
 
@@ -305,7 +349,11 @@ export class HomePage implements OnDestroy {
   }
 
   verCarrito() {
-    this.navCtrl.push(CarritoComprasPage);
+    if (this.productoService.getTotalCarrito() > 0) {
+      let nav = this.app.getRootNav();
+            //nav.pop();
+      nav.push(CarritoComprasPage);
+    }
   }
 
 }

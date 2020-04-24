@@ -5,30 +5,40 @@
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let producto of productosCarrito" class="full-size animated fadeInUp">
-    <ion-card>
-      <div class="favorito">
-        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito"></ion-icon>
-        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #3b64bf;"
-          (click)="deleteFavorito(producto)"></ion-icon>
-      </div>
-      <img src="{{env.getImagenIndividual}}{{producto.adjuntoId}}" (click)="productoService.viewDetail(producto)" />
-      <div class="card-title" (click)="productoService.viewDetail(producto)">{{producto.nombre}}</div>
-      <div class="card-subtitle" (click)="productoService.viewDetail(producto)">{{producto.descripcion}}</div>
-      <div class="card-price" (click)="productoService.viewDetail(producto)">{{producto.precio | currency}}</div>
 
-
-      <!-- imagenes adicionales -->
-      <div class="info-icons">
-        <div class="square">
-          <p>{{producto.proveedor?.nombre}}</p>
+  <div>
+      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productosCarrito; let i = index">
+          <!-- <div class="tacha">
+                <div class="mini-tacha">
+                    <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>
+                    <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>
+                </div>
+              </div> -->
+          <div class="container-card">
+      
+            <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />
+          </div>
+          <div class="container-text">{{p.nombre}}</div>
+          <div class="description">{{p.descripcion}}</div>
+          <div class="precio">{{p.precio | currency}}</div>
+      
+          <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
+            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">
+              <div>-</div>
+            </div>
+            <div class="cantidad" *ngIf="p.cantidad > 0">
+              <div>{{p.cantidad}}</div>
+            </div>
+            <div class="mas" (click)="incrementa(p)">
+              <div>+</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </ion-card>
   </div>
+
+  
 </ion-content>
-<ion-footer class="footer-button">
-  <div class="btn-full" (tap)="comprar()">
-    <span>Comprar</span>
-  </div>
+<ion-footer class="footer-button-class">
+  <button (tap)="addToList()">Agregar a una lista</button>
+  <button (tap)="comprar()">Comprar</button>
 </ion-footer>

@@ -13,6 +13,7 @@ import { RequestInterceptorService } from './interceptors/request-interceptor.se
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ProductoService } from './services/producto.service';
+import { StringUtilsService } from './services/string-utils.service';
 
 @NgModule({
     providers: [
@@ -32,7 +33,8 @@ import { ProductoService } from './services/producto.service';
             multi: true
         },
         AuthService,
-        ProductoService
+        ProductoService,
+        StringUtilsService
     ]
 })
 export class ProvidersModule { }

@@ -52,8 +52,39 @@ export class CarritoComprasPage {
     }
   }
 
+  incrementa(p: any) {
+    if (p.cantidad) {
+      p.cantidad++;
+    } 
+    this.events.publish('updateProductos', { productoDelete:p });
+    this.verificarCarritoModificarCantidad(p);
+  }
+
+  decrementar(p: any) {
+    p.cantidad--;
+    if (p.cantidad == 0) {
+      this.verificarCarritoModificarCantidad(p);
+      this.deleteFavorito(p);
+    }else{
+      this.verificarCarritoModificarCantidad(p);
+    }
+    this.events.publish('updateProductos', { productoDelete:p });
+  }
+
+  verificarCarritoModificarCantidad(element:any) {
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    if (productosStorage) {
+      productosStorage.forEach(item => {
+          if (item.id == element.id) {
+            item.cantidad = element.cantidad;
+          }
+      });
+    }
+    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+  }
+
   comprar(){
-    
+
   }
 
 }

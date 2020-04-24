@@ -25,6 +25,7 @@ import { CarritoComprasPage } from './pages/carrito-compras/carrito-compras';
 import { AltaDireccionesPage } from './pages/alta-direcciones/alta-direcciones';
 import { ScrollHideDirective } from './directives/scroll-hide.directive';
 import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
+import { TarjetasFrecuentesPage } from './pages/tarjetas-frecuentes/tarjetas-frecuentes';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -47,7 +48,8 @@ export function createTranslateLoader(http: HttpClient) {
     CarritoComprasPage,
     AltaDireccionesPage,
     ScrollHideDirective,
-    ListaCarritoComprasPage
+    ListaCarritoComprasPage,
+    TarjetasFrecuentesPage
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ export function createTranslateLoader(http: HttpClient) {
     DetalleProductoPage,
     CarritoComprasPage,
     AltaDireccionesPage,
-    ListaCarritoComprasPage
+    ListaCarritoComprasPage,
+    TarjetasFrecuentesPage
   ],
   providers: [
     StatusBar,
