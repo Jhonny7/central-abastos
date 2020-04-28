@@ -163,6 +163,34 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
+  errorAlertGenericWithAction(error:any, action:any) {
+    if (!this.basica) {
+      this.alert = this.alertCtrl.create({
+        title: `<div class='notificacionError'>
+        <div><img class='headerImg' src='assets/imgs/alerts/error.png'/></div>
+        <div class='textoTitle'>${error}</div>
+        <div>`,
+        cssClass:"alerta-loteria",
+        message: null,
+        buttons: [
+          {
+            text: 'Aceptar',
+            handler: () => {
+              action();
+            }
+          }
+        ]
+      });
+      this.basica = true;
+      this.alert.present();
+      this.alert.onDidDismiss(() => {
+        this.basica = false;
+      });
+    }
+
+  }
+
+  /**Alerta genérica de error */
   errorAlertGeneric(error:any) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({

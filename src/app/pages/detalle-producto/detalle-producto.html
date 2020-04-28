@@ -1,8 +1,21 @@
-<ion-icon id="icn-p" name="ios-arrow-back" class="arrow-generada" (click)="regresar()"></ion-icon>
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{producto.nombre}}</ion-title>
 
-<ion-icon id="icn-c" name="ios-cart-outline" class="carrito" (click)="carrito()"></ion-icon>
+
+
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="compartir()">
+        <ion-icon name="md-share" style="font-size: 2.4rem;"></ion-icon>
+
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
 <ion-content>
-  <div class="title-page">{{producto.nombre}}</div>
 
   <div class="slider-io animated bounceInLeft" *ngIf="producto.photos.length > 0">
     <ion-slides autoplay="5000" zoom="true" loop="true" #slides2 loop="false">
@@ -16,7 +29,7 @@
         </div>
       </ion-slide>
     </ion-slides>
-    <div class="arrows-lateral">
+    <div class="arrows-lateral" *ngIf="1===2">
       <div (tap)="prev1()">
         <ion-icon ios="ios-arrow-back" md="ios-arrow-back"></ion-icon>
       </div>
@@ -27,41 +40,17 @@
   </div>
 
   <div class="descripcion">
-    {{producto.descripcion}}
+    {{producto.precio | currency}} MXN
   </div>
 
-  <div class="precio">{{producto.precio | currency}}</div>
-
-  <div class="especificaciones">
-    <div class="attr">
-      <img src="assets/imgs/detalle-producto/give.png" alt="">
-      <div class="attr-2">
-          {{producto.proveedor?.nombre}}
-        </div>
-    </div>
-    
-    <div class="attr">
-      <img src="assets/imgs/detalle-producto/market.png" alt="">
-      <div class="attr-2">
-          {{producto.empresa?.nombre}}
-        </div>
-    </div>
-    
-    <div class="attr">
-      <img src="assets/imgs/detalle-producto/news.png" alt="">
-      <div class="attr-2">
-          {{producto.tipoArticulo?.nombre}}
-        </div>
-    </div>
-    
-    <div class="attr">
-      <img src="assets/imgs/detalle-producto/section.png" alt="">
-      <div class="attr-2">
-          {{producto.seccion?.nombre}}
-        </div>
-    </div>
-    
+  <div class="space-desc">
+    <ion-icon name="ios-arrow-up-outline" *ngIf="verDescripcion" (click)="verDes()"></ion-icon>
+    <ion-icon name="ios-arrow-down-outline" *ngIf="!verDescripcion" (click)="verDes()"></ion-icon>
+    <h4>Descripción</h4>
+    <div class="descripcion-gral" *ngIf="verDescripcion">{{producto.descripcion}}</div>
   </div>
+
+
 
   <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 2;">
 
@@ -83,8 +72,7 @@
       <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
       <div class="pswp__ui pswp__ui--hidden">
 
-        <div class="pswp__top-bar" style="opacity: 1;z-index: 99999999;"
-          [ngStyle]="{'top': fixedContentTop == '56' ? '56px' : '44px'}">
+        <div class="pswp__top-bar" style="opacity: 1;z-index: 99999999;" [ngStyle]="{'top': fixedContentTop == '56' ? '56px' : '44px'}">
 
           <!--  Controls are self-explanatory. Order can be changed. -->
 
@@ -127,4 +115,22 @@
 
   </div>
 </ion-content>
+<ion-footer class="footer-detalle">
+  <div class="cont-e">
+    <div class="suma">
+      <div class="menos" (click)="decrementar(producto)" >
+        <div>-</div>
+      </div>
+      <div class="cantidad" >
+        <div>{{producto.cantidad}} {{producto.cantidad == 1 ? 'pza' : 'pzas'}}</div>
+      </div>
+      <div class="mas" (click)="incrementa(producto)">
+        <div>+</div>
+      </div>
+    </div>
+    <button (click)="agregarCarrito(producto)">
+      Agregar a carrito
+    </button>
+  </div>
+</ion-footer>
 <!-- Root element of PhotoSwipe. Must have class pswp. -->

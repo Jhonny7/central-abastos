@@ -1,0 +1,55 @@
+page-opciones-menu {
+  .rowi {
+    .tema-1 {
+      text-align: center;
+      button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        position: relative;
+        background-color: #3b63be;
+        border: #080808 1px solid;
+        margin: auto;
+      }
+    }
+
+    .tema-2 {
+      text-align: center;
+      button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        position: relative;
+        background-color: #be3b3b;
+        border: #080808 1px solid;
+        margin: auto;
+      }
+    }
+
+    .tema-3 {
+      text-align: center;
+      button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        position: relative;
+        background-color: #3bb8be;
+        border: #080808 1px solid;
+        margin: auto;
+      }
+    }
+
+    .tema-4 {
+      text-align: center;
+      button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        position: relative;
+        background-color: #74be3b;
+        border: #080808 1px solid;
+        margin: auto;
+      }
+    }
+  }
+}

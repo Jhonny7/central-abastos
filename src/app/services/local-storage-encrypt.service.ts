@@ -22,8 +22,11 @@ export class LocalStorageEncryptService {
    * @param data Dato a almacenar
    */
   setToLocalStorage(key: string, data: any) {
-    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
-    const encryptedKey = CryptoJS.SHA256(key).toString();
+    let encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
+    let encryptedKey = CryptoJS.SHA256(key).toString();
+
+    encryptedData = JSON.stringify(data);
+    encryptedKey = key;
     localStorage.setItem(encryptedKey, encryptedData);
   }
 
@@ -32,16 +35,22 @@ export class LocalStorageEncryptService {
    * @param key Llave a obtener
    */
   getFromLocalStorage(key: string): any {
-    const encryptedKey = CryptoJS.SHA256(key).toString();
+    let encryptedKey = CryptoJS.SHA256(key).toString();
+    encryptedKey = key;
     const item = localStorage.getItem(encryptedKey);
     if (item === undefined || item === null) {
       return null;
     }
-    const dencryptedData = CryptoJS.AES.decrypt(item, this.secretKey).toString(CryptoJS.enc.Utf8);
-    if (this.isJson(dencryptedData)) {
-      return JSON.parse(dencryptedData);
-    } else {
-      return dencryptedData;
+    let dencryptedData;// = CryptoJS.AES.decrypt(item, this.secretKey).toString(CryptoJS.enc.Utf8);
+    dencryptedData = 1;
+    if(dencryptedData == 1){
+      return JSON.parse(item);
+    }else{
+      if (this.isJson(dencryptedData)) {
+        return JSON.parse(dencryptedData);
+      } else {
+        return dencryptedData;
+      }
     }
   }
 

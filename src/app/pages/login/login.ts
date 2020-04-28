@@ -1,7 +1,7 @@
 import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { HomePage } from '../home/home';
 import { GenericService } from '../../services/generic.service';
@@ -30,7 +30,9 @@ export class LoginPage {
     private loadingService: LoadingService,
     private alertaService: AlertaService,
     private genericService: GenericService,
-    private localStorageEncryptService: LocalStorageEncryptService) {
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private app:App,
+    private events: Events) {
     //this.loadingService.show();  
     //comentario
   }
@@ -39,6 +41,12 @@ export class LoginPage {
     //console.log("fghjk");
 
     //this.loadingService.show();
+  }
+
+  regresar(){
+    console.log("dfgh");
+    
+    this.navCtrl.pop();
   }
 
   login() {
@@ -52,7 +60,14 @@ export class LoginPage {
         //quitar
         this.loadingService.hide();
         this.localStorageEncryptService.setToLocalStorage("userSession",response);
-        this.navCtrl.setRoot(TabsPage);
+
+        console.log(this.localStorageEncryptService.getFromLocalStorage("userSession"));
+        //let nav:any = this.app.getRootNav();
+        //nav.push(TabsPage);
+        this.events.publish("actualizarCantidad",{});
+        this.events.publish("actualizarTarjetas",{});
+        this.events.publish("totalCarrito");
+        this.navCtrl.pop();
       },(error:HttpErrorResponse)=>{
         this.loadingService.hide();
         let err:any = error.error;

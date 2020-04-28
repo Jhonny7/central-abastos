@@ -1,0 +1,104 @@
+page-chat {
+  .contenedor-chat {
+    .uno {
+      padding-left: 5%;
+      padding-right: 5%;
+      span {
+      }
+      .dos {
+        max-width: 95%;
+        .span1 {
+          right: -12px;
+          background-position: 50% 50%;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-image: url(assets/imgs/chat/chatTriangulo.png);
+        }
+        .span2 {
+          background-position: 50% 50%;
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-image: url(assets/imgs/chat/chatTriangulo.png);
+        }
+        .tres {
+          border-top-right-radius: 0px;
+          background-color: #96bfc5;
+          box-shadow: 0 1px 0.5px rgba(var(--shadow-rgb), 0.13);
+          .cuatro {
+            padding: 6px 7px 8px 9px;
+            .cinco {
+              .seis {
+                position: relative;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+                span {
+                  span {
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .cont-msj {
+      padding-left: 5%;
+      padding-right: 5%;
+      text-align: end;
+      margin-top: 3px;
+      .msj {
+        text-align: -webkit-right;
+        .m {
+          padding-top: 9px;
+          padding-bottom: 9px;
+          background-color: #3b64c0;
+          color: #fff;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-radius: 7px;
+          width: fit-content;
+        }
+      }
+
+      .msj-r {
+        text-align: -webkit-left;
+        .m {
+          padding-top: 9px;
+          padding-bottom: 9px;
+          background-color: #22ace0;
+          color: #fff;
+          padding-left: 10px;
+          padding-right: 10px;
+          border-radius: 7px;
+          width: fit-content;
+        }
+      }
+    }
+  }
+}
+.footer-chat {
+  padding: 9px;
+  background-color: #dedede;
+  div {
+    input {
+      display: inline-block;
+      width: 89%;
+      padding: 11px;
+      border-radius: 20px;
+      border: none;
+    }
+    div {
+      display: inline-block;
+      width: 9%;
+      button {
+        background-color: rgba(0, 0, 0, 0);
+        vertical-align: middle;
+        ion-icon {
+          font-size: 30px;
+          color: #525252;
+        }
+      }
+    }
+  }
+}

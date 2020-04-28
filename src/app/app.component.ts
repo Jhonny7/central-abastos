@@ -1,5 +1,7 @@
+import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
+import { AlertaService } from './services/alerta.service';
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Events, App, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from './pages/tabs/tabs';
@@ -7,19 +9,25 @@ import { TranslateService } from '@ngx-translate/core';
 import { LoginPage } from './pages/login/login';
 import { HomePage } from './pages/home/home';
 import { LocalStorageEncryptService } from './services/local-storage-encrypt.service';
+import { Menu } from './models/Menu';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = null;
+  rootPage: any = null;
+  pages: Menu[] = [];
 
   constructor(
-    platform: Platform, 
-    statusBar: StatusBar, 
+    private platform: Platform,
+    statusBar: StatusBar,
     splashScreen: SplashScreen,
     private translateService: TranslateService,
-    private localStorageEncryptService: LocalStorageEncryptService) {
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private events: Events,
+    private app:App,
+    private alertaService: AlertaService,
+    private alertCtrl: AlertController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -27,13 +35,98 @@ export class MyApp {
       splashScreen.hide();
       this.initializeLanguage();
 
+      /**Armar menu */
+      this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
+      /** */
+
       let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-      if(user){
+      if (user) {
         this.rootPage = TabsPage;
-      }else{
-        this.rootPage = LoginPage;
+      } else {
+        this.rootPage = TabsPage;
       }
     });
+
+    this.events.subscribe("cierre", data => {
+      try {
+        this.alertaService.errorAlertGeneric("Su sesión expiró");
+        this.cierreSesion();
+      } catch (error) {
+      }
+    });
+
+    this.events.subscribe("startSession", data => {
+      try {
+        this.openSesion();
+      } catch (error) {
+      }
+    });
+
+  }
+
+  openPage(pagina) {
+    this.app.getActiveNav().push(pagina.component);
+  }
+
+  cierreSesion(){
+    try {
+      this.app.getActiveNav().popToRoot();
+    } catch (error) {
+
+    }
+    this.localStorageEncryptService.clearProperty("userSession");
+    //this.app.getRootNav().push(ProvisionalComponent);
+    this.app.getRootNav().push(LoginPage);
+  }
+
+  openSesion(){
+    let alert = this.alertCtrl.create({
+      title: 'Confirmación',
+      message: 'Para proceder es necesario que inicies sesión',
+      cssClass: "alerta-two-button",
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.app.getRootNav().push(LoginPage);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  exitApp() {
+    const confirm = this.alertCtrl.create({
+      title: "Confirmación",
+      message: "¿Estás seguro de querer salir?",
+      buttons: [
+        {
+          text: 'Cancelar',
+          handler: () => {
+
+          }
+        },
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.salir();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  salir() {
+    this.platform.exitApp();
   }
 
   initializeLanguage() {

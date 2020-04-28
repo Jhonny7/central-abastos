@@ -29,7 +29,9 @@ export class ProductoService {
         private localStorageEncryptService: LocalStorageEncryptService,
         private events: Events) {
         this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        if(this.user){
+            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        }
     }
 
     viewDetail(producto: any) {

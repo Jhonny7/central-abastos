@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title *ngIf="card">{{card.alias}}</ion-title>
+    <ion-title *ngIf="!card">Nueva Tarjeta</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="contenedori">
+    <div class="formulario" *ngIf="render">
+      <form [formGroup]="formGroup">
+        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
+          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"
+            [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select' && dato.formName != 'ccv'">
+  
+            <input placeholder="{{dato.name}}"  class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}" type="password"
+            [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select' && dato.formName == 'ccv'">
+  
+          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="MM/YY"
+            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == 'date'"
+            placeholder="{{dato.name}}" min="2016" max="2050"></ion-datetime>
+  
+          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="'validators2'">
+          </app-control-messages>
+        </div>
+        <div class="contenedor-boton">
+          <button [disabled]="btnHabilitado" (click)="guardar()">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+</ion-content>
+<ion-footer class="footer-button-class">
+  <div style="text-align: end;"><img src="assets/imgs/tarjetas/visa.jpg" alt="" style="width:60%"></div>
+</ion-footer>

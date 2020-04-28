@@ -1,75 +1,103 @@
 <ion-header>
   <ion-navbar color="primary">
-    <!-- <button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
-    </button> -->
+    </button>
     <ion-title>Productos</ion-title>
+
+
+
+
     <ion-buttons end>
       <button ion-button icon-only (click)="verCarrito()" class="carrito">
-          <ion-badge *ngIf="productoService.getTotalCarrito() > 0">{{productoService.getTotalCarrito()}}</ion-badge>
+        <ion-badge *ngIf="totalCarrito > 0">{{totalCarrito}}</ion-badge>
         <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
-        
+
       </button>
-      <button ion-button icon-only (click)="logout()">
-        <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
+
+      <button ion-button icon-only (click)="verOpciones()">
+        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>
       </button>
+
     </ion-buttons>
   </ion-navbar>
+  <div class="division">
+    <label for="search"></label>
+    <div class="input-image" (click)="close()" [style.background-image]="'url('+imgBusqueda+')'"></div>
+    <input type="text" placeholder="Buscar" class="input-text" id="search" [(ngModel)]="dataFilter.nombre" (keyup)="buscarPorFiltros()">
+
+  </div>
 </ion-header>
 
-<div class="filtro">
+<div class="filtro" *ngIf="1==2">
   <button ion-button (click)="openFilters()">
     <ion-icon ios="ios-options" md="ios-options"></ion-icon>
   </button>
 </div>
 
-<ion-content padding>
+<ion-content>
 
-  <div style="margin-top: 48px"></div>
+  <div *ngIf="dataFilter.nombre.length > 0" class="contenedor-busqueda">
+    <div class="resultado" *ngFor="let p of productosBuscados" (click)="viewDetail(p)">
+      <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" alt=""></div>
+      <div class="r">{{ p.nombre }}</div>
+    </div>
 
-  <div class="scrolling-wrapper" *ngIf="productos.length > 0">
-      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index">
-        <!-- <div class="tacha">
-          <div class="mini-tacha">
-              <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>
-              <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>
-          </div>
-        </div> -->
-        <div class="container-card">
-  
-          <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />
+    <div *ngIf="productosBuscados.length <= 0" class="no-en">
+      No se encontraron resultados
+    </div>
+  </div>
+
+  <div *ngIf="dataFilter.nombre.length<=0">
+    <div style="margin-top: 8px"></div>
+
+    <div class="scrolling-wrapper-flexbox" style="margin-top:0px">
+      <div class="promociones" [style.background-image]="'url('+env.getImagenIndividual+promo.adjuntoId+')'" *ngFor="let promo of promociones">
+        <div class="contenedor-imagen">
+          <!-- <img src="assets/imgs/home/images.jpeg" alt=""> -->
         </div>
-        <div class="container-text">{{p.nombre}}</div>
-        <div class="description">{{p.descripcion}}</div>
-        <div class="precio">{{p.precio | currency}}</div>
-
-        <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
-          <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)"><div>-</div></div>
-          <div class="cantidad" *ngIf="p.cantidad > 0"><div>{{p.cantidad}}</div></div>
-          <div class="mas" (click)="incrementa(p)"><div>+</div></div>
+        <div class="info">
+          <p class="titulo">{{promotitulo}}</p>
+          <p class="subtitulo">{{promo.descripcion}}</p>
         </div>
       </div>
     </div>
 
-  <div *ngFor="let producto of productos" class="full-size animated fadeInUp">
-    <ion-card>
-      <div class="favorito">
-        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" *ngIf="!producto.carrito" (click)="agregarToCarrito(producto)"></ion-icon>
-        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="producto.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(producto)"></ion-icon>
+    <div class="scrolling-wrapper" style="margin-top: 15px">
+      <div class="buttons">
+        <button>
+          <img src="assets/imgs/home/milk.png" alt="">
+          Artículos
+        </button>
       </div>
-      <img src="{{env.getImagenIndividual}}{{producto.adjuntoId}}" (click)="productoService.viewDetail(producto)" />
-      <div class="card-title" (click)="productoService.viewDetail(producto)">{{producto.nombre}}</div>
-      <div class="card-subtitle" (click)="productoService.viewDetail(producto)">{{producto.descripcion}}</div>
-      <div class="card-price" (click)="productoService.viewDetail(producto)">{{producto.precio | currency}}</div>
+      <div class="buttons">
+        <button>
+          <img src="assets/imgs/home/services.png" alt="">
+          Servicios
+        </button>
+      </div>
 
+    </div>
 
-      <!-- imagenes adicionales -->
-      <div class="info-icons">
-        <div class="square">
-          <p>{{producto.proveedor?.nombre}}</p>
+    <div class="card-super" *ngIf="productosCategorias.length > 0">
+      <div class="cont">
+        <div class="principal" (click)="irToCategoria(productosCategorias[0])">
+          <img src="{{env.getImagenIndividual}}{{productosCategorias[0].categoria.adjuntoId}}" alt="">
+          <div class="seccion-principal">{{productosCategorias[0].categoria.nombre}}</div>
+        </div>
+
+        <div class="borde-b"></div>
+
+        <div class="contenedor-tres">
+          <div class="contenedor-int" (click)="irToCategoria(cat)" *ngFor="let cat of productosCategoriasSub">
+            <img src="{{env.getImagenIndividual}}{{cat.categoria.adjuntoId}}" alt="">
+            <div class="seccion-sub-principal">{{cat.categoria.nombre}}</div>
+          </div>
+
         </div>
       </div>
-    </ion-card>
+    </div>
   </div>
+
 
 </ion-content>

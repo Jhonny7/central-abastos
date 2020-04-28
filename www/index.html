@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <script data-ionic="inject">
     (function(w){var i=w.Ionic=w.Ionic||{};i.version='3.9.9';i.angular='5.2.11';i.staticDir='build/';})(window);
   </script>
   <meta charset="UTF-8">
-  <title>Ionic App</title>
+  <title>Central de Abastos</title>
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
@@ -44,7 +45,14 @@
 
   <link href="build/main.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="assets/css/leaflet.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/leaflet-routing-machine.css" />
+  <script src="assets/leaflet/leaflet.js"></script>
+  <script src="assets/leaflet/leaflet-knn.js"></script>
+  <script src="assets/leaflet/leaflet-routing-machine.js"></script>
+  <script src="assets/leaflet/Leaflet.GoogleMutant.js"></script>
 </head>
+
 <body>
 
   <!-- Ionic's root component and where the app will load -->
@@ -61,4 +69,5 @@
   <script src="build/main.js"></script>
 
 </body>
+
 </html>

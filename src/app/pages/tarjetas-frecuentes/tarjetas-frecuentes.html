@@ -5,22 +5,26 @@
 </ion-header>
 
 <ion-content>
+    <div class="spinner-carrito" *ngIf="!cards">
+        <ion-spinner></ion-spinner>
+    </div>
     <ion-list>
-        <ion-item-sliding #item>
-          <ion-item>
+        <ion-item-sliding #item *ngFor="let card of cards">
+          <ion-item class="item-list-card" (click)="addCard(card)">
             <ion-avatar slot="start">
               <img src="assets/imgs/tarjetas/bank.png" alt="">
             </ion-avatar>
-            <ion-label>Alias de tarjeta</ion-label>
-            <ion-label>4152 3133 1665 9596</ion-label>
+            <div class="datos-tarjetas">
+              <div class="name">{{card.alias}}</div>
+              <div class="number">{{card.numeroTarjeta}}</div>
+            </div>
           </ion-item>
-          <ion-item-options side="left">
-            <button ion-button (click)="favorite(item)">Favorite</button>
-            <button ion-button color="danger" (click)="share(item)">Share</button>
-          </ion-item-options>
       
           <ion-item-options side="right">
-            <button ion-button (click)="unread(item)">Unread</button>
+            <button ion-button (click)="borrar(card)" color="danger">
+              <ion-icon name="ios-trash-outline"></ion-icon>
+              Borrar
+            </button>
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>

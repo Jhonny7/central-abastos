@@ -16,11 +16,11 @@
               </div> -->
           <div class="container-card">
       
-            <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />
+            <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
           </div>
-          <div class="container-text">{{p.nombre}}</div>
-          <div class="description">{{p.descripcion}}</div>
-          <div class="precio">{{p.precio | currency}}</div>
+          <div class="container-text">{{p.producto.nombre}}</div>
+          <div class="description">{{p.producto.descripcion}}</div>
+          <div class="precio">{{p.producto.precio | currency}}</div>
       
           <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
             <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">

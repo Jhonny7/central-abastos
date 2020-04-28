@@ -25,6 +25,7 @@
 
             <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
               pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac
+              
               (ionChange)="ejecutaValidator()" *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
 
             <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">

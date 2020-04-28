@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
 import { ProductoService } from './services/producto.service';
 import { StringUtilsService } from './services/string-utils.service';
+import { GoogleMaps } from '@ionic-native/google-maps';
 
 @NgModule({
     providers: [
@@ -34,7 +35,8 @@ import { StringUtilsService } from './services/string-utils.service';
         },
         AuthService,
         ProductoService,
-        StringUtilsService
+        StringUtilsService,
+        GoogleMaps
     ]
 })
 export class ProvidersModule { }

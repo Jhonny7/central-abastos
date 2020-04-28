@@ -8,6 +8,7 @@ import { LoadingController } from 'ionic-angular';
 export class LoadingService {
   /**Variable que tiene la referencia del spinner */
   private loading: any;
+  private activo: number = 0;
   /**Constructor donde se hace la inyección del 
    * controlador de loading
    */
@@ -16,18 +17,18 @@ export class LoadingService {
   /**Método que se encarga de mostrar el loader */
   async show(message: any = null) {
     try {
-      let params: any = {
+      if(this.activo == 0){
+        let params: any = {
 
-      };
-      if (message) {
-        params.message = message;
+        };
+        if (message) {
+          params.message = message;
+        }
+        this.loading = await this.loadingController.create(params);
+        this.activo = 1;
+        await this.loading.present();
       }
-      this.hide();
-      this.loading = await this.loadingController.create(params);
-      await this.loading.present();
     } catch (error) {
-      console.log("pdo en el ejido");
-      console.log(error);
 
     }
   }
@@ -35,17 +36,12 @@ export class LoadingService {
   /**Método que se encarga de ocultar el loader */
   hide() {
     try {
-      if (this.loading) {
+      if (this.activo == 1) {
+        this.activo = 0;
         this.loading.dismiss();
       } else {
-        if (this.loading != undefined) {
-          this.loading.dismiss();
-        }
       }
     } catch (error) {
-      console.log("---->");
-
-      console.log(error);
 
     }
   }

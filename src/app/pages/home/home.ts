@@ -1,5 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
-import { NavController, ModalController, AlertController, Events, App } from 'ionic-angular';
+
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavController, ModalController, AlertController, Events, App, PopoverController, MenuController } from 'ionic-angular';
 import { FiltroProductoPage } from '../filtro-producto/filtro-producto';
 import { LoadingService } from '../../services/loading.service';
 import { LoginPage } from '../login/login';
@@ -17,24 +18,35 @@ import { LocalStorageEncryptService } from '../../services/local-storage-encrypt
 import { User } from '../../models/User';
 import { ProductoService } from '../../services/producto.service';
 import { StringUtilsService } from '../../services/string-utils.service';
+import { OpcionesMenuPage } from '../opciones-menu/opciones-menu';
+import { CategoriaPage } from '../categoria/categoria';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy, OnInit {
 
   public productos: any = [];
+  public promociones: any = [];
+  public productosBuscados: any = [];
+  public productosCategorias: any = [];
+  public productosCategoriasSub: any = [];
 
   public categorias: Categoria[] = [];
   public proveedores: Proveedor[] = [];
   public secciones: Seccion[] = [];
 
+  public imgBusqueda: any = "/assets/imgs/home/search.png";
+  public textoBusqueda: string = "";
+
+  public pruebaImg: string = "assets/imgs/home/images.jpeg";
+
   private dataFilter: any = {
     idProveedor: null,
     idSeccion: null,
     idCategoria: null,
-    nombre: null
+    nombre: ""
   };
 
   private objCombos: any = {
@@ -46,6 +58,9 @@ export class HomePage implements OnDestroy {
   public env: any = environment;
 
   public user: User = null;
+
+  public totalCarrito: any = 0;
+
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
@@ -55,30 +70,43 @@ export class HomePage implements OnDestroy {
     private alertaService: AlertaService,
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events,
-    public productoService: ProductoService,
     private actionSheet: ActionSheet,
     private stringUtilsService: StringUtilsService,
-    private app: App) {
+    private app: App,
+    public popoverCtrl: PopoverController,
+    public menuCtrl: MenuController) {
     /**Obtenci{on de usuario en sesión */
+      this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-    this.cargarProductos();
+    console.log("------------------");
+    //this.totalCarrito = this.getTotalCarrito();
 
-    this.cargarProveedores();
-    this.cargarSecciones();
-    this.cargarCategorias();
-
-    this.events.subscribe('updateProductos', data => {
-      console.log(data);
-      if (data) {
-        if (data.productoDelete) {
-          this.productos.forEach(element => {
-            if (element.id == data.productoDelete.id) {
-              element.carrito = data.productoDelete.carrito;
-              element.cantidad = data.productoDelete.cantidad;
-            }
-          });
-        }
+    this.events.subscribe("totalCarrito", data => {
+      try {
+        this.totalCarrito = this.getTotalCarrito();
+      } catch (error) {
       }
+    });
+
+    
+  }
+
+  cargaPromociones(){
+      this.genericService.sendGetRequest(environment.promociones).subscribe((response: any) => {
+        this.promociones = response;
+        this.verificarCarrito();
+      }, (error: HttpErrorResponse) => {
+        this.promociones = null;
+      });
+  }
+
+  getTotalCarrito() {
+    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+      console.log(response);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`,response);
+      this.totalCarrito = response.length;
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
     });
   }
 
@@ -86,29 +114,75 @@ export class HomePage implements OnDestroy {
     this.events.unsubscribe("updateProductos");
   }
 
-  verificarCarrito() {
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-    console.log(productosStorage);
-    
-    if (productosStorage) {
-      productosStorage.forEach(item => {
-        this.productos.forEach(element => {
-          if (item.id == element.id) {
-            element.carrito = true;
-            element.cantidad = item.cantidad;
-          }
-        });
-      });
+  ngOnInit() {
+    this.cargarProductosPorCategoria();
+    this.cargaPromociones();
+    //this.cargarProductos();
+
+    //this.cargarProveedores();
+    //this.cargarSecciones();
+    //this.cargarCategorias();
+
+    this.events.subscribe('updateProductos', data => {
+      this.getTotalCarrito();
+    });
+
+    this.getTotalCarrito();
+
+    //this.cargarProductosCarrito();
+  }
+
+  cargarProductosCarrito(){
+    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+      console.log(response);
+      let nav = this.app.getRootNav();
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`,response);
+      nav.push(CarritoComprasPage);
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
+  }
+
+  buscando() {
+    if (this.textoBusqueda.length > 0) {
+      this.imgBusqueda = "/assets/imgs/home/close.png";
+    } else {
+      this.imgBusqueda = "/assets/imgs/home/search.png";
     }
   }
 
-  verificarCarritoModificarCantidad(element:any) {
+  close() {
+    if (this.imgBusqueda == "/assets/imgs/home/close.png") {
+      this.imgBusqueda = "/assets/imgs/home/search.png";
+      this.textoBusqueda = "";
+    }
+  }
+
+  verificarCarrito() {
+    if (this.user) {
+      let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      console.log(productosStorage);
+
+      if (productosStorage) {
+        productosStorage.forEach(item => {
+          this.productos.forEach(element => {
+            if (item.id == element.id) {
+              element.carrito = true;
+              element.cantidad = item.cantidad;
+            }
+          });
+        });
+      }
+    }
+  }
+
+  verificarCarritoModificarCantidad(element: any) {
     let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     if (productosStorage) {
       productosStorage.forEach(item => {
-          if (item.id == element.id) {
-            item.cantidad = element.cantidad;
-          }
+        if (item.id == element.id) {
+          item.cantidad = element.cantidad;
+        }
       });
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
@@ -152,33 +226,112 @@ export class HomePage implements OnDestroy {
   }
 
   incrementa(p: any) {
+    let bandera: boolean = false;
     if (p.cantidad) {
       p.cantidad++;
     } else if (p.cantidad == 0) {
       p.cantidad = 1;
-      this.agregarToCarrito(p);
+      bandera = true;
     } else {
       p.cantidad = 1;
-      this.agregarToCarrito(p);
+      bandera = true;
     }
-    this.verificarCarritoModificarCantidad(p);
+    this.agregarToCarritoBack(bandera, p);
   }
 
-  decrementar(p: any) {
-    p.cantidad--;
-    if (p.cantidad == 0) {
-      this.productoService.deleteFavorito(p);
+  agregarToCarritoBack(bandera: boolean, producto: any) {
+    let body: any = {
+      precio: producto.precio,
+      productoId: producto.id
     }
-    this.verificarCarritoModificarCantidad(p);
+    let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
+
+    if (producto.cantidad > 1) {
+      body.cantidad = producto.cantidad;
+      service = this.genericService.sendPutRequest(environment.carritoCompras, body);
+    }
+
+    service.subscribe((response: any) => {
+      if (bandera) {
+        this.agregarToCarrito(producto);
+      }
+      this.verificarCarritoModificarCantidad(producto);
+    }, (error: HttpErrorResponse) => {
+      producto.cantidad--;
+    });
   }
+
+  /* decrementar(p: any) {
+    p.cantidad--;
+    this.borrarToCarritoBack(p);
+  } */
+
+  /* borrarToCarritoBack(producto: any) {
+    let body: any = {
+      precio: producto.precio,
+      productoId: producto.id
+    }
+    body.cantidad = producto.cantidad;
+    this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
+      this.genericService.sendDeleteRequest(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
+        if (producto.cantidad == 0) {
+          this.productoService.deleteFavorito(producto);
+          //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        }
+        this.verificarCarritoModificarCantidad(producto);
+      }, (error: HttpErrorResponse) => {
+        producto.cantidad++;
+      });
+    }, (error: HttpErrorResponse) => {
+      producto.cantidad++;
+    });
+  } */
+  /* borrarToCarritoBack(producto: any) {
+    this.genericService.sendDeleteRequest(`${environment.carritoCompras}/${producto.id}`).subscribe((response: any) => {
+      if (producto.cantidad == 0) {
+        this.productoService.deleteFavorito(producto);
+      }
+      this.verificarCarritoModificarCantidad(producto);
+    }, (error: HttpErrorResponse) => {
+      producto.cantidad++;
+    });
+  } */
+
+
 
   /**Método para cargar productos en base a especificaciones */
   cargarProductos() {
+    console.log("in method");
+
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(environment.productos).subscribe((response: any) => {
         console.log(response);
         //quitar
         this.productos = response;
+        console.log(this.productos);
+        this.verificarCarrito();
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
+  }
+
+  /**Método para cargar productos en base a especificaciones */
+  cargarProductosPorCategoria() {
+    console.log("in method");
+
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(`${environment.productosCategoria}/1`).subscribe((response: any) => {
+        console.log(response);
+        //quitar
+        this.productosCategorias = response.productosCategoria;
+        for (let index = 1; index < this.productosCategorias.length; index++) {
+          const element = this.productosCategorias[index];
+          this.productosCategoriasSub.push(element);
+        }
         console.log(this.productos);
         this.verificarCarrito();
         this.loadingService.hide();
@@ -235,49 +388,16 @@ export class HomePage implements OnDestroy {
     console.log(params);
 
 
+    this.productosBuscados = [];
     this.genericService.sendGetParams(`${environment.productos}/search`, params).subscribe((response: any) => {
       console.log(response);
-      this.productos = response;
+      this.productosBuscados = response;
       this.loadingService.hide();
     }, (error: HttpErrorResponse) => {
       this.loadingService.hide();
       let err: any = error.error;
       this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
     });
-  }
-
-  logout() {
-    let alert = this.alertCtrl.create({
-      title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
-      message: "¿Estás segur@ de cerrar sesión?",//this.translatePipe.instant("CONFIRM-LOGOUT"),
-      cssClass: "alerta-two-button",
-      buttons: [
-        {
-          text: "Cancelar",//this.translatePipe.instant("CANCEL"),
-          role: 'cancel',
-          handler: () => {
-          }
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            this.confirmar();
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
-
-  confirmar() {
-    try {
-      localStorage.removeItem("userSession");
-      this.navCtrl.setRoot(LoginPage);
-
-    } catch (error) {
-      console.log(error);
-
-    }
   }
 
   agregarColeccion() {
@@ -349,11 +469,59 @@ export class HomePage implements OnDestroy {
   }
 
   verCarrito() {
-    if (this.productoService.getTotalCarrito() > 0) {
-      let nav = this.app.getRootNav();
-            //nav.pop();
-      nav.push(CarritoComprasPage);
+    if (this.genericService.getTotalCarrito() > 0) {
+      
+      //nav.pop();
+      this.cargarProductosCarrito();
+      
     }
   }
 
+  verOpciones() {
+    let popover = this.popoverCtrl.create(OpcionesMenuPage, {}, { cssClass: "clase-Pop" });
+    popover.present({
+    });
+  }
+
+  irToCategoria(categoria: any) {
+    let nav: any = this.app.getRootNav();
+    this.navCtrl.push(CategoriaPage, { categoria });
+  }
+
+  viewDetail(producto: any) {
+    //consumir servicio de imagenes completas
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(`${environment.productos}/${producto.id}`).subscribe((response: any) => {
+        console.log(response);
+
+        //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
+        //let nav = this.app.getRootNav();
+        let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        if (user) {
+          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${user.id_token}`);
+          console.log(carritos);
+
+          if(carritos){
+            let position: any = carritos.findIndex(
+              (carrito) => {
+                return carrito.id == response.id;
+              }
+            );
+  
+            if (position >= 0) {
+              response.cantidad = carritos[position].cantidad;
+            }
+          }
+        }
+        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
+    //
+
+  }
 }

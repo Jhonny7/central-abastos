@@ -1,0 +1,19 @@
+page-home-geo-proveedores {
+    #map_canvas{
+        display: block;
+        height: 50%;
+        width: 100%;
+      }
+
+      .contenedor{
+        width: 100%;
+        text-align: center;
+        .img{
+            width: 100%;
+            img{width: 38px;}
+        }
+        .titulo{
+            font-weight: 500;
+        }
+      }
+}

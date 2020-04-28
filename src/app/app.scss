@@ -1,5 +1,47 @@
 /*Imports*/
 @import "../assets/css/animations.scss";
+.header-md::after, .tabs-md[tabsPlacement="top"] > .tabbar::after, .footer-md::before, .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+  background-image: none;
+  /* background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMV…h/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==); */
+  
+}
+
+.spinner-carrito {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  padding: 9px;
+  ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+  ion-spinner > svg {
+    color: map-get($colors, primary);
+  }
+  .spinner-md-crescent circle {
+    stroke: map-get($colors, primary);
+  }
+  ion-spinner svg {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    color: aqua;
+    fill: beige;
+    stroke: map-get($colors, primary);
+  }
+  .spinner-ios line,
+  .spinner-ios-small line {
+    stroke: map-get($colors, primary);
+  }
+}
 
 @media only screen and (min-width: 768px) {
   .full-size {

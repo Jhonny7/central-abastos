@@ -1,3 +1,4 @@
+import { LocalStorageEncryptService } from './local-storage-encrypt.service';
 import { HttpHeaders } from '@angular/common/http';
 import { AlertaService } from './alerta.service';
 import { HttpClient } from '@angular/common/http';
@@ -7,35 +8,39 @@ import { catchError, timeout } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Observable, TimeoutError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Events } from 'ionic-angular';
 
 export const TIME_OUT = 1000 * 60 * 1; //ultimo número define en minutos
 /**Clase provider que es básicamente un servicio generico para las peticiones a servicios */
 @Injectable()
 export class GenericService {
-    
+
+    public user: any = null;
     constructor(
         private readonly http: HttpClient,
-        private alertaService: AlertaService) {
-            
+        private alertaService: AlertaService,
+        private localStorageEncryptService: LocalStorageEncryptService,
+        private events: Events) {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     }
 
     /**Método que hace peticiones tipo GET */
-    sendGetRequest(webservice_URL: string, clase:any = null) {
-        let observable:any = this.http.get(webservice_URL);
+    sendGetRequest(webservice_URL: string, clase: any = null) {
+        let observable: any = this.http.get(webservice_URL);
 
-        if(clase){
+        if (clase) {
             return observable.pipe(map((data: any) => {
                 let arr: any = data;
-        
+
                 let obj: any = null;
                 if (!Array.isArray(arr)) {
-                  obj = clase.fromJson(arr);
+                    obj = clase.fromJson(arr);
                 } else {
-                  obj = arr.map(item => clase.fromJson(item));
+                    obj = arr.map(item => clase.fromJson(item));
                 }
                 return obj;
-              }))
-        }else{
+            }))
+        } else {
             return observable;
         }
     }
@@ -49,7 +54,7 @@ export class GenericService {
     /**Método que hace peticiones tipo GET  con parámetros*/
     sendGetParams(webservice_URL: string, params: any) {
         //return this.http.get(webservice_URL, params).timeout(TIME_OUT);
-        let options:any={};
+        let options: any = {};
         options.params = params;
         return this.http.get(webservice_URL, options);
     }
@@ -78,4 +83,22 @@ export class GenericService {
         return this.http.delete(webservice_URL);
     }
 
+    /**Método que hace peticiones tipo DELETE */
+    sendDelete(webservice_URL: string) {
+        //return this.http.delete(webservice_URL).timeout(TIME_OUT);
+        return this.http.delete(webservice_URL);
+    }
+
+    getTotalCarrito() {
+        if (this.user) {
+            let productosCarrito: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            if (productosCarrito) {
+                return productosCarrito.length;
+            } else {
+                return 0;
+            }
+        } else {
+            return 0;
+        }
+    }
 }

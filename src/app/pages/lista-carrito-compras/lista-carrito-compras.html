@@ -5,5 +5,28 @@
 </ion-header>
 
 <ion-content padding>
+  <div class="spinner-carrito" *ngIf="renderSlide">
+      <ion-spinner></ion-spinner>
+  </div>
 
+  <ion-list>
+      <ion-item-sliding #item *ngFor="let card of listas">
+        <ion-item class="item-list-card" (click)="addCard(card)">
+          <ion-avatar slot="start">
+            <img src="assets/imgs/lista-carrito/shopping-cart.png" alt="">
+          </ion-avatar>
+          <div class="datos-tarjetas">
+            <div class="name">{{card.nombre}}</div>
+            <div class="number">{{card.fecha}}</div>
+          </div>
+        </ion-item>
+    
+        <ion-item-options side="right">
+          <button ion-button (click)="borrar(card)" color="danger">
+            <ion-icon name="ios-trash-outline"></ion-icon>
+            Borrar
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
 </ion-content>

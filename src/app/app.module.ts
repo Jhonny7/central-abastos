@@ -1,3 +1,5 @@
+import { CategoriaPage } from './pages/categoria/categoria';
+
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -26,6 +28,11 @@ import { AltaDireccionesPage } from './pages/alta-direcciones/alta-direcciones';
 import { ScrollHideDirective } from './directives/scroll-hide.directive';
 import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
 import { TarjetasFrecuentesPage } from './pages/tarjetas-frecuentes/tarjetas-frecuentes';
+import { DetalleTarjetaPage } from './pages/detalle-tarjeta/detalle-tarjeta';
+import { OpcionesMenuPage } from './pages/opciones-menu/opciones-menu';
+import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-proveedores';
+import { ChatPage } from './pages/chat/chat';
+import { ArticuloProductosPage } from './pages/articulo-productos/articulo-productos';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -49,7 +56,13 @@ export function createTranslateLoader(http: HttpClient) {
     AltaDireccionesPage,
     ScrollHideDirective,
     ListaCarritoComprasPage,
-    TarjetasFrecuentesPage
+    TarjetasFrecuentesPage,
+    DetalleTarjetaPage,
+    OpcionesMenuPage,
+    HomeGeoProveedoresPage,
+    ChatPage,
+    CategoriaPage,
+    ArticuloProductosPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +94,13 @@ export function createTranslateLoader(http: HttpClient) {
     CarritoComprasPage,
     AltaDireccionesPage,
     ListaCarritoComprasPage,
-    TarjetasFrecuentesPage
+    TarjetasFrecuentesPage,
+    DetalleTarjetaPage,
+    OpcionesMenuPage,
+    HomeGeoProveedoresPage,
+    ChatPage,
+    CategoriaPage,
+    ArticuloProductosPage
   ],
   providers: [
     StatusBar,

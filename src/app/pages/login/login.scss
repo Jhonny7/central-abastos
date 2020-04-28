@@ -1,4 +1,12 @@
 page-login {
+  .iconico{
+    position: absolute;
+    top: 0;
+    left: 8px;
+    z-index: 1;
+    font-size: 3em;
+    color: #3b64c0;
+  }
   .container {
     display: flex;
     align-items: center;
