@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, Events} from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -137,7 +137,8 @@ export class RegistroPage {
     private actionSheet: ActionSheet,
     private alertaService: AlertaService,
     private genericService: GenericService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private events: Events) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
@@ -179,6 +180,13 @@ export class RegistroPage {
     this.formGroup = this.formBuilder.group(
       putObj
     );
+
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
+      }
+    });
   }
 
   ionViewDidLoad() {

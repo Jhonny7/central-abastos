@@ -4,7 +4,8 @@ export const environment = {
   production: true,
   productos: `${pathPrincipal}productos`,
   productosCategoria: `${pathPrincipal}productos/home`,
-  categoria: `${pathPrincipal}productos/categoria/`,
+  proveedorProductos: `${pathPrincipal}proveedor-productos`,
+  categoria: `${pathPrincipal}proveedor-productos/categoria/`,
   secciones: `${pathPrincipal}seccions`,
   categorias: `${pathPrincipal}categorias`,
   proveedores: `${pathPrincipal}proveedors`,
@@ -15,5 +16,20 @@ export const environment = {
   getImagenIndividual: `${pathPrincipal}adjuntos/download/`,
   promociones: `${pathPrincipal}promociones`,
   tarjetas: `${pathPrincipal}tarjetas`,
-  logout: null
+  logout: null,
+  icons: {
+    persona: {
+      icon: "assets/imgs/direcciones/m3.png"
+    },
+    casa: {
+      icon: "assets/imgs/direcciones/m2.png"
+    },
+    lugar: {
+      icon: "assets/imgs/direcciones/m1.png"
+    }
+  },
+
+  //info de GOOGLE
+  geocodeGoogle: "https://maps.googleapis.com/maps/api/geocode/json",
+  keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ"
 };

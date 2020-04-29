@@ -48,7 +48,7 @@ export class ListaCarritoComprasPage {
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.renderSlide = false;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 

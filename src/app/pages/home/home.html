@@ -1,16 +1,16 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="{{genericService.getColor()}}">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Productos</ion-title>
 
 
-
+     
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="verCarrito()" class="carrito">
-        <ion-badge *ngIf="totalCarrito > 0">{{totalCarrito}}</ion-badge>
+      <button ion-button icon-only (click)="verCarrito()" class="carrito" *ngIf="user">
+        <ion-badge *ngIf="totalCarrito > 0" [ngStyle]="{'color': genericService.getColorHex()}">{{totalCarrito}}</ion-badge>
         <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
 
       </button>
@@ -21,7 +21,7 @@
 
     </ion-buttons>
   </ion-navbar>
-  <div class="division">
+  <div class="division" [ngStyle]="{'background-color': color}">
     <label for="search"></label>
     <div class="input-image" (click)="close()" [style.background-image]="'url('+imgBusqueda+')'"></div>
     <input type="text" placeholder="Buscar" class="input-text" id="search" [(ngModel)]="dataFilter.nombre" (keyup)="buscarPorFiltros()">
@@ -39,8 +39,8 @@
 
   <div *ngIf="dataFilter.nombre.length > 0" class="contenedor-busqueda">
     <div class="resultado" *ngFor="let p of productosBuscados" (click)="viewDetail(p)">
-      <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" alt=""></div>
-      <div class="r">{{ p.nombre }}</div>
+      <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" alt=""></div>
+      <div class="r">{{ p.producto.nombre }}</div>
     </div>
 
     <div *ngIf="productosBuscados.length <= 0" class="no-en">
@@ -65,13 +65,13 @@
 
     <div class="scrolling-wrapper" style="margin-top: 15px">
       <div class="buttons">
-        <button>
+        <button [ngStyle]="{'background-color': color}">
           <img src="assets/imgs/home/milk.png" alt="">
           Artículos
         </button>
       </div>
       <div class="buttons">
-        <button>
+        <button [ngStyle]="{'background-color': color}">
           <img src="assets/imgs/home/services.png" alt="">
           Servicios
         </button>
@@ -83,7 +83,7 @@
       <div class="cont">
         <div class="principal" (click)="irToCategoria(productosCategorias[0])">
           <img src="{{env.getImagenIndividual}}{{productosCategorias[0].categoria.adjuntoId}}" alt="">
-          <div class="seccion-principal">{{productosCategorias[0].categoria.nombre}}</div>
+          <div class="seccion-principal" [ngStyle]="{'color': color}">{{productosCategorias[0].categoria.nombre}}</div>
         </div>
 
         <div class="borde-b"></div>
@@ -91,7 +91,7 @@
         <div class="contenedor-tres">
           <div class="contenedor-int" (click)="irToCategoria(cat)" *ngFor="let cat of productosCategoriasSub">
             <img src="{{env.getImagenIndividual}}{{cat.categoria.adjuntoId}}" alt="">
-            <div class="seccion-sub-principal">{{cat.categoria.nombre}}</div>
+            <div class="seccion-sub-principal" [ngStyle]="{'color': color}">{{cat.categoria.nombre}}</div>
           </div>
 
         </div>

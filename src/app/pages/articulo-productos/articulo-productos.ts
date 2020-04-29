@@ -3,10 +3,11 @@ import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
+import { User } from '../../models/User';
 
 @Component({
   selector: 'page-articulo-productos',
@@ -27,16 +28,41 @@ export class ArticuloProductosPage {
 
   public palabra: string = "";
 
+  public user: User = null;
+
+  public color: any = "#3b64c0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
     private alertaService: AlertaService,
     private loadingService: LoadingService,
-    private localStorageEncryptService: LocalStorageEncryptService) {
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private events: Events) {
     this.articulo = navParams.get("articulo");
     console.log(this.articulo);
+    this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.cargarProductosArticulo();
+
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
+      }
+    });
+
+    if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+      this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+    }
+    this.events.subscribe("changeColor", data => {
+      try {
+        if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+          this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+        }
+      } catch (error) {
+      }
+    });
   }
 
   ionViewDidLoad() {
@@ -80,14 +106,14 @@ export class ArticuloProductosPage {
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.productos}/${producto.id}`).subscribe((response: any) => {
+      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
         console.log(response);
 
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
-        let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        if (user) {
-          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${user.id_token}`);
+        //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        if (this.user) {
+          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
           console.log(carritos);
 
           if (carritos) {
@@ -114,9 +140,9 @@ export class ArticuloProductosPage {
 
   }
 
-  buscarPorPalabra(){
+  buscarPorPalabra() {
     this.productos = this.replicaProductos;
-    this.productos = this.productos.filter((item:any) => item.nombre.toUpperCase().includes(this.palabra.toUpperCase()));
-    
+    this.productos = this.productos.filter((item: any) => item.nombre.toUpperCase().includes(this.palabra.toUpperCase()));
+
   }
 }

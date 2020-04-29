@@ -2,27 +2,28 @@
   <ion-list>
     <ion-list-header style="margin: 0px;">General</ion-list-header>
 
+    <div style="padding: 10px;text-align: center;">Elige un tema</div>
     <ion-row class="rowi">
       <ion-col col-3 class="tema-1">
-        <button></button>
+        <button (click)="change(1)"></button>
       </ion-col>
       <ion-col col-3 class="tema-2">
-        <button></button>
+        <button (click)="change(2)"></button>
       </ion-col>
       <ion-col col-3 class="tema-3">
-        <button></button>
+        <button (click)="change(3)"></button>
       </ion-col>
       <ion-col col-3 class="tema-4">
-        <button></button>
+        <button (click)="change(4)"></button>
       </ion-col>
     </ion-row>
 
-    <button ion-item (click)="openListCarrito()">
+    <button ion-item (click)="openListCarrito()" *ngIf="user">
       <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
       Listas de carrito
     </button>
 
-    <button ion-item (click)="logout()">
+    <button ion-item (click)="logout()" *ngIf="user">
       <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
       Cerrar sesión
     </button>

@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>{{producto.nombre}}</ion-title>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>{{producto.producto.nombre}}</ion-title>
 
 
 
@@ -39,7 +39,7 @@
     </div>
   </div>
 
-  <div class="descripcion">
+  <div class="descripcion" [ngStyle]="{'color': color}">
     {{producto.precio | currency}} MXN
   </div>
 
@@ -47,7 +47,7 @@
     <ion-icon name="ios-arrow-up-outline" *ngIf="verDescripcion" (click)="verDes()"></ion-icon>
     <ion-icon name="ios-arrow-down-outline" *ngIf="!verDescripcion" (click)="verDes()"></ion-icon>
     <h4>Descripción</h4>
-    <div class="descripcion-gral" *ngIf="verDescripcion">{{producto.descripcion}}</div>
+    <div class="descripcion-gral" *ngIf="verDescripcion">{{producto.producto.descripcion}}</div>
   </div>
 
 
@@ -128,7 +128,7 @@
         <div>+</div>
       </div>
     </div>
-    <button (click)="agregarCarrito(producto)">
+    <button (click)="agregarCarrito(producto)" [ngStyle]="{'background-color': color}">
       Agregar a carrito
     </button>
   </div>

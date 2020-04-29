@@ -8,6 +8,7 @@ import { User } from '../../models/User';
 import { ProductoService } from '../../services/producto.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
+import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 
 @Component({
   selector: 'page-carrito-compras',
@@ -97,7 +98,7 @@ export class CarritoComprasPage {
   agregarToCarritoBack(bandera: boolean, producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoId: producto.producto.id
+      productoProveedorId: producto.productoProveedor.id
     }
     let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
 
@@ -112,8 +113,49 @@ export class CarritoComprasPage {
       }
       this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
-      producto.cantidad--;
+      if(producto.cantidad == 1){
+        producto.cantidad = 1;
+      }else{
+        producto.cantidad--;
+      }
     });
+  }
+
+  viewDetail(producto: any) {
+    //consumir servicio de imagenes completas
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoProveedor.id}`).subscribe((response: any) => {
+        console.log(response);
+
+        //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
+        //let nav = this.app.getRootNav();
+        //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        if (this.user) {
+          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+          console.log(carritos);
+
+          if(carritos){
+            let position: any = carritos.findIndex(
+              (carrito) => {
+                return carrito.id == response.id;
+              }
+            );
+  
+            if (position >= 0) {
+              response.cantidad = carritos[position].cantidad;
+            }
+          }
+        }
+        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
+    //
+
   }
 
   decrementar(p: any) {
@@ -124,7 +166,7 @@ export class CarritoComprasPage {
   borrarToCarritoBack(producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoId: producto.producto.id
+      productoProveedorId: producto.productoProveedor.id
     }
     body.cantidad = producto.cantidad;
 
@@ -134,7 +176,7 @@ export class CarritoComprasPage {
       console.log(response1);
 
       if (producto.cantidad == 0) {
-        this.genericService.sendDelete(`${environment.carritoCompras}/${producto.producto.id}`).subscribe((response2: any) => {
+        this.genericService.sendDelete(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
 
           if (producto.cantidad == 0) {
             this.events.publish("totalCarrito");
@@ -159,7 +201,7 @@ export class CarritoComprasPage {
     let nuevoArrarCarrito: any[] = [];
     let productoDelete: any = null;
     this.productosCarrito.forEach(element => {
-      if (producto.producto.id != element.producto.id) {
+      if (producto.productoProveedor.producto.id != element.productoProveedor.producto.id) {
         nuevoArrarCarrito.push(element);
       } else {
         productoDelete = element;

@@ -33,6 +33,9 @@
     },
     "cordova-plugin-ionic-keyboard": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-fcm-with-dependecy-updated": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
     }
   },
   "dependent_plugins": {}

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="{{genericService.getColor()}}">
     <ion-title>Mi carrito</ion-title>
   </ion-navbar>
 </ion-header>
@@ -14,13 +14,13 @@
                     <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>
                 </div>
               </div> -->
-          <div class="container-card">
+          <div class="container-card" (click)="viewDetail(p)">
       
-            <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
+            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />
           </div>
-          <div class="container-text">{{p.producto.nombre}}</div>
-          <div class="description">{{p.producto.descripcion}}</div>
-          <div class="precio">{{p.producto.precio | currency}}</div>
+          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>
+          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>
+          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>
       
           <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
             <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">
@@ -39,6 +39,6 @@
   
 </ion-content>
 <ion-footer class="footer-button-class">
-  <button (tap)="addToList()">Agregar a una lista</button>
-  <button (tap)="comprar()">Comprar</button>
+  <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Agregar a una lista</button>
+  <button (tap)="comprar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Comprar</button>
 </ion-footer>

@@ -15,6 +15,8 @@ import { AuthService } from './services/auth.service';
 import { ProductoService } from './services/producto.service';
 import { StringUtilsService } from './services/string-utils.service';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
+import { FCM } from '@ionic-native/fcm';
 
 @NgModule({
     providers: [
@@ -36,7 +38,9 @@ import { GoogleMaps } from '@ionic-native/google-maps';
         AuthService,
         ProductoService,
         StringUtilsService,
-        GoogleMaps
+        GoogleMaps,
+        Geolocation,
+        FCM
     ]
 })
 export class ProvidersModule { }

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="{{genericService.getColor()}}">
     <ion-title *ngIf="card">{{card.alias}}</ion-title>
     <ion-title *ngIf="!card">Nueva Tarjeta</ion-title>
   </ion-navbar>
@@ -24,7 +24,7 @@
           </app-control-messages>
         </div>
         <div class="contenedor-boton">
-          <button [disabled]="btnHabilitado" (click)="guardar()">Guardar</button>
+          <button [disabled]="btnHabilitado" (click)="guardar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Guardar</button>
         </div>
       </form>
     </div>
@@ -32,5 +32,5 @@
   
 </ion-content>
 <ion-footer class="footer-button-class">
-  <div style="text-align: end;"><img src="assets/imgs/tarjetas/visa.jpg" alt="" style="width:60%"></div>
+  <div style="text-align: end;" ><img src="assets/imgs/tarjetas/visa.jpg" alt="" style="width:60%"></div>
 </ion-footer>

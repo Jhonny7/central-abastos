@@ -18,10 +18,23 @@ export class GenericService {
     public user: any = null;
     constructor(
         private readonly http: HttpClient,
-        private alertaService: AlertaService,
         private localStorageEncryptService: LocalStorageEncryptService,
         private events: Events) {
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+
+        this.events.subscribe("reloadUser", data => {
+            try {
+                this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+            } catch (error) {
+            }
+        });
+
+        this.events.subscribe("changeColor", data => {
+            try {
+                this.getColor();
+            } catch (error) {
+            }
+        });
     }
 
     /**Método que hace peticiones tipo GET */
@@ -100,5 +113,25 @@ export class GenericService {
         } else {
             return 0;
         }
+    }
+
+    getColor(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let retornar:any = color == '#3b64c0' ? 'primary' : color == '#be3b3b' ? 'primary2' : color == '#3bb8be' ? 'primary3' : 'primary4';
+        //console.log(retornar);
+        return retornar;
+    }
+
+    getColorHex(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        
+        return color;
+    }
+
+    getColorClass(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let retornar:any = color == '#3b64c0' ? 'alerta-loteria' : color == '#be3b3b' ? 'alerta-loteria2' : color == '#3bb8be' ? 'alerta-loteria3' : 'alerta-loteria4';
+        //console.log(retornar);
+        return retornar;
     }
 }

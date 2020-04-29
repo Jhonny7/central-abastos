@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { ValidationService } from '../../services/validation.service';
@@ -47,7 +47,8 @@ export class ChangePasswordPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    private localStorageEncryptService: LocalStorageEncryptService) {
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private events:Events) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
     this.objetoRegistro.forEach(item => {
@@ -86,6 +87,13 @@ export class ChangePasswordPage {
     this.formGroup = this.formBuilder.group(
       putObj
     );
+
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
+      }
+    });
   }
 
   ionViewDidLoad() {

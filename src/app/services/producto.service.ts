@@ -37,7 +37,7 @@ export class ProductoService {
     viewDetail(producto: any) {
         //consumir servicio de imagenes completas
         this.loadingService.show().then(() => {
-            this.genericService.sendGetRequest(`${environment.productos}/${producto.id}`).subscribe((response: any) => {
+            this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
                 console.log(response);
                 let nav = this.app.getRootNav();
                 nav.push(DetalleProductoPage, { producto: response });

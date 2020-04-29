@@ -1,3 +1,5 @@
+import { GenericService } from './generic.service';
+import { LocalStorageEncryptService } from './local-storage-encrypt.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AlertController, Events } from 'ionic-angular';
@@ -16,18 +18,20 @@ export class AlertaService implements OnDestroy {
    */
   private basica: boolean = false;
 
-  public mensajeAdvertencia:string = this.translateService.instant("WARNING");
-  public mensajeError:string = this.translateService.instant("ERROR");
+  public mensajeAdvertencia: string = this.translateService.instant("WARNING");
+  public mensajeError: string = this.translateService.instant("ERROR");
 
-  public mensajeBien:string = this.translateService.instant("GOOD");
+  public mensajeBien: string = this.translateService.instant("GOOD");
 
   /**Constructor del servicio en el que se inyecta el controlador de alertas de ionic
    * y eventos de escucha para el momento de un cierre de sesión inesperado
    */
   constructor(
     public alertCtrl: AlertController,
+    private translateService: TranslateService,
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private genericService: GenericService,
     public events: Events,
-    private translateService: TranslateService
   ) {
     //this.events.publish();
     this.events.subscribe('closedAlerts', data => {
@@ -51,7 +55,7 @@ export class AlertaService implements OnDestroy {
       this.alert = this.alertCtrl.create({
         title: titulo,
         subTitle: subtitulo,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         buttons: [
           {
             text: 'Aceptar',
@@ -64,15 +68,20 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       })
     }
   }
 
-  errorAlertTimeout(){
-    this.warnAlert(null,this.translateService.instant("VERIFY-CONNECTION"),null);
+  errorAlertTimeout() {
+    this.warnAlert(null, this.translateService.instant("VERIFY-CONNECTION"), null);
   }
 
   /**Método utilizado como alerta normal  */
@@ -85,7 +94,7 @@ export class AlertaService implements OnDestroy {
         <div class='textoTitle'>${mensaje}</div>
         <div>`,
         message: null,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         buttons: [
           {
             text: 'Aceptar',
@@ -95,7 +104,12 @@ export class AlertaService implements OnDestroy {
           }
         ]
       });
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(res => {
         this.basica = false;
       });
@@ -111,7 +125,7 @@ export class AlertaService implements OnDestroy {
         
         <div>`,
         subTitle: subtitulo,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         buttons: [
           {
             text: 'Aceptar',
@@ -124,7 +138,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });
@@ -142,7 +161,7 @@ export class AlertaService implements OnDestroy {
         
         <div>` : titulo,
         subTitle: subtitulo,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         buttons: [
           {
             text: 'Aceptar',
@@ -155,7 +174,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });
@@ -163,14 +187,14 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
-  errorAlertGenericWithAction(error:any, action:any) {
+  errorAlertGenericWithAction(error: any, action: any) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({
         title: `<div class='notificacionError'>
         <div><img class='headerImg' src='assets/imgs/alerts/error.png'/></div>
         <div class='textoTitle'>${error}</div>
         <div>`,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         message: null,
         buttons: [
           {
@@ -182,7 +206,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });
@@ -191,14 +220,14 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
-  errorAlertGeneric(error:any) {
+  errorAlertGeneric(error: any) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({
         title: `<div class='notificacionError'>
         <div><img class='headerImg' src='assets/imgs/alerts/error.png'/></div>
         <div class='textoTitle'>${error}</div>
         <div>`,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         message: null,
         buttons: [
           {
@@ -209,7 +238,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });
@@ -218,14 +252,14 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
-  warnAlertGeneric(error:any) {
+  warnAlertGeneric(error: any) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({
         title: `<div class='notificacionError'>
         <div><img class='headerImg' src='assets/imgs/alerts/warn.png'/></div>
         <div class='textoTitle'>${error}</div>
         <div>`,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         message: null,
         buttons: [
           {
@@ -236,7 +270,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });
@@ -245,14 +284,14 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
-  successAlertGeneric(error:any) {
+  successAlertGeneric(error: any) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({
         title: `<div class='notificacionError'>
         <div><img class='headerImg' src='assets/imgs/alerts/success.png'/></div>
         <div class='textoTitle'>${error}</div>
         <div>`,
-        cssClass:"alerta-loteria",
+        cssClass: this.genericService.getColorClass(),
         message: null,
         buttons: [
           {
@@ -263,7 +302,12 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.basica = true;
-      this.alert.present();
+      this.alert.present().then((result: any) => {
+        let a: any = document.getElementsByClassName("alert-button");
+        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
+
+        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+      });
       this.alert.onDidDismiss(() => {
         this.basica = false;
       });

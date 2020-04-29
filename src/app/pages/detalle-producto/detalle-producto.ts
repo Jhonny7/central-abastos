@@ -28,6 +28,9 @@ export class DetalleProductoPage {
   slider2: Slides;
 
   public user: User = null;
+
+  public color: any = "#3b64c0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -59,6 +62,25 @@ export class DetalleProductoPage {
     this.events.subscribe("actualizarCantidad", data => {
       try {
         this.actualizarCantidad();
+      } catch (error) {
+      }
+    });
+
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
+      }
+    });
+
+    if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+      this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+    }
+    this.events.subscribe("changeColor", data => {
+      try {
+        if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+          this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+        }
       } catch (error) {
       }
     });
@@ -177,7 +199,12 @@ export class DetalleProductoPage {
       }
       //this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
-      producto.cantidad--;
+      //producto.cantidad--;
+      if(producto.cantidad == 1){
+        producto.cantidad = 1;
+      }else{
+        producto.cantidad--;
+      }
     });
   }
 
@@ -191,7 +218,7 @@ export class DetalleProductoPage {
   borrarToCarritoBack(producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoId: producto.id
+      productoProveedorId: producto.id
     }
     body.cantidad = producto.cantidad;
     this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
@@ -217,13 +244,13 @@ export class DetalleProductoPage {
 
   agregarCarrito(producto: any) {
     this.loadingService.show().then(() => {
-      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      //this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
 
       if (this.user) {
         let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
         let body: any = {
           precio: producto.precio,
-          productoId: producto.id
+          productoProveedorId: producto.id
         }
         let b: boolean = false;
         let position: any;
@@ -243,11 +270,18 @@ export class DetalleProductoPage {
           
           this.genericService.sendPostRequest(environment.carritoCompras, body).subscribe((response: any) => {
             body.cantidad = producto.cantidad;
-            this.alertaService.successAlertGeneric("Tu articulo se agrego al carrito con éxito");
+            this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
             this.updateCarrito(producto, body);
             //this.verificarCarritoModificarCantidad(producto);
           }, (error: HttpErrorResponse) => {
-            producto.cantidad--;
+            console.log(error);
+            
+            this.alertaService.errorAlertGeneric(error.error.title);
+            if(producto.cantidad == 1){
+              producto.cantidad = 1;
+            }else{
+              producto.cantidad--;
+            }
             this.loadingService.hide();
           });
         }
@@ -263,7 +297,11 @@ export class DetalleProductoPage {
       this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
       this.loadingService.hide();
-      producto.cantidad--;
+      if(producto.cantidad == 1){
+        producto.cantidad = 1;
+      }else{
+        producto.cantidad--;
+      }
     });
   }
 

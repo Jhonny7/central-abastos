@@ -24,6 +24,8 @@ export class LoginPage {
     password: null
   };
 
+  public color: any = "#3b64c0";
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,8 +35,19 @@ export class LoginPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private app:App,
     private events: Events) {
-    //this.loadingService.show();  
+    this.loadingService.hide();  
     //comentario
+    if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+      this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+    }
+    this.events.subscribe("changeColor", data => {
+      try {
+        if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
+          this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
+        }
+      } catch (error) {
+      }
+    });
   }
 
   ionViewDidLoad() {
@@ -67,6 +80,8 @@ export class LoginPage {
         this.events.publish("actualizarCantidad",{});
         this.events.publish("actualizarTarjetas",{});
         this.events.publish("totalCarrito");
+
+        this.events.publish("reloadUser");
         this.navCtrl.pop();
       },(error:HttpErrorResponse)=>{
         this.loadingService.hide();

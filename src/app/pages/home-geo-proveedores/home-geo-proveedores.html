@@ -1,17 +1,35 @@
 <ion-header>
-    <ion-navbar color="primary">
-      <ion-title>
-        Demo 111
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
-  
-  <ion-content>
-    <div id="map_canvas" *ngIf="1==2"></div>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title>
+      Direcciones
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
-    <div id="map" style="height: 50%;"></div>
+<ion-content>
 
-    <div class="card-proveedor">
+  <div class="spinner-carrito" *ngIf="!muestraMapa">
+    <ion-spinner></ion-spinner>
+  </div>
 
+  <div id="locationField" class="buscador" >
+    <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />
+
+    <div>
+      <img src="assets/imgs/direcciones/home-run.png" alt="">
     </div>
-  </ion-content>
+  </div>
+
+  <div id="map_canvas" class="mapita-google"></div>
+
+  <div id="map" style="height: 50%;" *ngIf="1==2"></div>
+
+  <div class="card-proveedor">
+
+  </div>
+</ion-content>
+
+<ion-footer class="footer-button-class" *ngIf="muestraMapa">
+  <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Guardar dirección</button>
+  <button (tap)="comprar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Nombre</button>
+</ion-footer>

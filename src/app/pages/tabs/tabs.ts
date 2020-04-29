@@ -1,3 +1,4 @@
+import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 
 import { AboutPage } from '../about/about';
@@ -14,7 +15,7 @@ export class TabsPage {
   tab2Root = TarjetasFrecuentesPage;
   tab3Root = ContactPage;
 
-  constructor() {
+  constructor(private genericService:GenericService) {
 
   }
 }

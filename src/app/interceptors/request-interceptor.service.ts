@@ -39,16 +39,14 @@ export class RequestInterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((errorResponse: HttpErrorResponse) => {
-        console.log(errorResponse);
+        let error :any = null;
+        try {
+          error = (typeof errorResponse !== 'object') ? JSON.parse(errorResponse) : errorResponse;
+        } catch (error) {
+          error = errorResponse;
+        }
 
-        const error = (typeof errorResponse !== 'object') ? JSON.parse(errorResponse) : errorResponse;
-        console.log(error);
-
-        if (error.status == 400 && error.error.errorKey == "idexists") {
-          console.log("cerrar sesion");
-          this.auth.events.publish("startSession");
-          return Observable.throw(error);
-        } else if (error.status == 401 &&
+        if (error && error.status == 401 &&
           error.error.title == "Unauthorized" ||
           error.error.title == "El cliente es requerido") {
           this.auth.events.publish("startSession");

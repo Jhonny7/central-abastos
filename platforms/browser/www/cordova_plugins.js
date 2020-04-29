@@ -408,6 +408,14 @@ module.exports = [
         "clobbers": [
             "Ionic.WebView"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-fcm-with-dependecy-updated/www/FCMPlugin.js",
+        "id": "cordova-plugin-fcm-with-dependecy-updated.FCMPlugin",
+        "pluginId": "cordova-plugin-fcm-with-dependecy-updated",
+        "clobbers": [
+            "FCMPlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -421,7 +429,8 @@ module.exports.metadata =
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-ionic-webview": "4.2.0",
-    "cordova-plugin-ionic-keyboard": "2.2.0"
+    "cordova-plugin-ionic-keyboard": "2.2.0",
+    "cordova-plugin-fcm-with-dependecy-updated": "6.3.0"
 }
 // BOTTOM OF METADATA
 });

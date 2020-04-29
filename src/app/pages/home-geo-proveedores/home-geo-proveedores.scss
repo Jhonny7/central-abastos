@@ -1,19 +1,74 @@
 page-home-geo-proveedores {
-    #map_canvas{
-        display: block;
-        height: 50%;
-        width: 100%;
-      }
+  .mapita-google {
+    display: block;
+    height: 80%;
+    width: 100%;
+  }
 
-      .contenedor{
-        width: 100%;
-        text-align: center;
-        .img{
-            width: 100%;
-            img{width: 38px;}
-        }
-        .titulo{
-            font-weight: 500;
+  @media only screen and (max-width: 320px) and (min-width: 0px) {
+    .mapita-google {
+      height: 80.7%;
+    }
+  }
+  @media only screen and (max-width: 374px) and (min-width: 321px) {
+    .mapita-google {
+      height: 90.1%;
+    }
+  }
+  @media only screen and (max-width: 413px) and (min-width: 375px) {
+    .mapita-google {
+      height: 83.9%;
+    }
+  }
+
+  .buscador {
+    width: 100%;
+    padding: 7px;
+    input {
+      padding: 11px;
+      border: 1px solid #a9a6a6;
+      border-radius: 4px;
+      display: inline-block;
+      width: 87%;
+      vertical-align: bottom;
+    }
+
+    div {
+      display: inline-block;
+      width: 10%;
+      vertical-align: bottom;
+      img {
+      }
+    }
+  }
+  @media only screen and (max-width: 768px) and (min-width: 414px) {
+    .mapita-google {
+      height: 94.1%;
+    }
+
+    .buscador {
+      input {
+        width: 94%;
+      }
+      div {
+        width: 5%;
+        img {
         }
       }
+    }
+  }
+
+  .contenedor {
+    width: 100%;
+    text-align: center;
+    .img {
+      width: 100%;
+      img {
+        width: 38px;
+      }
+    }
+    .titulo {
+      font-weight: 500;
+    }
+  }
 }

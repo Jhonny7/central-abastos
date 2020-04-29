@@ -1,3 +1,5 @@
+import { GenericService } from './services/generic.service';
+import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-proveedores';
 import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
 import { AlertaService } from './services/alerta.service';
 import { Component } from '@angular/core';
@@ -10,6 +12,7 @@ import { LoginPage } from './pages/login/login';
 import { HomePage } from './pages/home/home';
 import { LocalStorageEncryptService } from './services/local-storage-encrypt.service';
 import { Menu } from './models/Menu';
+import { User } from './models/User';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,6 +21,8 @@ export class MyApp {
   rootPage: any = null;
   pages: Menu[] = [];
 
+  public user: User = null;
+
   constructor(
     private platform: Platform,
     statusBar: StatusBar,
@@ -25,9 +30,10 @@ export class MyApp {
     private translateService: TranslateService,
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events,
-    private app:App,
+    private app: App,
     private alertaService: AlertaService,
-    private alertCtrl: AlertController) {
+    private alertCtrl: AlertController,
+    private genericService: GenericService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -37,13 +43,21 @@ export class MyApp {
 
       /**Armar menu */
       this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
+      this.pages.push(new Menu("Drecciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", HomeGeoProveedoresPage));
       /** */
 
-      let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-      if (user) {
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      if (this.user) {
         this.rootPage = TabsPage;
       } else {
         this.rootPage = TabsPage;
+      }
+    });
+
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
       }
     });
 
@@ -68,7 +82,7 @@ export class MyApp {
     this.app.getActiveNav().push(pagina.component);
   }
 
-  cierreSesion(){
+  cierreSesion() {
     try {
       this.app.getActiveNav().popToRoot();
     } catch (error) {
@@ -79,7 +93,7 @@ export class MyApp {
     this.app.getRootNav().push(LoginPage);
   }
 
-  openSesion(){
+  openSesion() {
     let alert = this.alertCtrl.create({
       title: 'Confirmación',
       message: 'Para proceder es necesario que inicies sesión',

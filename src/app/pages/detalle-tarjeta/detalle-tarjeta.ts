@@ -139,6 +139,12 @@ export class DetalleTarjetaPage {
       
     this.render = true;
 
+    this.events.subscribe("reloadUser", data => {
+      try {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      } catch (error) {
+      }
+    });
   }
 
   /**Verifica validaciones */

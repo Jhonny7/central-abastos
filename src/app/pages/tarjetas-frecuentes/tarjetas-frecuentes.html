@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="{{genericService.getColor()}}">
     <ion-title>Tarjetas Frecuentes</ion-title>
   </ion-navbar>
 </ion-header>
@@ -31,7 +31,7 @@
 </ion-content>
 
 <ion-fab bottom right class="fab-cards animated swing">
-  <button ion-fab (click)="addCard()" color="naranja">
+  <button ion-fab (click)="addCard()" [ngStyle]="{'background-color': genericService.getColorHex()}">
     <ion-icon name="add"></ion-icon>
   </button>
 </ion-fab>

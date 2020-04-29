@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
     <ion-title>{{categoria.categoria.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -12,7 +12,7 @@
 
   <div *ngFor="let articulo of articulos">
       <div class="titulo-wrapper" >
-          <div class="seccion">
+          <div class="seccion" [ngStyle]="{'color':color}">
             {{articulo.tipoArticulo.nombre}}
           </div>
       
@@ -25,10 +25,10 @@
           (click)="viewDetail(p)">
             <div class="container-card">
       
-              <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />
+              <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
             </div>
-            <div class="container-text">{{p.nombre}}</div>
-            <div class="description">{{p.descripcion}}</div>
+            <div class="container-text">{{p.producto.nombre}}</div>
+            <div class="description">{{p.producto.descripcion}}</div>
             <div class="precio">{{p.precio | currency}}</div>
       
             <!-- <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
