@@ -24,13 +24,13 @@
       
           <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
             <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">
-              <div>-</div>
-            </div>
+              <div [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">-</div>
+            </div>   
             <div class="cantidad" *ngIf="p.cantidad > 0">
-              <div>{{p.cantidad}}</div>
+              <div [ngStyle]="{'color': genericService.getColorHex()}">{{p.cantidad}}</div>
             </div>
             <div class="mas" (click)="incrementa(p)">
-              <div>+</div>
+              <div [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">+</div>
             </div>
           </div>
         </div>

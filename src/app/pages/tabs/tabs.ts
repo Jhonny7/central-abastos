@@ -1,3 +1,4 @@
+import { ChatPage } from './../chat/chat';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 
@@ -13,7 +14,7 @@ export class TabsPage {
 
   tab1Root = HomePage;
   tab2Root = TarjetasFrecuentesPage;
-  tab3Root = ContactPage;
+  tab3Root = ChatPage;
 
   constructor(private genericService:GenericService) {
 

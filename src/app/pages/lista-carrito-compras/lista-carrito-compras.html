@@ -11,7 +11,7 @@
 
   <ion-list>
       <ion-item-sliding #item *ngFor="let card of listas">
-        <ion-item class="item-list-card" (click)="addCard(card)">
+        <ion-item class="item-list-card" (click)="view(card)">
           <ion-avatar slot="start">
             <img src="assets/imgs/lista-carrito/shopping-cart.png" alt="">
           </ion-avatar>

@@ -33,6 +33,7 @@ import { OpcionesMenuPage } from './pages/opciones-menu/opciones-menu';
 import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-proveedores';
 import { ChatPage } from './pages/chat/chat';
 import { ArticuloProductosPage } from './pages/articulo-productos/articulo-productos';
+import { CarritoHistoricoPage } from './pages/carrito-historico/carrito-historico';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,7 +63,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomeGeoProveedoresPage,
     ChatPage,
     CategoriaPage,
-    ArticuloProductosPage
+    ArticuloProductosPage,
+    CarritoHistoricoPage
   ],
   imports: [
     BrowserModule,
@@ -100,7 +102,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomeGeoProveedoresPage,
     ChatPage,
     CategoriaPage,
-    ArticuloProductosPage
+    ArticuloProductosPage,
+    CarritoHistoricoPage
   ],
   providers: [
     StatusBar,

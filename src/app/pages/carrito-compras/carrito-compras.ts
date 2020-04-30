@@ -281,7 +281,7 @@ export class CarritoComprasPage {
 
     let alert = this.alertCtrl.create({
       title: data.title,
-      cssClass: "alerta-one-button",
+      cssClass: this.genericService.getColorClass(),
       message: data.message,
       inputs: data.inputs,
       buttons: buttons

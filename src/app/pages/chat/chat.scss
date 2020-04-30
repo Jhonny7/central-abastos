@@ -58,6 +58,24 @@ page-chat {
           padding-right: 10px;
           border-radius: 7px;
           width: fit-content;
+          position: relative;
+        }
+
+        .m:after {
+          content: "";
+          position: absolute;
+          top: 9px;
+          right: -9px;
+          margin: -2px auto;
+          width: 0px;
+          height: 0px;
+          border-top: solid 25px #BE3B3A;
+          border-left: solid 15px rgba(0, 0, 0, 0);
+          border-right: solid 24px rgba(0, 0, 0, 0);
+          border-bottom: solid 0px rgba(0, 0, 0, 0);
+          -webkit-transform: rotate(126deg);
+          transform: rotate(360deg);
+          z-index: -1;
         }
       }
 
@@ -66,12 +84,30 @@ page-chat {
         .m {
           padding-top: 9px;
           padding-bottom: 9px;
-          background-color: #22ace0;
+          background-color: #515151;
           color: #fff;
           padding-left: 10px;
           padding-right: 10px;
           border-radius: 7px;
           width: fit-content;
+          position: relative;
+        }
+
+        .m:after {
+          content: "";
+          position: absolute;
+          top: 11px;
+          left: -8px;
+          margin: -2px auto;
+          width: 0px;
+          height: 0px;
+          border-top: solid 21px #515151;
+          border-left: solid 15px #e60f0f00;
+          border-right: solid 24px #f50e0e00;
+          border-bottom: solid 0px #f3121200;
+          -webkit-transform: rotate(126deg);
+          transform: rotate(360deg);
+          z-index: -1;
         }
       }
     }

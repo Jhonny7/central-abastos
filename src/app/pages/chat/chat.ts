@@ -1,3 +1,4 @@
+import { GenericService } from './../../services/generic.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
@@ -15,7 +16,8 @@ export class ChatPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private localStorageEncryptService: LocalStorageEncryptService,
-    private events:Events) {
+    private events:Events,
+    private genericService: GenericService) {
 
     if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
       this.color = this.localStorageEncryptService.getFromLocalStorage("theme");

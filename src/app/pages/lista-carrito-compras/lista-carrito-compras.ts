@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import * as moment from "moment";
+import { CarritoHistoricoPage } from '../carrito-historico/carrito-historico';
 
 @Component({
   selector: 'page-lista-carrito-compras',
@@ -75,4 +76,7 @@ export class ListaCarritoComprasPage {
     
   }
 
+  view(lista:any){
+    this.navCtrl.push(CarritoHistoricoPage,{lista});
+  }
 }

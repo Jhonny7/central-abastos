@@ -50,6 +50,23 @@ export class HomeGeoProveedoresPage {
     let claseTabs:any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "none";
     this.getPosition();
+    let as:any = document.getElementById('autocomplete');
+
+    console.log(as);
+    
+    this.autocomplete = new google.maps.places.Autocomplete(
+      as, { types: ['geocode'] });
+
+    // Avoid paying for data that you don't need by restricting the set of
+    // place fields that are returned to just the address components.
+    this.autocomplete.setFields(['address_component']);
+
+    // When the user selects an address from the drop-down, populate the
+    // address fields in the form.
+    let componente:any = this;
+    this.autocomplete.addListener('place_changed', function(){
+      componente.fillInAddress(componente);
+    });
     
   }
 
@@ -86,18 +103,6 @@ export class HomeGeoProveedoresPage {
     });
 
     this.muestraMapa = true;
-
-    this.autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById('autocomplete'), { types: ['geocode'] });
-
-    // Avoid paying for data that you don't need by restricting the set of
-    // place fields that are returned to just the address components.
-    this.autocomplete.setFields(['address_component']);
-
-    // When the user selects an address from the drop-down, populate the
-    // address fields in the form.
-    let componente:any = this;
-    this.autocomplete.addListener('place_changed', this.fillInAddress(componente));
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
 
       let info: any = `<div>Ejemplo de window</div>`;
@@ -196,6 +201,10 @@ export class HomeGeoProveedoresPage {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+
+        console.log(position);
+        console.log(geolocation);
+        
         var circle = new google.maps.Circle(
           { center: geolocation, radius: position.coords.accuracy });
         this.autocomplete.setBounds(circle.getBounds());
@@ -204,24 +213,44 @@ export class HomeGeoProveedoresPage {
   }
 
   fillInAddress(componente:any) {
+
+    console.log(componente);
+    
     // Get the place details from the autocomplete object.
     var place = componente.autocomplete.getPlace();
-
+    console.log(place);
+    
     for (var component in componente.componentForm) {
+
+      console.log(component);
+      
       let a: any = document.getElementById(component);
-      a.value = '';
+      if(a){
+        a.value = '';
+      }
       let b: any = document.getElementById(component);
-      b.disabled = false;
+      if(b){
+        b.disabled = false;
+      }
     }
 
     // Get each component of the address from the place details,
     // and then fill-in the corresponding field on the form.
-    for (var i = 0; i < place.address_components.length; i++) {
-      var addressType = place.address_components[i].types[0];
-      if (componente.componentForm[addressType]) {
-        var val = place.address_components[i][componente.componentForm[addressType]];
-        let c: any = document.getElementById(addressType);
-        c.value = val;
+    if(place){
+      for (var i = 0; i < place.address_components.length; i++) {
+        var addressType = place.address_components[i].types[0];
+        console.log(addressType);
+        
+        if (componente.componentForm[addressType]) {
+          var val = place.address_components[i][componente.componentForm[addressType]];
+
+          console.log(val);
+          
+          let c: any = document.getElementById(addressType);
+          if(c){
+            c.value = val;
+          }
+        }
       }
     }
   }
