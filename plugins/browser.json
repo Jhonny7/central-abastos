@@ -36,6 +36,18 @@
     },
     "cordova-plugin-fcm-with-dependecy-updated": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-stripe": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-open-native-settings": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova.plugins.diagnostic": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
     }
   },
   "dependent_plugins": {}

@@ -477,9 +477,138 @@ ion-card {
       }
 
       .alert-button:nth-child(1) {
-        background-color: #fff;
         color: map-get($colors, primary);
+        background-color: #fff;
         border: 1px solid map-get($colors, primary);
+      }
+    }
+  }
+}
+
+.alerta-two-button2 {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary2);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary2);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        color: map-get($colors, primary2);
+        background-color: #fff;
+        border: 1px solid map-get($colors, primary2);
+      }
+    }
+  }
+}
+
+.alerta-two-button3 {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary3);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary3);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        color: map-get($colors, primary3);
+        background-color: #fff;
+        border: 1px solid map-get($colors, primary3);
+      }
+    }
+  }
+}
+
+.alerta-two-button4 {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary4);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary4);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        color: map-get($colors, primary4);
+        background-color: #fff;
+        border: 1px solid map-get($colors, primary4);
       }
     }
   }

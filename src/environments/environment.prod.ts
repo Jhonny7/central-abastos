@@ -16,6 +16,8 @@ export const environment = {
   getImagenIndividual: `${pathPrincipal}adjuntos/download/`,
   promociones: `${pathPrincipal}promociones`,
   tarjetas: `${pathPrincipal}tarjetas`,
+  direcciones: `${pathPrincipal}usuario-direcciones`,
+  tipoDirecciones: `${pathPrincipal}tipo-direcciones`,
   logout: null,
   icons: {
     persona: {

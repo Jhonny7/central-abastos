@@ -1,3 +1,4 @@
+import { GenericService } from './../../services/generic.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, ViewController, Events } from 'ionic-angular';
@@ -19,7 +20,8 @@ export class OpcionesMenuPage {
     private alertCtrl: AlertController,
     private app: App,
     private viewCtrl: ViewController,
-    private events: Events) {
+    private events: Events,
+    private genericService: GenericService) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
 
@@ -39,7 +41,7 @@ export class OpcionesMenuPage {
     let alert = this.alertCtrl.create({
       title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
       message: "¿Estás segur@ de cerrar sesión?",//this.translatePipe.instant("CONFIRM-LOGOUT"),
-      cssClass: "alerta-two-button",
+      cssClass: this.genericService.getColorClassTWO(),
       buttons: [
         {
           text: "Cancelar",//this.translatePipe.instant("CANCEL"),

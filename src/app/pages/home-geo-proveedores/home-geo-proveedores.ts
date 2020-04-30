@@ -1,20 +1,18 @@
+import { AlertaService } from './../../services/alerta.service';
+import { LoadingService } from './../../services/loading.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker
-} from '@ionic-native/google-maps';
+import { IonicPage, NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
 
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
 import leaflet from 'leaflet';
 import { environment } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
+
 
 declare var google;
 @Component({
@@ -24,9 +22,14 @@ declare var google;
 export class HomeGeoProveedoresPage {
 
   public map: any;
+
+  public marker: any;
+
   public mapa: any;
 
   public autocomplete: any;
+
+  public emulado: boolean = true;
 
   public componentForm: any = {
     street_number: 'short_name',
@@ -37,41 +40,198 @@ export class HomeGeoProveedoresPage {
     postal_code: 'short_name'
   };
 
-  public muestraMapa:boolean = false;
+  public data: any = {};
+
+  public muestraMapa: boolean = false;
+
+  public tipoDirecciones: any = [];
+
+  public direccion: any = null;
+
+  public edit: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private geolocation: Geolocation,
-    private genericService: GenericService) {
+    private genericService: GenericService,
+    private loadingService: LoadingService,
+    private alertaService: AlertaService,
+    private alertCtrl: AlertController,
+    private diagnostic: Diagnostic,
+    private openNativeSettings: OpenNativeSettings,
+    private androidPermissions: AndroidPermissions,
+    private platform: Platform,
+    private events: Events) {
+    this.direccion = navParams.get("direccion");
+    if (this.direccion) {
+      this.edit = true;
+      /*
+              codigoPostal: "89670"
+              direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+              latitud: "22.9221196"
+              longitud: "-98.0690771"
+              */
+      this.data.codigoPostal = this.direccion.direccion.codigoPostal;
+      this.data.direccion = this.direccion.direccion.direccion;
+      this.data.latitud = this.direccion.direccion.latitud;
+      this.data.longitud = this.direccion.direccion.longitud;
+
+    }
+
+    this.cargarTipoDirecciones();
+  }
+
+  cargarTipoDirecciones() {
+    this.genericService.sendGetRequest(environment.tipoDirecciones).subscribe((response: any) => {
+      this.tipoDirecciones = response;
+      console.log(this.tipoDirecciones);
+
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   ionViewDidLoad() {
-    let claseTabs:any = document.getElementsByClassName("tabbar");
+    let claseTabs: any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "none";
-    this.getPosition();
-    let as:any = document.getElementById('autocomplete');
+    this.obtenerLocalizacion();
+    let as: any = document.getElementById('autocomplete');
 
     console.log(as);
-    
+
     this.autocomplete = new google.maps.places.Autocomplete(
       as, { types: ['geocode'] });
 
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
-    this.autocomplete.setFields(['address_component']);
+    this.autocomplete.setFields(['address_component', 'geometry', 'name']);
 
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
-    let componente:any = this;
-    this.autocomplete.addListener('place_changed', function(){
+    let componente: any = this;
+    this.autocomplete.addListener('place_changed', function () {
       componente.fillInAddress(componente);
     });
-    
+
   }
 
-  ionViewWillLeave(){
-    let claseTabs:any = document.getElementsByClassName("tabbar");
+  /**Método que obtiene la geolocalización del usuario
+   * se utiliza al hacer click en el boton de posicionamiento
+   */
+  obtenerLocalizacion() {
+    //this.loadingService.show().then(() => {
+
+    if (this.platform.is("android") && !this.emulado) {
+      //debugger;
+      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
+        result => {
+          //debugger;
+          if (!result.hasPermission) {
+            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then((resReq) => {
+              this.loadingService.hide();
+            });
+          } else {
+            this.diagnostic.isLocationAvailable().then((res: any) => {
+              //debugger;
+              if (!res) {
+                this.loadingService.hide();
+                //debugger;
+                this.openNativeSettings.open("location").then((res2) => {
+                  //debugger;
+                  this.loadingService.hide();
+                  this.diagnostic.isLocationAvailable().then((res: any) => {
+                    //debugger;
+                    if (!res) {
+                      this.loadingService.hide();
+                      //aqui apagar geolocation
+                      //this.selecciones.cercaDeMi = false;
+                    } else {
+                      //debugger;
+                      this.getPosition();
+                    }
+                  });
+                });
+              } else {
+                this.getPosition();
+              }
+            });
+          }
+        },
+        err => {
+          this.loadingService.hide();
+          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
+
+        }
+      );
+    } else if (this.platform.is("ios") && !this.emulado) {
+      this.diagnostic.isLocationEnabled().then((resIOS: any) => {
+        this.loadingService.hide();
+        //alert(JSON.stringify(res));
+
+        if (!resIOS) {
+          this.loadingService.hide();
+          let alert = this.alertCtrl.create({
+            title: `<div class='notificacionError'>
+                <div><img class='headerImg' src='assets/imgs/alerts/success.png'/></div>
+                <div class='textoTitle'>Para acceder a ésta función necesitas habilitar tu <strong>GPS</strong></div>
+                <div>`,
+            message: null,
+            cssClass: this.genericService.getColorClass(),
+            buttons: [
+
+              {
+                text: 'Cancelar',
+                handler: () => {
+
+                }
+              },
+              {
+                text: 'Aceptar',
+                handler: () => {
+                  this.openLocate();
+                }
+              }
+            ]
+          });
+          alert.present();
+          alert.onDidDismiss(res => {
+
+          });
+        } else {
+          this.getPosition();
+        }
+      });
+
+
+    } else {
+      this.getPosition();
+    }
+    //});
+
+  }
+
+  /**Metodo que se ejecuta solo en ios para pedir abrir localizacion*/
+  openLocate() {
+    this.loadingService.hide();
+    //debugger;
+    this.openNativeSettings.open("locations").then((res2) => {
+      //debugger;
+      this.diagnostic.isLocationEnabled().then((res: any) => {
+        //debugger;
+        if (!res) {
+          //aqui apagar geolocation
+          //this.selecciones.cercaDeMi = false;
+        } else {
+          //debugger;
+          this.getPosition();
+        }
+      });
+    });
+  }
+
+  ionViewWillLeave() {
+    let claseTabs: any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "flex";
   }
 
@@ -94,6 +254,13 @@ export class HomeGeoProveedoresPage {
     let mapEle: HTMLElement = document.getElementById('map_canvas');
 
     // create LatLng object
+    if(this.edit){
+      console.log("editable");
+      
+      latitude = Number(this.direccion.direccion.latitud);
+      longitude = Number(this.direccion.direccion.longitud);
+    }
+    console.log(latitude, longitude);
     let myLatLng = { lat: latitude, lng: longitude };
 
     // create map
@@ -112,7 +279,7 @@ export class HomeGeoProveedoresPage {
       });
       let component: any = this;
 
-      let marker = new google.maps.Marker({
+      component.marker = new google.maps.Marker({
         position: myLatLng,//{ lat: -0.179041, lng: -78.499211 },
         map: this.map,
         title: 'Hello World!',
@@ -121,16 +288,56 @@ export class HomeGeoProveedoresPage {
         icon: environment.icons['casa'].icon
       });
 
-      marker.addListener('click', () => {
-        infowindow.open(this.map, marker);
-        component.changeInfoCard();
+      component.marker.addListener('click', () => {
+        //infowindow.open(this.map, this.marker);
+        //component.changeInfoCard();
       });
 
-      google.maps.event.addListener(marker, 'dragend', function (evt) {
+      google.maps.event.addListener(component.marker, 'dragend', function (evt) {
         console.log(evt.latLng.lat());
         console.log(evt.latLng.lng());
-        component.map.setCenter(marker.position);
-        marker.setMap(component.map);
+
+
+        component.data.latitud = evt.latLng.lat().toString();
+        component.data.longitud = evt.latLng.lng().toString();
+
+
+        component.loadingService.show().then(() => {
+          let params = new HttpParams()
+          params = params.set('latlng', `${component.data.latitud},${component.data.longitud}`);
+          params = params.set('key', environment.keyGoogle);
+
+          console.log(params);
+
+          component.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
+            console.log(response);
+            component.loadingService.hide();
+            component.map.setCenter(component.marker.position);
+            component.marker.setMap(component.map);
+
+            let results: any = response.results;
+            if (results) {
+              /*
+              codigoPostal: "89670"
+              direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+              latitud: "22.9221196"
+              longitud: "-98.0690771"
+              */
+              component.data.direccion = results[0].formatted_address;
+              component.data.codigoPostal = "";
+            }
+          }, (error: HttpErrorResponse) => {
+            component.loadingService.hide();
+            component.marker.setPosition(myLatLng);
+
+            component.map.setCenter(myLatLng);
+            component.marker.setMap(component.map);
+
+
+            component.alertaService.errorAlertGeneric("No se obtuvo información del marcador, intenta nuevamente");
+          });
+        });
+
         //'<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
       });
 
@@ -204,7 +411,7 @@ export class HomeGeoProveedoresPage {
 
         console.log(position);
         console.log(geolocation);
-        
+
         var circle = new google.maps.Circle(
           { center: geolocation, radius: position.coords.accuracy });
         this.autocomplete.setBounds(circle.getBounds());
@@ -212,46 +419,208 @@ export class HomeGeoProveedoresPage {
     }
   }
 
-  fillInAddress(componente:any) {
+  getData() {
+    return this.data;
+  }
 
-    console.log(componente);
-    
+  cleanData() {
+    this.data = {};
+  }
+
+  guardar(body: any) {
+    if (!this.edit) {
+      this.loadingService.show().then(() => {
+        this.genericService.sendPostRequest(environment.direcciones, body).subscribe((response: any) => {
+          this.alertaService.successAlertGeneric("Dirección agregada con éxito");
+          this.loadingService.hide();
+          this.events.publish("direction", { body, create: true });
+          this.navCtrl.pop();
+        }, (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          this.alertaService.errorAlertGeneric("No se ha podido agregar tu dirección frecuente, intenta nuevamente");
+        });
+      });
+    } else {
+      this.loadingService.show().then(() => {
+        this.genericService.sendPutRequest(environment.direcciones, body).subscribe((response: any) => {
+          this.alertaService.successAlertGeneric("Dirección modificada con éxito");
+          this.loadingService.hide();
+          this.events.publish("direction", { body, create: false });
+          this.navCtrl.pop();
+        }, (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          this.alertaService.errorAlertGeneric("No se ha podido modificar tu dirección frecuente, intenta nuevamente");
+        });
+      });
+    }
+  }
+
+  fillInAddress(componente: any) {
+
     // Get the place details from the autocomplete object.
     var place = componente.autocomplete.getPlace();
-    console.log(place);
-    
-    for (var component in componente.componentForm) {
 
-      console.log(component);
-      
+    var lat = place.geometry.location.lat(),
+      lng = place.geometry.location.lng();
+    componente.cleanData();
+    componente.marker.position = place.geometry.location;
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    componente.marker.setPosition(latlng);
+
+
+    componente.map.setCenter(place.geometry.location);
+    console.log(componente.marker);
+    componente.marker.setMap(componente.map);
+
+    console.log(componente.marker);
+
+    componente.getData().latitud = lat ? lat.toString() : "";
+    componente.getData().longitud = lng ? lng.toString() : "";
+
+
+    let completa: any = document.getElementById("autocomplete");
+    componente.getData().direccion = completa ? completa.value.toString() : "";
+
+    for (var component in componente.componentForm) {
       let a: any = document.getElementById(component);
-      if(a){
+      if (a) {
         a.value = '';
       }
       let b: any = document.getElementById(component);
-      if(b){
+      if (b) {
         b.disabled = false;
       }
     }
 
     // Get each component of the address from the place details,
     // and then fill-in the corresponding field on the form.
-    if(place){
+    if (place) {
       for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
         console.log(addressType);
-        
+
         if (componente.componentForm[addressType]) {
           var val = place.address_components[i][componente.componentForm[addressType]];
 
           console.log(val);
-          
+          switch (addressType) {
+            case "postal_code":
+              componente.getData().codigoPostal = val ? val.toString() : "";
+              break;
+
+            default:
+              break;
+          }
           let c: any = document.getElementById(addressType);
-          if(c){
+          if (c) {
             c.value = val;
           }
         }
       }
     }
+
+    console.log(componente.getData());
+
+  }
+
+  addToList() {
+      let buttons: any = [
+        {
+          text: "Agregar",
+          handler: (data: any) => {
+            let input: any = document.getElementById("input-name");
+            let selectDireccion: any = document.getElementById("select-direccion");
+
+            console.log(input.value);
+            console.log(selectDireccion.value);
+
+            if (input.value.length <= 0) {
+              this.alertaService.warnAlertGeneric("Por favor ingresa un nombre a tu dirección");
+            } else {
+              let body: any = {
+                alias: input.value,
+                direccion: {
+                  codigoPostal: "",
+                  direccion: "",
+                  latitud: "",
+                  longitud: ""
+                },
+                tipodireccionId: selectDireccion.value
+              };
+
+              if (this.edit) {
+                body.direccionId = this.direccion.direccionId;
+                body.id = this.direccion.id;
+              }
+              /*
+              codigoPostal: "89670"
+              direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+              latitud: "22.9221196"
+              longitud: "-98.0690771"
+              */
+              body.direccion.codigoPostal = this.data.codigoPostal ? this.data.codigoPostal : "";
+              body.direccion.direccion = this.data.direccion ? this.data.direccion : "";
+              body.direccion.latitud = this.data.latitud ? this.data.latitud : "";
+              body.direccion.longitud = this.data.longitud ? this.data.longitud : "";
+
+
+              console.log(body);
+              this.guardar(body);
+
+            }
+          }
+        }
+      ];
+      let data: any = {
+        title: "Mi dirección frecuente",
+        message: `Ingresa un alias y selecciona el tipo de dirección`,
+
+      }
+
+      let alert = this.alertCtrl.create({
+        title: data.title,
+        cssClass: this.genericService.getColorClass(),
+        message: data.message,
+        inputs: data.inputs,
+        buttons: buttons
+      });
+      alert.present().then((res) => {
+        let a: any = document.getElementsByClassName("alert-message");
+
+
+        let div2 = document.createElement("div");
+        div2.id = `div-name-2`;
+
+        let input: any = `<input placeholder="Ingresa el nombre" id="input-name"></input>`;
+        div2.innerHTML = input;
+
+        div2.setAttribute("class", "clase-select animated fadeIn");
+
+        a[0].appendChild(div2);
+
+        let div = document.createElement("div");
+        div.id = `div-name-1`;
+
+        let select: any = "<select id='select-direccion'>";
+        this.tipoDirecciones.forEach(element => {
+          select += `<option value="${element.id}">${element.nombre}</option>`;
+        });
+        select += "</select>"
+        div.innerHTML = select;
+
+        div.setAttribute("class", "clase-select animated fadeIn");
+
+        a[0].appendChild(div);
+
+        if(this.edit){
+          let input: any = document.getElementById("input-name");
+          let selectDireccion: any = document.getElementById("select-direccion");
+          input.value = this.direccion.alias;
+          selectDireccion.value = this.direccion.tipodireccionId;
+        }
+
+
+      });
   }
 }

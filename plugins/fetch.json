@@ -81,5 +81,37 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-stripe": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-stripe"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-open-native-settings": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-open-native-settings@1.5.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova.plugins.diagnostic": {
+    "source": {
+      "type": "registry",
+      "id": "cordova.plugins.diagnostic@5.0.1"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-android-permissions": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-android-permissions"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}">
     <ion-title>
-      Direcciones
+      {{!direccion ? 'Alta de dirección' : 'Actualizar de dirección'}}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -30,6 +30,5 @@
 </ion-content>
 
 <ion-footer class="footer-button-class" *ngIf="muestraMapa">
-  <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Guardar dirección</button>
-  <button (tap)="comprar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Nombre</button>
+  <button style="width:100%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{!direccion ? 'Agregar' : 'Actualizar'}} dirección</button>
 </ion-footer>

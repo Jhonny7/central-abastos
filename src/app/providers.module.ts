@@ -17,6 +17,10 @@ import { StringUtilsService } from './services/string-utils.service';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FCM } from '@ionic-native/fcm';
+import { Stripe } from '@ionic-native/stripe';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 @NgModule({
     providers: [
@@ -40,7 +44,11 @@ import { FCM } from '@ionic-native/fcm';
         StringUtilsService,
         GoogleMaps,
         Geolocation,
-        FCM
+        FCM,
+        Stripe,
+        OpenNativeSettings,
+        Diagnostic,
+        AndroidPermissions,
     ]
 })
 export class ProvidersModule { }

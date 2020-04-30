@@ -13,6 +13,7 @@ import { HomePage } from './pages/home/home';
 import { LocalStorageEncryptService } from './services/local-storage-encrypt.service';
 import { Menu } from './models/Menu';
 import { User } from './models/User';
+import { DireccionesPage } from './pages/direcciones/direcciones';
 
 @Component({
   templateUrl: 'app.html'
@@ -43,7 +44,7 @@ export class MyApp {
 
       /**Armar menu */
       this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
-      this.pages.push(new Menu("Drecciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", HomeGeoProveedoresPage));
+      this.pages.push(new Menu("Drecciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
       /** */
 
       this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
@@ -97,7 +98,7 @@ export class MyApp {
     let alert = this.alertCtrl.create({
       title: 'Confirmación',
       message: 'Para proceder es necesario que inicies sesión',
-      cssClass: "alerta-two-button",
+      cssClass: this.genericService.getColorClassTWO(),
       buttons: [
         {
           text: 'Cancelar',

@@ -134,4 +134,11 @@ export class GenericService {
         //console.log(retornar);
         return retornar;
     }
+
+    getColorClassTWO(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let retornar:any = color == '#3b64c0' ? 'alerta-two-button' : color == '#be3b3b' ? 'alerta-two-button2' : color == '#3bb8be' ? 'alerta-two-button3' : 'alerta-two-button4';
+        //console.log(retornar);
+        return retornar;
+    }
 }

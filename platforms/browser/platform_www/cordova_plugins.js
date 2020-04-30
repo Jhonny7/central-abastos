@@ -416,6 +416,36 @@ module.exports = [
         "clobbers": [
             "FCMPlugin"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+        "id": "cordova-plugin-stripe.stripe",
+        "pluginId": "cordova-plugin-stripe",
+        "clobbers": [
+            "cordova.plugins.stripe"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-stripe/src/browser/CordovaStripe.js",
+        "id": "cordova-plugin-stripe.CordovaStripe",
+        "pluginId": "cordova-plugin-stripe",
+        "runs": true
+    },
+    {
+        "file": "plugins/cordova-open-native-settings/www/settings.js",
+        "id": "cordova-open-native-settings.Settings",
+        "pluginId": "cordova-open-native-settings",
+        "clobbers": [
+            "cordova.plugins.settings"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-android-permissions/www/permissions-dummy.js",
+        "id": "cordova-plugin-android-permissions.Permissions",
+        "pluginId": "cordova-plugin-android-permissions",
+        "clobbers": [
+            "cordova.plugins.permissions"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -430,7 +460,11 @@ module.exports.metadata =
     "cordova-plugin-splashscreen": "5.0.2",
     "cordova-plugin-ionic-webview": "4.2.0",
     "cordova-plugin-ionic-keyboard": "2.2.0",
-    "cordova-plugin-fcm-with-dependecy-updated": "6.3.0"
+    "cordova-plugin-fcm-with-dependecy-updated": "6.3.0",
+    "cordova-plugin-stripe": "1.5.3",
+    "cordova-open-native-settings": "1.5.2",
+    "cordova.plugins.diagnostic": "5.0.1",
+    "cordova-plugin-android-permissions": "1.0.2"
 }
 // BOTTOM OF METADATA
 });

@@ -34,6 +34,7 @@ import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-pr
 import { ChatPage } from './pages/chat/chat';
 import { ArticuloProductosPage } from './pages/articulo-productos/articulo-productos';
 import { CarritoHistoricoPage } from './pages/carrito-historico/carrito-historico';
+import { DireccionesPage } from './pages/direcciones/direcciones';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -64,7 +65,8 @@ export function createTranslateLoader(http: HttpClient) {
     ChatPage,
     CategoriaPage,
     ArticuloProductosPage,
-    CarritoHistoricoPage
+    CarritoHistoricoPage,
+    DireccionesPage
   ],
   imports: [
     BrowserModule,
@@ -103,7 +105,8 @@ export function createTranslateLoader(http: HttpClient) {
     ChatPage,
     CategoriaPage,
     ArticuloProductosPage,
-    CarritoHistoricoPage
+    CarritoHistoricoPage,
+    DireccionesPage
   ],
   providers: [
     StatusBar,

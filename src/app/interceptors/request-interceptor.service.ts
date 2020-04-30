@@ -24,37 +24,43 @@ export class RequestInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //console.log("---------------------------------");
+    console.log(request);
 
     let chequeo: any = this.auth.getToken();
     let headers: any = {
       'Content-Type': 'application/json'
     };
-    if (chequeo) {
+    if (chequeo && request.url != "https://maps.googleapis.com/maps/api/geocode/json") {
       headers.Authorization = `Bearer ${this.auth.getToken()}`;
     }
-    request = request.clone({
-      setHeaders: headers
-    });
-
-
-    return next.handle(request).pipe(
-      catchError((errorResponse: HttpErrorResponse) => {
-        let error :any = null;
-        try {
-          error = (typeof errorResponse !== 'object') ? JSON.parse(errorResponse) : errorResponse;
-        } catch (error) {
-          error = errorResponse;
-        }
-
-        if (error && error.status == 401 &&
-          error.error.title == "Unauthorized" ||
-          error.error.title == "El cliente es requerido") {
-          this.auth.events.publish("startSession");
-          return Observable.throw(error);
-        } else {
-          return next.handle(request);
-        }
-      })
-    );
+    
+    if(request.url == "https://maps.googleapis.com/maps/api/geocode/json"){
+      return next.handle(request);
+    }else{
+      request = request.clone({
+        setHeaders: headers
+      });
+  
+  
+      return next.handle(request).pipe(
+        catchError((errorResponse: HttpErrorResponse) => {
+          let error :any = null;
+          try {
+            error = (typeof errorResponse !== 'object') ? JSON.parse(errorResponse) : errorResponse;
+          } catch (error) {
+            error = errorResponse;
+          }
+  
+          if (error && error.status == 401 &&
+            error.error.title == "Unauthorized" ||
+            error.error.title == "El cliente es requerido") {
+            this.auth.events.publish("startSession");
+            return Observable.throw(error);
+          } else {
+            return next.handle(request);
+          }
+        })
+      );
+    }
   }
 }

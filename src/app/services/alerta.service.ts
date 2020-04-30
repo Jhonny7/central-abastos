@@ -69,10 +69,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -105,10 +102,7 @@ export class AlertaService implements OnDestroy {
         ]
       });
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(res => {
         this.basica = false;
@@ -139,10 +133,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -175,10 +166,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -207,10 +195,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -239,10 +224,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -271,10 +253,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
@@ -303,10 +282,7 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        let a: any = document.getElementsByClassName("alert-button");
-        let colorStorage: any = this.localStorageEncryptService.getFromLocalStorage("theme");
-
-        a[0].style.backgroundColor = colorStorage ? colorStorage : "#3b64c0";
+        
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;
