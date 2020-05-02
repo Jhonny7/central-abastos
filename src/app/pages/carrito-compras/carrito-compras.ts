@@ -9,6 +9,7 @@ import { ProductoService } from '../../services/producto.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
+declare var Stripe;
 
 @Component({
   selector: 'page-carrito-compras',
@@ -22,6 +23,19 @@ export class CarritoComprasPage {
   public productosCarrito: any = [];
 
   public env: any = environment;
+
+  public stripe = Stripe('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+  //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
+  public card: any;
+
+  public cards: any = null;
+
+  public dataCard: any = {
+    tarj: "",
+    cvc: "",
+    dtime: ""
+  };
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,13 +49,123 @@ export class CarritoComprasPage {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     console.log(this.productosCarrito);
+    this.getCards();
+  }
 
+  seleccionar(card: any) {
+    if (!card.selected) {
+      this.cards.forEach(element => {
+        element.selected = false;
+      });
+      card.selected = true;
+    } else {
+      card.selected = false;
+    }
+  }
+
+  getCards() {
+    this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
+      console.log(response);
+      //quitar
+      this.cards = response;
+      this.cards.forEach(element => {
+        element.selected = false;
+      });
+      if (this.cards.length <= 0) {
+        //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
+      }
+    }, (error: HttpErrorResponse) => {
+      let err: any = error.error;
+      this.cards = null;
+      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    });
   }
 
   ionViewDidLoad() {
     //this.cargarProductosCarrito();
+    //this.setupStripe();
   }
 
+  setupStripe() {
+
+    console.log(this.cards);
+
+    let position: any = this.cards.findIndex(
+      (carrito) => {
+        return carrito.selected;
+      }
+    );
+    let c: any = {
+      number: "4242424242424242",
+      cvc: "123",
+      exp_month: 12,
+      exp_year: 2025
+    }
+
+    let bandera: boolean = false;
+    if (this.cards[position]) {
+      console.log(this.cards[position]);
+      let item: any = this.cards[position];
+      let fechaFormat: any = item.fechaCaducidad.split("-");
+      item.expMont = fechaFormat[1];
+      item.expYear = fechaFormat[0];
+
+      c.number = item.numeroTarjeta;
+      c.cvc = item.numeroSeguridad;
+      c.exp_month = item.expMont;
+      c.exp_year = item.expYear;
+    } else if (this.dataCard.dtime.length == 0 || this.dataCard.tarj.length == 0 || this.dataCard.cvc.length == 0) {
+      bandera = true;
+    } else {
+      c.number = this.dataCard.tarj;
+      c.cvc = this.dataCard.cvc;
+
+      let fechaFormat: any = this.dataCard.dtime.split("-");
+      let expMont = fechaFormat[1];
+      let expYear = fechaFormat[0];
+
+      c.exp_month = expMont;
+      c.exp_year = expYear;
+    }
+    //this.stripe.createSource(this.card);
+    //console.log(a);
+    if (!bandera) {
+      Stripe.setPublishableKey('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+      this.loadingService.show().then(() => {
+        let clase: any = this;
+        Stripe.card.createToken(c, (status, response) => {
+
+          if (response.error) { // Problem!
+            clase.loadingService.hide();
+            clase.alertaService.errorAlertGeneric("Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta");
+          } else { // Token was created!
+
+            // Get the token ID:
+            clase.loadingService.hide();
+            var token = response.id;
+            console.log(token);
+            console.log(response);
+
+          }
+        });
+      });
+    } else {
+      this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+    }
+  }
+
+  cerrar() {
+    let modal: any = document.getElementById("myModal");
+    modal.style.display = "none";
+    this.dataCard = {
+      tarj: "",
+      cvc: "",
+      dtime: ""
+    };
+    this.cards.forEach(element => {
+      element.selected = false;
+    });
+  }
 
   deleteFavorito(producto) {
     let nuevoArrarCarrito: any[] = [];
@@ -113,9 +237,9 @@ export class CarritoComprasPage {
       }
       this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
-      if(producto.cantidad == 1){
+      if (producto.cantidad == 1) {
         producto.cantidad = 1;
-      }else{
+      } else {
         producto.cantidad--;
       }
     });
@@ -134,13 +258,13 @@ export class CarritoComprasPage {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
           console.log(carritos);
 
-          if(carritos){
+          if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {
                 return carrito.id == response.id;
               }
             );
-  
+
             if (position >= 0) {
               response.cantidad = carritos[position].cantidad;
             }
@@ -235,7 +359,8 @@ export class CarritoComprasPage {
   }
 
   comprar() {
-
+    let modal: any = document.getElementById("myModal");
+    modal.style.display = "block";
   }
 
   addToList() {
@@ -253,12 +378,12 @@ export class CarritoComprasPage {
         text: "Agregar",
         handler: (data: any) => {
           console.log(data.nombre);
-          let body:any = {
-            nombre : data.nombre
+          let body: any = {
+            nombre: data.nombre
           };
           let service: any = this.genericService.sendPostRequest(environment.carritoHistorico, body);
 
-          this.loadingService.show().then(()=>{
+          this.loadingService.show().then(() => {
             service.subscribe((response: any) => {
               this.alertaService.successAlertGeneric("Lista frecuente agregada con éxito");
               this.loadingService.hide();

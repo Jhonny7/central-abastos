@@ -9,10 +9,14 @@ export const environment = {
   secciones: `${pathPrincipal}seccions`,
   categorias: `${pathPrincipal}categorias`,
   proveedores: `${pathPrincipal}proveedors`,
+
+  proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
+
   registro: `${pathPrincipal}register`,
   login: `${pathPrincipal}authenticate`,
   carritoCompras: `${pathPrincipal}carrito-compras`,
   carritoHistorico: `${pathPrincipal}carrito-historicos`,
+  carritoHistoricoDetalle: `${pathPrincipal}carrito-historico-detalles`,
   getImagenIndividual: `${pathPrincipal}adjuntos/download/`,
   promociones: `${pathPrincipal}promociones`,
   tarjetas: `${pathPrincipal}tarjetas`,
@@ -28,10 +32,16 @@ export const environment = {
     },
     lugar: {
       icon: "assets/imgs/direcciones/m1.png"
+    },
+    proveedor: {
+      icon: "assets/imgs/direcciones/m4.png"
     }
   },
 
   //info de GOOGLE
   geocodeGoogle: "https://maps.googleapis.com/maps/api/geocode/json",
-  keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ"
+  keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
+
+  //Fines de pruebas
+  emulado: true
 };

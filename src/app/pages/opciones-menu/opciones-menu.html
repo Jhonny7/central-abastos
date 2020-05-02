@@ -27,5 +27,10 @@
       <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
       Cerrar sesión
     </button>
+
+    <button ion-item (click)="login()" *ngIf="!user">
+      <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
+      Iniciar sesión
+    </button>
   </ion-list>
 </div>

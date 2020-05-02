@@ -65,13 +65,13 @@
 
     <div class="scrolling-wrapper" style="margin-top: 15px">
       <div class="buttons">
-        <button [ngStyle]="{'background-color': color}">
+        <button [ngStyle]="{'background-color': color}" (click)="ordena(1)">
           <img src="assets/imgs/home/milk.png" alt="">
           Artículos
         </button>
       </div>
       <div class="buttons">
-        <button [ngStyle]="{'background-color': color}">
+        <button [ngStyle]="{'background-color': color}" (click)="ordena(2)">
           <img src="assets/imgs/home/services.png" alt="">
           Servicios
         </button>

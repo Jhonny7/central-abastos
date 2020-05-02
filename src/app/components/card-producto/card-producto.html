@@ -1,0 +1,26 @@
+<div *ngIf="showSpinner && cards?.length == 0" class="divSpinner animated fadeIn">
+  <ion-spinner></ion-spinner>
+</div>
+<div style="box-shadow: 1px 1px 6px 1px #646467;" class="animated fadeIn">
+  <img src="{{imagen}}" alt="" style="width: 100%;">
+</div>
+<div class="slider-io">
+  <ion-slides class="ionSlidesAndroid animated fadeIn" autoplay="5000" loop="false" speed="500" pager
+  (ionSlideDidChange)="didChange($event)">
+    <ion-slide *ngFor="let slide of cards; let i = index" [ngClass]="{'adjustEntertaiment' : isEntertaiment}">
+      <img src="{{slide.url}}" alt="" (click)="changeImage(i)">
+      <div class="textoGana" [ngStyle]="{'margin-top': titleUp ? '0%' :  !showButton ? '0%' : ''}" *ngIf="!isEntertaiment">
+      </div>
+      <div *ngIf="isEntertaiment" class="titlesAlign">
+      </div>
+    </ion-slide>
+  </ion-slides>
+  <div class="arrows-lateral">
+    <div (tap)="prev()">
+      <ion-icon ios="ios-arrow-back" md="ios-arrow-back" [ngStyle]="{'display': !leftArrow ? 'none' : 'block', 'text-shadow': !leftArrow ? 'none' : ''}"></ion-icon>
+    </div>
+    <div (tap)="next()" *ngIf="cards?.length > 0">
+      <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" [ngStyle]="{'display': !rigthArrow ? 'none' : 'block', 'text-shadow': !rigthArrow ? 'none' : ''}"></ion-icon>
+    </div>
+  </div>
+</div>

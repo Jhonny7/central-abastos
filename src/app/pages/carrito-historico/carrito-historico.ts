@@ -87,17 +87,17 @@ export class CarritoHistoricoPage {
   borrarToCarritoBack(producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoProveedorId: producto.productoProveedor.id
+      id: producto.id
     }
     body.cantidad = producto.cantidad;
 
     console.log(body);
 
-    this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
+    this.genericService.sendPutRequest(environment.carritoHistoricoDetalle, body).subscribe((response1: any) => {
       console.log(response1);
 
       if (producto.cantidad == 0) {
-        this.genericService.sendDelete(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
+        this.genericService.sendDelete(`${environment.carritoHistoricoDetalle}/${producto.id}`).subscribe((response2: any) => {
 
           if (producto.cantidad == 0) {
             this.events.publish("totalCarrito");
@@ -189,13 +189,13 @@ export class CarritoHistoricoPage {
   agregarToCarritoBack(bandera: boolean, producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoProveedorId: producto.productoProveedor.id
+      id: producto.id
     }
-    let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
+    let service: any = this.genericService.sendPostRequest(environment.carritoHistoricoDetalle, body);
 
     if (producto.cantidad > 1) {
       body.cantidad = producto.cantidad;
-      service = this.genericService.sendPutRequest(environment.carritoCompras, body);
+      service = this.genericService.sendPutRequest(environment.carritoHistoricoDetalle, body);
     }
 
     service.subscribe((response: any) => {

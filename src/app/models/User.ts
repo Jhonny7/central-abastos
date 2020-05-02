@@ -6,7 +6,9 @@ export class User {
     /** Generate User */
     constructor(
       public id_token: string,
-      public username: string
+      public username: string,
+      public tipo_usuario: number,
+      public pantalla_proveedores: string,
     ) { }
   
     /*
@@ -20,7 +22,9 @@ export class User {
   
       let temp: User = new User(
         data.id_token,
-        data.username);
+        data.username,
+        data.tipo_usuario,
+        data.pantalla_proveedores);
   
       return temp;
     }

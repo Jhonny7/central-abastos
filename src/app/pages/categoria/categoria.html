@@ -11,27 +11,27 @@
   </div>
 
   <div *ngFor="let articulo of articulos">
-      <div class="titulo-wrapper" >
-          <div class="seccion" [ngStyle]="{'color':color}">
-            {{articulo.tipoArticulo.nombre}}
-          </div>
-      
-          <div class="ver-todos" (click)="verTodos(articulo)">
-            Ver todos
-          </div>
+    <div class="titulo-wrapper">
+      <div class="seccion" [ngStyle]="{'color':color}">
+        {{articulo.tipoArticulo.nombre}}
+      </div>
+
+      <div class="ver-todos" (click)="verTodos(articulo)">
+        Ver todos
+      </div>
+    </div>
+    <div class="scrolling-wrapper" *ngIf="articulo.productos">
+      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of articulo.productos; let i = index"
+        (click)="viewDetail(p)">
+        <div class="container-card">
+
+          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
         </div>
-        <div class="scrolling-wrapper" *ngIf="articulo.productos">
-          <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of articulo.productos; let i = index"
-          (click)="viewDetail(p)">
-            <div class="container-card">
-      
-              <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
-            </div>
-            <div class="container-text">{{p.producto.nombre}}</div>
-            <div class="description">{{p.producto.descripcion}}</div>
-            <div class="precio">{{p.precio | currency}}</div>
-      
-            <!-- <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
+        <div class="container-text">{{p.producto.nombre}}</div>
+        <div class="description">{{p.producto.descripcion}}</div>
+        <div class="precio">{{p.precio | currency}}</div>
+
+        <!-- <div class="contenedor-carrito" [ngStyle]="{'text-align': !p.cantidad || p.cantidad <= 0 ? 'end' : ''}">
                       <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">
                         <div>-</div>
                       </div>
@@ -42,7 +42,7 @@
                         <div>+</div>
                       </div>
                     </div> -->
-          </div>
-        </div>
+      </div>
+    </div>
   </div>
 </ion-content>

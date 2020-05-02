@@ -10,6 +10,7 @@ import { ProductoService } from '../../services/producto.service';
 import { LoadingService } from '../../services/loading.service';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 import { User } from '../../models/User';
+import { MapaProveedoresPage } from '../mapa-proveedores/mapa-proveedores';
 
 @Component({
   selector: 'page-categoria',
@@ -66,35 +67,47 @@ export class CategoriaPage {
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-        console.log(response);
-
-        //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
-        //let nav = this.app.getRootNav();
-        //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        if (this.user) {
-          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          console.log(carritos);
-
-          if(carritos){
-            let position: any = carritos.findIndex(
-              (carrito) => {
-                return carrito.id == response.id;
-              }
-            );
+      this.user.pantalla_proveedores = "S";
+      if(this.user.pantalla_proveedores == "S"){
+        this.genericService.sendGetRequest(`${environment.proveedoresProducto}${producto.id}`).subscribe((response: any) => {
+          console.log(response);
+          this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });
+          this.loadingService.hide();
+        }, (error: HttpErrorResponse) => {
+          let err: any = error.error;
+          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
+      }else{
+        this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
+          console.log(response);
   
-            if (position >= 0) {
-              response.cantidad = carritos[position].cantidad;
+          //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
+          //let nav = this.app.getRootNav();
+          //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+          if (this.user) {
+            let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            console.log(carritos);
+  
+            if(carritos){
+              let position: any = carritos.findIndex(
+                (carrito) => {
+                  return carrito.id == response.id;
+                }
+              );
+    
+              if (position >= 0) {
+                response.cantidad = carritos[position].cantidad;
+              }
             }
           }
-        }
-        this.navCtrl.push(DetalleProductoPage, { producto: response });
-        this.loadingService.hide();
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
+          this.navCtrl.push(DetalleProductoPage, { producto: response });
+          this.loadingService.hide();
+        }, (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          let err: any = error.error;
+          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
+      }
     });
     //
 

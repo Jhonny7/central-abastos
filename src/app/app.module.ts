@@ -1,3 +1,4 @@
+import { MapaProveedoresPage } from './pages/mapa-proveedores/mapa-proveedores';
 import { CategoriaPage } from './pages/categoria/categoria';
 
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -66,7 +67,8 @@ export function createTranslateLoader(http: HttpClient) {
     CategoriaPage,
     ArticuloProductosPage,
     CarritoHistoricoPage,
-    DireccionesPage
+    DireccionesPage,
+    MapaProveedoresPage
   ],
   imports: [
     BrowserModule,
@@ -106,7 +108,8 @@ export function createTranslateLoader(http: HttpClient) {
     CategoriaPage,
     ArticuloProductosPage,
     CarritoHistoricoPage,
-    DireccionesPage
+    DireccionesPage,
+    MapaProveedoresPage
   ],
   providers: [
     StatusBar,

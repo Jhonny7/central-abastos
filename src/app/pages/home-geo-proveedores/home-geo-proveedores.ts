@@ -29,7 +29,7 @@ export class HomeGeoProveedoresPage {
 
   public autocomplete: any;
 
-  public emulado: boolean = true;
+  public emulado: boolean = environment.emulado;
 
   public componentForm: any = {
     street_number: 'short_name',

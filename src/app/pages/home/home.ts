@@ -133,7 +133,7 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this.cargarProductosPorCategoria();
+    this.cargarProductosPorCategoria(1);
     this.cargaPromociones();
     //this.cargarProductos();
 
@@ -344,11 +344,12 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   /**Método para cargar productos en base a especificaciones */
-  cargarProductosPorCategoria() {
+  cargarProductosPorCategoria(opc:number) {
     console.log("in method");
-
+    this.productosCategorias = [];
+    this.productosCategoriasSub = [];
     this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.proveedorProductos}/home/1`).subscribe((response: any) => {
+      this.genericService.sendGetRequest(`${environment.proveedorProductos}/home/${opc}`).subscribe((response: any) => {
         console.log(response);
         //quitar
         this.productosCategorias = response.productosCategoria;
@@ -365,6 +366,10 @@ export class HomePage implements OnDestroy, OnInit {
         this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
+  }
+
+  ordena(opc){
+    this.cargarProductosPorCategoria(opc);
   }
 
   /**Método que mediante un modal abre una página con los filtros de intereses */

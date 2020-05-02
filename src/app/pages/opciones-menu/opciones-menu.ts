@@ -97,4 +97,9 @@ export class OpcionesMenuPage {
     }
     this.events.publish("changeColor");
   }
+
+  login(){
+    this.viewCtrl.dismiss();
+    this.app.getRootNav().push(LoginPage);
+  }
 }
