@@ -48,6 +48,9 @@
     },
     "cordova-plugin-android-permissions": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-qrscanner": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
     }
   },
   "dependent_plugins": {}

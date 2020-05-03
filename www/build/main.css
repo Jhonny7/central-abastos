@@ -43866,12 +43866,8 @@ page-registro .contenedor-step-3 {
 }
 
 page-registro .contenedor-step-3 .sub-contenedor {
-  padding: 10px;
-  border: 1px solid #dedede;
-  border-radius: 4px;
   color: #c7c5c5;
-  position: relative;
-  width: 88%;
+  width: 100%;
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .title {

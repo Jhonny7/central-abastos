@@ -19,6 +19,10 @@
             {
               "xml": "<feature name=\"CordovaStripe\"><param name=\"browser-package\" value=\"CordovaStripe\" /></feature>",
               "count": 1
+            },
+            {
+              "xml": "<feature name=\"QRScanner\"><param name=\"browser-package\" value=\"QRScanner\" /></feature>",
+              "count": 1
             }
           ]
         }
@@ -66,6 +70,9 @@
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
     },
     "cordova-plugin-android-permissions": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-qrscanner": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
     }
   },
@@ -517,6 +524,20 @@
       "clobbers": [
         "cordova.plugins.permissions"
       ]
+    },
+    {
+      "file": "plugins/cordova-plugin-qrscanner/www/www.min.js",
+      "id": "cordova-plugin-qrscanner.QRScanner",
+      "pluginId": "cordova-plugin-qrscanner",
+      "clobbers": [
+        "QRScanner"
+      ]
+    },
+    {
+      "file": "plugins/cordova-plugin-qrscanner/src/browser/plugin.min.js",
+      "id": "cordova-plugin-qrscanner.QRScannerProxy",
+      "pluginId": "cordova-plugin-qrscanner",
+      "runs": true
     }
   ],
   "plugin_metadata": {
@@ -533,6 +554,7 @@
     "cordova-plugin-stripe": "1.5.3",
     "cordova-open-native-settings": "1.5.2",
     "cordova.plugins.diagnostic": "5.0.1",
-    "cordova-plugin-android-permissions": "1.0.2"
+    "cordova-plugin-android-permissions": "1.0.2",
+    "cordova-plugin-qrscanner": "3.0.1"
   }
 }

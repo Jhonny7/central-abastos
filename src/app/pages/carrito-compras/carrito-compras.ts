@@ -36,6 +36,8 @@ export class CarritoComprasPage {
     dtime: ""
   };
 
+  public pagoActual: any = null;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -141,11 +143,27 @@ export class CarritoComprasPage {
           } else { // Token was created!
 
             // Get the token ID:
-            clase.loadingService.hide();
+            //clase.loadingService.hide();
             var token = response.id;
             console.log(token);
             console.log(response);
+            let body: any = {
+              pedidoId: clase.pagoActual.id,
+              token: token
+            };
+            let service: any = clase.genericService.sendPutRequest(`${environment.pedidos}/pago`, body);
 
+            service.subscribe((response: any) => {
+              clase.loadingService.hide();
+              console.log(response);
+              clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
+              clase.cerrar();
+            }, (error: HttpErrorResponse) => {
+              console.log(error);
+
+              clase.loadingService.hide();
+              clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+            });
           }
         });
       });
@@ -356,6 +374,35 @@ export class CarritoComprasPage {
       });
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+  }
+
+  precompra() {
+    let body: any = {
+      productos: []
+    };
+
+    this.productosCarrito.forEach(item => {
+      body.productos.push({
+        cantidad: item.cantidad,
+        productoProveedorId: item.productoProveedorId
+      });
+    });
+
+    let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
+
+    this.loadingService.show().then(() => {
+      service.subscribe((response: any) => {
+        console.log(response);
+        this.pagoActual = response;
+        this.loadingService.hide();
+        this.comprar();
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+
+        this.loadingService.hide();
+        this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+      });
+    });
   }
 
   comprar() {

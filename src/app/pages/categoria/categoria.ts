@@ -67,8 +67,8 @@ export class CategoriaPage {
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
-      this.user.pantalla_proveedores = "S";
-      if(this.user.pantalla_proveedores == "S"){
+      this.user.parametros.pantalla_proveedores = "N";
+      if(this.user.parametros.pantalla_proveedores == "S"){
         this.genericService.sendGetRequest(`${environment.proveedoresProducto}${producto.id}`).subscribe((response: any) => {
           console.log(response);
           this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });

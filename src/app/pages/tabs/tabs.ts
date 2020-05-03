@@ -1,3 +1,4 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { ChatPage } from './../chat/chat';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
@@ -16,7 +17,10 @@ export class TabsPage {
   tab2Root = TarjetasFrecuentesPage;
   tab3Root = ChatPage;
 
-  constructor(private genericService:GenericService) {
-
+  public user:any = null;
+  constructor(
+    private genericService:GenericService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
+    this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
   }
 }

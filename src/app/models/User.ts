@@ -8,7 +8,7 @@ export class User {
       public id_token: string,
       public username: string,
       public tipo_usuario: number,
-      public pantalla_proveedores: string,
+      public parametros: any,
     ) { }
   
     /*
@@ -24,7 +24,7 @@ export class User {
         data.id_token,
         data.username,
         data.tipo_usuario,
-        data.pantalla_proveedores);
+        data.parametros);
   
       return temp;
     }

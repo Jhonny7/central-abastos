@@ -1,5 +1,5 @@
 export const pathPrincipal = "http://localhost:8080/api/";
-
+export const pathChat = "http://localhost:8080/";
 export const environment = {
   production: true,
   productos: `${pathPrincipal}productos`,
@@ -22,6 +22,7 @@ export const environment = {
   tarjetas: `${pathPrincipal}tarjetas`,
   direcciones: `${pathPrincipal}usuario-direcciones`,
   tipoDirecciones: `${pathPrincipal}tipo-direcciones`,
+  pedidos: `${pathPrincipal}pedidos`,
   logout: null,
   icons: {
     persona: {

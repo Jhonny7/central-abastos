@@ -44,7 +44,7 @@
         height: auto;
         contain: none;
         margin-top: 15px;font-size: 14px;"
-      [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="setupStripe()">Aceptar</button>
+      [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="setupStripe()">Pagar</button>
   </div>
 </div>
 
@@ -83,5 +83,5 @@
 </ion-content>
 <ion-footer class="footer-button-class">
   <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Agregar a una lista</button>
-  <button (tap)="comprar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Comprar</button>
+  <button (tap)="precompra()" [ngStyle]="{'background-color': genericService.getColorHex()}">Comprar</button>
 </ion-footer>

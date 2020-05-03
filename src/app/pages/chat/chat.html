@@ -56,9 +56,9 @@
 </ion-content>
 <ion-footer class="footer-chat">
   <div>
-    <input type="text" placeholder="Escribe un mensaje aquí">
+    <input type="text" placeholder="Escribe un mensaje aquí" [(ngModel)]="mensaje">
     <div>
-      <button>
+      <button (click)="sendMessage()">
         <ion-icon name="md-send"></ion-icon>
       </button>
     </div>
