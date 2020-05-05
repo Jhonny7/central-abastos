@@ -36,6 +36,8 @@ import { ChatPage } from './pages/chat/chat';
 import { ArticuloProductosPage } from './pages/articulo-productos/articulo-productos';
 import { CarritoHistoricoPage } from './pages/carrito-historico/carrito-historico';
 import { DireccionesPage } from './pages/direcciones/direcciones';
+import { ComparaPreciosProveedorPage } from './pages/compara-precios-proveedor/compara-precios-proveedor';
+import { ArticuloProveedoresPage } from './pages/articulo-proveedores/articulo-proveedores';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -68,7 +70,9 @@ export function createTranslateLoader(http: HttpClient) {
     ArticuloProductosPage,
     CarritoHistoricoPage,
     DireccionesPage,
-    MapaProveedoresPage
+    MapaProveedoresPage,
+    ComparaPreciosProveedorPage,
+    ArticuloProveedoresPage
   ],
   imports: [
     BrowserModule,
@@ -109,7 +113,9 @@ export function createTranslateLoader(http: HttpClient) {
     ArticuloProductosPage,
     CarritoHistoricoPage,
     DireccionesPage,
-    MapaProveedoresPage
+    MapaProveedoresPage,
+    ComparaPreciosProveedorPage,
+    ArticuloProveedoresPage
   ],
   providers: [
     StatusBar,

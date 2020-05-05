@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>Comparativa</ion-title>
+
+  </ion-navbar>
+  <div class="busca">
+    <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí el proveedor" (keyup)="buscarPorPalabra()">
+  </div>
+</ion-header>
+
+<ion-content padding>
+  <div class="spinner-carrito" *ngIf="!proveedoresGeolocate || proveedoresGeolocate.length <= 0">
+    <ion-spinner></ion-spinner>
+  </div>
+
+
+
+  <div *ngIf="proveedoresGeolocate && proveedoresGeolocate.length > 0">
+    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedoresGeolocate; let i = index"
+      (click)="viewDetail(p)">
+      <!-- <div class="tacha">
+                      <div class="mini-tacha">
+                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>
+                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>
+                      </div>
+                    </div> -->
+      <div class="container-card">
+
+        <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
+      </div>
+      <div class="container-text">{{p.producto.nombre}}</div>
+      <div class="description">{{p.producto.descripcion}}</div>
+      <div class="precio">{{p.producto.precio | currency}}</div>
+
+      <div style="text-align: center;
+      font-weight: 600;">Proveedor:</div>
+      <div style="text-align: center;">{{p.proveedor.nombre}}, {{p.proveedor.empresa.nombre}}</div>
+    </div>
+  </div>
+</ion-content>

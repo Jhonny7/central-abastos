@@ -3,7 +3,7 @@ import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 
@@ -15,7 +15,8 @@ export class DireccionesPage {
 
   public listaDirecciones: any = [];
 
-  public render:boolean = false;
+  public render: boolean = false;
+  public fromPop: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -23,8 +24,10 @@ export class DireccionesPage {
     private genericService: GenericService,
     private alertaService: AlertaService,
     private loadingService: LoadingService,
-    private events: Events) {
+    private events: Events,
+    private viewCtrl: ViewController) {
 
+    this.fromPop = navParams.get("fromPop");
     this.cargarDireccionesLista();
 
     this.events.subscribe('direction', data => {
@@ -97,7 +100,11 @@ export class DireccionesPage {
     this.navCtrl.push(HomeGeoProveedoresPage, { direccion });
   }
 
-  nuevaLista(){
+  select(direccion: any) {
+    this.viewCtrl.dismiss({ direccion });
+  }
+
+  nuevaLista() {
     this.navCtrl.push(HomeGeoProveedoresPage);
   }
 

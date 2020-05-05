@@ -184,6 +184,111 @@ page-carrito-compras {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+/* The Modal (background) */
+.modal2 {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  padding-top: 30%;
+  border-radius: 3px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* The Modal (background) */
+.modal3 {
+  display: none;
+  position: absolute;
+  z-index: 99;
+  padding-top: 30%;
+  border-radius: 3px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.4);
+
+  .modal-content {
+    .resumen {
+      text-align: center;
+      padding: 8px;
+      font-size: 18px;
+    }
+    .resumen-proveedor {
+      .separador {
+        border-bottom: 1px solid #dedede;
+        padding-bottom: 8px;
+        .proveedor {
+          width: 100%;
+          .nombre {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+          }
+          .precio {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+            font-weight: 600;
+          }
+
+          .costo-envio {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+          }
+          .precio-envio {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+            font-weight: 600;
+          }
+
+          .costo-subtotal {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+          }
+          .precio-subtotal {
+            display: inline-block;
+            font-size: 15px;
+            width: 49%;
+            font-weight: 600;
+          }
+        }
+      }
+      .total-pagar {
+        padding: 8px;
+        text-align: center;
+        font-size: 17px;
+      }
+      .iva {
+        font-size: 10px;
+      }
+
+      ion-item {
+        ion-checkbox {
+        }
+        .item-inner {
+          .input-wrapper {
+            ion-label {
+              font-size: 12px;
+              margin: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 /* Modal Content */
 .modal-content {
   background-color: #fefefe;
@@ -194,13 +299,37 @@ page-carrito-compras {
   border-radius: 5px;
   position: relative;
 
-  .tacha{
+  .tacha {
     position: absolute;
     padding: 3px;
     font-size: 25px;
     top: 0;
     right: 4px;
     color: #3b64c1;
+  }
+
+  .direc {
+    display: inline-block;
+    width: 9%;
+    vertical-align: sub;
+  }
+
+  .formulario {
+    form {
+      margin-top: 25px;
+      .contenedor-input {
+        width: 100%;
+        display: inline-block;
+        input {
+          padding: 7px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          margin-bottom: 10px;
+          width: 100%;
+          display: inline-block;
+        }
+      }
+    }
   }
 
   .selecciona {
@@ -220,6 +349,8 @@ page-carrito-compras {
   ion-list {
     margin: 0px;
     border: none;
+    height: 150px;
+    overflow-y: scroll;
     ion-item {
       border: none;
       border-top: none !important;

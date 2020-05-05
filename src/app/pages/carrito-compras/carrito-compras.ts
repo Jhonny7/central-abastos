@@ -1,14 +1,18 @@
+import { HomeGeoProveedoresPage } from './../home-geo-proveedores/home-geo-proveedores';
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, AlertController, ModalController } from 'ionic-angular';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { User } from '../../models/User';
 import { ProductoService } from '../../services/producto.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
+import { ValidationService } from '../../services/validation.service';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 declare var Stripe;
 
 @Component({
@@ -38,16 +42,76 @@ export class CarritoComprasPage {
 
   public pagoActual: any = null;
 
+  public objetoRegistro: any[] = [
+    {
+      name: "Nombre del contacto",
+      required: true,
+      length: 50,
+      type: "text",
+      formName: "name",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Teléfono",
+      required: true,
+      length: 10,
+      type: "number",
+      formName: "tel",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Correo electrónico",
+      required: true,
+      length: 100,
+      type: "email",
+      formName: "email",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Dirección",
+      required: true,
+      length: 200,
+      type: "text",
+      formName: "direc",
+      value: null,
+      disabled: true
+    },
+    {
+      name: "Código postal",
+      required: false,
+      length: 6,
+      type: "text",
+      formName: "cp",
+      value: null,
+      disabled: true
+    },
+  ];
+
+  public formGroup: FormGroup = null;
+
+  public btnHabilitado: boolean = true;
+
+  public data: any = null;
+
+  public objetoRegistroCopy: any = [];
+
+  public check: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events,
+    private modalController: ModalController,
     //private productoService: ProductoService,
     private genericService: GenericService,
     private alertCtrl: AlertController,
     private alertaService: AlertaService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    public formBuilder: FormBuilder,
+    private currencyPipe: CurrencyPipe) {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     console.log(this.productosCarrito);
@@ -376,10 +440,141 @@ export class CarritoComprasPage {
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
   }
 
+  infoContact() {
+    let modal: any = document.getElementById("myModal2");
+    //
+    let putObj: any = {};
+    this.objetoRegistro.forEach(item => {
+      console.log(item);
+
+      let tmp: any[] = [];
+      tmp[0] = null;
+      tmp[1] = [];
+      if (item.required) {
+        tmp[1].push(Validators.required);
+      }
+
+      if (item.type == "number") {
+        tmp[1].push(ValidationService.phoneValidator);
+        tmp[1].push(ValidationService.maxLengthValidator);
+        tmp[1].push(ValidationService.minLengthValidator);
+      }
+
+      if (item.type == "email") {
+        tmp[1].push(ValidationService.emailValidator);
+      }
+
+      if (item.type == "password") {
+        tmp[1].push(ValidationService.passwordValidator);
+      }
+
+      if (item.type == "select") {
+        tmp[0] = item.opts[0].value;
+      }
+
+      if (this.user) {
+
+      }
+
+      putObj[item.formName] = tmp;
+    });
+
+    this.formGroup = this.formBuilder.group(
+      putObj
+    );
+    //
+    modal.style.display = "block";
+  }
+
+  closeInfoContact() {
+    let modal: any = document.getElementById("myModal2");
+    modal.style.display = "none";
+
+    this.objetoRegistro.forEach(item => {
+      item.value = null;
+    });
+
+    this.formGroup = null;
+    this.btnHabilitado = true;
+  }
+
+  cerrarModal3() {
+    let modal: any = document.getElementById("myModal3");
+    modal.style.display = "none";
+  }
+
+  openModal3() {
+    let modal: any = document.getElementById("myModal3");
+    modal.style.display = "block";
+  }
+
+  /**Verifica validaciones */
+  ejecutaValidator() {
+    let validacion: number = 0;
+    for (const name in this.formGroup.controls) {
+
+      let n: any = this.formGroup.controls[name];
+
+      if (n.invalid) {
+        validacion++;
+
+      }
+      /*
+      if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
+        invalid.push(this.translatePipe.instant(String(name).toUpperCase()));
+        fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
+      } */
+    }
+    console.log(this.formGroup.controls);
+    console.log(validacion);
+
+    if (validacion <= 0) {
+      this.btnHabilitado = false;
+    } else {
+      this.btnHabilitado = true;
+    }
+  }
+
+  getMapa() {
+    let modal = this.modalController.create(HomeGeoProveedoresPage,
+      { fromModal: true });
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        if (data != null) {
+          console.log(data);
+          this.data = data.data;
+          this.objetoRegistro[3].value = this.data.direccion;
+          this.objetoRegistro[4].value = this.data.codigoPostal;
+          setTimeout(() => {
+            this.ejecutaValidator();
+          }, 1000);
+        }
+      }
+    });
+  }
+
   precompra() {
+
+    this.objetoRegistroCopy = [];
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
+
     let body: any = {
+      nombreContacto: this.objetoRegistroCopy[0].value,
+      telefonoContacto: this.objetoRegistroCopy[1].value,
+      correoContacto: this.objetoRegistroCopy[2].value,
+      direccionContacto: {
+        id: this.data.id ? this.data.id : null,
+        codigoPostal: this.data.codigoPostal,
+        direccion: this.data.direccion,
+        latitud: this.data.latitud,
+        longitud: this.data.longitud
+      },
       productos: []
     };
+
 
     this.productosCarrito.forEach(item => {
       body.productos.push({
@@ -395,7 +590,11 @@ export class CarritoComprasPage {
         console.log(response);
         this.pagoActual = response;
         this.loadingService.hide();
-        this.comprar();
+        //this.comprar();
+        this.closeInfoContact();
+        setTimeout(() => {
+          this.openModal3();
+        }, 300);
       }, (error: HttpErrorResponse) => {
         console.log(error);
 
@@ -406,8 +605,37 @@ export class CarritoComprasPage {
   }
 
   comprar() {
-    let modal: any = document.getElementById("myModal");
-    modal.style.display = "block";
+    if (this.check) {
+      this.cerrarModal3();
+      let modal: any = document.getElementById("myModal");
+      modal.style.display = "block";
+    } else {
+      this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
+    }
+  }
+
+  confirmar() {
+    let alert = this.alertCtrl.create({
+      title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
+      message: `Se realizará un cargo a su tarjeta por ${this.currencyPipe.transform(this.pagoActual.total)} ¿Estás de acuerdo?`,//this.translatePipe.instant("CONFIRM-LOGOUT"),
+      cssClass: this.genericService.getColorClassTWO(),
+      buttons: [
+        {
+          text: "No",//this.translatePipe.instant("CANCEL"),
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            //this.confirmar();
+            this.setupStripe();
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   addToList() {

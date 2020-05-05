@@ -1,8 +1,18 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}">
-    <ion-title>
+    <ion-title *ngIf="!fromModal">
       {{!direccion ? 'Alta de dirección' : 'Actualizar de dirección'}}
     </ion-title>
+    <ion-title *ngIf="fromModal">
+      Datos de contacto
+    </ion-title>
+
+    <ion-buttons start *ngIf="fromModal">
+      <button ion-button (click)="dismiss(false)">
+        <span color="secundary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -12,10 +22,14 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <div id="locationField" class="buscador" >
+  <div id="locationField" class="buscador">
     <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />
 
-    <div>
+    <div *ngIf="!fromModal">
+      <img src="assets/imgs/direcciones/home-run.png" alt="">
+    </div>
+
+    <div *ngIf="fromModal" (click)="selectFrecuente()">
       <img src="assets/imgs/direcciones/home-run.png" alt="">
     </div>
   </div>
@@ -29,6 +43,12 @@
   </div>
 </ion-content>
 
-<ion-footer class="footer-button-class" *ngIf="muestraMapa">
-  <button style="width:100%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{!direccion ? 'Agregar' : 'Actualizar'}} dirección</button>
+<ion-footer class="footer-button-class" *ngIf="muestraMapa && !fromModal">
+  <button style="width:100%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{!direccion
+    ? 'Agregar' : 'Actualizar'}} dirección</button>
+</ion-footer>
+<ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">
+  <button style="width:49%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Guardar
+    y aceptar</button>
+  <button style="width:49%" (tap)="backData()" [ngStyle]="{'background-color': genericService.getColorHex()}">Aceptar</button>
 </ion-footer>

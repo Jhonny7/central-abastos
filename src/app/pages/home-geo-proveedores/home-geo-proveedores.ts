@@ -2,7 +2,7 @@ import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform, Events, ViewController, PopoverController } from 'ionic-angular';
 
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
 
@@ -12,6 +12,7 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { DireccionesPage } from '../direcciones/direcciones';
 
 
 declare var google;
@@ -50,6 +51,10 @@ export class HomeGeoProveedoresPage {
 
   public edit: boolean = false;
 
+  public fromModal: any = null;
+
+  public listaDirecciones: any = [];
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -62,8 +67,12 @@ export class HomeGeoProveedoresPage {
     private openNativeSettings: OpenNativeSettings,
     private androidPermissions: AndroidPermissions,
     private platform: Platform,
-    private events: Events) {
+    private events: Events,
+    private viewCtrl: ViewController,
+    private popoverCtrl: PopoverController) {
     this.direccion = navParams.get("direccion");
+    this.fromModal = navParams.get("fromModal");
+
     if (this.direccion) {
       this.edit = true;
       /*
@@ -80,6 +89,53 @@ export class HomeGeoProveedoresPage {
     }
 
     this.cargarTipoDirecciones();
+
+    if (this.fromModal) {
+      this.cargarDireccionesLista();
+    }
+  }
+
+  /**Método para cerrar el modal, sin embargo
+   * se envían de vuelta los filtros para manipularlos en la búsqueda
+   */
+  dismiss() {
+    this.viewCtrl.dismiss({});
+  }
+
+  cargarDireccionesLista() {
+    this.genericService.sendGetRequest(environment.direcciones).subscribe((response: any) => {
+      this.listaDirecciones = response;
+    }, (error: HttpErrorResponse) => {
+      let err: any = error.error;
+      this.listaDirecciones = [];
+      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    });
+  }
+
+  selectFrecuente() {
+    let popover = this.popoverCtrl.create(DireccionesPage, { fromPop: true }, { cssClass: "clase-Pop-direcciones" });
+    popover.present({
+    });
+    popover.onDidDismiss((data) => {
+      if (data) {
+        if (data != null) {
+          console.log(data);
+          console.log(data.direccion);
+          /*
+              codigoPostal: "89670"
+              direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+              latitud: "22.9221196"
+              longitud: "-98.0690771"
+              */
+          this.data.codigoPostal = data.direccion.direccion.codigoPostal;
+          this.data.direccion = data.direccion.direccion.direccion;
+          this.data.latitud = data.direccion.direccion.latitud;
+          this.data.longitud = data.direccion.direccion.longitud;
+          this.data.id = data.direccion.direccion.id;
+          this.viewCtrl.dismiss({ data: this.data });
+        }
+      }
+    });
   }
 
   cargarTipoDirecciones() {
@@ -254,9 +310,9 @@ export class HomeGeoProveedoresPage {
     let mapEle: HTMLElement = document.getElementById('map_canvas');
 
     // create LatLng object
-    if(this.edit){
+    if (this.edit) {
       console.log("editable");
-      
+
       latitude = Number(this.direccion.direccion.latitud);
       longitude = Number(this.direccion.direccion.longitud);
     }
@@ -427,14 +483,25 @@ export class HomeGeoProveedoresPage {
     this.data = {};
   }
 
+  backData(){
+    console.log(this.data);
+    
+    this.viewCtrl.dismiss({ data: this.data });
+  }
+
   guardar(body: any) {
     if (!this.edit) {
       this.loadingService.show().then(() => {
         this.genericService.sendPostRequest(environment.direcciones, body).subscribe((response: any) => {
-          this.alertaService.successAlertGeneric("Dirección agregada con éxito");
+
           this.loadingService.hide();
           this.events.publish("direction", { body, create: true });
-          this.navCtrl.pop();
+          if (!this.fromModal) {
+            this.alertaService.successAlertGeneric("Dirección agregada con éxito");
+            this.navCtrl.pop();
+          } else {
+            this.viewCtrl.dismiss({ data: this.data });
+          }
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           this.alertaService.errorAlertGeneric("No se ha podido agregar tu dirección frecuente, intenta nuevamente");
@@ -525,102 +592,102 @@ export class HomeGeoProveedoresPage {
   }
 
   addToList() {
-      let buttons: any = [
-        {
-          text: "Agregar",
-          handler: (data: any) => {
-            let input: any = document.getElementById("input-name");
-            let selectDireccion: any = document.getElementById("select-direccion");
-
-            console.log(input.value);
-            console.log(selectDireccion.value);
-
-            if (input.value.length <= 0) {
-              this.alertaService.warnAlertGeneric("Por favor ingresa un nombre a tu dirección");
-            } else {
-              let body: any = {
-                alias: input.value,
-                direccion: {
-                  codigoPostal: "",
-                  direccion: "",
-                  latitud: "",
-                  longitud: ""
-                },
-                tipodireccionId: selectDireccion.value
-              };
-
-              if (this.edit) {
-                body.direccionId = this.direccion.direccionId;
-                body.id = this.direccion.id;
-              }
-              /*
-              codigoPostal: "89670"
-              direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
-              latitud: "22.9221196"
-              longitud: "-98.0690771"
-              */
-              body.direccion.codigoPostal = this.data.codigoPostal ? this.data.codigoPostal : "";
-              body.direccion.direccion = this.data.direccion ? this.data.direccion : "";
-              body.direccion.latitud = this.data.latitud ? this.data.latitud : "";
-              body.direccion.longitud = this.data.longitud ? this.data.longitud : "";
-
-
-              console.log(body);
-              this.guardar(body);
-
-            }
-          }
-        }
-      ];
-      let data: any = {
-        title: "Mi dirección frecuente",
-        message: `Ingresa un alias y selecciona el tipo de dirección`,
-
-      }
-
-      let alert = this.alertCtrl.create({
-        title: data.title,
-        cssClass: this.genericService.getColorClass(),
-        message: data.message,
-        inputs: data.inputs,
-        buttons: buttons
-      });
-      alert.present().then((res) => {
-        let a: any = document.getElementsByClassName("alert-message");
-
-
-        let div2 = document.createElement("div");
-        div2.id = `div-name-2`;
-
-        let input: any = `<input placeholder="Ingresa el nombre" id="input-name"></input>`;
-        div2.innerHTML = input;
-
-        div2.setAttribute("class", "clase-select animated fadeIn");
-
-        a[0].appendChild(div2);
-
-        let div = document.createElement("div");
-        div.id = `div-name-1`;
-
-        let select: any = "<select id='select-direccion'>";
-        this.tipoDirecciones.forEach(element => {
-          select += `<option value="${element.id}">${element.nombre}</option>`;
-        });
-        select += "</select>"
-        div.innerHTML = select;
-
-        div.setAttribute("class", "clase-select animated fadeIn");
-
-        a[0].appendChild(div);
-
-        if(this.edit){
+    let buttons: any = [
+      {
+        text: "Agregar",
+        handler: (data: any) => {
           let input: any = document.getElementById("input-name");
           let selectDireccion: any = document.getElementById("select-direccion");
-          input.value = this.direccion.alias;
-          selectDireccion.value = this.direccion.tipodireccionId;
+
+          console.log(input.value);
+          console.log(selectDireccion.value);
+
+          if (input.value.length <= 0) {
+            this.alertaService.warnAlertGeneric("Por favor ingresa un nombre a tu dirección");
+          } else {
+            let body: any = {
+              alias: input.value,
+              direccion: {
+                codigoPostal: "",
+                direccion: "",
+                latitud: "",
+                longitud: ""
+              },
+              tipodireccionId: selectDireccion.value
+            };
+
+            if (this.edit) {
+              body.direccionId = this.direccion.direccionId;
+              body.id = this.direccion.id;
+            }
+            /*
+            codigoPostal: "89670"
+            direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+            latitud: "22.9221196"
+            longitud: "-98.0690771"
+            */
+            body.direccion.codigoPostal = this.data.codigoPostal ? this.data.codigoPostal : "";
+            body.direccion.direccion = this.data.direccion ? this.data.direccion : "";
+            body.direccion.latitud = this.data.latitud ? this.data.latitud : "";
+            body.direccion.longitud = this.data.longitud ? this.data.longitud : "";
+
+
+            console.log(body);
+            this.guardar(body);
+
+          }
         }
+      }
+    ];
+    let data: any = {
+      title: "Mi dirección frecuente",
+      message: `Ingresa un alias y selecciona el tipo de dirección`,
+
+    }
+
+    let alert = this.alertCtrl.create({
+      title: data.title,
+      cssClass: this.genericService.getColorClass(),
+      message: data.message,
+      inputs: data.inputs,
+      buttons: buttons
+    });
+    alert.present().then((res) => {
+      let a: any = document.getElementsByClassName("alert-message");
 
 
+      let div2 = document.createElement("div");
+      div2.id = `div-name-2`;
+
+      let input: any = `<input placeholder="Ingresa el nombre" id="input-name"></input>`;
+      div2.innerHTML = input;
+
+      div2.setAttribute("class", "clase-select animated fadeIn");
+
+      a[0].appendChild(div2);
+
+      let div = document.createElement("div");
+      div.id = `div-name-1`;
+
+      let select: any = "<select id='select-direccion'>";
+      this.tipoDirecciones.forEach(element => {
+        select += `<option value="${element.id}">${element.nombre}</option>`;
       });
+      select += "</select>"
+      div.innerHTML = select;
+
+      div.setAttribute("class", "clase-select animated fadeIn");
+
+      a[0].appendChild(div);
+
+      if (this.edit) {
+        let input: any = document.getElementById("input-name");
+        let selectDireccion: any = document.getElementById("select-direccion");
+        input.value = this.direccion.alias;
+        selectDireccion.value = this.direccion.tipodireccionId;
+      }
+
+
+    });
   }
 }

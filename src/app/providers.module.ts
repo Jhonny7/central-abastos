@@ -23,6 +23,7 @@ import { Diagnostic } from '@ionic-native/diagnostic';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ChatService } from './services/chat.service';
+import { CurrencyPipe } from '@angular/common';
 
 @NgModule({
     providers: [
@@ -52,7 +53,8 @@ import { ChatService } from './services/chat.service';
         Diagnostic,
         AndroidPermissions,
         QRScanner,
-        ChatService
+        ChatService,
+        CurrencyPipe
     ]
 })
 export class ProvidersModule { }

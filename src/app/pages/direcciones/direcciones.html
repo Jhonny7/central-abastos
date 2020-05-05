@@ -1,15 +1,20 @@
-<ion-header>
+<ion-header *ngIf="!fromPop">
   <ion-navbar color="{{genericService.getColor()}}">
     <ion-title>Mis direcciones</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content [ngStyle]="{'padding': !fromPop ? '16px' : '0px'}">
   <div class="spinner-carrito" *ngIf="!render">
     <ion-spinner></ion-spinner>
   </div>
+  <div *ngIf="fromPop" style="padding: 10px;
+  text-align: center;
+  color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}">
+    Selecciona una dirección frecuente
+  </div>
 
-  <ion-list>
+  <ion-list *ngIf="!fromPop">
     <ion-item-sliding #item *ngFor="let card of listaDirecciones">
       <ion-item class="item-list-card" (click)="view(card)">
         <ion-avatar slot="start">
@@ -29,8 +34,20 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+
+  <ion-list *ngIf="fromPop">
+    <ion-item class="item-list-card" (click)="select(card)" *ngFor="let card of listaDirecciones">
+      <ion-avatar slot="start">
+        <img src="assets/imgs/direcciones/maps-and-flags.png" alt="">
+      </ion-avatar>
+      <div class="datos-tarjetas">
+        <div class="name">{{card.alias}}</div>
+        <div class="number">{{card.direccion.direccion}}</div>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
-<ion-fab bottom right class="fab-cards animated swing">
+<ion-fab bottom right class="fab-cards animated swing" *ngIf="!fromPop">
   <button ion-fab (click)="nuevaLista()" [ngStyle]="{'background-color': genericService.getColorHex()}">
     <ion-icon name="add"></ion-icon>
   </button>

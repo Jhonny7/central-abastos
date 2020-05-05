@@ -1,5 +1,5 @@
 <ion-tabs color="{{genericService.getColor()}}">
   <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="Mis tarjetas" tabIcon="card" *ngIf="user"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Mis chats" tabIcon="ios-chatbubbles-outline" *ngIf="user"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Mis tarjetas" tabIcon="card" *ngIf="genericService.getUser()"></ion-tab>
+  <ion-tab [root]="tab3Root" tabTitle="Mis chats" tabIcon="ios-chatbubbles-outline" *ngIf="genericService.getUser()"></ion-tab>
 </ion-tabs>

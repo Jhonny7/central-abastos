@@ -1,4 +1,12 @@
 page-mapa-proveedores {
+  .todos {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 0;
+    color: #fff;
+    font-weight: 500;
+  }
   .contenedor-card {
     position: relative;
     .card {
@@ -8,7 +16,7 @@ page-mapa-proveedores {
       box-shadow: 0px 1px 3px #bdbdbd;
       margin: 10px;
       border-radius: 6px;
-      width: 43%;
+      width: 35%;
       background-color: white;
       @media only screen and (max-width: 768px) and (min-width: 747px) {
         width: 47%;
@@ -42,7 +50,7 @@ page-mapa-proveedores {
       }
       .container-card {
         width: 100%;
-        height: 110px;
+        height: 80px;
         //border: 1px solid #d8d8d8;
         border-radius: 5px;
         display: flex;
@@ -50,7 +58,7 @@ page-mapa-proveedores {
         justify-content: center;
         z-index: 1;
         img {
-          height: 110px;
+          height: 80px;
           //width: 100%;
         }
       }
@@ -112,7 +120,7 @@ page-mapa-proveedores {
 
     .informa {
       display: inline-block;
-      width: 45%;
+      width: 57%;
       color: #fff;
       vertical-align: top;
       padding-top: 14px;
@@ -138,8 +146,29 @@ page-mapa-proveedores {
 
   .mapita-google {
     display: block;
+    height: 100%;
+    width: 100%;
+    position: relative;
+
+    .boton-mapa {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+    }
+  }
+  .mapp {
+    position: relative;
+    display: block;
     height: 50%;
     width: 100%;
+    .boton-mapa {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      padding: 10px;
+      color: #fff;
+      border-radius: 4px;
+    }
   }
 }
 

@@ -141,4 +141,8 @@ export class GenericService {
         //console.log(retornar);
         return retornar;
     }
+
+    getUser(){
+        return this.localStorageEncryptService.getFromLocalStorage("userSession");
+    }
 }
