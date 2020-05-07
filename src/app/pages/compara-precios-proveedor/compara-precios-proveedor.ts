@@ -60,4 +60,18 @@ export class ComparaPreciosProveedorPage {
     //
 
   }
+
+  up(){
+    this.proveedoresGeolocate = this.proveedoresGeolocateReplica;
+    this.proveedoresGeolocate.sort((mayor,menor)=>{
+        return mayor.precio - menor.precio;
+      });
+  }
+
+  down(){
+    this.proveedoresGeolocate = this.proveedoresGeolocateReplica;
+    this.proveedoresGeolocate.sort((mayor,menor)=>{
+        return menor.precio - mayor.precio;
+      });
+  }
 }

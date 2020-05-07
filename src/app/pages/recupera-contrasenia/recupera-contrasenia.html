@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title style="padding: 0px;">Recuperar contraseña</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div class="correo">
+    <div [ngStyle]="{'color': genericService.getColorHex()}">Correo electrónico</div>
+    <input type="text" placeholder="Ingresa aqui" [(ngModel)]="correo">
+  </div>
+  <button class="boton" [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="cambio()">
+    Recibir indicaciones
+  </button>
+</ion-content>

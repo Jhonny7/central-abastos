@@ -21,42 +21,58 @@ export class RequestInterceptorService implements HttpInterceptor {
     private events: Events) {
 
   }
+  
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     //console.log("---------------------------------");
-    console.log(request);
+    //console.log(request);
 
     let chequeo: any = this.auth.getToken();
+    console.log(chequeo);
+    
     let headers: any = {
       'Content-Type': 'application/json'
     };
     if (chequeo && request.url != "https://maps.googleapis.com/maps/api/geocode/json") {
       headers.Authorization = `Bearer ${this.auth.getToken()}`;
     }
-    
-    if(request.url == "https://maps.googleapis.com/maps/api/geocode/json"){
+    /* let urlParse: any = request.url.split("api");
+    switch (urlParse[1]) {
+      case "promociones":
+
+        break;
+
+      default:
+        headers.Authorization = `Bearer ${this.auth.getToken()}`;
+        break;
+    } */
+
+    if (request.url == "https://maps.googleapis.com/maps/api/geocode/json") {
       return next.handle(request);
-    }else{
+    } else {
       request = request.clone({
         setHeaders: headers
       });
-  
-  
+
+
+
       return next.handle(request).pipe(
         catchError((errorResponse: HttpErrorResponse) => {
-          let error :any = null;
+          let error: any = null;
           try {
             error = (typeof errorResponse !== 'object') ? JSON.parse(errorResponse) : errorResponse;
           } catch (error) {
             error = errorResponse;
           }
-  
+          console.log("-----------------------------");
+          console.log(error);
+
           if (error && error.status == 401 &&
             error.error.title == "Unauthorized" ||
             error.error.title == "El cliente es requerido") {
             this.auth.events.publish("startSession");
             return Observable.throw(error);
-          } else {
+          }  else {
             return next.handle(request);
           }
         })

@@ -25,6 +25,7 @@ export class CarritoComprasPage {
   public user: User = null;
 
   public productosCarrito: any = [];
+  public productosCarritoReplica: any = [];
 
   public env: any = environment;
 
@@ -114,6 +115,7 @@ export class CarritoComprasPage {
     private currencyPipe: CurrencyPipe) {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    this.productosCarritoReplica = this.productosCarrito
     console.log(this.productosCarrito);
     this.getCards();
   }
@@ -609,6 +611,7 @@ export class CarritoComprasPage {
       this.cerrarModal3();
       let modal: any = document.getElementById("myModal");
       modal.style.display = "block";
+      this.check = false;
     } else {
       this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
     }
@@ -689,4 +692,17 @@ export class CarritoComprasPage {
     alert.present();
   }
 
+  up(){
+    this.productosCarrito = this.productosCarritoReplica;
+    this.productosCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
+        return mayor.precio - menor.precio;
+      });
+  }
+
+  down(){
+    this.productosCarrito = this.productosCarritoReplica;
+    this.productosCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
+        return menor.precio - mayor.precio;
+      });
+  }
 }

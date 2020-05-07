@@ -3,9 +3,182 @@
     <ion-title>{{listaCarrito.nombre}}</ion-title>
   </ion-navbar>
 </ion-header>
+<div id="myModal" class="modal">
+
+  <div class="modal-content animated lightSpeedIn">
+
+    <div class="tacha" (click)="cerrar()" [ngStyle]="{'color': genericService.getColorHex()}">
+      <ion-icon ios="md-close" md="md-close"></ion-icon>
+    </div>
+    <div class="selecciona" [ngStyle]="{'color': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona
+      tu tarjeta</div>
+    <ion-list *ngIf="cards && cards?.length > 0">
+      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{'seleccionado':card.selected}" (click)="seleccionar(card)">
+        <ion-avatar slot="start">
+          <img src="assets/imgs/tarjetas/bank.png" alt="">
+        </ion-avatar>
+        <div class="datos-tarjetas">
+          <div class="name">{{card.alias}}</div>
+          <div class="number">{{card.numeroTarjeta}}</div>
+        </div>
+
+      </ion-item>
+    </ion-list>
+    <div class="ingresa" [ngStyle]="{'color': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó
+      ingresa una para hacer el pago</div>
+    <div class="ingresa" [ngStyle]="{'color': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa
+      una tarjeta para hacer el pago</div>
+
+
+
+    <div class="form-row">
+      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">
+
+      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac
+        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>
+
+      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">
+
+
+
+
+    </div>
+    <button ion-button block large style="padding: 10px;
+          height: auto;
+          contain: none;
+          margin-top: 15px;font-size: 14px;"
+      [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>
+  </div>
+</div>
+
+<div id="myModal2" class="modal2">
+
+  <div class="modal-content animated lightSpeedIn">
+
+    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{'color': genericService.getColorHex()}">
+      <ion-icon ios="md-close" md="md-close"></ion-icon>
+    </div>
+
+    <div style="width: 90%;
+        padding: 7px;
+        color: #fff;
+        border-radius: 4px;" [ngStyle]="{'background-color': genericService.getColorHex()}">Llena
+      la información de contacto</div>
+    <div class="formulario" *ngIf="formGroup">
+      <form [formGroup]="formGroup">
+        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
+          <!-- <span>{{dato.name}}</span> -->
+
+          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"
+            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? '' : null"
+            *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'" [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}">
+
+          <div class="direc" *ngIf="dato.name == 'Dirección'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"
+              alt=""></div>
+
+          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"
+            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == 'date'"
+            placeholder="01/12/2020"></ion-datetime>
+
+          <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">
+            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">
+            </ion-checkbox>
+          </ion-col>
+
+          <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
+            interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
+            <ion-option *ngFor="let op of dato.opts" [value]="op.id">
+              {{op.value}}
+            </ion-option>
+          </ion-select>
+
+          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="'validators2'">
+          </app-control-messages>
+        </div>
+      </form>
+
+    </div>
+
+    <button ion-button block large style="padding: 10px;
+            height: auto;
+            contain: none;
+            margin-top: 15px;font-size: 14px;"
+      [disabled]="btnHabilitado" [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>
+  </div>
+</div>
+
+<div id="myModal3" class="modal3">
+
+  <div class="modal-content animated lightSpeedIn">
+
+    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{'color': genericService.getColorHex()}">
+      <ion-icon ios="md-close" md="md-close"></ion-icon>
+    </div>
+    <div style="width: 90%;
+      padding: 7px;
+      color: #fff;
+      border-radius: 4px;" [ngStyle]="{'background-color': genericService.getColorHex()}">Información
+      de pago</div>
+
+    <div class="resumen">Resumen de la compra</div>
+
+    <div class="resumen-proveedor" *ngIf="pagoActual">
+      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">
+        <div class="proveedor">
+          <div class="nombre">{{p.proveedor?.nombre}}</div>
+          <div class="precio">{{p.total | currency}}</div>
+
+          <div class="costo-envio">Costo de envío</div>
+          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>
+
+          <div class="costo-subtotal">Subtotal</div>
+          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>
+        </div>
+
+
+      </div>
+
+      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>
+      <div class="iva">*Costos incluyen iva.</div>
+
+      <ion-item>
+        <ion-label>Acepto términos y condiciones</ion-label>
+        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>
+      </ion-item>
+    </div>
+
+    <div style="width:100%">
+      <button ion-button block large style="padding: 10px;
+          height: auto;
+          contain: none;
+          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"
+        [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>
+      <button ion-button block large style="padding: 10px;
+            height: auto;
+            contain: none;
+            margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"
+        [ngStyle]="{'background-color': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>
+    </div>
+  </div>
+</div>
+
 
 <ion-content padding>
-
+  <div *ngIf="listaCarrito.carritoHistoricoDetalles && listaCarrito.carritoHistoricoDetalles?.length>0" class="ordenamiento" [ngStyle]="{'background-color': genericService.getColorHex()}">
+    <div class="texto-ordena">
+      Ordernar por precio
+    </div>
+    <div class="botones">
+      <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+        <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>
+      </button>
+    </div>
+    <div class="botones">
+      <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+        <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>
+      </button>
+    </div>
+  </div>
   <div>
     <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of listaCarrito.carritoHistoricoDetalles; let i = index">
       <!-- <div class="tacha">
@@ -32,8 +205,12 @@
         <div class="mas" (click)="incrementa(p)">
           <div [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">+</div>
         </div>
-      </div> 
+      </div>
     </div>
   </div>
 
 </ion-content>
+<ion-footer class="footer-button-class">
+  <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar
+    pedido</button>
+</ion-footer>

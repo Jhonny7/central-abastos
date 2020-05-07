@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>Mi historial</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div class="filtros" [ngStyle]="{'background-color' : genericService.getColorHex()}">
+      <button (click)="ordenPor(1)"><ion-icon name="ios-calendar-outline"></ion-icon></button>
+      <button (click)="ordenPor(2)"><ion-icon name="md-calendar"></ion-icon></button>
+      <button (click)="ordenPor(3)"><ion-icon name="ios-checkbox-outline"></ion-icon></button>
+  </div>
+
+  <ion-list *ngIf="pedidos && pedidos?.length > 0">
+    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">
+      <ion-avatar slot="start">
+        <img src="assets/imgs/pedidos/entrega.png" alt="">
+      </ion-avatar>
+      <div class="datos-tarjetas">
+        <div class="name">Pedido Num. <strong>{{p.id | number:'5.'}}</strong></div>
+        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>
+        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>
+        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>
+        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>
+      </div>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

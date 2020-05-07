@@ -40,7 +40,7 @@
   <div *ngIf="dataFilter.nombre.length > 0" class="contenedor-busqueda">
     <div class="resultado" *ngFor="let p of productosBuscados" (click)="viewDetail(p)">
       <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" alt=""></div>
-      <div class="r">{{ p.producto.nombre }}</div>
+      <div class="r">{{ p.producto.nombre }} - {{p.proveedor.nombre}}</div>
     </div>
 
     <div *ngIf="productosBuscados.length <= 0" class="no-en">

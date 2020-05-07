@@ -3,11 +3,16 @@ import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, AlertController, ModalController } from 'ionic-angular';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import { User } from '../../models/User';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { ValidationService } from '../../services/validation.service';
+import { CurrencyPipe } from '@angular/common';
+import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveedores';
+declare var Stripe;
 
 @Component({
   selector: 'page-carrito-historico',
@@ -22,6 +27,80 @@ export class CarritoHistoricoPage {
   public listaCarrito:any = null;
   
   public productosCarrito: any = [];
+  public listaCarritoReplica: any = [];
+
+  public stripe = Stripe('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+  //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
+  public card: any;
+
+  public cards: any = null;
+
+  public dataCard: any = {
+    tarj: "",
+    cvc: "",
+    dtime: ""
+  };
+
+  public pagoActual: any = null;
+
+  public objetoRegistro: any[] = [
+    {
+      name: "Nombre del contacto",
+      required: true,
+      length: 50,
+      type: "text",
+      formName: "name",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Teléfono",
+      required: true,
+      length: 10,
+      type: "number",
+      formName: "tel",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Correo electrónico",
+      required: true,
+      length: 100,
+      type: "email",
+      formName: "email",
+      value: null,
+      disabled: false
+    },
+    {
+      name: "Dirección",
+      required: true,
+      length: 200,
+      type: "text",
+      formName: "direc",
+      value: null,
+      disabled: true
+    },
+    {
+      name: "Código postal",
+      required: false,
+      length: 6,
+      type: "text",
+      formName: "cp",
+      value: null,
+      disabled: true
+    },
+  ];
+
+  public formGroup: FormGroup = null;
+
+  public btnHabilitado: boolean = true;
+
+  public data: any = null;
+
+  public objetoRegistroCopy: any = [];
+
+  public check: boolean = false;
+  
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -29,17 +108,59 @@ export class CarritoHistoricoPage {
     private alertaService: AlertaService,
     private loadingService: LoadingService,
     private localStorageEncryptService: LocalStorageEncryptService,
-    private events: Events) {
+    private events: Events,
+    private alertCtrl: AlertController,
+    private currencyPipe: CurrencyPipe,
+    public formBuilder: FormBuilder,
+    private modalController: ModalController) {
       this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
       this.listaCarrito = navParams.get("lista");
-
+      this.listaCarritoReplica = this.listaCarrito;
       this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-      console.log(this.listaCarrito);
       
+      this.getCards();
+  }
+
+  getCards() {
+    this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
+      console.log(response);
+      //quitar
+      this.cards = response;
+      this.cards.forEach(element => {
+        element.selected = false;
+      });
+      if (this.cards.length <= 0) {
+        //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
+      }
+    }, (error: HttpErrorResponse) => {
+      let err: any = error.error;
+      this.cards = null;
+      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    });
+  }
+
+  cerrar() {
+    let modal: any = document.getElementById("myModal");
+    modal.style.display = "none";
+    this.dataCard = {
+      tarj: "",
+      cvc: "",
+      dtime: ""
+    };
+    this.cards.forEach(element => {
+      element.selected = false;
+    });
   }
 
   ionViewDidLoad() {
+    let claseTabs: any = document.getElementsByClassName("tabbar");
+    claseTabs[0].style.display = "none";
+  }
+
+  ionViewWillLeave() {
+    let claseTabs: any = document.getElementsByClassName("tabbar");
+    claseTabs[0].style.display = "flex";
   }
 
   viewDetail(producto: any) {
@@ -210,5 +331,303 @@ export class CarritoHistoricoPage {
         producto.cantidad--;
       }
     });
+  }
+
+
+  infoContact() {
+    let modal: any = document.getElementById("myModal2");
+    //
+    let putObj: any = {};
+    this.objetoRegistro.forEach(item => {
+      console.log(item);
+
+      let tmp: any[] = [];
+      tmp[0] = null;
+      tmp[1] = [];
+      if (item.required) {
+        tmp[1].push(Validators.required);
+      }
+
+      if (item.type == "number") {
+        tmp[1].push(ValidationService.phoneValidator);
+        tmp[1].push(ValidationService.maxLengthValidator);
+        tmp[1].push(ValidationService.minLengthValidator);
+      }
+
+      if (item.type == "email") {
+        tmp[1].push(ValidationService.emailValidator);
+      }
+
+      if (item.type == "password") {
+        tmp[1].push(ValidationService.passwordValidator);
+      }
+
+      if (item.type == "select") {
+        tmp[0] = item.opts[0].value;
+      }
+
+      if (this.user) {
+
+      }
+
+      putObj[item.formName] = tmp;
+    });
+
+    this.formGroup = this.formBuilder.group(
+      putObj
+    );
+    //
+    modal.style.display = "block";
+  }
+
+  closeInfoContact() {
+    let modal: any = document.getElementById("myModal2");
+    modal.style.display = "none";
+
+    this.objetoRegistro.forEach(item => {
+      item.value = null;
+    });
+
+    this.formGroup = null;
+    this.btnHabilitado = true;
+  }
+
+  cerrarModal3() {
+    let modal: any = document.getElementById("myModal3");
+    modal.style.display = "none";
+  }
+
+  openModal3() {
+    let modal: any = document.getElementById("myModal3");
+    modal.style.display = "block";
+  }
+
+  /**Verifica validaciones */
+  ejecutaValidator() {
+    let validacion: number = 0;
+    for (const name in this.formGroup.controls) {
+
+      let n: any = this.formGroup.controls[name];
+
+      if (n.invalid) {
+        validacion++;
+
+      }
+      /*
+      if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
+        invalid.push(this.translatePipe.instant(String(name).toUpperCase()));
+        fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
+      } */
+    }
+    console.log(this.formGroup.controls);
+    console.log(validacion);
+
+    if (validacion <= 0) {
+      this.btnHabilitado = false;
+    } else {
+      this.btnHabilitado = true;
+    }
+  }
+
+  getMapa() {
+    let modal = this.modalController.create(HomeGeoProveedoresPage,
+      { fromModal: true });
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        if (data != null) {
+          console.log(data);
+          this.data = data.data;
+          this.objetoRegistro[3].value = this.data.direccion;
+          this.objetoRegistro[4].value = this.data.codigoPostal;
+          setTimeout(() => {
+            this.ejecutaValidator();
+          }, 1000);
+        }
+      }
+    });
+  }
+
+  precompra() {
+
+    this.objetoRegistroCopy = [];
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
+
+    let body: any = {
+      nombreContacto: this.objetoRegistroCopy[0].value,
+      telefonoContacto: this.objetoRegistroCopy[1].value,
+      correoContacto: this.objetoRegistroCopy[2].value,
+      direccionContacto: {
+        id: this.data.id ? this.data.id : null,
+        codigoPostal: this.data.codigoPostal,
+        direccion: this.data.direccion,
+        latitud: this.data.latitud,
+        longitud: this.data.longitud
+      },
+      productos: []
+    };
+
+
+    this.productosCarrito.forEach(item => {
+      body.productos.push({
+        cantidad: item.cantidad,
+        productoProveedorId: item.productoProveedorId
+      });
+    });
+
+    let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
+
+    this.loadingService.show().then(() => {
+      service.subscribe((response: any) => {
+        console.log(response);
+        this.pagoActual = response;
+        this.loadingService.hide();
+        //this.comprar();
+        this.closeInfoContact();
+        setTimeout(() => {
+          this.openModal3();
+        }, 300);
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+
+        this.loadingService.hide();
+        this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+      });
+    });
+  }
+
+  comprar() {
+    if (this.check) {
+      this.cerrarModal3();
+      let modal: any = document.getElementById("myModal");
+      modal.style.display = "block";
+      this.check = false;
+    } else {
+      this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
+    }
+  }
+
+  confirmar() {
+    let alert = this.alertCtrl.create({
+      title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
+      message: `Se realizará un cargo a su tarjeta por ${this.currencyPipe.transform(this.pagoActual.total)} ¿Estás de acuerdo?`,//this.translatePipe.instant("CONFIRM-LOGOUT"),
+      cssClass: this.genericService.getColorClassTWO(),
+      buttons: [
+        {
+          text: "No",//this.translatePipe.instant("CANCEL"),
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Si',
+          handler: () => {
+            //this.confirmar();
+            this.setupStripe();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  setupStripe() {
+
+    console.log(this.cards);
+
+    let position: any = this.cards.findIndex(
+      (carrito) => {
+        return carrito.selected;
+      }
+    );
+    let c: any = {
+      number: "4242424242424242",
+      cvc: "123",
+      exp_month: 12,
+      exp_year: 2025
+    }
+
+    let bandera: boolean = false;
+    if (this.cards[position]) {
+      console.log(this.cards[position]);
+      let item: any = this.cards[position];
+      let fechaFormat: any = item.fechaCaducidad.split("-");
+      item.expMont = fechaFormat[1];
+      item.expYear = fechaFormat[0];
+
+      c.number = item.numeroTarjeta;
+      c.cvc = item.numeroSeguridad;
+      c.exp_month = item.expMont;
+      c.exp_year = item.expYear;
+    } else if (this.dataCard.dtime.length == 0 || this.dataCard.tarj.length == 0 || this.dataCard.cvc.length == 0) {
+      bandera = true;
+    } else {
+      c.number = this.dataCard.tarj;
+      c.cvc = this.dataCard.cvc;
+
+      let fechaFormat: any = this.dataCard.dtime.split("-");
+      let expMont = fechaFormat[1];
+      let expYear = fechaFormat[0];
+
+      c.exp_month = expMont;
+      c.exp_year = expYear;
+    }
+    //this.stripe.createSource(this.card);
+    //console.log(a);
+    if (!bandera) {
+      Stripe.setPublishableKey('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+      this.loadingService.show().then(() => {
+        let clase: any = this;
+        Stripe.card.createToken(c, (status, response) => {
+
+          if (response.error) { // Problem!
+            clase.loadingService.hide();
+            clase.alertaService.errorAlertGeneric("Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta");
+          } else { // Token was created!
+
+            // Get the token ID:
+            //clase.loadingService.hide();
+            var token = response.id;
+            console.log(token);
+            console.log(response);
+            let body: any = {
+              pedidoId: clase.pagoActual.id,
+              token: token
+            };
+            let service: any = clase.genericService.sendPutRequest(`${environment.pedidos}/pago`, body);
+
+            service.subscribe((response: any) => {
+              clase.loadingService.hide();
+              console.log(response);
+              clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
+              clase.cerrar();
+            }, (error: HttpErrorResponse) => {
+              console.log(error);
+
+              clase.loadingService.hide();
+              clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+            });
+          }
+        });
+      });
+    } else {
+      this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+    }
+  }
+
+  up(){
+    this.listaCarrito = this.listaCarritoReplica;
+    this.listaCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
+        return mayor.precio - menor.precio;
+      });
+  }
+
+  down(){
+    this.listaCarrito = this.listaCarritoReplica;
+    this.listaCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
+        return menor.precio - mayor.precio;
+      });
   }
 }

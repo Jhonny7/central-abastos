@@ -10,6 +10,24 @@
     <ion-spinner></ion-spinner>
   </div>
 
+  <div *ngIf="articulos && articulos?.length>0" class="ordenamiento" [ngStyle]="{'background-color': genericService.getColorHex()}">
+    <div class="texto-ordena">
+      Ordernar por precio
+    </div>
+    <div class="botones">
+        <button ion-button outline style="width: 48%;" (click)="up()"
+        [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+          <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>
+        </button>
+    </div>
+    <div class="botones">
+        <button ion-button outline style="width: 48%;" (click)="down()"
+        [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+          <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>
+        </button>
+    </div>
+  </div>
+
   <div *ngFor="let articulo of articulos">
     <div class="titulo-wrapper">
       <div class="seccion" [ngStyle]="{'color':color}">

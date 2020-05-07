@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>Pedido <strong>{{pedido.id | number:'5.'}}</strong></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <section class="estatus">
+    <div class="number">Costo <strong>{{pedido.total | currency}}</strong></div>
+    <div class="number">Fecha Solicitud <strong>{{pedido.fechaAlta}}</strong></div>
+    <div class="number" *ngIf="pedido.fechaEntrega">Fecha Entrega <strong>{{pedido.fechaEntrega}}</strong></div>
+    <div class="number">Estatus <strong>{{pedido.estatus.nombre}}</strong></div>
+  </section>
+
+  <section class="mapa">
+    <div class="direccion" [ngStyle]="{'background-color' : genericService.getColorHex()}">Dirección de entrega</div>
+    <div class="direct">{{pedido.direccionContacto.direccion}}</div>
+    <div id="map_canvas" class="mapita-google"></div>
+  </section>
+ 
+  <section class="botones">  
+    <button class="boton-terminar" [ngStyle]="{'background-color' : genericService.getColorHex()}"><ion-icon name="md-done-all"></ion-icon>Terminar servicio</button>
+    <button class="boton-detalle" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="verDetalle()"><ion-icon name="ios-clipboard-outline"></ion-icon>Ver detalle</button>
+    <button class="boton-chat" [ngStyle]="{'background-color' : genericService.getColorHex()}">
+      <ion-icon name="ios-chatbubbles-outline"></ion-icon>
+      Chat
+    </button>
+    <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}"><ion-icon name="ios-document-outline"></ion-icon>Ver recibo</button>
+    <button class="boton-problemas" [ngStyle]="{'background-color' : genericService.getColorHex()}"><ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido</button>
+  </section>
+
+</ion-content>

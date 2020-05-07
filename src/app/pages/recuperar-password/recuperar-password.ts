@@ -21,5 +21,8 @@ export class RecuperarPasswordPage {
     this.navCtrl.pop();
   }
 
+  cambio(){
+    
+  }
 
 }

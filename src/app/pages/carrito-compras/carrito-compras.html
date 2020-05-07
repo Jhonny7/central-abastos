@@ -32,7 +32,7 @@
 
 
     <div class="form-row">
-      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj">
+      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">
 
       <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac
         placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>
@@ -163,6 +163,25 @@
 </div>
 
 <ion-content padding>
+
+    <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{'background-color': genericService.getColorHex()}">
+        <div class="texto-ordena">
+          Ordernar por precio
+        </div>
+        <div class="botones">
+            <button ion-button outline style="width: 48%;" (click)="up()"
+            [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>
+            </button>
+        </div>
+        <div class="botones">
+            <button ion-button outline style="width: 48%;" (click)="down()"
+            [ngStyle]="{'color': genericService.getColorHex(), 'border-color': genericService.getColorHex()}">
+              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>
+            </button>
+        </div>
+      </div>
+
   <div>
     <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productosCarrito; let i = index">
       <!-- <div class="tacha">

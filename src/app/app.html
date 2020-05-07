@@ -5,12 +5,17 @@
                   background-size: 100%;
                   background-position: center center;">
       <img src="assets/imgs/logo.png" alt="Fry" class="animated myImagen" style="top: 16px !important;left: 16px !important;height: 65px !important;border-radius: 0px !important;width: 67px !important;opacity: -1.6;">
-      <div class="menu-bottom" style="color: #ffffff;
-        font-size: x-large;
-        text-shadow: 1px 1px 2px #000000;
-        font-weight: 700;
-        font-family: sans-serif;">
-        Menu
+      <div class="menu-bottom" style="color: rgba(0, 0, 0, 0.99);
+      background-color: rgba(255, 255, 255, 0.74);
+      padding: 7px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: sans-serif;
+      border-radius: 4px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;">
+        {{user.nombre}}
       </div>
     </ion-item>
   </ion-header>

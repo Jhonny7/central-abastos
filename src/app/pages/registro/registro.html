@@ -1,5 +1,9 @@
-<ion-icon id="icn-1" name="ios-arrow-back" class="arrow-generada" (click)="regresar()"></ion-icon>
-<ion-content>
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title style="padding: 0px;">Registro</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
 
   <div class="contenedor-step-3">
     <div class="sub-contenedor">
@@ -13,27 +17,22 @@
       <div class="formulario">
         <form [formGroup]="formGroup">
           <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
-            <span>{{dato.name}}</span>
+            <span [ngStyle]="{'vertical-align': dato.name == 'Género' ? 'super' : ''}">{{dato.name}}</span>
 
             <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"
-              [(ngModel)]="dato.value" maxlength="{{dato.length}}"
-              *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'">
+              [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'">
 
             <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
-              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac
-              
-              (ionChange)="ejecutaValidator()" *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
+              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"
+              *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
 
             <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">
-              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value"
-                (ionChange)="ejecutaValidator()">
+              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">
               </ion-checkbox>
             </ion-col>
 
-            <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" 
-              okText="Ok" cancelText="Cancelar" interface="action-sheet"
-              (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" 
-              formControlName="{{dato.formName}}">
+            <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
+              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
               <ion-option *ngFor="let op of dato.opts" [value]="op.id">
                 {{op.value}}
               </ion-option>
@@ -43,7 +42,7 @@
             </app-control-messages>
           </div>
           <div class="contenedor-boton">
-            <button [disabled]="btnHabilitado" (click)="registrar()">Registrarme</button>
+            <button [disabled]="btnHabilitado" (click)="registrar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Registrarme</button>
           </div>
         </form>
 

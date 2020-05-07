@@ -316,7 +316,6 @@ export class HomeGeoProveedoresPage {
       latitude = Number(this.direccion.direccion.latitud);
       longitude = Number(this.direccion.direccion.longitud);
     }
-    console.log(latitude, longitude);
     let myLatLng = { lat: latitude, lng: longitude };
 
     // create map
@@ -342,6 +341,42 @@ export class HomeGeoProveedoresPage {
         id: "marcador-1",
         draggable: true,
         icon: environment.icons['casa'].icon
+      });
+
+      this.data.latitud = latitude;
+      this.data.longitud = longitude;
+      let params = new HttpParams()
+      params = params.set('latlng', `${this.data.latitud},${this.data.longitud}`);
+      params = params.set('key', environment.keyGoogle);
+
+      console.log(params);
+
+      this.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
+        console.log(response);
+        this.loadingService.hide();
+        this.map.setCenter(this.marker.position);
+        this.marker.setMap(this.map);
+
+        let results: any = response.results;
+        if (results) {
+          /*
+          codigoPostal: "89670"
+          direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
+          latitud: "22.9221196"
+          longitud: "-98.0690771"
+          */
+          this.data.direccion = results[0].formatted_address;
+          this.data.codigoPostal = "";
+        }
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        this.marker.setPosition(myLatLng);
+
+        this.map.setCenter(myLatLng);
+        this.marker.setMap(this.map);
+
+
+        this.alertaService.errorAlertGeneric("No se obtuvo información del marcador, intenta nuevamente");
       });
 
       component.marker.addListener('click', () => {
@@ -483,9 +518,9 @@ export class HomeGeoProveedoresPage {
     this.data = {};
   }
 
-  backData(){
+  backData() {
     console.log(this.data);
-    
+
     this.viewCtrl.dismiss({ data: this.data });
   }
 

@@ -145,4 +145,20 @@ export class ArticuloProductosPage {
     this.productos = this.productos.filter((item: any) => item.nombre.toUpperCase().includes(this.palabra.toUpperCase()));
 
   }
+
+  up(){
+    this.palabra = "";
+    this.productos = this.replicaProductos;
+    this.productos.sort((mayor,menor)=>{
+        return mayor.precio - menor.precio;
+      });
+  }
+
+  down(){
+    this.palabra = "";
+    this.productos = this.replicaProductos;
+    this.productos.sort((mayor,menor)=>{
+        return menor.precio - mayor.precio;
+      });
+  }
 }

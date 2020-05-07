@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+      <ion-title>Detalle pedido <strong>{{id | number:'5.'}}</strong></ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+    <div *ngFor="let p of detalle" class="separador">
+        <div class="proveedor">
+          <div class="nombre" style="font-weight: 900;
+          font-size: 18px;" [ngStyle]="{'color': genericService.getColorHex()}">{{p.proveedor?.nombre}}</div>
+          <div class="precio">{{p.total | currency}}</div>
+
+          <div class="costo-envio">Costo de envío</div>
+          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>
+
+          <div class="costo-subtotal">Subtotal</div>
+          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>
+        </div>
+
+
+      </div>
+</ion-content>

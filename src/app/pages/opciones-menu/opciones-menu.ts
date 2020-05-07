@@ -1,3 +1,4 @@
+import { CambioContraseniaPage } from '../cambio-contrasenia/cambio-contrasenia';
 import { GenericService } from './../../services/generic.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { Component } from '@angular/core';
@@ -98,8 +99,12 @@ export class OpcionesMenuPage {
     this.events.publish("changeColor");
   }
 
-  login(){
+  login() {
     this.viewCtrl.dismiss();
     this.app.getRootNav().push(LoginPage);
+  }
+
+  cambiarContra() {
+    this.navCtrl.push(CambioContraseniaPage);
   }
 }

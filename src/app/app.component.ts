@@ -1,3 +1,4 @@
+import { HistorialPedidosPage } from './pages/historial-pedidos/historial-pedidos';
 import { GenericService } from './services/generic.service';
 import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-proveedores';
 import { ListaCarritoComprasPage } from './pages/lista-carrito-compras/lista-carrito-compras';
@@ -44,7 +45,8 @@ export class MyApp {
 
       /**Armar menu */
       this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
-      this.pages.push(new Menu("Drecciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
+      this.pages.push(new Menu("Direcciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
+      this.pages.push(new Menu("Mi historial", "assets/imgs/menu/historial.png", "#7d3a63", HistorialPedidosPage));
       /** */
 
       this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");

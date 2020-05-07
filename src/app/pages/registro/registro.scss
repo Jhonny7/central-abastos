@@ -19,11 +19,15 @@ page-registro {
     position: inherit;
   }
   .contenedor-step-3 {
-    display: flex;
+    /* display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 9px;
+    padding: 9px; */
+    background-color: rgb(232, 232, 232);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 1px 1px 3px #123;
     .sub-contenedor {
       color: #c7c5c5;
       width: 100%;
@@ -90,6 +94,7 @@ page-registro {
               }
               button{
                 position: absolute;
+                background-color: rgba(255, 255, 255, 0.68);
               }
             }
 
@@ -106,6 +111,7 @@ page-registro {
               width: 55%;
               display: inline-block;
               color: #716b6b;
+              vertical-align: top;
             }
             .dt {
               border: 1px solid #c3bdbd;
@@ -122,6 +128,7 @@ page-registro {
               }
               button {
                 position: absolute;
+                background-color: rgba(255, 255, 255, 0.68);
               }
             }
           }
@@ -134,7 +141,7 @@ page-registro {
             margin: auto;
             text-align: center;
             button {
-              width: 91%;
+              width: 100%;
               padding: 10px;
               margin-top: 10px;
               background-color: #3b64bf;

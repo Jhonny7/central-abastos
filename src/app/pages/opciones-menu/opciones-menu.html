@@ -23,6 +23,11 @@
       Listas de carrito
     </button>
 
+    <button ion-item (click)="cambiarContra()" *ngIf="user">
+      <ion-icon name="ios-construct-outline" style="font-size: 2.4rem;"></ion-icon>
+      Cambiar contraseña
+    </button>
+
     <button ion-item (click)="logout()" *ngIf="user">
       <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>
       Cerrar sesión

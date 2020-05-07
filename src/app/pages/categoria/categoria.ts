@@ -21,6 +21,8 @@ export class CategoriaPage {
   public categoria: any = null;
   public articulos: any = null;
 
+  public articulosReplica: any = null;
+
   public env: any = environment;
 
   public user: User = null;
@@ -68,7 +70,7 @@ export class CategoriaPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       //this.user.parametros.pantalla_proveedores = "N";
-      if(this.user.parametros.pantalla_proveedores == "S"){
+      if(this.user && this.user.parametros.pantalla_proveedores == "S"){
         this.genericService.sendGetRequest(`${environment.proveedorProductos}/producto/${producto.id}`).subscribe((response: any) => {
           console.log(response);
           this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });
@@ -124,9 +126,29 @@ export class CategoriaPage {
       subscribe((res: any) => {
         console.log(res);
         this.articulos = res.productosTipoArticulo;
+        this.articulosReplica = this.articulos;
       }, (err: HttpErrorResponse) => {
 
       });
   }
 
+  up(){
+    this.articulos = this.articulosReplica;
+    this.articulos.forEach(item1 => {
+      item1.productos.sort((mayor,menor)=>{
+        return mayor.precio - menor.precio;
+      });
+    });
+    console.log(this.articulos);
+    
+  }
+
+  down(){
+    this.articulos = this.articulosReplica;
+    this.articulos.forEach(item1 => {
+      item1.productos.sort((mayor,menor)=>{
+        return menor.precio - mayor.precio;
+      });
+    });
+  }
 }

@@ -1,3 +1,9 @@
+import { AcercaDePage } from './pages/acerca-de/acerca-de';
+import { AyudaPage } from './pages/ayuda/ayuda';
+import { CambioContraseniaPage } from './pages/cambio-contrasenia/cambio-contrasenia';
+import { PerfilPage } from './pages/perfil/perfil';
+import { ProblemasPedidoPage } from './pages/problemas-pedido/problemas-pedido';
+import { RecuperaContraseniaPage } from './pages/recupera-contrasenia/recupera-contrasenia';
 import { MapaProveedoresPage } from './pages/mapa-proveedores/mapa-proveedores';
 import { CategoriaPage } from './pages/categoria/categoria';
 
@@ -38,6 +44,13 @@ import { CarritoHistoricoPage } from './pages/carrito-historico/carrito-historic
 import { DireccionesPage } from './pages/direcciones/direcciones';
 import { ComparaPreciosProveedorPage } from './pages/compara-precios-proveedor/compara-precios-proveedor';
 import { ArticuloProveedoresPage } from './pages/articulo-proveedores/articulo-proveedores';
+import { HistorialPedidosPage } from './pages/historial-pedidos/historial-pedidos';
+import { HistorialPedidosDetailPage } from './pages/historial-pedidos-detail/historial-pedidos-detail';
+import { PedidosDetailPage } from './pages/pedidos-detail/pedidos-detail';
+import { TerminoServicioPage } from './pages/termino-servicio/termino-servicio';
+import { TerminosCondicionesPage } from './pages/terminos-condiciones/terminos-condiciones';
+import { ReciboPagoPage } from './pages/recibo-pago/recibo-pago';
+import { InfoPage } from './pages/info/info';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -72,7 +85,21 @@ export function createTranslateLoader(http: HttpClient) {
     DireccionesPage,
     MapaProveedoresPage,
     ComparaPreciosProveedorPage,
-    ArticuloProveedoresPage
+    ArticuloProveedoresPage,
+    HistorialPedidosPage,
+    HistorialPedidosDetailPage,
+    PedidosDetailPage,
+
+    RecuperaContraseniaPage,
+    TerminoServicioPage,
+    TerminosCondicionesPage,
+    ReciboPagoPage,
+    ProblemasPedidoPage,
+    PerfilPage,
+    InfoPage,
+    CambioContraseniaPage,
+    AyudaPage,
+    AcercaDePage
   ],
   imports: [
     BrowserModule,
@@ -115,7 +142,21 @@ export function createTranslateLoader(http: HttpClient) {
     DireccionesPage,
     MapaProveedoresPage,
     ComparaPreciosProveedorPage,
-    ArticuloProveedoresPage
+    ArticuloProveedoresPage,
+    HistorialPedidosPage,
+    HistorialPedidosDetailPage,
+    PedidosDetailPage,
+
+    RecuperaContraseniaPage,
+    TerminoServicioPage,
+    TerminosCondicionesPage,
+    ReciboPagoPage,
+    ProblemasPedidoPage,
+    PerfilPage,
+    InfoPage,
+    CambioContraseniaPage,
+    AyudaPage,
+    AcercaDePage
   ],
   providers: [
     StatusBar,

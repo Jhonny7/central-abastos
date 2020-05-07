@@ -41534,6 +41534,37 @@ page-articulo-proveedores .card .contenedor-carrito .mas div {
   color: #3b64bf;
 }
 
+page-cambio-contrasenia .correo {
+  padding: 15px;
+  background-color: #ecebeb;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 1px 2px #b5b5b5;
+  box-shadow: 0px 1px 2px #b5b5b5;
+  margin-top: 40%;
+}
+
+page-cambio-contrasenia .correo div {
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+page-cambio-contrasenia .correo input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #afafaf;
+  border-radius: 4px;
+}
+
+page-cambio-contrasenia .boton {
+  padding: 14px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+}
+
 page-carrito-compras .card {
   display: inline-block;
   position: relative;
@@ -42034,7 +42065,7 @@ page-carrito-historico .card .contenedor-carrito {
 
 page-carrito-historico .card .contenedor-carrito .menos {
   display: inline-block;
-  width: 33%;
+  width: 32%;
   text-align: center;
 }
 
@@ -42410,6 +42441,34 @@ page-categoria .scrolling-wrapper .sin-fotos div img {
 page-categoria .scrolling-wrapper .sin-fotos div span {
   display: inline-block;
   font-size: 10px;
+}
+
+.ordenamiento {
+  color: #fff;
+  background-color: #3b64c1;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.ordenamiento .texto-ordena {
+  display: inline-block;
+  width: 63%;
+  font-size: 17px;
+  vertical-align: sub;
+}
+
+.ordenamiento .botones {
+  display: inline-block;
+  width: 17%;
+}
+
+.ordenamiento .botones button {
+  width: 100% !important;
+  color: white !important;
+  border-color: white !important;
+  padding: 7px;
+  margin: 0px;
+  height: auto;
 }
 
 page-chat .contenedor-chat .uno {
@@ -43325,6 +43384,81 @@ page-filtro-producto ion-item .item-inner {
   }
 }
 
+page-historial-pedidos .item {
+  border-bottom: 1px solid #ddd;
+}
+
+page-historial-pedidos ion-avatar {
+  vertical-align: super;
+}
+
+page-historial-pedidos .filtros {
+  padding: 10px;
+  width: 100%;
+  background-color: #be3b3b;
+}
+
+page-historial-pedidos .filtros button {
+  display: inline-block;
+  width: 32.4%;
+  padding: 7px;
+  font-size: 21px;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.27);
+  border-radius: 4px;
+}
+
+page-historial-pedidos-detail .mapa {
+  height: 50%;
+}
+
+page-historial-pedidos-detail .mapa .direccion {
+  padding: 10px;
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  background-color: #be3b3b;
+  border-radius: 4px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+page-historial-pedidos-detail .mapa .direct {
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+page-historial-pedidos-detail .mapa #map_canvas {
+  height: 100%;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 5px #b3b3b3;
+  box-shadow: 0px 0px 5px #b3b3b3;
+}
+
+page-historial-pedidos-detail .botones {
+  margin-top: 50%;
+  margin-bottom: 10%;
+}
+
+page-historial-pedidos-detail .botones button {
+  padding: 10px;
+  display: inline-block;
+  width: 49%;
+  font-size: 13px;
+  background-color: #be3b3b;
+  color: #fff;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+page-historial-pedidos-detail .botones button ion-icon {
+  margin-right: 5px;
+}
+
+page-historial-pedidos-detail .botones .boton-problemas {
+  width: 100% !important;
+}
+
 page-home .card-super {
   padding: 10px;
 }
@@ -43362,7 +43496,7 @@ page-home .card-super .cont .contenedor-tres {
 
 page-home .card-super .cont .contenedor-tres .contenedor-int {
   display: inline-block;
-  width: 32%;
+  width: 33%;
   padding: 10px;
   text-align: center;
 }
@@ -43523,7 +43657,7 @@ page-home .scrolling-wrapper-flexbox {
 }
 
 page-home .scrolling-wrapper-flexbox .promociones {
-  width: 50%;
+  width: 63%;
   display: inline-block;
   margin: 4px;
   -webkit-box-shadow: 0px 1px 3px #d2d1d1;
@@ -43577,6 +43711,8 @@ page-home .scrolling-wrapper-flexbox .promociones .info .titulo {
   color: #3c3f42;
   margin: 0px;
   margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 4px 4px 0px 0px;
 }
 
 page-home .scrolling-wrapper-flexbox .promociones .info .subtitulo {
@@ -43584,6 +43720,8 @@ page-home .scrolling-wrapper-flexbox .promociones .info .subtitulo {
   margin: 0px;
   margin-bottom: 10px;
   text-shadow: 1px 0px 1px #fff;
+  background-color: rgba(255, 255, 255, 0.92);
+  border-radius: 0px 0px 4px 4px;
 }
 
 page-home .scrolling-wrapper {
@@ -44403,6 +44541,85 @@ page-opciones-menu .rowi .tema-4 button {
   margin: auto;
 }
 
+page-pedidos-detail .separador {
+  border-bottom: 1px solid #dedede;
+  padding-bottom: 8px;
+}
+
+page-pedidos-detail .separador .proveedor {
+  width: 100%;
+}
+
+page-pedidos-detail .separador .proveedor .nombre {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+}
+
+page-pedidos-detail .separador .proveedor .precio {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+  font-weight: 600;
+}
+
+page-pedidos-detail .separador .proveedor .costo-envio {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+}
+
+page-pedidos-detail .separador .proveedor .precio-envio {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+  font-weight: 600;
+}
+
+page-pedidos-detail .separador .proveedor .costo-subtotal {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+}
+
+page-pedidos-detail .separador .proveedor .precio-subtotal {
+  display: inline-block;
+  font-size: 15px;
+  width: 49%;
+  font-weight: 600;
+}
+
+page-recupera-contrasenia .correo {
+  padding: 15px;
+  background-color: #ecebeb;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 1px 2px #b5b5b5;
+  box-shadow: 0px 1px 2px #b5b5b5;
+  margin-top: 40%;
+}
+
+page-recupera-contrasenia .correo div {
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+}
+
+page-recupera-contrasenia .correo input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #afafaf;
+  border-radius: 4px;
+}
+
+page-recupera-contrasenia .boton {
+  padding: 14px;
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 16px;
+}
+
 page-registro .avatar {
   margin-top: 33px;
   text-align: center;
@@ -44419,20 +44636,16 @@ page-registro .item-cover {
 }
 
 page-registro .contenedor-step-3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  height: 100%;
-  padding: 9px;
+  /* display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 9px; */
+  background-color: #e8e8e8;
+  padding: 10px;
+  border-radius: 4px;
+  -webkit-box-shadow: 1px 1px 3px #123;
+  box-shadow: 1px 1px 3px #123;
 }
 
 page-registro .contenedor-step-3 .sub-contenedor {
@@ -44508,6 +44721,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-select button {
   position: absolute;
+  background-color: rgba(255, 255, 255, 0.68);
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input span {
@@ -44524,6 +44738,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
   width: 55%;
   display: inline-block;
   color: #716b6b;
+  vertical-align: top;
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input .dt {
@@ -44544,6 +44759,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input .dt button {
   position: absolute;
+  background-color: rgba(255, 255, 255, 0.68);
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input:nth-child(1) {
@@ -44556,7 +44772,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-bo
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-boton button {
-  width: 91%;
+  width: 100%;
   padding: 10px;
   margin-top: 10px;
   background-color: #3b64bf;

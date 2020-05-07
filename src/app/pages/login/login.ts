@@ -9,6 +9,7 @@ import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { TabsPage } from '../tabs/tabs';
+import { RecuperaContraseniaPage } from '../recupera-contrasenia/recupera-contrasenia';
 
 @Component({
   selector: 'page-login',
@@ -97,6 +98,10 @@ export class LoginPage {
 
   goToRegister() {
     this.navCtrl.push(RegistroPage);
+  }
+
+  olvideContrasenia(){
+    this.navCtrl.push(RecuperaContraseniaPage);
   }
 
 }

@@ -9,7 +9,6 @@ export const environment = {
   secciones: `${pathPrincipal}seccions`,
   categorias: `${pathPrincipal}categorias`,
   proveedores: `${pathPrincipal}proveedors`,
-
   proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
 
   registro: `${pathPrincipal}register`,
@@ -23,6 +22,10 @@ export const environment = {
   direcciones: `${pathPrincipal}usuario-direcciones`,
   tipoDirecciones: `${pathPrincipal}tipo-direcciones`,
   pedidos: `${pathPrincipal}pedidos`,
+  usuarios: `${pathPrincipal}usuarios`,
+
+  cambioContraseña: `${pathPrincipal}account/change-password`,
+  reset: `${pathPrincipal}account/reset-password/init`,
   logout: null,
   icons: {
     persona: {
