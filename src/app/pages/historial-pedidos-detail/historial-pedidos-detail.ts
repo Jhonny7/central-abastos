@@ -6,6 +6,7 @@ import { LocalStorageEncryptService } from '../../services/local-storage-encrypt
 import { AlertaService } from '../../services/alerta.service';
 import { environment } from '../../../environments/environment.prod';
 import { PedidosDetailPage } from '../pedidos-detail/pedidos-detail';
+import { ProblemasPedidoPage } from '../problemas-pedido/problemas-pedido';
 declare var google;
 
 @Component({
@@ -83,6 +84,10 @@ export class HistorialPedidosDetailPage {
 
   verDetalle(){
     this.navCtrl.push(PedidosDetailPage,{detalle: this.pedido.pedidoProveedores, id:this.pedido.id});
+  }
+
+  problemasPedido(){
+    this.navCtrl.push(ProblemasPedidoPage);
   }
 
 }

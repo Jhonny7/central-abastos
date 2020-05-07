@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { GenericService } from '../../services/generic.service';
+import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
+import { AlertaService } from '../../services/alerta.service';
 
-/**
- * Generated class for the ProblemasPedidoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-problemas-pedido',
   templateUrl: 'problemas-pedido.html',
 })
 export class ProblemasPedidoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    private genericService: GenericService,
+    private localStorageEncryptService: LocalStorageEncryptService,
+    private alertaService: AlertaService) {
   }
 
   ionViewDidLoad() {

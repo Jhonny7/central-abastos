@@ -142,6 +142,14 @@ export class GenericService {
         return retornar;
     }
 
+    imgLogin(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let armado:string = "assets/imgs/login/loginFondo";
+        let retornar:any = color == '#3b64c0' ? `${armado}.png` : color == '#be3b3b' ? `${armado}2.png` : color == '#3bb8be' ? `${armado}3.png` : `${armado}4.png`;
+        //console.log(retornar);
+        return retornar;
+    }
+
     getUser(){
         return this.localStorageEncryptService.getFromLocalStorage("userSession");
     }

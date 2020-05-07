@@ -1,6 +1,7 @@
 <!-- background-color: #258649; -->
-<ion-icon id="icn-5" name="ios-arrow-back" class="arrow-generada" (click)="regresar()" [ngStyle]="{'color': color}"></ion-icon>
-<ion-content class="max-contenedor" padding style="background-image: url(assets/imgs/login/loginFondo.png);">
+<ion-icon *ngIf="env.perfil.activo == 1" id="icn-5" name="ios-arrow-back" class="arrow-generada" (click)="regresar()" [ngStyle]="{'color': color}"></ion-icon>
+<ion-content class="max-contenedor" padding style="background-image: url(assets/imgs/login/loginFondo.png);"
+[style.background-image]="'url('+genericService.imgLogin()+')'">
   <section class="container animated rubberBand">
     <section class="flex">
       <img src="assets/imgs/logo.png" alt="" class="animated fadeIn">
@@ -14,13 +15,13 @@
           </section>
         </div>
 
-        <button (click)="login()">{{'LOGIN' | translate}}</button>
+        <button (click)="login()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{'LOGIN' | translate}}</button>
       </section>
       <section class="registrate">
-        <a (click)="goToRegister()">¿Aún no te has registrado?</a>
+        <a (click)="goToRegister()" [ngStyle]="{'color': genericService.getColorHex()}">¿Aún no te has registrado?</a>
       </section>
       <section class="registrate">
-        <a (click)="olvideContrasenia()">Olvidé mi contraseña</a>
+        <a (click)="olvideContrasenia()" [ngStyle]="{'color': genericService.getColorHex()}">Olvidé mi contraseña</a>
       </section>
     </section>
   </section>

@@ -230,9 +230,17 @@ export class RegistroPage {
           size:0
         },
       };
+      let path:string = environment.registro;
+      
+      if(environment.perfil.activo == 2){
+        body.tipoPersona = 2;
+        path = `${environment.registro}/proveedor`;
+      }
 
       this.loadingService.show().then(()=>{
-        this.genericService.sendPostRequest(environment.registro, body).subscribe((response:any)=>{
+
+        
+        this.genericService.sendPostRequest(path, body).subscribe((response:any)=>{
           console.log(response);
           this.loadingService.hide();
           this.alertaService.successAlertGeneric("Registro exitoso");

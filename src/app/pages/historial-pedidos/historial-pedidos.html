@@ -8,7 +8,7 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <div class="filtros" [ngStyle]="{'background-color' : genericService.getColorHex()}">
+  <div class="filtros" [ngStyle]="{'background-color' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">
       <button (click)="ordenPor(1)"><ion-icon name="ios-calendar-outline"></ion-icon></button>
       <button (click)="ordenPor(2)"><ion-icon name="md-calendar"></ion-icon></button>
       <button (click)="ordenPor(3)"><ion-icon name="ios-checkbox-outline"></ion-icon></button>

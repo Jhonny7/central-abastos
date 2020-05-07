@@ -1,3 +1,6 @@
+import { AyudaPage } from './pages/ayuda/ayuda';
+import { AcercaDePage } from './pages/acerca-de/acerca-de';
+import { PerfilPage } from './pages/perfil/perfil';
 import { HistorialPedidosPage } from './pages/historial-pedidos/historial-pedidos';
 import { GenericService } from './services/generic.service';
 import { HomeGeoProveedoresPage } from './pages/home-geo-proveedores/home-geo-proveedores';
@@ -15,6 +18,9 @@ import { LocalStorageEncryptService } from './services/local-storage-encrypt.ser
 import { Menu } from './models/Menu';
 import { User } from './models/User';
 import { DireccionesPage } from './pages/direcciones/direcciones';
+import { InfoPage } from './pages/info/info';
+import { TerminosCondicionesPage } from './pages/terminos-condiciones/terminos-condiciones';
+import { environment } from '../environments/environment.prod';
 
 @Component({
   templateUrl: 'app.html'
@@ -44,17 +50,45 @@ export class MyApp {
       this.initializeLanguage();
 
       /**Armar menu */
-      this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
-      this.pages.push(new Menu("Direcciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
-      this.pages.push(new Menu("Mi historial", "assets/imgs/menu/historial.png", "#7d3a63", HistorialPedidosPage));
+      switch (environment.perfil.activo) {
+        case 1:
+          this.pages.push(new Menu("Mi perfil", "assets/imgs/perfil/social-media.png", "#7d3a63", PerfilPage));
+          this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
+          this.pages.push(new Menu("Direcciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
+          this.pages.push(new Menu("Mi historial", "assets/imgs/menu/historial.png", "#7d3a63", HistorialPedidosPage));
+
+          this.pages.push(new Menu("Acerca de", "assets/imgs/menu/interface.png", "#7d3a63", AcercaDePage));
+          this.pages.push(new Menu("Información de la app", "assets/imgs/menu/signs.png", "#7d3a63", InfoPage));
+          this.pages.push(new Menu("Contacto", "assets/imgs/menu/logotype.png", "#7d3a63", AyudaPage));
+          this.pages.push(new Menu("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", TerminosCondicionesPage));
+          break;
+
+        case 2:
+          break;
+      }
       /** */
 
       this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-      if (this.user) {
-        this.rootPage = TabsPage;
-      } else {
-        this.rootPage = TabsPage;
+
+      switch (environment.perfil.activo) {
+        case 1:
+          if (this.user) {
+            this.rootPage = TabsPage;
+          } else {
+            this.rootPage = TabsPage;
+          }
+          break;
+
+        case 2:
+          if (this.user) {
+            this.rootPage = TabsPage;
+          } else {
+            this.rootPage = LoginPage;
+          }
+          break;
       }
+
+
     });
 
     this.events.subscribe("reloadUser", data => {

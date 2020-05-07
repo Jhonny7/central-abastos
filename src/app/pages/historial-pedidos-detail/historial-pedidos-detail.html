@@ -27,7 +27,7 @@
       Chat
     </button>
     <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}"><ion-icon name="ios-document-outline"></ion-icon>Ver recibo</button>
-    <button class="boton-problemas" [ngStyle]="{'background-color' : genericService.getColorHex()}"><ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido</button>
+    <button class="boton-problemas" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="problemasPedido()"><ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido</button>
   </section>
 
 </ion-content>

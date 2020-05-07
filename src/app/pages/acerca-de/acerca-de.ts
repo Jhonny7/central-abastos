@@ -1,25 +1,32 @@
+import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AppVersion } from '@ionic-native/app-version';
 
-/**
- * Generated class for the AcercaDePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
-@IonicPage()
 @Component({
   selector: 'page-acerca-de',
   templateUrl: 'acerca-de.html',
 })
 export class AcercaDePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  public version:any = "1.0.0";
+  public anio:any = "2020";
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private genericService: GenericService,
+    private appVersion: AppVersion) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AcercaDePage');
+    this.appVersion.getAppName();
+    this.appVersion.getPackageName();
+    this.appVersion.getVersionCode();
+    this.appVersion.getVersionNumber().then((res)=>{
+      this.version = res;
+    });
+
+    this.anio = new Date().getFullYear();
   }
 
 }

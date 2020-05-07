@@ -2,7 +2,7 @@ import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheet, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,6 +10,8 @@ import { LocalStorageEncryptService } from '../../services/local-storage-encrypt
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { TranslateService } from '@ngx-translate/core';
 import { ValidationService } from '../../services/validation.service';
+import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
+import * as moment from "moment";
 
 @Component({
   selector: 'page-perfil',
@@ -85,14 +87,6 @@ export class PerfilPage {
           value: "Mujer"
         }
       ]
-    },
-    {
-      name: "Correo electrónico",
-      required: true,
-      length: 100,
-      type: "email",
-      formName: "email",
-      value: null
     }
   ];
 
@@ -108,6 +102,11 @@ export class PerfilPage {
   public btnHabilitado: boolean = true;
 
   public user: any = null;
+
+  public userResponse: any = null;
+
+  public env: any = environment;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -121,45 +120,7 @@ export class PerfilPage {
     private loadingService: LoadingService,
     private events: Events) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-    let putObj: any = {};
-    this.objetoRegistro.forEach(item => {
-      console.log(item);
-
-      let tmp: any[] = [];
-      tmp[0] = null;
-      tmp[1] = [];
-      if (item.required) {
-        tmp[1].push(Validators.required);
-      }
-
-      if (item.type == "number") {
-        tmp[1].push(ValidationService.phoneValidator);
-        tmp[1].push(ValidationService.maxLengthValidator);
-        tmp[1].push(ValidationService.minLengthValidator);
-      }
-
-      if (item.type == "email") {
-        tmp[1].push(ValidationService.emailValidator);
-      }
-
-      if (item.type == "password") {
-        tmp[1].push(ValidationService.passwordValidator);
-      }
-
-      if (item.type == "select") {
-        tmp[0] = item.opts[0].value;
-      }
-
-      if (this.user) {
-
-      }
-
-      putObj[item.formName] = tmp;
-    });
-
-    this.formGroup = this.formBuilder.group(
-      putObj
-    );
+    this.getDataUsuario();
 
     this.events.subscribe("reloadUser", data => {
       try {
@@ -170,19 +131,97 @@ export class PerfilPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PerfilPage');
+    moment.locale("ES");
+  }
+
+  getDataUsuario() {
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(`${environment.users}/${this.user.username}`).subscribe((response: any) => {
+        console.log(response);
+
+        this.objetoRegistro[0].value = response.firstName;
+        this.objetoRegistro[1].value = response.lastName;
+        this.objetoRegistro[2].value = response.motherLastName;
+        this.objetoRegistro[3].value = moment(response.fechaNacimiento, "DD/MM/YYYY").toDate().toISOString();
+        this.objetoRegistro[4].value = response.telefono;
+        this.objetoRegistro[5].value = response.genero;
+
+
+        this.userResponse = response;
+
+        let putObj: any = {};
+        this.objetoRegistro.forEach(item => {
+          console.log(item);
+
+          let tmp: any[] = [];
+          tmp[0] = null;
+          tmp[1] = [];
+          if (item.required) {
+            tmp[1].push(Validators.required);
+          }
+
+          if (item.type == "number") {
+            tmp[1].push(ValidationService.phoneValidator);
+            tmp[1].push(ValidationService.maxLengthValidator);
+            tmp[1].push(ValidationService.minLengthValidator);
+          }
+
+          if (item.type == "email") {
+            tmp[1].push(ValidationService.emailValidator);
+          }
+
+          if (item.type == "password") {
+            tmp[1].push(ValidationService.passwordValidator);
+          }
+
+          if (item.type == "select") {
+            tmp[0] = item.opts[0].value;
+          }
+
+
+
+          putObj[item.formName] = tmp;
+        });
+
+        this.formGroup = this.formBuilder.group(
+          putObj
+        );
+        this.btnHabilitado = false;
+
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
   }
 
   cambiarPerfil() {
     this.loadingService.show().then(() => {
+
+      /**
+       this.objetoRegistro[0].value = response.firstName;
+        this.objetoRegistro[1].value = response.lastName;
+        this.objetoRegistro[2].value = response.motherLastName;
+        this.objetoRegistro[3].value = moment(response.fechaNacimiento, "DD/MM/YYYY").toDate().toISOString();
+        this.objetoRegistro[4].value = response.telefono;
+        this.objetoRegistro[5].value = response.genero;
+       */
       let body: any = {
-        login: "proveedor2",
-        firstName: "Proveedor",
-        lastName: "Dos",
-        motherLastName: "Tres",
-        telefono: "8877665544",
-        genero: "M",
-        fechaNacimiento: "20/11/1979",
+        login: this.user.username,
+        firstName: this.objetoRegistro[0].value,
+        lastName: this.objetoRegistro[1].value,
+        motherLastName: this.objetoRegistro[2].value,
+        telefono: this.objetoRegistro[4].value,
+        genero: this.objetoRegistro[5].value,
+        fechaNacimiento: moment(this.objetoRegistro[3].value.split("T")[0], "YYYY-MM-DD").format("DD/MM/YYYY"),
+        adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+          contentType: "image/jpeg",
+          file: this.photo_url,
+          fileName: Math.floor(new Date().getTime()/1000.0).toString(),
+          size:0
+        },
       };
 
       this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
@@ -192,6 +231,81 @@ export class PerfilPage {
         this.loadingService.hide();
         this.alertaService.errorAlertGeneric("No se ha podido modificar tu perfil, intenta nuevamente");
       });
+    });
+  }
+
+  /**Verifica validaciones */
+  ejecutaValidator() {
+    let validacion: number = 0;
+    for (const name in this.formGroup.controls) {
+      let n: any = this.formGroup.controls[name];
+
+      if (n.value === 0) {
+        validacion++;
+      }
+      if (n.errors) {
+        validacion++;
+      }
+      /*
+      if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
+        invalid.push(this.translatePipe.instant(String(name).toUpperCase()));
+        fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
+      } */
+    }
+    console.log(this.formGroup.controls);
+
+    if (validacion <= 0) {
+      this.btnHabilitado = false;
+    } else {
+      this.btnHabilitado = true;
+    }
+  }
+
+  opcionesDeImagen() {
+    let buttonLabels = [this.translatePipe.instant("CAPTURE"), this.translatePipe.instant("SELECT")];
+    const options: ActionSheetOptions = {
+      title: '',
+      subtitle: '',
+      buttonLabels: buttonLabels,
+      addCancelButtonWithLabel: this.translatePipe.instant("CANCEL"),
+      addDestructiveButtonWithLabel: this.translatePipe.instant("DELETE"),
+      androidTheme: 1,
+      destructiveButtonLast: true
+    };
+    this.actionSheet.show(options).then((buttonIndex: number) => {
+      switch (buttonIndex) {
+        case 1:
+          this.takeFoto();
+          break;
+        case 2:
+          this.seleccionaImagen();
+          break;
+        case 3:
+          this.photo_url = null;
+          break;
+      }
+    });
+  }
+
+  takeFoto() {
+    this.options.sourceType = this.camera.PictureSourceType.CAMERA;
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.photo_url = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+  }
+
+  seleccionaImagen() {
+    this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.photo_url = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
     });
   }
 }

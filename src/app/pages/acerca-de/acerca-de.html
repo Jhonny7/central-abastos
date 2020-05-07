@@ -1,15 +1,25 @@
-<!--
-  Generated template for the AcercaDePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar>
-    <ion-title>acerca-de</ion-title>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title style="padding: 0px;">Acerca de</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+  <div class="animated fadeIn acerca">
+    <div>
+      <img src="assets/imgs/logo.png" alt="">
+    </div>
+    <strong [ngStyle]="{'color':genericService.getColorHex()}">Luegoluego</strong> 
 
+    <div>
+      Version
+
+    </div>
+    <strong [ngStyle]="{'color':genericService.getColorHex()}">{{version}}</strong>
+
+    <div>Desarrollado por</div>
+    <img src="assets/imgs/Logo-SharkTech.png" alt="">
+
+    <div><strong [ngStyle]="{'color':genericService.getColorHex()}">© Copyright {{anio}}</strong></div>
+  </div>
 </ion-content>

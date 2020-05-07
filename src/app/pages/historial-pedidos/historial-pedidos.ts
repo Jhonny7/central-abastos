@@ -39,6 +39,9 @@ export class HistorialPedidosPage {
     this.genericService.sendGetRequest(`${environment.pedidos}`).subscribe((response: any) => {
       console.log(response);
       this.pedidos = response;
+      if (this.pedidos.length <= 0) {
+        this.pedidos = null;
+      }
       this.pedidosReplica = this.pedidos;
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
@@ -68,7 +71,7 @@ export class HistorialPedidosPage {
       case 1:
         //fecha solicitud
         this.pedidos.sort((mayor, menor) => {
-          var dateA:any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB:any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          var dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
           return dateA - dateB;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });
@@ -76,7 +79,7 @@ export class HistorialPedidosPage {
       case 2:
         //fecha entrega
         this.pedidos.sort((mayor, menor) => {
-          var dateA:any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB:any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          var dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
           return dateA - dateB;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });

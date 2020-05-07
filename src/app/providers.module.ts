@@ -24,6 +24,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ChatService } from './services/chat.service';
 import { CurrencyPipe } from '@angular/common';
+import { AppVersion } from '@ionic-native/app-version';
 
 @NgModule({
     providers: [
@@ -54,7 +55,8 @@ import { CurrencyPipe } from '@angular/common';
         AndroidPermissions,
         QRScanner,
         ChatService,
-        CurrencyPipe
+        CurrencyPipe,
+        AppVersion
     ]
 })
 export class ProvidersModule { }

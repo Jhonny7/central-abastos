@@ -27,6 +27,7 @@ export class LoginPage {
 
   public color: any = "#3b64c0";
 
+  public env:any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

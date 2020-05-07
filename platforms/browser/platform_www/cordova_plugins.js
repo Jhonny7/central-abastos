@@ -460,6 +460,14 @@ module.exports = [
         "id": "cordova-plugin-qrscanner.QRScannerProxy",
         "pluginId": "cordova-plugin-qrscanner",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-app-version/www/AppVersionPlugin.js",
+        "id": "cordova-plugin-app-version.AppVersionPlugin",
+        "pluginId": "cordova-plugin-app-version",
+        "clobbers": [
+            "cordova.getAppVersion"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -479,7 +487,8 @@ module.exports.metadata =
     "cordova-open-native-settings": "1.5.2",
     "cordova.plugins.diagnostic": "5.0.1",
     "cordova-plugin-android-permissions": "1.0.2",
-    "cordova-plugin-qrscanner": "3.0.1"
+    "cordova-plugin-qrscanner": "3.0.1",
+    "cordova-plugin-app-version": "0.1.9"
 }
 // BOTTOM OF METADATA
 });
