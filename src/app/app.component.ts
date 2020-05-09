@@ -24,6 +24,9 @@ import { TerminosCondicionesPage } from './pages/terminos-condiciones/terminos-c
 import { environment } from '../environments/environment.prod';
 import { TabsProveedorPage } from './pages-proveedor/tabs/tabs';
 import { ProveedorPage } from './pages/recuperar-password/recuperar-password';
+import { FCM } from '@ionic-native/fcm';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { DocumentosPage } from './pages-proveedor/documentos/documentos';
 
 @Component({
   templateUrl: 'app.html'
@@ -44,18 +47,24 @@ export class MyApp {
     private app: App,
     private alertaService: AlertaService,
     private alertCtrl: AlertController,
-    private genericService: GenericService) {
+    private genericService: GenericService,
+    private fcm: FCM,
+    private screenOrientation: ScreenOrientation) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+      if (this.platform.is("ios") || this.platform.is("android")) {
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      }
       this.initializeLanguage();
 
       let firstTime = this.localStorageEncryptService.getFromLocalStorage("firstTime");
-      if(!firstTime){
+      if (!firstTime) {
         this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
-        this.localStorageEncryptService.setToLocalStorage("firstTime",1);
+        this.localStorageEncryptService.setToLocalStorage("firstTime", 1);
       }
       /**Armar menu */
       switch (environment.perfil.activo) {
@@ -74,6 +83,10 @@ export class MyApp {
           break;
 
         case 2:
+          this.pages.push(new Menu("Mi perfil", "assets/imgs/perfil/social-media.png", "#7d3a63", PerfilPage));
+
+          this.pages.push(new Menu("Mis documentos", "assets/imgs/menu/file.png", "#7d3a63", DocumentosPage));
+
           this.pages.push(new Menu("Acerca de", "assets/imgs/menu/interface.png", "#7d3a63", AcercaDePage));
           this.pages.push(new Menu("Información de la app", "assets/imgs/menu/signs.png", "#7d3a63", InfoPage));
           this.pages.push(new Menu("Contacto", "assets/imgs/menu/logotype.png", "#7d3a63", AyudaPage));
@@ -127,6 +140,41 @@ export class MyApp {
       }
     });
 
+    this.fcm.getToken().then(token => {
+      console.log("*********************");
+      console.log(token);
+      localStorage.setItem("token", token);
+      console.log("*********************");
+    });
+  }
+
+  readNotify() {
+    if (this.platform.is('ios') || this.platform.is('android')) {
+      this.fcm.onNotification().subscribe(data => {
+        if (data.wasTapped) {
+          //Notification was received on device tray and tapped by the user.
+          console.log(JSON.stringify(data));
+          //var date = this.datePipe.transform(new Date(), "yyyy-MM-dd").toString();
+          //console.log(date);
+          //this.badge.increase(1);
+          /* this.localNotifications.schedule({
+            text: data.body,
+            led: 'FF0000',
+            //icon: 'http://www.soyluzradio.com/logo.png',
+            icon: 'assets://imgs/logo.png',
+            title: "Suite Home",
+            vibrate: true,
+            badge: 1
+          }); */
+        } else {
+          //Notification was received in foreground. Maybe the user needs to be notified.
+          console.log(JSON.stringify(data));
+          //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
+        }
+      });
+    } else {
+
+    }
   }
 
   openPage(pagina) {

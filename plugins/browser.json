@@ -54,6 +54,9 @@
     },
     "cordova-plugin-app-version": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-screen-orientation": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
     }
   },
   "dependent_plugins": {}

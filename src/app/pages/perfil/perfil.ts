@@ -2,7 +2,7 @@ import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ValidationService } from '../../services/validation.service';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import * as moment from "moment";
+import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveedores';
 
 @Component({
   selector: 'page-perfil',
@@ -107,6 +108,7 @@ export class PerfilPage {
 
   public env: any = environment;
 
+  public data: any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -118,7 +120,8 @@ export class PerfilPage {
     private alertaService: AlertaService,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    private events: Events) {
+    private events: Events,
+    private modalController: ModalController) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.getDataUsuario();
 
@@ -137,7 +140,7 @@ export class PerfilPage {
   getDataUsuario() {
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.users}/${this.user.username}`).subscribe((response: any) => {
-     
+
         this.objetoRegistro[0].value = response.firstName;
         this.objetoRegistro[1].value = response.lastName;
         this.objetoRegistro[2].value = response.motherLastName;
@@ -145,12 +148,55 @@ export class PerfilPage {
         this.objetoRegistro[4].value = response.telefono;
         this.objetoRegistro[5].value = response.genero;
 
+        if (environment.perfil.activo == 2) {
+          this.objetoRegistro.push({
+            name: "Tipo persona",
+            required: true,
+            length: 11,
+            type: "select",
+            formName: "typpe",
+            value: response.tipoPersonaId,
+            opts: [
+              {
+                id: 0,
+                value: "[--Tipo persona--]"
+              },
+              {
+                id: 1,
+                value: "Persona física"
+              },
+              {
+                id: 2,
+                value: "Persona moral"
+              }
+            ]
+          });
+
+          this.objetoRegistro.push({
+            name: "Razón Social",
+            required: true,
+            length: 50,
+            type: "text",
+            formName: "rz",
+            value: response.razonSocial
+          });
+
+          this.objetoRegistro.push({
+            name: "Dirección",
+            required: true,
+            length: 200,
+            type: "text",
+            formName: "direc",
+            value: response.direccion ? response.direccion.direccion : null,
+            disabled: true
+          });
+        }
 
         this.userResponse = response;
 
         let putObj: any = {};
         this.objetoRegistro.forEach(item => {
-          
+
           let tmp: any[] = [];
           tmp[0] = null;
           tmp[1] = [];
@@ -217,8 +263,8 @@ export class PerfilPage {
         adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
           contentType: "image/jpeg",
           file: this.photo_url,
-          fileName: Math.floor(new Date().getTime()/1000.0).toString(),
-          size:0
+          fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+          size: 0
         },
       };
 
@@ -302,6 +348,26 @@ export class PerfilPage {
       this.photo_url = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       // Handle error
+    });
+  }
+
+  getMapa() {
+    let modal = this.modalController.create(HomeGeoProveedoresPage,
+      { fromModal: true, fromRegister: true });
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        if (data != null) {
+          console.log(data.data);
+
+          this.data = data.data;
+          this.objetoRegistro[this.objetoRegistro.length - 1].value = this.data.direccion;
+          /*this.objetoRegistro[4].value = this.data.codigoPostal; */
+          setTimeout(() => {
+            this.ejecutaValidator();
+          }, 1000);
+        }
+      }
     });
   }
 }

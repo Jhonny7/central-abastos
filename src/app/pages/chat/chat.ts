@@ -77,6 +77,8 @@ export class ChatPage {
     this.intervalo = setInterval(() => {
       this.verChat();
     }, 2000);
+    let dimensions = this.content.getContentDimensions();
+      this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
   }
 
 

@@ -1,53 +1,56 @@
 <ion-header>
-    <ion-navbar color="{{genericService.getColor()}}">
-      <ion-title style="padding: 0px;">Mi perfil</ion-title>
-    </ion-navbar>
-  </ion-header>
-  <ion-content padding>
-  
-    <div class="contenedor-step-3">
-      <div class="sub-contenedor">
-        <div class="avatar">
-          <div class="imagen" (tap)="opcionesDeImagen()">
-            <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url">
-            <img src="{{photo_url}}" alt="" *ngIf="photo_url && !userResponse || !userResponse?.adjuntoId">
-            <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId">
-          </div>
-        </div>
-  
-        <div class="formulario" *ngIf="formGroup">
-          <form [formGroup]="formGroup">
-            <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
-              <span [ngStyle]="{'vertical-align': dato.name == 'Género' ? 'super' : ''}">{{dato.name}}</span>
-  
-              <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"
-                [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'">
-  
-              <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
-                pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"
-                *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
-  
-              <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">
-                <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">
-                </ion-checkbox>
-              </ion-col>
-  
-              <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
-                interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
-                <ion-option *ngFor="let op of dato.opts" [value]="op.id">
-                  {{op.value}}
-                </ion-option>
-              </ion-select>
-  
-              <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="'validators2'">
-              </app-control-messages>
-            </div>
-            <div class="contenedor-boton">
-              <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{'background-color': genericService.getColorHex()}">Registrarme</button>
-            </div>
-          </form>
-  
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title style="padding: 0px;">Mi perfil</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+
+  <div class="contenedor-step-3">
+    <div class="sub-contenedor">
+      <div class="avatar">
+        <div class="imagen" (tap)="opcionesDeImagen()">
+          <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url">
+          <img src="{{photo_url}}" alt="" *ngIf="photo_url && !userResponse || !userResponse?.adjuntoId">
+          <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId">
         </div>
       </div>
+
+      <div class="formulario" *ngIf="formGroup">
+        <form [formGroup]="formGroup">
+          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
+
+            <input class="inp" [attr.disabled]="dato.disabled ? '' : null" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"
+              type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'"
+              [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}">
+            <div class="direc" *ngIf="dato.name == 'Dirección'" (click)="getMapa()" style="display: inline-block;
+                width: 10%;
+                vertical-align: bottom;"><img
+                src="assets/imgs/direcciones/home-run.png" alt=""></div>
+            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
+              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"
+              *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
+
+            <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">
+              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">
+              </ion-checkbox>
+            </ion-col>
+
+            <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
+              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
+              <ion-option *ngFor="let op of dato.opts" [value]="op.id">
+                {{op.value}}
+              </ion-option>
+            </ion-select>
+
+            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="'validators2'">
+            </app-control-messages>
+          </div>
+          <div class="contenedor-boton">
+            <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{'background-color': genericService.getColorHex()}">Registrarme</button>
+          </div>
+        </form>
+
+      </div>
     </div>
-  </ion-content>
+  </div>
+</ion-content>

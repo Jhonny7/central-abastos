@@ -53,6 +53,8 @@ export class HomeGeoProveedoresPage {
 
   public fromModal: any = null;
 
+  public fromRegister: any = null;
+  
   public listaDirecciones: any = [];
 
   constructor(
@@ -72,7 +74,7 @@ export class HomeGeoProveedoresPage {
     private popoverCtrl: PopoverController) {
     this.direccion = navParams.get("direccion");
     this.fromModal = navParams.get("fromModal");
-
+    this.fromRegister = navParams.get("fromRegister");
     if (this.direccion) {
       this.edit = true;
       /*
@@ -90,7 +92,7 @@ export class HomeGeoProveedoresPage {
 
     this.cargarTipoDirecciones();
 
-    if (this.fromModal) {
+    if (this.fromModal && !this.fromRegister) {
       this.cargarDireccionesLista();
     }
   }
@@ -146,7 +148,9 @@ export class HomeGeoProveedoresPage {
 
   ionViewDidLoad() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "none";
+    if(claseTabs[0]){
+      claseTabs[0].style.display = "none";
+    }
     this.obtenerLocalizacion();
     let as: any = document.getElementById('autocomplete');
 
@@ -283,7 +287,9 @@ export class HomeGeoProveedoresPage {
 
   ionViewWillLeave() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "flex";
+    if(claseTabs[0]){
+      claseTabs[0].style.display = "flex";
+    }
   }
 
   getPosition(): any {

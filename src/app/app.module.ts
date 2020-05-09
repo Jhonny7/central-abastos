@@ -1,3 +1,4 @@
+import { DocumentosPage } from './pages-proveedor/documentos/documentos';
 import { AcercaDePage } from './pages/acerca-de/acerca-de';
 import { AyudaPage } from './pages/ayuda/ayuda';
 import { CambioContraseniaPage } from './pages/cambio-contrasenia/cambio-contrasenia';
@@ -110,7 +111,8 @@ export function createTranslateLoader(http: HttpClient) {
     TabsProveedorPage,
     HomeProveedorPage,
     VerProductosPage,
-    QrPage
+    QrPage,
+    DocumentosPage
   ],
   imports: [
     BrowserModule,
@@ -175,7 +177,8 @@ export function createTranslateLoader(http: HttpClient) {
     TabsProveedorPage,
     HomeProveedorPage,
     VerProductosPage,
-    QrPage
+    QrPage,
+    DocumentosPage
   ],
   providers: [
     StatusBar,

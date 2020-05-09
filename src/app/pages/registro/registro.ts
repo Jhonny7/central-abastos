@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events } from 'ionic-angular';
+import { NavController, NavParams, Events, ModalController } from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -12,6 +12,7 @@ import { LoadingService } from '../../services/loading.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import * as moment from "moment";
+import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveedores';
 
 @Component({
   selector: 'page-registro',
@@ -76,7 +77,7 @@ export class RegistroPage {
       opts: [
         {
           id: 0,
-          value: "[--Selecciona--]"
+          value: "[--Género--]"
         },
         {
           id: "M",
@@ -127,6 +128,7 @@ export class RegistroPage {
 
   public user: any = null;
 
+  public data: any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -138,7 +140,8 @@ export class RegistroPage {
     private alertaService: AlertaService,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    private events: Events) {
+    private events: Events,
+    private modalController: ModalController) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
@@ -154,7 +157,7 @@ export class RegistroPage {
         opts: [
           {
             id: 0,
-            value: "[--Selecciona--]"
+            value: "[--Tipo persona--]"
           },
           {
             id: 1,
@@ -175,10 +178,20 @@ export class RegistroPage {
         formName: "rz",
         value: null
       });
+
+      this.objetoRegistro.push({
+        name: "Dirección",
+        required: true,
+        length: 200,
+        type: "text",
+        formName: "direc",
+        value: null,
+        disabled: true
+      });
     }
 
     this.objetoRegistro.forEach(item => {
-    
+
       let tmp: any[] = [];
       tmp[0] = null;
       tmp[1] = [];
@@ -241,7 +254,7 @@ export class RegistroPage {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
     } else {
 
-      
+
       let body: any = null;
 
       switch (environment.perfil.activo) {
@@ -296,6 +309,13 @@ export class RegistroPage {
               fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
               size: 0
             },
+
+            direccion: {
+              codigoPostal: this.data.codigoPostal,
+              direccion: this.data.direccion,
+              latitud: this.data.latitud,
+              longitud: this.data.longitud
+            }
           };
           break;
       }
@@ -307,20 +327,24 @@ export class RegistroPage {
         path = `${environment.registro}/proveedor`;
       }
 
-      this.loadingService.show().then(() => {
+      if (environment.perfil.activo == 2 && this.objetoRegistro[this.objetoRegistro.length - 1].value.length <= 0) {
+        this.alertaService.warnAlertGeneric("Es necesario que ingreses tu dirección");
+      } else {
+        this.loadingService.show().then(() => {
 
 
-        this.genericService.sendPostRequest(path, body).subscribe((response: any) => {
-         
-          this.loadingService.hide();
-          this.alertaService.successAlertGeneric("Registro exitoso");
-          this.navCtrl.pop();
-        }, (error: HttpErrorResponse) => {
-          this.loadingService.hide();
-          let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.genericService.sendPostRequest(path, body).subscribe((response: any) => {
+
+            this.loadingService.hide();
+            this.alertaService.successAlertGeneric("Registro exitoso");
+            this.navCtrl.pop();
+          }, (error: HttpErrorResponse) => {
+            this.loadingService.hide();
+            let err: any = error.error;
+            this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          });
         });
-      });
+      }
     }
 
   }
@@ -395,6 +419,26 @@ export class RegistroPage {
       this.photo_url = 'data:image/jpeg;base64,' + imageData;
     }, (err) => {
       // Handle error
+    });
+  }
+
+  getMapa() {
+    let modal = this.modalController.create(HomeGeoProveedoresPage,
+      { fromModal: true, fromRegister: true });
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        if (data != null) {
+          console.log(data.data);
+
+          this.data = data.data;
+          this.objetoRegistro[this.objetoRegistro.length - 1].value = this.data.direccion;
+          /*this.objetoRegistro[4].value = this.data.codigoPostal; */
+          setTimeout(() => {
+            this.ejecutaValidator();
+          }, 1000);
+        }
+      }
     });
   }
 

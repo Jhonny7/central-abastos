@@ -37,6 +37,9 @@ export const environment = {
 
 
   usuarios: `${pathPrincipal}usuarios`,
+
+  usuarioDocumentos: `${pathPrincipal}usuario-documentos`,
+
   users: `${pathPrincipal}users`,
 
   chats: `${pathPrincipal}chats`,
@@ -70,7 +73,7 @@ export const environment = {
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
-    activo: appCliente,
-    //activo: appProveedor
+    //activo: appCliente,
+    activo: appProveedor
   }
 };

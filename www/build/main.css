@@ -52167,7 +52167,7 @@ page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-inpu
 
 page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-col {
   display: inline-block;
-  width: 55%;
+  width: 100%;
 }
 
 page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-col ion-checkbox {
@@ -52178,11 +52178,11 @@ page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-inpu
 page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-select {
   max-width: 100%;
   display: inline-block;
-  width: 55%;
+  width: 100%;
   border: 1px solid #c3bdbd !important;
   padding: 8px !important;
   border-radius: 4px !important;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   position: relative;
 }
@@ -52228,7 +52228,7 @@ page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-inpu
   border: 1px solid #c3bdbd !important;
   padding: 8px !important;
   border-radius: 4px !important;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   color: #716b6b;
   vertical-align: top;
@@ -52239,7 +52239,7 @@ page-perfil .contenedor-step-3 .sub-contenedor .formulario form .contenedor-inpu
   padding: 8px;
   border-radius: 4px;
   display: inline-block;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   color: #716b6b;
   position: relative;
@@ -52549,7 +52549,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-col {
   display: inline-block;
-  width: 55%;
+  width: 100%;
 }
 
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-col ion-checkbox {
@@ -52560,11 +52560,11 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
 page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-input ion-select {
   max-width: 100%;
   display: inline-block;
-  width: 55%;
+  width: 100%;
   border: 1px solid #c3bdbd !important;
   padding: 8px !important;
   border-radius: 4px !important;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   position: relative;
 }
@@ -52610,7 +52610,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
   border: 1px solid #c3bdbd !important;
   padding: 8px !important;
   border-radius: 4px !important;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   color: #716b6b;
   vertical-align: top;
@@ -52621,7 +52621,7 @@ page-registro .contenedor-step-3 .sub-contenedor .formulario form .contenedor-in
   padding: 8px;
   border-radius: 4px;
   display: inline-block;
-  width: 55%;
+  width: 100%;
   display: inline-block;
   color: #716b6b;
   position: relative;

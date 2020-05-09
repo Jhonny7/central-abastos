@@ -25,6 +25,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ChatService } from './services/chat.service';
 import { CurrencyPipe } from '@angular/common';
 import { AppVersion } from '@ionic-native/app-version';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
 
 @NgModule({
     providers: [
@@ -56,7 +57,8 @@ import { AppVersion } from '@ionic-native/app-version';
         QRScanner,
         ChatService,
         CurrencyPipe,
-        AppVersion
+        AppVersion,
+        ScreenOrientation
     ]
 })
 export class ProvidersModule { }
