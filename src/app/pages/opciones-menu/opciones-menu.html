@@ -4,21 +4,27 @@
 
     <div style="padding: 10px;text-align: center;">Elige un tema</div>
     <ion-row class="rowi">
-      <ion-col col-3 class="tema-1">
+      <ion-col col-2 class="tema-6">
+        <button (click)="change(6)"></button>
+      </ion-col>
+      <ion-col col-2 class="tema-1">
         <button (click)="change(1)"></button>
       </ion-col>
-      <ion-col col-3 class="tema-2">
+      <ion-col col-2 class="tema-2">
         <button (click)="change(2)"></button>
       </ion-col>
-      <ion-col col-3 class="tema-3">
+      <ion-col col-2 class="tema-3">
         <button (click)="change(3)"></button>
       </ion-col>
-      <ion-col col-3 class="tema-4">
+      <ion-col col-2 class="tema-4">
         <button (click)="change(4)"></button>
+      </ion-col>
+      <ion-col col-2 class="tema-5">
+        <button (click)="change(5)"></button>
       </ion-col>
     </ion-row>
 
-    <button ion-item (click)="openListCarrito()" *ngIf="user">
+    <button ion-item (click)="openListCarrito()" *ngIf="user && env.perfil.activo == 1">
       <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>
       Listas de carrito
     </button>

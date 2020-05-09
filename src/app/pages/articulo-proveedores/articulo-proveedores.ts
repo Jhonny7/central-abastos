@@ -36,14 +36,13 @@ export class ArticuloProveedoresPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ArticuloProveedoresPage');
   }
 
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
-        console.log(response);
+      
         this.navCtrl.push(DetalleProductoPage, { producto: response });
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {

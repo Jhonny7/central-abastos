@@ -86,8 +86,7 @@ export class DetalleTarjetaPage {
 
     let putObj: any = {};
     this.objetoRegistro.forEach(item => {
-      console.log(item);
-
+     
       let tmp: any[] = [];
       tmp[0] = null;
       tmp[1] = [];
@@ -121,8 +120,6 @@ export class DetalleTarjetaPage {
       }
 
       if (this.card) {
-        console.log(item.tag);
-        
         item.value = this.card[item.tag];
         tmp[0] = this.card[item.tag];
         this.btnHabilitado = true;
@@ -130,13 +127,9 @@ export class DetalleTarjetaPage {
 
       putObj[item.formName] = tmp;
     });
-    console.log(putObj);
-
     this.formGroup = this.formBuilder.group(
       putObj
     );
-    console.log("--------");
-      
     this.render = true;
 
     this.events.subscribe("reloadUser", data => {
@@ -165,8 +158,6 @@ export class DetalleTarjetaPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
-    console.log(this.formGroup.controls);
-
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {
@@ -193,8 +184,6 @@ export class DetalleTarjetaPage {
       this.alertaService.warnAlertGeneric("Ya cuentas con una tarjeta con mismo nombre y número");
     } else {
       if (this.edit) {
-        console.log("-.-.-.-.-.-.-.-.-.--.-..-.-.-.-");
-        
 
         let tarjeta: any = {
           alias: this.objetoRegistro[0].value,

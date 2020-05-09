@@ -30,12 +30,10 @@ export class ComparaPreciosProveedorPage {
     private events: Events) {
       this.proveedoresGeolocate = navParams.get("proveedoresGeolocate");
       this.proveedoresGeolocateReplica = this.proveedoresGeolocate;
-      console.log(this.proveedoresGeolocate);
       
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ComparaPreciosProveedorPage');
   }
 
   buscarPorPalabra() {

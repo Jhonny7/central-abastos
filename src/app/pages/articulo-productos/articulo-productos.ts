@@ -41,7 +41,6 @@ export class ArticuloProductosPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events) {
     this.articulo = navParams.get("articulo");
-    console.log(this.articulo);
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.cargarProductosArticulo();
 
@@ -107,15 +106,13 @@ export class ArticuloProductosPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-        console.log(response);
-
+        
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          console.log(carritos);
-
+         
           if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {

@@ -4,11 +4,12 @@ import { AlertaService } from './../../services/alerta.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { User } from '../../models/User';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as moment from "moment";
+import { OpcionesMenuPage } from '../opciones-menu/opciones-menu';
 
 @Component({
   selector: 'page-historial-pedidos',
@@ -20,13 +21,15 @@ export class HistorialPedidosPage {
   public pedidos: any = [];
   public pedidosReplica: any = [];
 
+  public env: any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
     private localStorageEncryptService: LocalStorageEncryptService,
     private alertaService: AlertaService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private popoverCtrl: PopoverController) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.cargarPedidos();
   }
@@ -35,9 +38,15 @@ export class HistorialPedidosPage {
 
   }
 
+  verOpciones() {
+    let popover = this.popoverCtrl.create(OpcionesMenuPage, {}, { cssClass: "clase-Pop" });
+    popover.present({
+    });
+  }
+
   cargarPedidos() {
     this.genericService.sendGetRequest(`${environment.pedidos}`).subscribe((response: any) => {
-      console.log(response);
+     
       this.pedidos = response;
       if (this.pedidos.length <= 0) {
         this.pedidos = null;
@@ -53,7 +62,7 @@ export class HistorialPedidosPage {
   viewDetail(pedido: any) {
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.pedidos}/${pedido.id}`).subscribe((response: any) => {
-        console.log(response);
+       
         this.loadingService.hide();
         this.navCtrl.push(HistorialPedidosDetailPage, { pedido: response });
       }, (error: HttpErrorResponse) => {
@@ -91,7 +100,6 @@ export class HistorialPedidosPage {
         });
         break;
     }
-    console.log(this.pedidos);
 
   }
 }

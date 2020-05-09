@@ -7,30 +7,13 @@
 <ion-content>
   <div class="contenedor-chat">
     <div class="cont-msj">
-      <div class="msj">
-        <div class="m" [ngStyle]="{'background-color': color}">Hola</div>
-      </div>
-      <div class="msj-r">
-        <div class="m" >Hola</div>
-      </div>
-      <div class="msj">
-          <div class="m" [ngStyle]="{'background-color': color}">Hola</div>
+      <div class="msj" style="margin-bottom: 10px;" [ngClass]="{'msj' : user.username == c.usuarioEmisorLogin, 'msj-r' : user.username != c.usuarioEmisorLogin}"
+        *ngFor="let c of chat.chatDetalles">
+        <div class="{{user.username == c.usuarioEmisorLogin ? genericService.getColorClassChat() : 'm'}}" [ngStyle]="{'background-color': user.username == c.usuarioEmisorLogin ? genericService.getColorHex(): ''}">
+          <div>{{c.mensaje}}</div>
+          <div style="font-size:9px">{{c.fecha}}</div>
         </div>
-        <div class="msj-r">
-          <div class="m" >Hola</div>
-        </div>
-        <div class="msj">
-            <div class="m" [ngStyle]="{'background-color': color}">Hola</div>
-          </div>
-          <div class="msj-r">
-            <div class="m" >Hola</div>
-          </div>
-          <div class="msj">
-              <div class="m" [ngStyle]="{'background-color': color}">Hola</div>
-            </div>
-            <div class="msj-r">
-              <div class="m" >Hola</div>
-            </div>
+      </div>
     </div>
     <!-- <div class="uno">
       <span>
@@ -53,10 +36,15 @@
     </div> -->
   </div>
 
+
 </ion-content>
 <ion-footer class="footer-chat">
   <div>
-    <input type="text" placeholder="Escribe un mensaje aquí" [(ngModel)]="mensaje">
+    <!-- <button class="emoji" ion-button clear icon-only (click)="toggled = !toggled" [(emojiPickerIf)]="toggled" [emojiPickerDirection]="'top'"
+      (emojiPickerSelect)="handleSelection($event)">
+      <ion-icon name="ios-happy-outline"></ion-icon>
+    </button> -->
+    <input type="text" style="width:89%" placeholder="Escribe un mensaje aquí" [(ngModel)]="mensaje">
     <div>
       <button (click)="sendMessage()">
         <ion-icon name="md-send"></ion-icon>

@@ -47,20 +47,16 @@ export class ValidationService {
   }
 
   static characterValidator(control) {
-    console.log(":::::::::");
     
     // RFC 2822 compliant regex
     if (control.value) {
       if (control._pendingValue.match(/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g)) {
-        console.log("->");
         
         return null;
       }
       else {
-        console.log("<-");
-        
         if (control._pendingValue.substring(0, control.value.length - 1).match(/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g)) {
-          console.log("<-Aqui");
+          
           control.setValue(control._pendingValue.substring(0, control._pendingValue.length - 1));
           return null;
         } else {

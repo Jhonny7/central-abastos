@@ -23,7 +23,6 @@ export class RecuperaContraseniaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RecuperaContraseniaPage');
   }
 
   cambio() {
@@ -33,7 +32,6 @@ export class RecuperaContraseniaPage {
         //this.verificarCarritoModificarCantidad(producto);
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
-        console.log(error);
 
         this.alertaService.errorAlertGeneric(error.error.title);
         this.loadingService.hide();

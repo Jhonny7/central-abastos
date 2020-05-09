@@ -14,6 +14,9 @@ export const environment = {
   secciones: `${pathPrincipal}seccions`,
   categorias: `${pathPrincipal}categorias`,
   proveedores: `${pathPrincipal}proveedors`,
+
+  proveedoresFull: `${pathPrincipal}proveedores`,
+
   proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
 
   registro: `${pathPrincipal}register`,
@@ -27,8 +30,18 @@ export const environment = {
   direcciones: `${pathPrincipal}usuario-direcciones`,
   tipoDirecciones: `${pathPrincipal}tipo-direcciones`,
   pedidos: `${pathPrincipal}pedidos`,
+  pedidosProveedor: `${pathPrincipal}proveedor/pedidos`,
+
+
+  pedidosProveedores: `${pathPrincipal}proveedor/pedido-proveedores`,
+
+
   usuarios: `${pathPrincipal}usuarios`,
   users: `${pathPrincipal}users`,
+
+  chats: `${pathPrincipal}chats`,
+
+  chatsProveedor: `${pathPrincipal}proveedor/chats/pedido-proveedor/`,
 
   cambioContraseña: `${pathPrincipal}account/change-password`,
   reset: `${pathPrincipal}account/reset-password/init`,
@@ -57,7 +70,7 @@ export const environment = {
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
-    //activo: appCliente,
-    activo: appProveedor
+    activo: appCliente,
+    //activo: appProveedor
   }
 };

@@ -39,12 +39,9 @@ export class ChatService {
     
     let urlComplete:any = `${pathChat}${url}`;
     const authToken = this.user.id_token;
-    console.log('authToken' + authToken);
-
     if (authToken) {
       url += '?access_token=' + authToken;
     }
-    console.log("--------");
     
     const socket = new SockJS(urlComplete);
     this.stompClient = Stomp.over(socket);

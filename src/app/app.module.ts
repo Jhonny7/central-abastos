@@ -27,7 +27,7 @@ import { LoginPage } from './pages/login/login';
 import { RegistroPage } from './pages/registro/registro';
 import { ControlMessagesComponent } from './components/control-messages/control-messages.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
-import { RecuperarPasswordPage } from './pages/recuperar-password/recuperar-password';
+import { ProveedorPage } from './pages/recuperar-password/recuperar-password';
 import { FiltroProductoPage } from './pages/filtro-producto/filtro-producto';
 import { DetalleProductoPage } from './pages/detalle-producto/detalle-producto';
 import { CarritoComprasPage } from './pages/carrito-compras/carrito-compras';
@@ -51,6 +51,12 @@ import { TerminoServicioPage } from './pages/termino-servicio/termino-servicio';
 import { TerminosCondicionesPage } from './pages/terminos-condiciones/terminos-condiciones';
 import { ReciboPagoPage } from './pages/recibo-pago/recibo-pago';
 import { InfoPage } from './pages/info/info';
+import { TabsProveedorPage } from './pages-proveedor/tabs/tabs';
+import { HomeProveedorPage } from './pages-proveedor/home-proveedor/home-proveedor';
+import { VerProductosPage } from './pages-proveedor/ver-productos/ver-productos';
+import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+import { QrPage } from './pages/qr/qr';
+import { QRCodeModule } from 'angularx-qrcode';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -67,7 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
     RegistroPage,
     ControlMessagesComponent,
     GalleryComponent,
-    RecuperarPasswordPage,
+    ProveedorPage,
     FiltroProductoPage,
     DetalleProductoPage,
     CarritoComprasPage,
@@ -99,12 +105,19 @@ export function createTranslateLoader(http: HttpClient) {
     InfoPage,
     CambioContraseniaPage,
     AyudaPage,
-    AcercaDePage
+    AcercaDePage,
+
+    TabsProveedorPage,
+    HomeProveedorPage,
+    VerProductosPage,
+    QrPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    EmojiPickerModule,
     ProvidersModule,
+    QRCodeModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -112,7 +125,8 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -125,7 +139,7 @@ export function createTranslateLoader(http: HttpClient) {
     RegistroPage,
     ControlMessagesComponent,
     GalleryComponent,
-    RecuperarPasswordPage,
+    ProveedorPage,
     FiltroProductoPage,
     DetalleProductoPage,
     CarritoComprasPage,
@@ -156,7 +170,12 @@ export function createTranslateLoader(http: HttpClient) {
     InfoPage,
     CambioContraseniaPage,
     AyudaPage,
-    AcercaDePage
+    AcercaDePage,
+
+    TabsProveedorPage,
+    HomeProveedorPage,
+    VerProductosPage,
+    QrPage
   ],
   providers: [
     StatusBar,

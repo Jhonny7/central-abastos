@@ -32,7 +32,6 @@ export class AuthService {
 
     getToken(){
         let user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-        //console.log(user);
         
         return user === null ? null : user.id_token;
     }

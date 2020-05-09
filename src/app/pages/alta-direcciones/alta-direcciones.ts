@@ -19,7 +19,6 @@ export class AltaDireccionesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AltaDireccionesPage');
   }
 
 }

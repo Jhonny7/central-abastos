@@ -97,7 +97,6 @@ export class ChangePasswordPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ChangePasswordPage');
   }
 
   regresar() {
@@ -108,8 +107,6 @@ export class ChangePasswordPage {
 
   guardar() {
     this.objetoRegistro.forEach(item => {
-      console.log(item);
-
     });
   }
 
@@ -131,8 +128,6 @@ export class ChangePasswordPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
-    console.log(this.formGroup.controls);
-
     //Verificar correo
     if (validacion <= 0) {
       this.btnHabilitado = false;

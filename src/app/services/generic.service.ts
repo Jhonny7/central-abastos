@@ -117,8 +117,8 @@ export class GenericService {
 
     getColor(){
         let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
-        let retornar:any = color == '#3b64c0' ? 'primary' : color == '#be3b3b' ? 'primary2' : color == '#3bb8be' ? 'primary3' : 'primary4';
-        //console.log(retornar);
+        let retornar:any = color == '#3b64c0' ? 'primary' : color == '#be3b3b' ? 'primary2' : color == '#3bb8be' ? 'primary3' : color == '#292929' ? 'primary5' : color == '#F07C1B' ? 'primary6' : 'primary4';
+        
         return retornar;
     }
 
@@ -130,23 +130,38 @@ export class GenericService {
 
     getColorClass(){
         let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
-        let retornar:any = color == '#3b64c0' ? 'alerta-loteria' : color == '#be3b3b' ? 'alerta-loteria2' : color == '#3bb8be' ? 'alerta-loteria3' : 'alerta-loteria4';
-        //console.log(retornar);
+        let retornar:any = color == '#3b64c0' ? 'alerta-loteria' : color == '#be3b3b' ? 'alerta-loteria2' : color == '#3bb8be' ? 'alerta-loteria3' : color == '#292929' ? 'alerta-loteria5' : color == '#F07C1B' ? 'alerta-loteria6' : 'alerta-loteria4';
+      
         return retornar;
     }
 
     getColorClassTWO(){
         let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
-        let retornar:any = color == '#3b64c0' ? 'alerta-two-button' : color == '#be3b3b' ? 'alerta-two-button2' : color == '#3bb8be' ? 'alerta-two-button3' : 'alerta-two-button4';
-        //console.log(retornar);
+        let retornar:any = color == '#3b64c0' ? 'alerta-two-button' : color == '#be3b3b' ? 'alerta-two-button2' : color == '#3bb8be' ? 'alerta-two-button3' : color == '#292929' ? 'alerta-two-button5' : color == '#F07C1B' ? 'alerta-two-button6' : 'alerta-two-button4';
+        
+        return retornar;
+    }
+
+    getColorClassChat(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let retornar:any = color == '#3b64c0' ? 'm' : color == '#be3b3b' ? 'm2' : color == '#3bb8be' ? 'm3' : color == '#292929' ? 'm5' : color == '#F07C1B' ? 'm6' : 'm4';
+        
         return retornar;
     }
 
     imgLogin(){
         let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
         let armado:string = "assets/imgs/login/loginFondo";
-        let retornar:any = color == '#3b64c0' ? `${armado}.png` : color == '#be3b3b' ? `${armado}2.png` : color == '#3bb8be' ? `${armado}3.png` : `${armado}4.png`;
-        //console.log(retornar);
+        let retornar:any = color == '#3b64c0' ? `${armado}.png` : color == '#be3b3b' ? `${armado}2.png` : color == '#3bb8be' ? `${armado}3.png` : color == '#292929' ? `${armado}5.png` : color == '#F07C1B' ? `${armado}6.png` : `${armado}4.png`;
+        
+        return retornar;
+    }
+
+    imgProblema(){
+        let color:any = this.localStorageEncryptService.getFromLocalStorage("theme");
+        let armado:string = "assets/imgs/problemas/problema";
+        let retornar:any = color == '#3b64c0' ? `${armado}2.png` : color == '#be3b3b' ? `${armado}3.png` : color == '#3bb8be' ? `${armado}4.png` : color == '#292929' ? `${armado}6.png` : color == '#F07C1B' ? `${armado}1.png` : `${armado}5.png`;
+       
         return retornar;
     }
 

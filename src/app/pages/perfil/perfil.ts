@@ -137,8 +137,7 @@ export class PerfilPage {
   getDataUsuario() {
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.users}/${this.user.username}`).subscribe((response: any) => {
-        console.log(response);
-
+     
         this.objetoRegistro[0].value = response.firstName;
         this.objetoRegistro[1].value = response.lastName;
         this.objetoRegistro[2].value = response.motherLastName;
@@ -151,8 +150,7 @@ export class PerfilPage {
 
         let putObj: any = {};
         this.objetoRegistro.forEach(item => {
-          console.log(item);
-
+          
           let tmp: any[] = [];
           tmp[0] = null;
           tmp[1] = [];
@@ -252,8 +250,6 @@ export class PerfilPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
-    console.log(this.formGroup.controls);
-
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {

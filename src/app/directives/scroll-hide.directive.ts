@@ -30,7 +30,6 @@ export class ScrollHideDirective implements OnDestroy {
             const element: any = this.a[index];
             for (let j = 0; j < element.children.length; j++) {
                 const element2 = element.children[j];
-                //console.log(element2);
                 if (element2.id) {
                     if (element2.id == this.config.property) {
                         posicion = index;
@@ -39,11 +38,9 @@ export class ScrollHideDirective implements OnDestroy {
             }
         }
         this.a = this.a[posicion];
-        //console.log(this.a);
 
         if (this.scrollContent && this.config) {
             this.lastValueMax = this.config.maxValue;
-            //console.log(this.lastValueMax);
             this.scrollContent.ionScrollStart.subscribe((ev) => {
                 this.contentHeight = this.scrollContent.getScrollElement().offsetHeight;
                 this.scrollHeight = this.scrollContent.getScrollElement().scrollHeight;
@@ -53,7 +50,6 @@ export class ScrollHideDirective implements OnDestroy {
                 try {
                     this.lastScrollPosition = ev.scrollTop;
                 } catch (error) {
-                    //console.log(error);
                     
                 }
             });
@@ -69,17 +65,9 @@ export class ScrollHideDirective implements OnDestroy {
 
                 let scrolldiff: number = scrollTop - this.lastScrollPosition;
                 let scrolldiff2: number = scrollTop + this.lastScrollPosition;
-                //console.log(scrolldiff2);
-
-                //console.log("--------------");
-
-                //console.log(scrolldiff);
-                //console.log("..............");
-
+                
 
                 this.lastScrollPosition = scrollTop;
-                //console.log("ScrollPosition: "+this.lastScrollPosition);
-
                 let newValue = this.lastValue + scrolldiff;
 
                 let newValue2 = this.lastValueMax + scrolldiff2;

@@ -40,7 +40,6 @@ export class CategoriaPage {
     private events: Events) {
     this.categoria = navParams.get("categoria");
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-    console.log(this.categoria);
     this.cargarArticulos();
 
     this.events.subscribe("reloadUser", data => {
@@ -63,7 +62,6 @@ export class CategoriaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CategoriaPage');
   }
 
   viewDetail(producto: any) {
@@ -72,7 +70,7 @@ export class CategoriaPage {
       //this.user.parametros.pantalla_proveedores = "N";
       if(this.user && this.user.parametros.pantalla_proveedores == "S"){
         this.genericService.sendGetRequest(`${environment.proveedorProductos}/producto/${producto.id}`).subscribe((response: any) => {
-          console.log(response);
+          
           this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });
           this.loadingService.hide();
         }, (error: HttpErrorResponse) => {
@@ -81,15 +79,13 @@ export class CategoriaPage {
         });
       }else{
         this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-          console.log(response);
-  
+         
           //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
           //let nav = this.app.getRootNav();
           //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
           if (this.user) {
             let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-            console.log(carritos);
-  
+            
             if(carritos){
               let position: any = carritos.findIndex(
                 (carrito) => {
@@ -120,11 +116,8 @@ export class CategoriaPage {
   }
 
   cargarArticulos() {
-    console.log("-----");
-
     this.genericService.sendGetRequest(`${environment.categoria}${this.categoria.categoria.id}`).
       subscribe((res: any) => {
-        console.log(res);
         this.articulos = res.productosTipoArticulo;
         this.articulosReplica = this.articulos;
       }, (err: HttpErrorResponse) => {
@@ -139,8 +132,6 @@ export class CategoriaPage {
         return mayor.precio - menor.precio;
       });
     });
-    console.log(this.articulos);
-    
   }
 
   down(){

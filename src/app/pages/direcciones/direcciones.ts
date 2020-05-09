@@ -31,8 +31,7 @@ export class DireccionesPage {
     this.cargarDireccionesLista();
 
     this.events.subscribe('direction', data => {
-      console.log(data);
-
+     
       if (!data.create) {
         let position = this.listaDirecciones.findIndex(
           (img) => {
@@ -58,12 +57,11 @@ export class DireccionesPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad DireccionesPage');
   }
 
   cargarDireccionesLista() {
     this.genericService.sendGetRequest(environment.direcciones).subscribe((response: any) => {
-      console.log(response);
+     
       //quitar
       this.listaDirecciones = response;
       this.render = true;

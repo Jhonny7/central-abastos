@@ -29,7 +29,7 @@ export class ListaCarritoComprasPage {
   /**Método para cargar productos en base a especificaciones */
   cargarListas() {
     this.genericService.sendGetRequest(environment.carritoHistorico).subscribe((response: any) => {
-      console.log(response);
+      
       //quitar
       this.listas = response;
       this.listas.forEach(item => {
@@ -54,7 +54,6 @@ export class ListaCarritoComprasPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ListaCarritoComprasPage');
   }
 
   borrar(item:any){

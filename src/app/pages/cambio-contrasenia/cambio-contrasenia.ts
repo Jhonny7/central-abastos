@@ -24,11 +24,9 @@ export class CambioContraseniaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad CambioContraseniaPage');
   }
 
   cambio() {
-    console.log(this.data.confirm);
 
     if (!this.data.confirm.toString().match(/^(?=.*\d)(?=.*[\u0021-\u002b\u003c-\u0040])(?=.*[A-Z])(?=.*[a-z])\S{8,16}$/)) {
 
@@ -46,8 +44,6 @@ export class CambioContraseniaPage {
           //this.verificarCarritoModificarCantidad(producto);
           this.loadingService.hide();
         }, (error: HttpErrorResponse) => {
-          console.log(error);
-
           this.alertaService.errorAlertGeneric(error.error.title);
           this.loadingService.hide();
         });

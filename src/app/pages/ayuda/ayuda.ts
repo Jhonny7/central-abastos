@@ -15,7 +15,6 @@ export class AyudaPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AyudaPage');
   }
 
 }

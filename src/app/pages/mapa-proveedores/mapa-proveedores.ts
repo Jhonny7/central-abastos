@@ -62,11 +62,9 @@ export class MapaProveedoresPage {
     private localStorageEncryptService: LocalStorageEncryptService) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.proveedoresTotal = navParams.get("proveedores");
-    //console.log(this.proveedores);
-
+    
     this.producto = navParams.get("producto");
-    console.log(this.producto);
-
+    
     this.geo = [];
     this.proveedoresTotal.forEach(proveedorT => {
 
@@ -217,25 +215,21 @@ export class MapaProveedoresPage {
         this.loadMap(response);
       })
       .catch(error => {
-        console.log(error);
       })
   }
 
   loadMap(position: Geoposition) {
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
-    console.log(latitude, longitude);
-
     // create a new map by passing HTMLElement
     let mapEle: HTMLElement = document.getElementById('map_canvas');
 
     let myLatLng = { lat: latitude, lng: longitude };
 
-    console.log(this.geo);
 
     var gj = leaflet.geoJson(this.geo);
     var nearest = leafletKnn(gj).nearest([latitude, longitude], 50, 5000);//punto de partida, estaciones máximas a encontrar, diámetro de busqueda en metros
-    console.log(nearest);
+   
 
     // create map
     this.map = new google.maps.Map(mapEle, {
@@ -247,7 +241,6 @@ export class MapaProveedoresPage {
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
 
       nearest.forEach(item => {
-        console.log(item);
         this.proveedoresGeolocate.push(item.layer.feature.properties.proveedor);
         let ll = { lat: Number(item.lon), lng: Number(item.lat) };
 
@@ -271,10 +264,6 @@ export class MapaProveedoresPage {
           content: info
         });
 
-        console.log(ll);
-
-        console.log(item.layer.feature.properties);
-
         let marker = new google.maps.Marker({
           position: ll,//{ lat: -0.179041, lng: -78.499211 },
           map: this.map,
@@ -284,7 +273,6 @@ export class MapaProveedoresPage {
           icon: environment.icons['proveedor'].icon
         });
 
-        console.log(marker);
 
 
         //this.map.setCenter(marker.position);
@@ -308,9 +296,7 @@ export class MapaProveedoresPage {
       }
     );
 
-    console.log(position);
     this.proveedorActivo = this.proveedoresTotal[position];
-    console.log(this.proveedorActivo);
 
   }
 
@@ -322,7 +308,7 @@ export class MapaProveedoresPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/proveedor/${proveedor.proveedorId}`).subscribe((response: any) => {
-        console.log(response);
+        
 
         this.loadingService.hide();
         this.navCtrl.push(ArticuloProveedoresPage, { productos: response, proveedor });
@@ -352,7 +338,6 @@ export class MapaProveedoresPage {
           this.events.publish("totalCarrito");
           //this.verificarCarritoModificarCantidad(producto);
         }, (error: HttpErrorResponse) => {
-          console.log(error);
           this.alertaService.errorAlertGeneric(error.error.title);
           this.loadingService.hide();
         });

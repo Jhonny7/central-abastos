@@ -38,7 +38,7 @@ export class ProductoService {
         //consumir servicio de imagenes completas
         this.loadingService.show().then(() => {
             this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-                console.log(response);
+                
                 let nav = this.app.getRootNav();
                 nav.push(DetalleProductoPage, { producto: response });
                 this.loadingService.hide();
@@ -62,7 +62,6 @@ export class ProductoService {
     }
 
     deleteFavorito(producto) {
-        console.log(producto);
         this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
         let nuevoArrarCarrito: any[] = [];
         let productoDelete: any = null;
@@ -76,7 +75,6 @@ export class ProductoService {
             }
         });
 
-        console.log(producto);
         this.productosCarrito = nuevoArrarCarrito;
         this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, this.productosCarrito);
 

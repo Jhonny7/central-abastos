@@ -80,7 +80,7 @@ export class HomePage implements OnDestroy, OnInit {
     /**Obtenci{on de usuario en sesión */
     this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-    console.log("------------------");
+    
     //this.totalCarrito = this.getTotalCarrito();
 
     this.events.subscribe("totalCarrito", data => {
@@ -120,11 +120,10 @@ export class HomePage implements OnDestroy, OnInit {
 
   getTotalCarrito() {
     this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
-      console.log(response);
+     
       this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
       this.totalCarrito = response.length;
     }, (error: HttpErrorResponse) => {
-      console.log(error);
     });
   }
 
@@ -154,12 +153,11 @@ export class HomePage implements OnDestroy, OnInit {
 
   cargarProductosCarrito() {
     this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
-      console.log(response);
+      
       let nav = this.app.getRootNav();
       this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
       nav.push(CarritoComprasPage);
     }, (error: HttpErrorResponse) => {
-      console.log(error);
     });
   }
 
@@ -181,8 +179,7 @@ export class HomePage implements OnDestroy, OnInit {
   verificarCarrito() {
     if (this.user) {
       let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-      console.log(productosStorage);
-
+      
       if (productosStorage) {
         productosStorage.forEach(item => {
           this.productos.forEach(element => {
@@ -325,14 +322,12 @@ export class HomePage implements OnDestroy, OnInit {
 
   /**Método para cargar productos en base a especificaciones */
   cargarProductos() {
-    console.log("in method");
-
+   
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(environment.productos).subscribe((response: any) => {
-        console.log(response);
+        
         //quitar
         this.productos = response;
-        console.log(this.productos);
         this.verificarCarrito();
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
@@ -345,19 +340,17 @@ export class HomePage implements OnDestroy, OnInit {
 
   /**Método para cargar productos en base a especificaciones */
   cargarProductosPorCategoria(opc:number) {
-    console.log("in method");
     this.productosCategorias = [];
     this.productosCategoriasSub = [];
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/home/${opc}`).subscribe((response: any) => {
-        console.log(response);
+        
         //quitar
         this.productosCategorias = response.productosCategoria;
         for (let index = 1; index < this.productosCategorias.length; index++) {
           const element = this.productosCategorias[index];
           this.productosCategoriasSub.push(element);
         }
-        console.log(this.productos);
         this.verificarCarrito();
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
@@ -410,16 +403,14 @@ export class HomePage implements OnDestroy, OnInit {
       params = params.set('categoriaId', this.dataFilter.idCategoria ? this.dataFilter.idCategoria : "")
     }
     if (this.dataFilter.nombre) {
-      console.log("---");
 
       params = params.append('nombre', this.dataFilter.nombre);
     }
-    console.log(params);
 
 
     this.productosBuscados = [];
     this.genericService.sendGetParams(`${environment.proveedorProductos}/search`, params).subscribe((response: any) => {
-      console.log(response);
+     
       this.productosBuscados = response;
       this.loadingService.hide();
     }, (error: HttpErrorResponse) => {
@@ -483,7 +474,6 @@ export class HomePage implements OnDestroy, OnInit {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
           }
         },
         {
@@ -521,15 +511,13 @@ export class HomePage implements OnDestroy, OnInit {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-        console.log(response);
-
+       
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          console.log(carritos);
-
+          
           if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {

@@ -4,8 +4,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-
+    
   <div class="contened">
+    <div style="width: 100%;
+    text-align: center;">
+        <img style="width: 36%;" src="{{genericService.imgProblema()}}" alt="">
+    </div>
     <button [ngStyle]="{'background-color': genericService.getColorHex()}">
       Deseo reportar una queja al Contact Center
     </button>

@@ -119,8 +119,6 @@ export class HomeGeoProveedoresPage {
     popover.onDidDismiss((data) => {
       if (data) {
         if (data != null) {
-          console.log(data);
-          console.log(data.direccion);
           /*
               codigoPostal: "89670"
               direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
@@ -141,10 +139,8 @@ export class HomeGeoProveedoresPage {
   cargarTipoDirecciones() {
     this.genericService.sendGetRequest(environment.tipoDirecciones).subscribe((response: any) => {
       this.tipoDirecciones = response;
-      console.log(this.tipoDirecciones);
 
     }, (error: HttpErrorResponse) => {
-      console.log(error);
     });
   }
 
@@ -154,7 +150,6 @@ export class HomeGeoProveedoresPage {
     this.obtenerLocalizacion();
     let as: any = document.getElementById('autocomplete');
 
-    console.log(as);
 
     this.autocomplete = new google.maps.places.Autocomplete(
       as, { types: ['geocode'] });
@@ -297,21 +292,18 @@ export class HomeGeoProveedoresPage {
         this.loadMap(response);
       })
       .catch(error => {
-        console.log(error);
       })
   }
 
   loadMap(position: Geoposition) {
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
-    console.log(latitude, longitude);
 
     // create a new map by passing HTMLElement
     let mapEle: HTMLElement = document.getElementById('map_canvas');
 
     // create LatLng object
     if (this.edit) {
-      console.log("editable");
 
       latitude = Number(this.direccion.direccion.latitud);
       longitude = Number(this.direccion.direccion.longitud);
@@ -349,10 +341,9 @@ export class HomeGeoProveedoresPage {
       params = params.set('latlng', `${this.data.latitud},${this.data.longitud}`);
       params = params.set('key', environment.keyGoogle);
 
-      console.log(params);
 
       this.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
-        console.log(response);
+       
         this.loadingService.hide();
         this.map.setCenter(this.marker.position);
         this.marker.setMap(this.map);
@@ -385,10 +376,7 @@ export class HomeGeoProveedoresPage {
       });
 
       google.maps.event.addListener(component.marker, 'dragend', function (evt) {
-        console.log(evt.latLng.lat());
-        console.log(evt.latLng.lng());
-
-
+       
         component.data.latitud = evt.latLng.lat().toString();
         component.data.longitud = evt.latLng.lng().toString();
 
@@ -398,10 +386,8 @@ export class HomeGeoProveedoresPage {
           params = params.set('latlng', `${component.data.latitud},${component.data.longitud}`);
           params = params.set('key', environment.keyGoogle);
 
-          console.log(params);
-
           component.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
-            console.log(response);
+           
             component.loadingService.hide();
             component.map.setCenter(component.marker.position);
             component.marker.setMap(component.map);
@@ -433,7 +419,6 @@ export class HomeGeoProveedoresPage {
       });
 
       /* marker.addEventListener("click", (e: Event) => {
-        console.log("---->");
         
       }); */
 
@@ -442,8 +427,7 @@ export class HomeGeoProveedoresPage {
   }
 
   changeInfoCard() {
-    console.log("Hola mundo 1");
-
+    
   }
 
   loadMapLeaflet() {
@@ -500,8 +484,6 @@ export class HomeGeoProveedoresPage {
           lng: position.coords.longitude
         };
 
-        console.log(position);
-        console.log(geolocation);
 
         var circle = new google.maps.Circle(
           { center: geolocation, radius: position.coords.accuracy });
@@ -519,8 +501,7 @@ export class HomeGeoProveedoresPage {
   }
 
   backData() {
-    console.log(this.data);
-
+    
     this.viewCtrl.dismiss({ data: this.data });
   }
 
@@ -572,10 +553,8 @@ export class HomeGeoProveedoresPage {
 
 
     componente.map.setCenter(place.geometry.location);
-    console.log(componente.marker);
-    componente.marker.setMap(componente.map);
 
-    console.log(componente.marker);
+    componente.marker.setMap(componente.map);
 
     componente.getData().latitud = lat ? lat.toString() : "";
     componente.getData().longitud = lng ? lng.toString() : "";
@@ -600,12 +579,10 @@ export class HomeGeoProveedoresPage {
     if (place) {
       for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
-        console.log(addressType);
-
+        
         if (componente.componentForm[addressType]) {
           var val = place.address_components[i][componente.componentForm[addressType]];
 
-          console.log(val);
           switch (addressType) {
             case "postal_code":
               componente.getData().codigoPostal = val ? val.toString() : "";
@@ -622,8 +599,6 @@ export class HomeGeoProveedoresPage {
       }
     }
 
-    console.log(componente.getData());
-
   }
 
   addToList() {
@@ -633,9 +608,6 @@ export class HomeGeoProveedoresPage {
         handler: (data: any) => {
           let input: any = document.getElementById("input-name");
           let selectDireccion: any = document.getElementById("select-direccion");
-
-          console.log(input.value);
-          console.log(selectDireccion.value);
 
           if (input.value.length <= 0) {
             this.alertaService.warnAlertGeneric("Por favor ingresa un nombre a tu dirección");
@@ -666,8 +638,6 @@ export class HomeGeoProveedoresPage {
             body.direccion.latitud = this.data.latitud ? this.data.latitud : "";
             body.direccion.longitud = this.data.longitud ? this.data.longitud : "";
 
-
-            console.log(body);
             this.guardar(body);
 
           }

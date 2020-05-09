@@ -19,7 +19,6 @@ export class ReciboPagoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReciboPagoPage');
   }
 
 }

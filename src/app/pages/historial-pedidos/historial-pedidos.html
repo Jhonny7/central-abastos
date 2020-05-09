@@ -1,6 +1,22 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title *ngIf="env.perfil.activo == 2">Mi historial</ion-title>
+
+    <button ion-button menuToggle *ngIf="env.perfil.activo == 1">
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Mi historial</ion-title>
+
+
+
+
+    <ion-buttons end>
+
+      <button ion-button icon-only (click)="verOpciones()">
+        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content>
@@ -9,9 +25,15 @@
   </div>
 
   <div class="filtros" [ngStyle]="{'background-color' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">
-      <button (click)="ordenPor(1)"><ion-icon name="ios-calendar-outline"></ion-icon></button>
-      <button (click)="ordenPor(2)"><ion-icon name="md-calendar"></ion-icon></button>
-      <button (click)="ordenPor(3)"><ion-icon name="ios-checkbox-outline"></ion-icon></button>
+    <button (click)="ordenPor(1)">
+      <ion-icon name="ios-calendar-outline"></ion-icon>
+    </button>
+    <button (click)="ordenPor(2)">
+      <ion-icon name="md-calendar"></ion-icon>
+    </button>
+    <button (click)="ordenPor(3)">
+      <ion-icon name="ios-checkbox-outline"></ion-icon>
+    </button>
   </div>
 
   <ion-list *ngIf="pedidos && pedidos?.length > 0">
@@ -20,7 +42,7 @@
         <img src="assets/imgs/pedidos/entrega.png" alt="">
       </ion-avatar>
       <div class="datos-tarjetas">
-        <div class="name">Pedido Num. <strong>{{p.id | number:'5.'}}</strong></div>
+        <div class="name">Pedido Num. <strong>{{p.folio}}</strong></div>
         <div class="number">Costo <strong>{{p.total | currency}}</strong></div>
         <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>
         <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>

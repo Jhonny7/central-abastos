@@ -19,7 +19,6 @@ export class ProblemasPedidoPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ProblemasPedidoPage');
   }
 
 }

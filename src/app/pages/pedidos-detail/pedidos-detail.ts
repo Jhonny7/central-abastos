@@ -27,7 +27,6 @@ export class PedidosDetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PedidosDetailPage');
   }
 
 }

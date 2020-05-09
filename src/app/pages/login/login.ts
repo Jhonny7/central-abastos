@@ -1,3 +1,4 @@
+import { HomeProveedorPage } from './../../pages-proveedor/home-proveedor/home-proveedor';
 import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
@@ -10,6 +11,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { TabsPage } from '../tabs/tabs';
 import { RecuperaContraseniaPage } from '../recupera-contrasenia/recupera-contrasenia';
+import { TabsProveedorPage } from '../../pages-proveedor/tabs/tabs';
 
 @Component({
   selector: 'page-login',
@@ -27,7 +29,7 @@ export class LoginPage {
 
   public color: any = "#3b64c0";
 
-  public env:any = environment;
+  public env: any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,9 +37,9 @@ export class LoginPage {
     private alertaService: AlertaService,
     private genericService: GenericService,
     private localStorageEncryptService: LocalStorageEncryptService,
-    private app:App,
+    private app: App,
     private events: Events) {
-    this.loadingService.hide();  
+    this.loadingService.hide();
     //comentario
     if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
       this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
@@ -53,14 +55,12 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    //console.log("fghjk");
 
     //this.loadingService.show();
   }
 
-  regresar(){
-    console.log("dfgh");
-    
+  regresar() {
+
     this.navCtrl.pop();
   }
 
@@ -70,24 +70,32 @@ export class LoginPage {
         username: this.dataLogin.user,
         password: this.dataLogin.password
       };
-      this.genericService.sendPostRequest(environment.login, body).subscribe((response:any)=>{
-        console.log(response);
+      this.genericService.sendPostRequest(environment.login, body).subscribe((response: any) => {
+        
         //quitar
         this.loadingService.hide();
-        this.localStorageEncryptService.setToLocalStorage("userSession",response);
+        this.localStorageEncryptService.setToLocalStorage("userSession", response);
 
-        console.log(this.localStorageEncryptService.getFromLocalStorage("userSession"));
-        //let nav:any = this.app.getRootNav();
+       //let nav:any = this.app.getRootNav();
         //nav.push(TabsPage);
-        this.events.publish("actualizarCantidad",{});
-        this.events.publish("actualizarTarjetas",{});
+        this.events.publish("actualizarCantidad", {});
+        this.events.publish("actualizarTarjetas", {});
         this.events.publish("totalCarrito");
 
         this.events.publish("reloadUser");
-        this.navCtrl.pop();
-      },(error:HttpErrorResponse)=>{
+        switch (environment.perfil.activo) {
+          case 1:
+            this.navCtrl.pop();
+            break;
+          case 2:
+            this.navCtrl.setRoot(TabsProveedorPage);
+            break;
+          default:
+            break;
+        }
+      }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
-        let err:any = error.error;
+        let err: any = error.error;
         this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
@@ -101,7 +109,7 @@ export class LoginPage {
     this.navCtrl.push(RegistroPage);
   }
 
-  olvideContrasenia(){
+  olvideContrasenia() {
     this.navCtrl.push(RecuperaContraseniaPage);
   }
 

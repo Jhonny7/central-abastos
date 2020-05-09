@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events} from 'ionic-angular';
+import { NavController, NavParams, Events } from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -142,9 +142,43 @@ export class RegistroPage {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
-    this.objetoRegistro.forEach(item => {
-      console.log(item);
 
+    if (environment.perfil.activo == 2) {
+      this.objetoRegistro.splice(7, 0, {
+        name: "Tipo persona",
+        required: true,
+        length: 11,
+        type: "select",
+        formName: "typpe",
+        value: 0,
+        opts: [
+          {
+            id: 0,
+            value: "[--Selecciona--]"
+          },
+          {
+            id: 1,
+            value: "Persona física"
+          },
+          {
+            id: 2,
+            value: "Persona moral"
+          }
+        ]
+      });
+
+      this.objetoRegistro.splice(8, 0, {
+        name: "Razón Social",
+        required: true,
+        length: 50,
+        type: "text",
+        formName: "rz",
+        value: null
+      });
+    }
+
+    this.objetoRegistro.forEach(item => {
+    
       let tmp: any[] = [];
       tmp[0] = null;
       tmp[1] = [];
@@ -201,58 +235,94 @@ export class RegistroPage {
 
   registrar() {
 
-    if(this.objetoRegistro[7].value != this.objetoRegistro[8].value){
+    if (this.objetoRegistro[7].value != this.objetoRegistro[8].value && environment.perfil.activo == 1) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
-    }else{
+    } else if (this.objetoRegistro[9].value != this.objetoRegistro[10].value && environment.perfil.activo == 2) {
+      this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    } else {
 
-      console.log(this.photo_url);
       
-      let body:any = {
-        login: this.objetoRegistro[6].value,
-        email: this.objetoRegistro[6].value,
-        firstName: this.objetoRegistro[0].value,
-        lastName:this.objetoRegistro[1].value,
-        motherLastName:this.objetoRegistro[2].value,
-  
-        telefono:this.objetoRegistro[4].value,
-        fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("DD/MM/YYYY"),
-  
-        genero: this.objetoRegistro[5].value,
-        password:this.objetoRegistro[7].value,
-  
-  
-        activated: true,// por default en la app
-  
-        adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
-          contentType: "image/jpeg",
-          file: this.photo_url,
-          fileName: Math.floor(new Date().getTime()/1000.0).toString(),
-          size:0
-        },
-      };
-      let path:string = environment.registro;
-      
-      if(environment.perfil.activo == 2){
+      let body: any = null;
+
+      switch (environment.perfil.activo) {
+        case 1:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("DD/MM/YYYY"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[7].value,
+
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            },
+          };
+          break;
+
+        case 2:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("DD/MM/YYYY"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[9].value,
+
+            tipoPersona: this.objetoRegistro[7].value,
+            razonSocial: this.objetoRegistro[8].value,
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            },
+          };
+          break;
+      }
+
+      let path: string = environment.registro;
+
+      if (environment.perfil.activo == 2) {
         body.tipoPersona = 2;
         path = `${environment.registro}/proveedor`;
       }
 
-      this.loadingService.show().then(()=>{
+      this.loadingService.show().then(() => {
 
-        
-        this.genericService.sendPostRequest(path, body).subscribe((response:any)=>{
-          console.log(response);
+
+        this.genericService.sendPostRequest(path, body).subscribe((response: any) => {
+         
           this.loadingService.hide();
           this.alertaService.successAlertGeneric("Registro exitoso");
           this.navCtrl.pop();
-        },(error:HttpErrorResponse)=>{
+        }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
-          let err:any = error.error;
+          let err: any = error.error;
           this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       });
     }
-    
+
   }
 
   /**Verifica validaciones */
@@ -273,8 +343,6 @@ export class RegistroPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
-    console.log(this.formGroup.controls);
-
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {

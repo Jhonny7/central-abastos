@@ -24,12 +24,9 @@ export class RequestInterceptorService implements HttpInterceptor {
   
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //console.log("---------------------------------");
-    //console.log(request);
-
+  
     let chequeo: any = this.auth.getToken();
-    console.log(chequeo);
-    
+   
     let headers: any = {
       'Content-Type': 'application/json'
     };
@@ -64,10 +61,8 @@ export class RequestInterceptorService implements HttpInterceptor {
           } catch (error) {
             error = errorResponse;
           }
-          console.log("-----------------------------");
-          console.log(error);
-
           if (error && error.status == 401 &&
+            !request.url.toString().includes("api/authenticate") &&
             error.error.title == "Unauthorized" ||
             error.error.title == "El cliente es requerido") {
             this.auth.events.publish("startSession");

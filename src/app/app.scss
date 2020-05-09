@@ -614,6 +614,92 @@ ion-card {
   }
 }
 
+.alerta-two-button5 {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary5);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary5);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        color: map-get($colors, primary5);
+        background-color: #fff;
+        border: 1px solid map-get($colors, primary5);
+      }
+    }
+  }
+}
+
+.alerta-two-button6 {
+  .alert-wrapper {
+    background-color: rgba(255, 255, 255, 0.92);
+
+    width: 80%;
+    max-width: 100%;
+    .alert-head {
+      text-align: center;
+      .alert-title {
+        color: #020202;
+      }
+    }
+    .alert-button-group {
+      padding: 0px;
+      width: 100%;
+      .alert-button {
+        background-color: map-get($colors, primary6);
+        color: #ffffff;
+
+        margin: 0px;
+        width: 100%;
+        border-radius: 0px;
+        text-align: center;
+
+        display: inline-block;
+        width: 50%;
+        text-transform: capitalize;
+        font-size: 14px;
+        border: 1px solid map-get($colors, primary6);
+        .button-inner {
+          justify-content: center;
+        }
+      }
+
+      .alert-button:nth-child(1) {
+        color: map-get($colors, primary6);
+        background-color: #fff;
+        border: 1px solid map-get($colors, primary6);
+      }
+    }
+  }
+}
+
 .headerImg{
   width: 44px;
 }
@@ -730,6 +816,66 @@ ion-card {
         padding: 13px;
         font-size: 16px;
         background-color: #74be3b;
+        span {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.alerta-loteria5 {
+  .alert-wrapper {
+    width: 100%;
+    border-radius: 13px;
+    .alert-head {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.82);
+    }
+    .alert-button-group {
+      padding: 0px;
+      text-align: center;
+      justify-content: center;
+      .alert-button {
+        margin: 0px;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        justify-content: center;
+        text-transform: initial;
+        padding: 13px;
+        font-size: 16px;
+        background-color: #292929;
+        span {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.alerta-loteria6 {
+  .alert-wrapper {
+    width: 100%;
+    border-radius: 13px;
+    .alert-head {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.82);
+    }
+    .alert-button-group {
+      padding: 0px;
+      text-align: center;
+      justify-content: center;
+      .alert-button {
+        margin: 0px;
+        width: 100%;
+        color: #fff;
+        text-align: center;
+        justify-content: center;
+        text-transform: initial;
+        padding: 13px;
+        font-size: 16px;
+        background-color: #F07C1B;
         span {
           justify-content: center;
         }

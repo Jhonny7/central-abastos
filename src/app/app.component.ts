@@ -1,3 +1,4 @@
+import { TarjetasFrecuentesPage } from './pages/tarjetas-frecuentes/tarjetas-frecuentes';
 import { AyudaPage } from './pages/ayuda/ayuda';
 import { AcercaDePage } from './pages/acerca-de/acerca-de';
 import { PerfilPage } from './pages/perfil/perfil';
@@ -21,6 +22,8 @@ import { DireccionesPage } from './pages/direcciones/direcciones';
 import { InfoPage } from './pages/info/info';
 import { TerminosCondicionesPage } from './pages/terminos-condiciones/terminos-condiciones';
 import { environment } from '../environments/environment.prod';
+import { TabsProveedorPage } from './pages-proveedor/tabs/tabs';
+import { ProveedorPage } from './pages/recuperar-password/recuperar-password';
 
 @Component({
   templateUrl: 'app.html'
@@ -49,13 +52,20 @@ export class MyApp {
       splashScreen.hide();
       this.initializeLanguage();
 
+      let firstTime = this.localStorageEncryptService.getFromLocalStorage("firstTime");
+      if(!firstTime){
+        this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
+        this.localStorageEncryptService.setToLocalStorage("firstTime",1);
+      }
       /**Armar menu */
       switch (environment.perfil.activo) {
         case 1:
           this.pages.push(new Menu("Mi perfil", "assets/imgs/perfil/social-media.png", "#7d3a63", PerfilPage));
+          this.pages.push(new Menu("Tarjetas", "assets/imgs/menu/card.png", "#7d3a63", TarjetasFrecuentesPage));
           this.pages.push(new Menu("Lista de carrito frecuentes", "assets/imgs/lista-carrito/trolley.png", "#7d3a63", ListaCarritoComprasPage));
           this.pages.push(new Menu("Direcciones frecuentes", "assets/imgs/direcciones/markerD.png", "#7d3a63", DireccionesPage));
-          this.pages.push(new Menu("Mi historial", "assets/imgs/menu/historial.png", "#7d3a63", HistorialPedidosPage));
+          //this.pages.push(new Menu("Mi historial", "assets/imgs/menu/historial.png", "#7d3a63", HistorialPedidosPage));
+          this.pages.push(new Menu("Proveedores", "assets/imgs/menu/arrows.png", "#7d3a63", ProveedorPage));
 
           this.pages.push(new Menu("Acerca de", "assets/imgs/menu/interface.png", "#7d3a63", AcercaDePage));
           this.pages.push(new Menu("Información de la app", "assets/imgs/menu/signs.png", "#7d3a63", InfoPage));
@@ -64,6 +74,10 @@ export class MyApp {
           break;
 
         case 2:
+          this.pages.push(new Menu("Acerca de", "assets/imgs/menu/interface.png", "#7d3a63", AcercaDePage));
+          this.pages.push(new Menu("Información de la app", "assets/imgs/menu/signs.png", "#7d3a63", InfoPage));
+          this.pages.push(new Menu("Contacto", "assets/imgs/menu/logotype.png", "#7d3a63", AyudaPage));
+          this.pages.push(new Menu("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", TerminosCondicionesPage));
           break;
       }
       /** */
@@ -81,7 +95,7 @@ export class MyApp {
 
         case 2:
           if (this.user) {
-            this.rootPage = TabsPage;
+            this.rootPage = TabsProveedorPage;
           } else {
             this.rootPage = LoginPage;
           }
@@ -140,7 +154,6 @@ export class MyApp {
           text: 'Cancelar',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         },
         {

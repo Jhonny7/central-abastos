@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+      <ion-title>Terminar servicio</ion-title>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content padding>
+
+  <div class="titlee" [ngStyle]="{'border-color' : genericService.getColorHex()}">Código: <strong>{{pedido.folio}}</strong></div>
+
+    <div class="miqr">
+        <qrcode [qrdata]="qrCode"></qrcode>
+    </div>
+
+    <div style="    margin-top: 20px;
+    font-size: 17px;
+    text-align: center;">Muestra este código QR a la persona que entrega el pedido</div>
+
+    
+</ion-content>

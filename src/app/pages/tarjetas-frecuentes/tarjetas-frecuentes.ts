@@ -29,8 +29,7 @@ export class TarjetasFrecuentesPage implements OnDestroy {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
     this.events.subscribe('card', data => {
-      console.log(data);
-
+      
       if (!data.create) {
         let position = this.cards.findIndex(
           (img) => {
@@ -57,7 +56,7 @@ export class TarjetasFrecuentesPage implements OnDestroy {
 
   getCards() {
     this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
-      console.log(response);
+      
       //quitar
       this.cards = response;
       if (this.cards.length <= 0) {
@@ -90,8 +89,6 @@ export class TarjetasFrecuentesPage implements OnDestroy {
     } else {
       position = -1;
     }
-    console.log(position);
-
     nav.push(DetalleTarjetaPage, { card, position, cards: this.cards, edit: card ? true : false });
   }
 

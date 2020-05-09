@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, App, ViewController, Events } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { ListaCarritoComprasPage } from '../lista-carrito-compras/lista-carrito-compras';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'page-opciones-menu',
@@ -14,6 +15,7 @@ export class OpcionesMenuPage {
 
   public user: any = null;
 
+  public env:any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -35,7 +37,6 @@ export class OpcionesMenuPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OpcionesMenuPage');
   }
 
   logout() {
@@ -64,10 +65,11 @@ export class OpcionesMenuPage {
   confirmar() {
     try {
       this.localStorageEncryptService.clearProperty("userSession");
-      this.viewCtrl.dismiss();
-      this.navCtrl.setRoot(LoginPage);
+        this.viewCtrl.dismiss();
+      
+      let nav:any = this.app.getRootNav();
+      nav.setRoot(LoginPage);
     } catch (error) {
-      console.log(error);
 
     }
   }
@@ -91,6 +93,12 @@ export class OpcionesMenuPage {
         break;
       case 4:
         this.localStorageEncryptService.setToLocalStorage("theme", "#74be3b");
+        break;
+        case 5:
+        this.localStorageEncryptService.setToLocalStorage("theme", "#292929");
+        break;
+        case 6:
+        this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
         break;
       default:
         this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");

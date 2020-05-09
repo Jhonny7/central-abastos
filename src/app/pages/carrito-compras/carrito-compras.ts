@@ -115,8 +115,7 @@ export class CarritoComprasPage {
     private currencyPipe: CurrencyPipe) {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-    this.productosCarritoReplica = this.productosCarrito
-    console.log(this.productosCarrito);
+    this.productosCarritoReplica = this.productosCarrito;
     this.getCards();
   }
 
@@ -133,8 +132,7 @@ export class CarritoComprasPage {
 
   getCards() {
     this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
-      console.log(response);
-      //quitar
+      
       this.cards = response;
       this.cards.forEach(element => {
         element.selected = false;
@@ -156,8 +154,6 @@ export class CarritoComprasPage {
 
   setupStripe() {
 
-    console.log(this.cards);
-
     let position: any = this.cards.findIndex(
       (carrito) => {
         return carrito.selected;
@@ -172,7 +168,6 @@ export class CarritoComprasPage {
 
     let bandera: boolean = false;
     if (this.cards[position]) {
-      console.log(this.cards[position]);
       let item: any = this.cards[position];
       let fechaFormat: any = item.fechaCaducidad.split("-");
       item.expMont = fechaFormat[1];
@@ -195,8 +190,6 @@ export class CarritoComprasPage {
       c.exp_month = expMont;
       c.exp_year = expYear;
     }
-    //this.stripe.createSource(this.card);
-    //console.log(a);
     if (!bandera) {
       Stripe.setPublishableKey('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
       this.loadingService.show().then(() => {
@@ -211,8 +204,6 @@ export class CarritoComprasPage {
             // Get the token ID:
             //clase.loadingService.hide();
             var token = response.id;
-            console.log(token);
-            console.log(response);
             let body: any = {
               pedidoId: clase.pagoActual.id,
               token: token
@@ -221,11 +212,9 @@ export class CarritoComprasPage {
 
             service.subscribe((response: any) => {
               clase.loadingService.hide();
-              console.log(response);
               clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
               clase.cerrar();
             }, (error: HttpErrorResponse) => {
-              console.log(error);
 
               clase.loadingService.hide();
               clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
@@ -333,15 +322,13 @@ export class CarritoComprasPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoProveedor.id}`).subscribe((response: any) => {
-        console.log(response);
-
+        
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          console.log(carritos);
-
+          
           if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {
@@ -378,11 +365,8 @@ export class CarritoComprasPage {
     }
     body.cantidad = producto.cantidad;
 
-    console.log(body);
-
     this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
-      console.log(response1);
-
+    
       if (producto.cantidad == 0) {
         this.genericService.sendDelete(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
 
@@ -404,7 +388,6 @@ export class CarritoComprasPage {
   }
 
   deleteFavoritoService(producto) {
-    console.log(producto);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     let nuevoArrarCarrito: any[] = [];
     let productoDelete: any = null;
@@ -417,8 +400,6 @@ export class CarritoComprasPage {
         producto.carrito = false;
       }
     });
-
-    console.log(producto);
     this.productosCarrito = nuevoArrarCarrito;
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, this.productosCarrito);
 
@@ -447,7 +428,6 @@ export class CarritoComprasPage {
     //
     let putObj: any = {};
     this.objetoRegistro.forEach(item => {
-      console.log(item);
 
       let tmp: any[] = [];
       tmp[0] = null;
@@ -527,9 +507,6 @@ export class CarritoComprasPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
-    console.log(this.formGroup.controls);
-    console.log(validacion);
-
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {
@@ -544,7 +521,6 @@ export class CarritoComprasPage {
     modal.onDidDismiss((data) => {
       if (data) {
         if (data != null) {
-          console.log(data);
           this.data = data.data;
           this.objetoRegistro[3].value = this.data.direccion;
           this.objetoRegistro[4].value = this.data.codigoPostal;
@@ -589,7 +565,6 @@ export class CarritoComprasPage {
 
     this.loadingService.show().then(() => {
       service.subscribe((response: any) => {
-        console.log(response);
         this.pagoActual = response;
         this.loadingService.hide();
         //this.comprar();
@@ -598,8 +573,6 @@ export class CarritoComprasPage {
           this.openModal3();
         }, 300);
       }, (error: HttpErrorResponse) => {
-        console.log(error);
-
         this.loadingService.hide();
         this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
       });
@@ -655,7 +628,6 @@ export class CarritoComprasPage {
       {
         text: "Agregar",
         handler: (data: any) => {
-          console.log(data.nombre);
           let body: any = {
             nombre: data.nombre
           };

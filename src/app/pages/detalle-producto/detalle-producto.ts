@@ -57,8 +57,6 @@ export class DetalleProductoPage {
       this.producto.cantidad = 1;
       this.producto.first = true;
     }
-    console.log(this.producto);
-    
     this.events.subscribe("actualizarCantidad", data => {
       try {
         this.actualizarCantidad();
@@ -88,8 +86,7 @@ export class DetalleProductoPage {
 
   actualizarCantidad() {
     let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-    console.log(carritos);
-
+    
     let position: any = carritos.findIndex(
       (carrito) => {
         return carrito.id == this.producto.id;
@@ -103,8 +100,6 @@ export class DetalleProductoPage {
 
   /**Métodos de navegacion del slide */
   next1() {
-    console.log("next");
-
     this.slider2.slideNext();
   }
 
@@ -118,8 +113,7 @@ export class DetalleProductoPage {
       img.src = phot.img;
       img.onload = () => {
         this.productosTemp.push({ img: phot.img, w: img.width, h: img.height, i: phot.id });
-        console.log(this.productosTemp);
-
+       
       }
     });
   }
@@ -131,24 +125,17 @@ export class DetalleProductoPage {
   }
 
   imagesLoaded(i: number): void {
-    console.log(i);
     let pswpElement: any = document.querySelectorAll('.pswp')[0];
-    console.log(this.productosTemp);
-
-    this.productosTemp.sort((a, b) => (a.i > b.i) ? 1 : -1)
-    console.log(this.productosTemp);
+    this.productosTemp.sort((a, b) => (a.i > b.i) ? 1 : -1);
 
     // build items array
     let items: any[] = [];
 
     this.productosTemp.forEach(photo => {
-      //console.log(photo);
-
+      
       items.push({ src: photo.img, w: photo.w, h: photo.h });
 
     });
-
-    console.log(items);
 
 
     // define options (if needed)
@@ -222,7 +209,7 @@ export class DetalleProductoPage {
     }
     body.cantidad = producto.cantidad;
     this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
-      console.log(response1);
+      
       if (producto.cantidad == 0) {
         this.genericService.sendDeleteRequest(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
           if (producto.cantidad == 0) {
@@ -274,8 +261,7 @@ export class DetalleProductoPage {
             this.updateCarrito(producto, body);
             //this.verificarCarritoModificarCantidad(producto);
           }, (error: HttpErrorResponse) => {
-            console.log(error);
-            
+          
             this.alertaService.errorAlertGeneric(error.error.title);
             if(producto.cantidad == 1){
               producto.cantidad = 1;
