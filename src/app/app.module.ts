@@ -54,7 +54,7 @@ import { InfoPage } from './pages/info/info';
 import { TabsProveedorPage } from './pages-proveedor/tabs/tabs';
 import { HomeProveedorPage } from './pages-proveedor/home-proveedor/home-proveedor';
 import { VerProductosPage } from './pages-proveedor/ver-productos/ver-productos';
-import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
+//import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 import { QrPage } from './pages/qr/qr';
 import { QRCodeModule } from 'angularx-qrcode';
 
@@ -115,7 +115,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    EmojiPickerModule,
+    //EmojiPickerModule,
     ProvidersModule,
     QRCodeModule,
     HttpClientModule,
