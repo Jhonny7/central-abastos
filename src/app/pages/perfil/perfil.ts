@@ -190,6 +190,8 @@ export class PerfilPage {
             value: response.direccion ? response.direccion.direccion : null,
             disabled: true
           });
+
+          this.data = response.direccion ? response.direccion : null;
         }
 
         this.userResponse = response;
@@ -267,6 +269,18 @@ export class PerfilPage {
           size: 0
         },
       };
+
+      if (environment.perfil.activo == 2) {
+        body.direccion = {
+          codigoPostal: this.data.codigoPostal,
+          direccion: this.data.direccion,
+          latitud: this.data.latitud,
+          longitud: this.data.longitud
+        };
+
+        body.tipoPersonaId = this.objetoRegistro[6].value;
+        body.razonSocial = this.objetoRegistro[7].value;
+      }
 
       this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
         this.alertaService.successAlertGeneric("Perfil modificado con éxito");

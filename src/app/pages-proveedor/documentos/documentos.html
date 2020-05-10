@@ -10,9 +10,17 @@
     <ion-spinner></ion-spinner>
   </div>
 
-  <div *ngFor="let d of documentos">
-    <div>
-
-    </div>
-  </div>
+  <ion-list *ngIf="documentos && documentos?.length > 0">
+      <ion-item class="item-list-card" *ngFor="let d of documentos" (click)="viewDetail(p)">
+        <ion-avatar slot="start">
+            <img src="assets/imgs/menu/file.png" alt="" *ngIf="!d.usuarioDocumentoId">
+            <img src="{{d.imagen}}" alt="" *ngIf="d.usuarioDocumentoId">
+        </ion-avatar>
+        <div class="datos-tarjetas" style="vertical-align: top;">
+            <div class="name" style="font-size:14px">Documento</div>
+            <div class="name" style="font-size:14px"><strong>{{d.nombre}}</strong></div>
+        </div>
+  
+      </ion-item>
+    </ion-list>
 </ion-content>
