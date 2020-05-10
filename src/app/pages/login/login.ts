@@ -71,27 +71,32 @@ export class LoginPage {
         password: this.dataLogin.password
       };
       this.genericService.sendPostRequest(environment.login, body).subscribe((response: any) => {
-        
+
         //quitar
         this.loadingService.hide();
-        this.localStorageEncryptService.setToLocalStorage("userSession", response);
+        if (response.tipo_usuario == 3 && environment.perfil.activo == 2 ||
+          response.tipo_usuario == 2 && environment.perfil.activo == 1) {
+          this.localStorageEncryptService.setToLocalStorage("userSession", response);
 
-       //let nav:any = this.app.getRootNav();
-        //nav.push(TabsPage);
-        this.events.publish("actualizarCantidad", {});
-        this.events.publish("actualizarTarjetas", {});
-        this.events.publish("totalCarrito");
+          //let nav:any = this.app.getRootNav();
+          //nav.push(TabsPage);
+          this.events.publish("actualizarCantidad", {});
+          this.events.publish("actualizarTarjetas", {});
+          this.events.publish("totalCarrito");
 
-        this.events.publish("reloadUser");
-        switch (environment.perfil.activo) {
-          case 1:
-            this.navCtrl.pop();
-            break;
-          case 2:
-            this.navCtrl.setRoot(TabsProveedorPage);
-            break;
-          default:
-            break;
+          this.events.publish("reloadUser");
+          switch (environment.perfil.activo) {
+            case 1:
+              this.navCtrl.pop();
+              break;
+            case 2:
+              this.navCtrl.setRoot(TabsProveedorPage);
+              break;
+            default:
+              break;
+          }
+        } else {
+          this.alertaService.warnAlertGeneric("No has dado de alta tu usuario, por favor, registrate");
         }
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();

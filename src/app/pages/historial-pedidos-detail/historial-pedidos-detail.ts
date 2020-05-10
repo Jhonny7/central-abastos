@@ -1,3 +1,4 @@
+import { ListaChatPage } from './../../pages/lista-chat/lista-chat';
 import { QrPage } from './../qr/qr';
 import { ChatPage } from './../chat/chat';
 import { LoadingService } from './../../services/loading.service';
@@ -112,7 +113,7 @@ export class HistorialPedidosDetailPage {
 
     this.genericService.sendPutRequest(environment.pedidosProveedores, body).subscribe((response1: any) => {
       
-      this.alertaService.successAlertGeneric(`El pedido ha cambiado su estatus a enviado, ponte en contacto con ${this.pedido.cliente.firstName}`);
+      this.alertaService.successAlertGeneric(`El pedido ha cambiado su estatus a enviado`);
     }, (error: HttpErrorResponse) => {
       this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");
     });
@@ -124,17 +125,17 @@ export class HistorialPedidosDetailPage {
         if (!this.pedido.pedidoProveedores[0].chatProveedorid) {
           this.alertaService.warnAlertGeneric("El proveedor aun no inicia el chat, espera a que él se comunique contigo");
         } else {
-          this.loadingService.show().then(() => {
+          /* this.loadingService.show().then(() => {
             this.genericService.sendGetRequest(`${environment.chats}/${this.pedido.pedidoProveedores[0].chatProveedorid}`).subscribe((response: any) => {
-             
-              this.navCtrl.push(ChatPage, { chat: response, pedido: this.pedido });
-              this.loadingService.hide();
+              */
+              this.navCtrl.push(ListaChatPage, { chats: this.pedido.pedidoProveedores, pedido: this.pedido });
+              /* this.loadingService.hide();
             }, (error: HttpErrorResponse) => {
               this.loadingService.hide();
               let err: any = error.error;
               this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
             });
-          });
+          }); */
         }
         break;
 

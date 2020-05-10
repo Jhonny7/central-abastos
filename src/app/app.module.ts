@@ -58,6 +58,7 @@ import { VerProductosPage } from './pages-proveedor/ver-productos/ver-productos'
 //import { EmojiPickerModule } from '@ionic-tools/emoji-picker';
 import { QrPage } from './pages/qr/qr';
 import { QRCodeModule } from 'angularx-qrcode';
+import { ListaChatPage } from './pages/lista-chat/lista-chat';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -107,7 +108,7 @@ export function createTranslateLoader(http: HttpClient) {
     CambioContraseniaPage,
     AyudaPage,
     AcercaDePage,
-
+    ListaChatPage,
     TabsProveedorPage,
     HomeProveedorPage,
     VerProductosPage,
@@ -173,6 +174,7 @@ export function createTranslateLoader(http: HttpClient) {
     CambioContraseniaPage,
     AyudaPage,
     AcercaDePage,
+    ListaChatPage,
 
     TabsProveedorPage,
     HomeProveedorPage,

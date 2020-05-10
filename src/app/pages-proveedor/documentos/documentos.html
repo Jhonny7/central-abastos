@@ -11,16 +11,29 @@
   </div>
 
   <ion-list *ngIf="documentos && documentos?.length > 0">
-      <ion-item class="item-list-card" *ngFor="let d of documentos" (click)="viewDetail(p)">
+    <ion-item-sliding #item *ngFor="let d of documentos">
+      <ion-item class="item-list-card" (click)="subirDocumento(d)" style="border-bottom: 1px solid #ddd;">
         <ion-avatar slot="start">
-            <img src="assets/imgs/menu/file.png" alt="" *ngIf="!d.usuarioDocumentoId">
-            <img src="{{d.imagen}}" alt="" *ngIf="d.usuarioDocumentoId">
+          <img src="assets/imgs/menu/file.png" alt="" *ngIf="!d.imagen">
+          <img src="{{d.imagen}}" alt="" *ngIf="d.imagen">
         </ion-avatar>
         <div class="datos-tarjetas" style="vertical-align: top;">
-            <div class="name" style="font-size:14px">Documento</div>
-            <div class="name" style="font-size:14px"><strong>{{d.nombre}}</strong></div>
+          <div class="name" style="font-size:14px">Documento</div>
+          <div class="name" style="font-size:14px"><strong>{{d.nombre}}</strong></div>
         </div>
-  
+
       </ion-item>
-    </ion-list>
+      <ion-item-options side="right">
+        <button ion-button (click)="actualizar(card)" color="primary">
+          <ion-icon name="ios-create-outline"></ion-icon>
+          Editar
+        </button>
+        <button ion-button (click)="borrar(card)" color="danger">
+          <ion-icon name="ios-trash-outline"></ion-icon>
+          Borrar
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
 </ion-content>

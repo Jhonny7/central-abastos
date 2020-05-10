@@ -55,7 +55,7 @@ export class VerProductosPage {
       
       this.genericService.sendPutRequest(environment.pedidosProveedores, body).subscribe((response1: any) => {
         
-        this.alertaService.successAlertGeneric(`El pedido ha sido confirmado, ponte en contacto con ${this.pedidos.cliente.firstName}`);
+        this.alertaService.successAlertGeneric(`El pedido ha sido confirmado`);
         this.navCtrl.pop();
       }, (error: HttpErrorResponse) => {
         this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");

@@ -1,5 +1,5 @@
 <ion-tabs color="{{genericService.getColor()}}" selectedIndex="1">
-    <ion-tab [root]="tab3Root" tabTitle="Proveedores" tabIcon="ios-cart-outline"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Proveedores" tabIcon="ios-cart-outline" *ngIf="genericService.getUser()"></ion-tab>
   <ion-tab [root]="tab1Root" tabTitle="Busca" tabIcon="home"></ion-tab>
   <ion-tab [root]="tab2Root" tabTitle="Mi historial" tabIcon="ios-albums-outline" *ngIf="genericService.getUser()"></ion-tab>
   

@@ -4,6 +4,9 @@ import { GenericService } from '../../services/generic.service';
 import { AlertaService } from '../../services/alerta.service';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-documentos',
@@ -15,11 +18,21 @@ export class DocumentosPage {
 
   public documentosTmp: any[] = [];
 
+  public options: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+  }
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
-    private alertaService: AlertaService) {
+    private alertaService: AlertaService,
+    private camera: Camera,
+    private actionSheet: ActionSheet,
+    private translatePipe: TranslateService) {
     this.documentosTmp.push({
       documentoId: 1,
       nombre: "IFE",
@@ -63,10 +76,96 @@ export class DocumentosPage {
         this.documentos = this.documentosTmp;
         console.log(this.documentos);
         
+      }else{
+        console.log("no fue necesario");
+        this.documentos.forEach(element => {
+          if(element.adjuntoId){
+            element.imagen = `${environment.getImagenIndividual}${element.adjuntoId}`;
+          }
+        });
+        console.log(this.documentos);
+        
       }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    });
+  }
+
+  subirDocumento(documento:any){
+    this.opcionesDeImagen(documento);
+  }
+
+  opcionesDeImagen(documento:any) {
+    let buttonLabels = [this.translatePipe.instant("CAPTURE"), this.translatePipe.instant("SELECT")];
+    const options: ActionSheetOptions = {
+      title: '',
+      subtitle: '',
+      buttonLabels: buttonLabels,
+      addCancelButtonWithLabel: this.translatePipe.instant("CANCEL"),
+      addDestructiveButtonWithLabel: this.translatePipe.instant("DELETE"),
+      androidTheme: 1,
+      destructiveButtonLast: true
+    };
+    this.actionSheet.show(options).then((buttonIndex: number) => {
+      switch (buttonIndex) {
+        case 1:
+          this.takeFoto(documento);
+          break;
+        case 2:
+          this.seleccionaImagen(documento);
+          break;
+        case 3:
+          documento.imagen = null;
+          break;
+      }
+    });
+  }
+
+  takeFoto(documento:any) {
+    this.options.sourceType = this.camera.PictureSourceType.CAMERA;
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      documento.imagen = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+  }
+
+  seleccionaImagen(documento:any) {
+    this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+    this.camera.getPicture(this.options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      documento.imagen = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+  }
+
+  actualizar(documento:any){
+    let body:any = {
+      documentoId: documento.documentoId,
+      adjunto: {
+        fileName: `${Math.round(new Date().getTime() / 1000)}.jpg`,
+        contentType: "jpg",
+        size: null
+      }
+    }
+
+    this.genericService.sendPostRequest(`${environment.usuarioDocumentos}`, body).subscribe((response: any) => {
+      this.alertaService.successAlertGeneric("Tu documento se actualizó correctamente");
+    }, (error: HttpErrorResponse) => {
+      this.alertaService.errorAlertGeneric("No se ha podido actualizar tu documento, intenta nuevamente");
+    });
+  }
+
+  borrar(documento:any){
+    this.genericService.sendDeleteRequest(`${environment.usuarioDocumentos}/${documento.usuarioDocumentoId}`).subscribe((response: any) => {
+      this.alertaService.successAlertGeneric("Tu documento se eliminó correctamente");
+    }, (error: HttpErrorResponse) => {
+      this.alertaService.errorAlertGeneric("No se ha podido borrar tu documento, intenta nuevamente");
     });
   }
 }

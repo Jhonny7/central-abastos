@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>Chats</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="chats && chats?.length > 0">
+    <ion-item class="item-list-card" *ngFor="let c of chats" (click)="verChat(c)" style="border-bottom: 1px solid #ddd;">
+      <ion-avatar slot="start">
+        <img src="assets/imgs/chat/call.png" alt="">
+      </ion-avatar>
+      <div class="datos-tarjetas" style="vertical-align: top;">
+        <div class="name" style="font-size:14px">Pedido</div>
+        <div class="name" style="font-size:14px"><strong>{{c.folio}}</strong></div>
+      </div>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

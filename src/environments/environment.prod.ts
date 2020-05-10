@@ -73,7 +73,7 @@ export const environment = {
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
-    //activo: appCliente,
-    activo: appProveedor
+    activo: appCliente,
+    //activo: appProveedor
   }
 };
