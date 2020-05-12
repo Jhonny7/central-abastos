@@ -15,7 +15,7 @@ export class QrPage {
     public navParams: NavParams,
     private genericService: GenericService) {
       this.pedido = navParams.get("pedido");
-      this.qrCode = this.pedido.folio;
+      this.qrCode = this.pedido.token;
   }
 
   ionViewDidLoad() {

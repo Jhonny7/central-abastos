@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Events, ModalController } from 'ionic-angular';
+import { NavController, NavParams, Events, ModalController, ActionSheetController } from 'ionic-angular';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
@@ -28,7 +28,7 @@ export class RegistroPage {
 
   public objetoRegistro: any[] = [
     {
-      name: "Nombre del cliente",
+      name: "Nombre",
       required: true,
       length: 50,
       type: "text",
@@ -141,53 +141,90 @@ export class RegistroPage {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private events: Events,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private actionSheetCtrl: ActionSheetController) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
 
-    if (environment.perfil.activo == 2) {
-      this.objetoRegistro.splice(7, 0, {
-        name: "Tipo persona",
-        required: true,
-        length: 11,
-        type: "select",
-        formName: "typpe",
-        value: 0,
-        opts: [
-          {
-            id: 0,
-            value: "[--Tipo persona--]"
-          },
-          {
-            id: 1,
-            value: "Persona física"
-          },
-          {
-            id: 2,
-            value: "Persona moral"
-          }
-        ]
-      });
+    switch (environment.perfil.activo) {
+      case 2:
+        this.objetoRegistro.splice(7, 0, {
+          name: "Tipo persona",
+          required: true,
+          length: 11,
+          type: "select",
+          formName: "typpe",
+          value: 0,
+          opts: [
+            {
+              id: 0,
+              value: "[--Tipo persona--]"
+            },
+            {
+              id: 1,
+              value: "Persona física"
+            },
+            {
+              id: 2,
+              value: "Persona moral"
+            }
+          ]
+        });
 
-      this.objetoRegistro.splice(8, 0, {
-        name: "Razón Social",
-        required: true,
-        length: 50,
-        type: "text",
-        formName: "rz",
-        value: null
-      });
+        this.objetoRegistro.splice(8, 0, {
+          name: "Razón Social",
+          required: true,
+          length: 50,
+          type: "text",
+          formName: "rz",
+          value: null
+        });
 
-      this.objetoRegistro.push({
-        name: "Dirección",
-        required: true,
-        length: 200,
-        type: "text",
-        formName: "direc",
-        value: null,
-        disabled: true
-      });
+        this.objetoRegistro.push({
+          name: "Dirección",
+          required: true,
+          length: 200,
+          type: "text",
+          formName: "direc",
+          value: null,
+          disabled: true
+        });
+        break;
+
+      case 3:
+        this.objetoRegistro.splice(7, 0, {
+          name: "Tipo persona",
+          required: true,
+          length: 11,
+          type: "select",
+          formName: "typpe",
+          value: 0,
+          opts: [
+            {
+              id: 0,
+              value: "[--Tipo persona--]"
+            },
+            {
+              id: 1,
+              value: "Persona física"
+            },
+            {
+              id: 2,
+              value: "Persona moral"
+            }
+          ]
+        });
+
+        this.objetoRegistro.splice(8, 0, {
+          name: "Razón Social",
+          required: true,
+          length: 50,
+          type: "text",
+          formName: "rz",
+          value: null
+        });
+        break;
     }
 
     this.objetoRegistro.forEach(item => {
@@ -248,9 +285,9 @@ export class RegistroPage {
 
   registrar() {
 
-    if (this.objetoRegistro[7].value != this.objetoRegistro[8].value && environment.perfil.activo == 1) {
+    if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
-    } else if (this.objetoRegistro[9].value != this.objetoRegistro[10].value && environment.perfil.activo == 2) {
+    } else if (environment.perfil.activo == 2 || environment.perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
     } else {
 
@@ -318,6 +355,33 @@ export class RegistroPage {
             }
           };
           break;
+        case 3:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("DD/MM/YYYY"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[9].value,
+
+            tipoPersona: this.objetoRegistro[7].value,
+            razonSocial: this.objetoRegistro[8].value,
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            }
+          };
+          break;
       }
 
       let path: string = environment.registro;
@@ -325,6 +389,10 @@ export class RegistroPage {
       if (environment.perfil.activo == 2) {
         body.tipoPersona = 2;
         path = `${environment.registro}/proveedor`;
+      }
+      if (environment.perfil.activo == 3) {
+        body.tipoPersona = 3;
+        path = `${environment.registro}/transportista`;
       }
 
       if (environment.perfil.activo == 2 && this.objetoRegistro[this.objetoRegistro.length - 1].value.length <= 0) {
@@ -375,29 +443,43 @@ export class RegistroPage {
   }
 
   opcionesDeImagen() {
-    let buttonLabels = [this.translatePipe.instant("CAPTURE"), this.translatePipe.instant("SELECT")];
-    const options: ActionSheetOptions = {
-      title: '',
-      subtitle: '',
-      buttonLabels: buttonLabels,
-      addCancelButtonWithLabel: this.translatePipe.instant("CANCEL"),
-      addDestructiveButtonWithLabel: this.translatePipe.instant("DELETE"),
-      androidTheme: 1,
-      destructiveButtonLast: true
-    };
-    this.actionSheet.show(options).then((buttonIndex: number) => {
-      switch (buttonIndex) {
-        case 1:
-          this.takeFoto();
-          break;
-        case 2:
-          this.seleccionaImagen();
-          break;
-        case 3:
-          this.photo_url = null;
-          break;
-      }
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Selecciona',
+      buttons: [
+        {
+          text: 'Captura',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeFoto();
+          }
+        },
+        {
+          text: 'Selecciona',
+          icon: 'ios-archive-outline',
+          handler: () => {
+            this.seleccionaImagen();
+          }
+        },
+        {
+          text: 'Borrar',
+          icon: 'ios-trash-outline',
+          role: 'destructive',
+          handler: () => {
+            this.photo_url = null;
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'destructive',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
+
+    actionSheet.present();
   }
 
   takeFoto() {

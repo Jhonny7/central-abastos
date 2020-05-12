@@ -202,6 +202,8 @@ export class CarritoComprasPage {
           } else { // Token was created!
 
             // Get the token ID:
+            console.log(response);
+            
             //clase.loadingService.hide();
             var token = response.id;
             let body: any = {

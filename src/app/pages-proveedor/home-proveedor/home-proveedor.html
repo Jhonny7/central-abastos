@@ -37,12 +37,12 @@
         <img src="assets/imgs/pedidos/entrega.png" alt="">
       </ion-avatar>
       <div class="datos-tarjetas">
-        <div class="name">Pedido Num. <strong>{{p.id | number:'5.'}}</strong></div>
+        <div class="name">Pedido <strong>{{p.folio}}</strong></div>
         <div class="number">Costo <strong>{{p.total | currency}}</strong></div>
         <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>
         <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>
         <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>
-      </div>
+      </div>  
 
     </ion-item>
   </ion-list>

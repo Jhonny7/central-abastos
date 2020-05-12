@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "183752745939",
+    "firebase_url": "https://shark-abasto-275623.firebaseio.com",
+    "project_id": "shark-abasto-275623",
+    "storage_bucket": "shark-abasto-275623.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:183752745939:android:670842f7156a71340c8526",
+        "android_client_info": {
+          "package_name": "mx.com.sharkit.luegoluego.cliente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "183752745939-ploujrka6suti4h6e75lg4pio98h3v6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA4iHXRLkp6uYcguXjdCyLkamJ6RgD9P4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "183752745939-ploujrka6suti4h6e75lg4pio98h3v6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

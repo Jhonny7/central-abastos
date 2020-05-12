@@ -26,6 +26,8 @@ import { ChatService } from './services/chat.service';
 import { CurrencyPipe } from '@angular/common';
 import { AppVersion } from '@ionic-native/app-version';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { HeaderColor } from '@ionic-native/header-color';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 @NgModule({
     providers: [
@@ -58,7 +60,9 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
         ChatService,
         CurrencyPipe,
         AppVersion,
-        ScreenOrientation
+        ScreenOrientation,
+        HeaderColor,
+        InAppBrowser
     ]
 })
 export class ProvidersModule { }

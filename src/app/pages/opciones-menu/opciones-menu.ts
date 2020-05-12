@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, AlertController, App, ViewControll
 import { LoginPage } from '../login/login';
 import { ListaCarritoComprasPage } from '../lista-carrito-compras/lista-carrito-compras';
 import { environment } from '../../../environments/environment.prod';
+import { HeaderColor } from '@ionic-native/header-color';
 
 @Component({
   selector: 'page-opciones-menu',
@@ -24,7 +25,8 @@ export class OpcionesMenuPage {
     private app: App,
     private viewCtrl: ViewController,
     private events: Events,
-    private genericService: GenericService) {
+    private genericService: GenericService,
+    private headerColor: HeaderColor) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
 
@@ -84,24 +86,31 @@ export class OpcionesMenuPage {
     switch (opt) {
       case 1:
         this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
+        this.headerColor.tint("#3b64c0");
         break;
       case 2:
         this.localStorageEncryptService.setToLocalStorage("theme", "#be3b3b");
+        this.headerColor.tint("#be3b3b");
         break;
       case 3:
         this.localStorageEncryptService.setToLocalStorage("theme", "#3bb8be");
+        this.headerColor.tint("#3bb8be");
         break;
       case 4:
         this.localStorageEncryptService.setToLocalStorage("theme", "#74be3b");
+        this.headerColor.tint("#74be3b");
         break;
         case 5:
         this.localStorageEncryptService.setToLocalStorage("theme", "#292929");
+        this.headerColor.tint("#292929");
         break;
         case 6:
         this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
+        this.headerColor.tint("#F07C1B");
         break;
       default:
         this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
+        this.headerColor.tint("#3b64c0");
         break;
     }
     this.events.publish("changeColor");

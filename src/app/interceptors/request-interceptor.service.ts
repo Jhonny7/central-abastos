@@ -65,7 +65,7 @@ export class RequestInterceptorService implements HttpInterceptor {
             !request.url.toString().includes("api/authenticate") &&
             error.error.title == "Unauthorized" ||
             error.error.title == "El cliente es requerido") {
-            this.auth.events.publish("startSession");
+            this.events.publish("startSession");
             return Observable.throw(error);
           }  else {
             return next.handle(request);

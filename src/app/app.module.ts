@@ -59,6 +59,8 @@ import { VerProductosPage } from './pages-proveedor/ver-productos/ver-productos'
 import { QrPage } from './pages/qr/qr';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ListaChatPage } from './pages/lista-chat/lista-chat';
+import { CalificacionPage } from './pages/calificacion/calificacion';
+
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -113,7 +115,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomeProveedorPage,
     VerProductosPage,
     QrPage,
-    DocumentosPage
+    DocumentosPage,
+    CalificacionPage
   ],
   imports: [
     BrowserModule,
@@ -180,7 +183,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomeProveedorPage,
     VerProductosPage,
     QrPage,
-    DocumentosPage
+    DocumentosPage,
+    CalificacionPage
   ],
   providers: [
     StatusBar,

@@ -12,6 +12,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class CambioContraseniaPage {
   public data: any = {
+    oldContrasenia: "",
     contrasenia: "",
     confirm: ""
   }
@@ -33,10 +34,12 @@ export class CambioContraseniaPage {
       this.alertaService.warnAlertGeneric('Contraseña inválida. La contraseña debe contener mínimo 8 caracteres, por lo menos un valor numérico y mínimo un símbolo.');
     } else if (this.data.confirm.toString().length < 8) {
       this.alertaService.warnAlertGeneric('Contraseña inválida. La contraseña debe contener mínimo 8 caracteres, por lo menos un valor numérico y mínimo un símbolo.');
+    } else if (this.data.confirm != this.data.contrasenia) {
+      this.alertaService.warnAlertGeneric('La nueva contraseña no coincide con tu confirmación');
     } else {
       this.loadingService.show().then(() => {
         let body: any = {
-          currentPassword: this.data.contrasenia,
+          currentPassword: this.data.oldContrasenia,
           newPassword: this.data.confirm
         }
         this.genericService.sendPostRequest(environment.cambioContraseña, body).subscribe((response: any) => {

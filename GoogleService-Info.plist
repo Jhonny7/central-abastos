@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>183752745939-ccvsp63bf2r7ir6r1kco3clgs291ovjh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.183752745939-ccvsp63bf2r7ir6r1kco3clgs291ovjh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBQc4pUXm9D7T6tt5X3_CMcex7Ws4rurB0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>183752745939</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>mx.com.sharkit.luegoluego.cliente</string>
+	<key>PROJECT_ID</key>
+	<string>shark-abasto-275623</string>
+	<key>STORAGE_BUCKET</key>
+	<string>shark-abasto-275623.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:183752745939:ios:df5ab1dfb75155ed0c8526</string>
+	<key>DATABASE_URL</key>
+	<string>https://shark-abasto-275623.firebaseio.com</string>
+</dict>
+</plist>

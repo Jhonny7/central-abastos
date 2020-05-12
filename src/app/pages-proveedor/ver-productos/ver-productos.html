@@ -8,8 +8,8 @@
   <ion-list *ngIf="pedidos && pedidos?.pedidoProveedores.length > 0">
     <ion-item class="item-list-card" *ngFor="let p of pedidos.pedidoProveedores[0].pedidoDetalles">
       <div class="round" style="vertical-align:middle">
-        <input type="checkbox" id="checkbox" [(ngModel)]="p.activado"/>
-        <label for="checkbox"></label>
+        <input type="checkbox" id="checkbox-{{p.productoProveedor.producto.nombre}}" [(ngModel)]="p.activado"/>
+        <label for="checkbox-{{p.productoProveedor.producto.nombre}}"></label>
       </div>
       <div class="datos-tarjetas" style="vertical-align:middle">
         <div class="name" style="font-size: 15px;">Producto <strong>{{p.productoProveedor.producto.nombre}}</strong></div>
@@ -38,6 +38,6 @@
   </div>
 </ion-content>
 <ion-footer class="footer-button-class">
-    <button (tap)="solicitar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Solicitar cambio</button>
-    <button (tap)="confirmar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Confirmar pedido</button>
+    <button (tap)="solicitar()" [ngStyle]="{'background-color': genericService.getColorHex()}" *ngIf="env.perfil.activo == 2">Solicitar cambio</button>
+    <button (tap)="confirmar()" [ngStyle]="{'background-color': genericService.getColorHex(),'width': env.perfil.activo == 3 ? '100%' : ''}">{{env.perfil.activo == 2 ? 'Confirmar pedido' : 'Enviar pedido'}}</button>
   </ion-footer>

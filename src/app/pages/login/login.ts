@@ -12,6 +12,7 @@ import { LocalStorageEncryptService } from '../../services/local-storage-encrypt
 import { TabsPage } from '../tabs/tabs';
 import { RecuperaContraseniaPage } from '../recupera-contrasenia/recupera-contrasenia';
 import { TabsProveedorPage } from '../../pages-proveedor/tabs/tabs';
+import { FCM } from '@ionic-native/fcm';
 
 @Component({
   selector: 'page-login',
@@ -38,7 +39,8 @@ export class LoginPage {
     private genericService: GenericService,
     private localStorageEncryptService: LocalStorageEncryptService,
     private app: App,
-    private events: Events) {
+    private events: Events,
+    private fcm: FCM) {
     this.loadingService.hide();
     //comentario
     if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
@@ -75,7 +77,8 @@ export class LoginPage {
         //quitar
         this.loadingService.hide();
         if (response.tipo_usuario == 3 && environment.perfil.activo == 2 ||
-          response.tipo_usuario == 2 && environment.perfil.activo == 1) {
+          response.tipo_usuario == 2 && environment.perfil.activo == 1 ||
+          response.tipo_usuario == 4 && environment.perfil.activo == 3) {
           this.localStorageEncryptService.setToLocalStorage("userSession", response);
 
           //let nav:any = this.app.getRootNav();
@@ -85,11 +88,33 @@ export class LoginPage {
           this.events.publish("totalCarrito");
 
           this.events.publish("reloadUser");
+
+          if (!this.localStorageEncryptService.getFromLocalStorage("phoneToken")) {
+            this.fcm.getToken().then(token => {
+              console.log("*********************");
+              console.log(token);
+              //localStorage.setItem("token", token);
+              let body: any = {
+                login: response.username,
+                token: token
+              };
+              this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
+                this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+              }, (error: HttpErrorResponse) => {
+
+              });
+              console.log("*********************");
+            });
+          }
+
           switch (environment.perfil.activo) {
             case 1:
               this.navCtrl.pop();
               break;
             case 2:
+              this.navCtrl.setRoot(TabsProveedorPage);
+              break;
+            case 3:
               this.navCtrl.setRoot(TabsProveedorPage);
               break;
             default:

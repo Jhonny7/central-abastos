@@ -471,7 +471,7 @@ export class HomePage implements OnDestroy, OnInit {
         }],
       buttons: [
         {
-          text: 'Cancel',
+          text: 'Cancelar',
           role: 'cancel',
           handler: data => {
           }

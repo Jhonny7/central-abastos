@@ -1,23 +1,36 @@
 <ion-header>
-    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
-      <ion-title>Detalle pedido <strong>{{id | number:'5.'}}</strong></ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
+    <ion-title>Detalle pedido <strong>{{id | number:'5.'}}</strong></ion-title>
+  </ion-navbar>
+</ion-header>
 
-<ion-content padding>
-    <div *ngFor="let p of detalle" class="separador">
-        <div class="proveedor">
-          <div class="nombre" style="font-weight: 900;
-          font-size: 18px;" [ngStyle]="{'color': genericService.getColorHex()}">{{p.proveedor?.nombre}}</div>
-          <div class="precio">{{p.total | currency}}</div>
+<ion-content>
 
-          <div class="costo-envio">Costo de envío</div>
-          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>
 
-          <div class="costo-subtotal">Subtotal</div>
-          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>
+  <ion-list *ngIf="!fromPop">
+    <ion-item-sliding #item *ngFor="let p of detalle">
+      <ion-item class="item-list-card" >
+        <div class="datos-tarjetas" (click)="verProductos(p)">
+          <div class="name">{{p.proveedor?.nombre}}</div>
+          <div class="number">{{p.total | currency}}</div>
+          <div class="number">Costo de envío: <strong>{{p.comisionTransportista | currency}}</strong></div>
+          <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>
         </div>
+        <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button (click)="verChatProveedor(p)" color="primary">
+          <ion-icon name="ios-chatbubbles-outline"></ion-icon>
+          Chat proveedor
+        </button>
+        <button ion-button (click)="verChatTransportista(p)" color="danger">
+          <ion-icon name="ios-chatbubbles-outline"></ion-icon>
+          Chat transportista
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
 
-      </div>
 </ion-content>

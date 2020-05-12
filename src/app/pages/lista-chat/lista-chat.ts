@@ -27,6 +27,11 @@ export class ListaChatPage {
     private translatePipe: TranslateService) {
     this.chats = navParams.get("chats");
     this.pedido = navParams.get("pedido");
+
+    console.log(this.chats);
+    console.log(this.pedido);
+    
+    
   }
 
   ionViewDidLoad() {

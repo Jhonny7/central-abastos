@@ -78,7 +78,7 @@ export class ChatPage {
       this.verChat();
     }, 2000);
     let dimensions = this.content.getContentDimensions();
-      this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+    this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
   }
 
 
@@ -92,7 +92,7 @@ export class ChatPage {
   verChat() {
     switch (environment.perfil.activo) {
       case 1:
-        this.genericService.sendGetRequest(`${environment.chats}/${this.pedido.pedidoProveedores[0].chatProveedorid}`).subscribe((response: any) => {
+        this.genericService.sendGetRequest(`${environment.chats}/${this.chat.id}`).subscribe((response: any) => {
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
@@ -102,6 +102,14 @@ export class ChatPage {
 
       case 2:
         this.genericService.sendGetRequest(`${environment.chatsProveedor}${this.pedido.pedidoProveedores[0].id}/tipoChat/1`).subscribe((response: any) => {
+          this.chat = response;
+        }, (error: HttpErrorResponse) => {
+          let err: any = error.error;
+          //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
+        break;
+      case 3:
+        this.genericService.sendGetRequest(`${environment.chatsProveedor}${this.pedido.pedidoProveedores[0].id}/tipoChat/2`).subscribe((response: any) => {
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;

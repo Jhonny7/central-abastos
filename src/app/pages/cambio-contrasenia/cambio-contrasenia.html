@@ -6,7 +6,9 @@
 
 <ion-content padding>
   <div class="correo">
-    <div [ngStyle]="{'color': genericService.getColorHex()}">Contraseña</div>
+    <div [ngStyle]="{'color': genericService.getColorHex()}">Contraseña actual</div>
+    <input type="password" placeholder="Ingresa aqui" [(ngModel)]="data.oldContrasenia">
+    <div [ngStyle]="{'color': genericService.getColorHex()}">Nueva contraseña</div>
     <input type="password" placeholder="Ingresa aqui" [(ngModel)]="data.contrasenia">
     <div [ngStyle]="{'color': genericService.getColorHex()}" style="margin-top:10px">Confirmar contraseña</div>
     <input type="password" placeholder="Confirma" [(ngModel)]="data.confirm">

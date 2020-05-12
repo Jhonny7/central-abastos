@@ -27,6 +27,8 @@ import { ProveedorPage } from './pages/recuperar-password/recuperar-password';
 import { FCM } from '@ionic-native/fcm';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DocumentosPage } from './pages-proveedor/documentos/documentos';
+import { HttpErrorResponse } from '@angular/common/http';
+import { HeaderColor } from '@ionic-native/header-color';
 
 @Component({
   templateUrl: 'app.html'
@@ -49,15 +51,36 @@ export class MyApp {
     private alertCtrl: AlertController,
     private genericService: GenericService,
     private fcm: FCM,
+    private headerColor: HeaderColor,
     private screenOrientation: ScreenOrientation) {
     platform.ready().then(() => {
+
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
+      statusBar.overlaysWebView(false);
+
+      if (this.platform.is("android")) {
+        if (this.genericService.getColorHex()) {
+          statusBar.backgroundColorByHexString(this.genericService.getColorHex());
+        } else {
+          statusBar.backgroundColorByHexString('#F07C1B');
+        }
+      }
+
+
       splashScreen.hide();
 
       if (this.platform.is("ios") || this.platform.is("android")) {
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+      }
+      if (this.platform.is("android")) {
+        if (this.genericService.getColorHex()) {
+          this.headerColor.tint(this.genericService.getColorHex());
+        } else {
+          this.headerColor.tint("#F07C1B");
+        }
       }
       this.initializeLanguage();
 
@@ -65,6 +88,24 @@ export class MyApp {
       if (!firstTime) {
         this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
         this.localStorageEncryptService.setToLocalStorage("firstTime", 1);
+      }
+
+      if (!this.localStorageEncryptService.getFromLocalStorage("phoneToken")) {
+        this.fcm.getToken().then(token => {
+          console.log("*********************");
+          console.log(token);
+          //localStorage.setItem("token", token);
+          let body: any = {
+            login: this.user.username,
+            token: token
+          };
+          this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
+            this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+          }, (error: HttpErrorResponse) => {
+
+          });
+          console.log("*********************");
+        });
       }
       /**Armar menu */
       switch (environment.perfil.activo) {
@@ -92,10 +133,20 @@ export class MyApp {
           this.pages.push(new Menu("Contacto", "assets/imgs/menu/logotype.png", "#7d3a63", AyudaPage));
           this.pages.push(new Menu("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", TerminosCondicionesPage));
           break;
+        case 3:
+          this.pages.push(new Menu("Mi perfil", "assets/imgs/perfil/social-media.png", "#7d3a63", PerfilPage));
+
+          this.pages.push(new Menu("Mis documentos", "assets/imgs/menu/file.png", "#7d3a63", DocumentosPage));
+
+          this.pages.push(new Menu("Acerca de", "assets/imgs/menu/interface.png", "#7d3a63", AcercaDePage));
+          this.pages.push(new Menu("Información de la app", "assets/imgs/menu/signs.png", "#7d3a63", InfoPage));
+          this.pages.push(new Menu("Contacto", "assets/imgs/menu/logotype.png", "#7d3a63", AyudaPage));
+          this.pages.push(new Menu("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", TerminosCondicionesPage));
+          break;
       }
       /** */
 
-      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+
 
       switch (environment.perfil.activo) {
         case 1:
@@ -107,6 +158,13 @@ export class MyApp {
           break;
 
         case 2:
+          if (this.user) {
+            this.rootPage = TabsProveedorPage;
+          } else {
+            this.rootPage = LoginPage;
+          }
+          break;
+        case 3:
           if (this.user) {
             this.rootPage = TabsProveedorPage;
           } else {
@@ -140,12 +198,7 @@ export class MyApp {
       }
     });
 
-    this.fcm.getToken().then(token => {
-      console.log("*********************");
-      console.log(token);
-      localStorage.setItem("token", token);
-      console.log("*********************");
-    });
+
   }
 
   readNotify() {

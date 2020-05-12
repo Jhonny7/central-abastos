@@ -21,6 +21,8 @@ export class ArticuloProveedoresPage {
   public env: any = environment;
 
   public proveedor: any = null;
+
+  public fromCliente:boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -32,6 +34,9 @@ export class ArticuloProveedoresPage {
   ) {
     this.proveedor = navParams.get("proveedor");
     this.productos = navParams.get("productos");
+
+    this.fromCliente = navParams.get("fromCliente");
+
     this.replicaProductos = this.productos;
   }
 
@@ -40,17 +45,19 @@ export class ArticuloProveedoresPage {
 
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
-    this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
-      
-        this.navCtrl.push(DetalleProductoPage, { producto: response });
-        this.loadingService.hide();
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+    if(!this.fromCliente){
+      this.loadingService.show().then(() => {
+        this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
+        
+          this.navCtrl.push(DetalleProductoPage, { producto: response });
+          this.loadingService.hide();
+        }, (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          let err: any = error.error;
+          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
       });
-    });
+    }
     //
 
   }

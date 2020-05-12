@@ -2,7 +2,7 @@ import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events, ModalController, ActionSheetController } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -28,7 +28,7 @@ export class PerfilPage {
   //this.objetoRegistro[0].value = 
   public objetoRegistro: any[] = [
     {
-      name: "Nombre del cliente",
+      name: "Nombre",
       required: true,
       length: 50,
       type: "text",
@@ -121,7 +121,8 @@ export class PerfilPage {
     private genericService: GenericService,
     private loadingService: LoadingService,
     private events: Events,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private actionSheetCtrl: ActionSheetController) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.getDataUsuario();
 
@@ -192,6 +193,38 @@ export class PerfilPage {
           });
 
           this.data = response.direccion ? response.direccion : null;
+        } else if (environment.perfil.activo == 3) {
+          this.objetoRegistro.push({
+            name: "Tipo persona",
+            required: true,
+            length: 11,
+            type: "select",
+            formName: "typpe",
+            value: response.tipoPersonaId,
+            opts: [
+              {
+                id: 0,
+                value: "[--Tipo persona--]"
+              },
+              {
+                id: 1,
+                value: "Persona física"
+              },
+              {
+                id: 2,
+                value: "Persona moral"
+              }
+            ]
+          });
+
+          this.objetoRegistro.push({
+            name: "Razón Social",
+            required: true,
+            length: 50,
+            type: "text",
+            formName: "rz",
+            value: response.razonSocial
+          });
         }
 
         this.userResponse = response;
@@ -280,6 +313,9 @@ export class PerfilPage {
 
         body.tipoPersonaId = this.objetoRegistro[6].value;
         body.razonSocial = this.objetoRegistro[7].value;
+      } else if (environment.perfil.activo == 3) {
+        body.tipoPersonaId = this.objetoRegistro[6].value;
+        body.razonSocial = this.objetoRegistro[7].value;
       }
 
       this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
@@ -316,31 +352,45 @@ export class PerfilPage {
       this.btnHabilitado = true;
     }
   }
-
+  
   opcionesDeImagen() {
-    let buttonLabels = [this.translatePipe.instant("CAPTURE"), this.translatePipe.instant("SELECT")];
-    const options: ActionSheetOptions = {
-      title: '',
-      subtitle: '',
-      buttonLabels: buttonLabels,
-      addCancelButtonWithLabel: this.translatePipe.instant("CANCEL"),
-      addDestructiveButtonWithLabel: this.translatePipe.instant("DELETE"),
-      androidTheme: 1,
-      destructiveButtonLast: true
-    };
-    this.actionSheet.show(options).then((buttonIndex: number) => {
-      switch (buttonIndex) {
-        case 1:
-          this.takeFoto();
-          break;
-        case 2:
-          this.seleccionaImagen();
-          break;
-        case 3:
-          this.photo_url = null;
-          break;
-      }
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Selecciona',
+      buttons: [
+        {
+          text: 'Captura',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeFoto();
+          }
+        },
+        {
+          text: 'Selecciona',
+          icon: 'ios-archive-outline',
+          handler: () => {
+            this.seleccionaImagen();
+          }
+        },
+        {
+          text: 'Borrar',
+          icon: 'ios-trash-outline',
+          role: 'destructive',
+          handler: () => {
+            this.photo_url = null;
+          }
+        },
+        {
+          text: 'Cancelar',
+          role: 'destructive',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
+
+    actionSheet.present();
   }
 
   takeFoto() {

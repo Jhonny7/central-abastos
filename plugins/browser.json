@@ -57,6 +57,24 @@
     },
     "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-android-support-gradle-release": {
+      "PACKAGE_NAME": "mx.com.sharkit.abastos"
+    },
+    "cordova-plugin-ignore-lint-translation": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-androidx": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-androidx-adapter": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-headercolor": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
     }
   },
   "dependent_plugins": {}

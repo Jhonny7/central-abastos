@@ -47,8 +47,14 @@ export class HomeProveedorPage {
   }
 
   cargarPedidos() {
-    this.genericService.sendGetRequest(`${environment.pedidosProveedor}`).subscribe((response: any) => {
-     
+
+    let path: string = `${environment.pedidosProveedor}`;
+    if (environment.perfil.activo == 3) {
+      path = `${environment.pedidosTransportista}`;
+    }
+
+    this.genericService.sendGetRequest(path).subscribe((response: any) => {
+
       this.pedidos = response;
       if (this.pedidos.length <= 0) {
         this.pedidos = null;

@@ -31,10 +31,10 @@ export const environment = {
   tipoDirecciones: `${pathPrincipal}tipo-direcciones`,
   pedidos: `${pathPrincipal}pedidos`,
   pedidosProveedor: `${pathPrincipal}proveedor/pedidos`,
-
+  pedidosTransportista: `${pathPrincipal}transportista/pedidos`,
 
   pedidosProveedores: `${pathPrincipal}proveedor/pedido-proveedores`,
-
+  pedidosTransportistas: `${pathPrincipal}transportista/pedido-proveedores`,
 
   usuarios: `${pathPrincipal}usuarios`,
 
@@ -75,5 +75,6 @@ export const environment = {
   perfil:{
     activo: appCliente,
     //activo: appProveedor
+    //activo: appTransportista
   }
 };

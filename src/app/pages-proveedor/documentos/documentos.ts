@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
 import { AlertaService } from '../../services/alerta.service';
 import { environment } from '../../../environments/environment.prod';
@@ -31,7 +31,7 @@ export class DocumentosPage {
     private genericService: GenericService,
     private alertaService: AlertaService,
     private camera: Camera,
-    private actionSheet: ActionSheet,
+    private actionSheetCtrl: ActionSheetController,
     private translatePipe: TranslateService) {
     this.documentosTmp.push({
       documentoId: 1,
@@ -97,29 +97,43 @@ export class DocumentosPage {
   }
 
   opcionesDeImagen(documento:any) {
-    let buttonLabels = [this.translatePipe.instant("CAPTURE"), this.translatePipe.instant("SELECT")];
-    const options: ActionSheetOptions = {
-      title: '',
-      subtitle: '',
-      buttonLabels: buttonLabels,
-      addCancelButtonWithLabel: this.translatePipe.instant("CANCEL"),
-      addDestructiveButtonWithLabel: this.translatePipe.instant("DELETE"),
-      androidTheme: 1,
-      destructiveButtonLast: true
-    };
-    this.actionSheet.show(options).then((buttonIndex: number) => {
-      switch (buttonIndex) {
-        case 1:
-          this.takeFoto(documento);
-          break;
-        case 2:
-          this.seleccionaImagen(documento);
-          break;
-        case 3:
-          documento.imagen = null;
-          break;
-      }
+    
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Selecciona',
+      buttons: [
+        {
+          text: 'Captura',
+          icon: 'ios-camera-outline',
+          handler: () => {
+            this.takeFoto(documento);
+          }
+        },
+        {
+          text: 'Selecciona',
+          icon: 'ios-archive-outline',
+          handler: () => {
+            this.seleccionaImagen(documento);
+          }
+        },
+        {
+          text: 'Borrar',
+          icon: 'ios-trash-outline',
+          role: 'destructive',
+          handler: () => {
+            documento.imagen = null;
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'destructive',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
     });
+ 
+    actionSheet.present();
   }
 
   takeFoto(documento:any) {

@@ -21,14 +21,14 @@
 
             <input class="inp" [attr.disabled]="dato.disabled ? '' : null" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"
               type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'"
-              [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}">
+              [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}" placeholder="{{dato.name}}">
             <div class="direc" *ngIf="dato.name == 'Dirección'" (click)="getMapa()" style="display: inline-block;
                 width: 10%;
                 vertical-align: bottom;"><img
                 src="assets/imgs/direcciones/home-run.png" alt=""></div>
             <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
               pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"
-              *ngIf="dato.type == 'date'" placeholder="01/12/2020"></ion-datetime>
+              *ngIf="dato.type == 'date'" placeholder="{{dato.name}}"></ion-datetime>
 
             <ion-col col-2 class="text-center" *ngIf="dato.type == 'checkbox'">
               <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">
