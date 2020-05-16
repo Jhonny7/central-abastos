@@ -47,7 +47,7 @@ export class ArticuloProveedoresPage {
     //consumir servicio de imagenes completas
     if(!this.fromCliente){
       this.loadingService.show().then(() => {
-        this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
+        this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
         
           this.navCtrl.push(DetalleProductoPage, { producto: response });
           this.loadingService.hide();

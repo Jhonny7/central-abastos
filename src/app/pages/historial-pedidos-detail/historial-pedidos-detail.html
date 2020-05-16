@@ -37,7 +37,7 @@
       <ion-icon name="ios-chatbubbles-outline"></ion-icon>
       Chat
     </button> -->
-    <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}">
+    <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="verRecibo()">
       <ion-icon name="ios-document-outline"></ion-icon>Ver recibo
     </button>
     <button class="boton-problemas" style="font-size: 10px;" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="problemasPedido()">

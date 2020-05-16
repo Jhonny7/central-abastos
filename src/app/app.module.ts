@@ -1,3 +1,5 @@
+import { ChangePasswordPage } from './pages/change-password/change-password';
+import { TabsTransportistaPage } from './pages-transportista/tabs/tabs';
 import { DocumentosPage } from './pages-proveedor/documentos/documentos';
 import { AcercaDePage } from './pages/acerca-de/acerca-de';
 import { AyudaPage } from './pages/ayuda/ayuda';
@@ -60,6 +62,7 @@ import { QrPage } from './pages/qr/qr';
 import { QRCodeModule } from 'angularx-qrcode';
 import { ListaChatPage } from './pages/lista-chat/lista-chat';
 import { CalificacionPage } from './pages/calificacion/calificacion';
+import { CardProductoComponent } from './components/card-producto/card-producto.component';
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -116,7 +119,10 @@ export function createTranslateLoader(http: HttpClient) {
     VerProductosPage,
     QrPage,
     DocumentosPage,
-    CalificacionPage
+    CalificacionPage,
+    TabsTransportistaPage,
+    CardProductoComponent,
+    ChangePasswordPage
   ],
   imports: [
     BrowserModule,
@@ -184,7 +190,10 @@ export function createTranslateLoader(http: HttpClient) {
     VerProductosPage,
     QrPage,
     DocumentosPage,
-    CalificacionPage
+    CalificacionPage,
+    CardProductoComponent,
+    TabsTransportistaPage,
+    ChangePasswordPage
   ],
   providers: [
     StatusBar,

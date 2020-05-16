@@ -4,7 +4,7 @@ import { AlertaService } from './../../services/alerta.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController, Events } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { User } from '../../models/User';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -29,9 +29,16 @@ export class HistorialPedidosPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private alertaService: AlertaService,
     private loadingService: LoadingService,
-    private popoverCtrl: PopoverController) {
+    private popoverCtrl: PopoverController,
+    private events: Events) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.cargarPedidos();
+    this.events.subscribe("cargarPedidos", data => {
+      try {
+        this.cargarPedidos();
+      } catch (error) {
+      }
+    });
   }
 
   ionViewDidLoad() {

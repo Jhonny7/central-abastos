@@ -9,15 +9,19 @@
   padding: 15px;
   font-size: 20px;
   font-weight: 400;">{{nombre}}</div>
-  <div class="vendor">
+  <div class="vendor" *ngIf="!pedido">
     <img src="assets/imgs/chat/vendor.png" alt="">
+  </div>
+  <div class="vendor" *ngIf="pedido">
+    <img src="assets/imgs/chat/vendor.png" *ngIf="!p.proveedor.transportista.usuario.adjuntoId">
+    <img src="{{env.getImagenIndividual}}{{p.proveedor.transportista.usuario.adjuntoId}}" *ngIf="p.proveedor.transportista.usuario.adjuntoId"/>
   </div>
   <div class="calificacion">
     <div class="texto">{{calificacionActual}}</div>
     <div class="contenedor-stars">
       <div *ngFor="let s of stars" class="estrella" [ngStyle]="{'color': genericService.getColorHex()}" (click)="selecciona(s)">
-        <ion-icon name="ios-star" *ngIf="s.selected"></ion-icon>
-        <ion-icon name="ios-star-outline" *ngIf="!s.selected"></ion-icon>
+        <ion-icon name="ios-star" *ngIf="s.selected" (click)="selecciona(s)"></ion-icon>
+        <ion-icon name="ios-star-outline" *ngIf="!s.selected" (click)="selecciona(s)"></ion-icon>
       </div>
     </div>
     <div class="queja">

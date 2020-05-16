@@ -1,3 +1,4 @@
+import { CalificacionPage } from '../../pages/calificacion/calificacion';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
@@ -20,6 +21,7 @@ export class PedidosDetailPage {
 
   public detalle: any = null;
   public id: any = null;
+
 
   constructor(
     public navCtrl: NavController,
@@ -100,5 +102,9 @@ export class PedidosDetailPage {
     console.log(productos);
     
     this.navCtrl.push(ArticuloProveedoresPage, { productos, proveedor: pedido.proveedor, fromCliente:true });
+  }
+
+  calificar(pedido: any){
+    this.navCtrl.push(CalificacionPage,{pedido});
   }
 }

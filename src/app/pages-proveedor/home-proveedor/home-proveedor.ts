@@ -2,8 +2,8 @@ import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, MenuController } from 'ionic-angular';
+import { Component, OnDestroy } from '@angular/core';
+import { IonicPage, NavController, NavParams, PopoverController, MenuController, Events } from 'ionic-angular';
 import { OpcionesMenuPage } from '../../pages/opciones-menu/opciones-menu';
 import { User } from '../../models/User';
 import { environment } from '../../../environments/environment.prod';
@@ -15,7 +15,7 @@ import { HistorialPedidosDetailPage } from '../../pages/historial-pedidos-detail
   selector: 'page-home-proveedor',
   templateUrl: 'home-proveedor.html',
 })
-export class HomeProveedorPage {
+export class HomeProveedorPage implements OnDestroy{
 
   public user: User = null;
   public pedidos: any = [];
@@ -29,13 +29,26 @@ export class HomeProveedorPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private genericService: GenericService,
     private alertaService: AlertaService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private events: Events) {
     /**Obtenci{on de usuario en sesión */
     this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
     this.cargarPedidos();
+
+    this.events.subscribe("cargarPedidos", data => {
+      try {
+        this.cargarPedidos();
+      } catch (error) {
+      }
+    });
   }
+
+  ngOnDestroy(){
+    this.events.unsubscribe("cargarPedidos");
+  }
+
 
   ionViewDidLoad() {
   }

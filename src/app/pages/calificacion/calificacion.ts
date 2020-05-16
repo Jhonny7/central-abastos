@@ -1,6 +1,10 @@
+import { AlertaService } from './../../services/alerta.service';
+import { LoadingService } from './../../services/loading.service';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'page-calificacion',
@@ -16,10 +20,16 @@ export class CalificacionPage {
 
   public nombre: string = "Juan López Sarrelangue";
 
+  public pedido:any = null;
+
+  public env:any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private genericService: GenericService) {
+    private genericService: GenericService,
+    private loadingService: LoadingService,
+    private alertaService: AlertaService) {
+      this.pedido = navParams.get("pedido");
     this.stars.push({
       selected: true,
       id: 1
@@ -75,5 +85,29 @@ export class CalificacionPage {
         this.calificacionActual = "Excelente";
         break;
     }
+  }
+
+  enviar(){
+    this.loadingService.show().then(()=>{
+      let cal:any = 1;
+      this.stars.forEach(element => {
+        if(element.selected){
+          cal = element.id;
+        }
+      });
+      let body:any = {
+        pedidoProveedorId: this.pedido.id,
+        calificacionServicio: cal,
+        comentarios: this.queja
+      };
+      this.genericService.sendPutRequest(environment.calificacionServicio, body).subscribe((response: any) => {
+        this.loadingService.hide();
+        this.navCtrl.pop();
+        this.alertaService.successAlertGeneric("Tu calificación ha sido enviada, gracias.");
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        this.alertaService.errorAlertGeneric("Ocurrió un error, intenta nuevamente");
+      });
+    });
   }
 }

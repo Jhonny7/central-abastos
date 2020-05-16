@@ -52,21 +52,23 @@ export class DireccionesPage {
     });
 
     this.events.subscribe('actualizarTarjetas', data => {
-      this.cargarDireccionesLista();
+      this.cargarDireccionesLista(data.fromLogin);
     });
   }
 
   ionViewDidLoad() {
   }
 
-  cargarDireccionesLista() {
+  cargarDireccionesLista(fromLogin:boolean = false) {
     this.genericService.sendGetRequest(environment.direcciones).subscribe((response: any) => {
      
       //quitar
       this.listaDirecciones = response;
       this.render = true;
       if (this.listaDirecciones.length <= 0) {
-        this.alertaService.warnAlertGeneric("Aún no cuentas con direcciones frecuentes");
+        if(!fromLogin){
+          this.alertaService.warnAlertGeneric("Aún no cuentas con direcciones frecuentes");
+        }
       }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;

@@ -1,8 +1,9 @@
+import { PushNotificationService } from './../../services/pushNotifications.service';
 import { HomeProveedorPage } from './../../pages-proveedor/home-proveedor/home-proveedor';
 import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Events, Platform } from 'ionic-angular';
 import { RegistroPage } from '../registro/registro';
 import { HomePage } from '../home/home';
 import { GenericService } from '../../services/generic.service';
@@ -40,7 +41,9 @@ export class LoginPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private app: App,
     private events: Events,
-    private fcm: FCM) {
+    private fcm: FCM,
+    private platform:Platform,
+    private pushNotificationService: PushNotificationService) {
     this.loadingService.hide();
     //comentario
     if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
@@ -63,7 +66,12 @@ export class LoginPage {
 
   regresar() {
 
-    this.navCtrl.pop();
+    try {
+      this.navCtrl.pop();
+    } catch (error) {
+      let nav:any = this.app.getRootNav();
+      nav.setRoot(LoginPage);
+    }
   }
 
   login() {
@@ -83,33 +91,15 @@ export class LoginPage {
 
           //let nav:any = this.app.getRootNav();
           //nav.push(TabsPage);
-          this.events.publish("actualizarCantidad", {});
-          this.events.publish("actualizarTarjetas", {});
-          this.events.publish("totalCarrito");
+          this.events.publish("actualizarCantidad", { fromLogin: true });
+          this.events.publish("actualizarTarjetas", { fromLogin: true });
+          this.events.publish("totalCarrito", { fromLogin: true });
 
-          this.events.publish("reloadUser");
-
-          if (!this.localStorageEncryptService.getFromLocalStorage("phoneToken")) {
-            this.fcm.getToken().then(token => {
-              console.log("*********************");
-              console.log(token);
-              //localStorage.setItem("token", token);
-              let body: any = {
-                login: response.username,
-                token: token
-              };
-              this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
-                this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
-              }, (error: HttpErrorResponse) => {
-
-              });
-              console.log("*********************");
-            });
-          }
+          this.events.publish("reloadUser", { fromLogin: true });
 
           switch (environment.perfil.activo) {
             case 1:
-              this.navCtrl.pop();
+              this.navCtrl.setRoot(TabsPage);
               break;
             case 2:
               this.navCtrl.setRoot(TabsProveedorPage);
@@ -120,6 +110,25 @@ export class LoginPage {
             default:
               break;
           }
+
+            this.fcm.getToken().then(token => {
+              console.log("*********************");
+              console.log(token);
+              //localStorage.setItem("token", token);
+              let body: any = {
+                login: response.username,
+                token: token
+              };
+              this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
+                this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+                this.readNotify();
+              }, (error: HttpErrorResponse) => {
+
+              });
+              console.log("*********************");
+            });
+
+          
         } else {
           this.alertaService.warnAlertGeneric("No has dado de alta tu usuario, por favor, registrate");
         }
@@ -129,6 +138,16 @@ export class LoginPage {
         this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
+  }
+
+  readNotify() {
+    if (this.platform.is('ios') || this.platform.is('android')) {
+      this.fcm.onNotification().subscribe(data => {
+        this.pushNotificationService.evaluateNotification(data);
+      });
+    } else {
+
+    }
   }
 
   visible() {

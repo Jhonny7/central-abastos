@@ -297,7 +297,7 @@ export class PerfilPage {
         fechaNacimiento: moment(this.objetoRegistro[3].value.split("T")[0], "YYYY-MM-DD").format("DD/MM/YYYY"),
         adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
           contentType: "image/jpeg",
-          file: this.photo_url,
+          file: this.photo_url.split("data:image/jpeg;base64,")[1],
           fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
           size: 0
         },

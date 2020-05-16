@@ -115,7 +115,7 @@
 
   </div>
 </ion-content>
-<ion-footer class="footer-detalle">
+<ion-footer class="footer-detalle" *ngIf="!fromCarritos">
   <div class="cont-e">
     <div class="suma">
       <div class="menos" (click)="decrementar(producto)" >

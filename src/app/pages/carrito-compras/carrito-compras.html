@@ -166,7 +166,7 @@
 
     <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{'background-color': genericService.getColorHex()}">
         <div class="texto-ordena">
-          Ordernar por precio
+          Ordenar por precio
         </div>
         <div class="botones">
             <button ion-button outline style="width: 48%;" (click)="up()"
@@ -214,7 +214,16 @@
 
 
 </ion-content>
-<ion-footer class="footer-button-class">
+
+<ion-fab right bottom *ngIf="recarga" style="    bottom: 64px;">
+  <button ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}"><ion-icon name="arrow-dropleft"></ion-icon></button>
+  <ion-fab-list side="left">
+    <button (tap)="addToList()" ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}"><ion-icon name="add"></ion-icon></button>
+    <button (tap)="infoContact()" ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}"><ion-icon name="logo-usd"></ion-icon></button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-footer class="footer-button-class" *ngIf="!recarga">
   <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Agregar a una lista</button>
   <button (tap)="infoContact()" [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar pedido</button>
 </ion-footer>

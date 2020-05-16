@@ -17,14 +17,17 @@
       <div class="formulario">
         <form [formGroup]="formGroup">
           <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
-
+            <div style="    width: 100%;
+            font-size: 14px;
+            color: #123;">{{dato.name}}</div>
             <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"
-              [(ngModel)]="dato.value" [attr.disabled]="dato.disabled ? '' : null" placeholder="{{dato.name}}" maxlength="{{dato.length}}" [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'">
-            
-              <div class="direc" *ngIf="dato.name == 'Dirección'" (click)="getMapa()" style="display: inline-block;
+              [(ngModel)]="dato.value" [attr.disabled]="dato.disabled ? '' : null" placeholder="{{dato.name}}"
+              maxlength="{{dato.length}}" [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'">
+
+            <div class="direc" *ngIf="dato.name == 'Dirección'" (click)="getMapa()" style="display: inline-block;
               width: 10%;
-              vertical-align: bottom;"><img src="assets/imgs/direcciones/home-run.png"
-                alt=""></div>
+              vertical-align: bottom;"><img
+                src="assets/imgs/direcciones/home-run.png" alt=""></div>
 
             <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left
               pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"

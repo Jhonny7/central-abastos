@@ -17,6 +17,7 @@
           <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>
         </div>
         <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>
+        <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar pedido</button>
       </ion-item>
 
       <ion-item-options side="right">

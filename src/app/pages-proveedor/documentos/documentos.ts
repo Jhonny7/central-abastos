@@ -164,7 +164,8 @@ export class DocumentosPage {
       adjunto: {
         fileName: `${Math.round(new Date().getTime() / 1000)}.jpg`,
         contentType: "jpg",
-        size: null
+        size: null,
+        file: documento.imagen.split("data:image/jpeg;base64,")[1]
       }
     }
 

@@ -17,6 +17,7 @@ import leaflet from 'leaflet';
 import leafletKnn from 'leaflet-knn';
 import { ArticuloProveedoresPage } from '../articulo-proveedores/articulo-proveedores';
 import { AuthService } from '../../services/auth.service';
+import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 
 @Component({
   selector: 'page-mapa-proveedores',
@@ -37,6 +38,8 @@ export class MapaProveedoresPage {
   //public proveedores: any = [];
 
   public producto: any = null;
+
+  public slideProve: boolean = false;
 
   public geo: any = null;
 
@@ -62,8 +65,10 @@ export class MapaProveedoresPage {
     private localStorageEncryptService: LocalStorageEncryptService) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.proveedoresTotal = navParams.get("proveedores");
-    
+
     this.producto = navParams.get("producto");
+
+    this.slideProve = navParams.get("slideProve");
     
     this.geo = [];
     this.proveedoresTotal.forEach(proveedorT => {
@@ -85,13 +90,17 @@ export class MapaProveedoresPage {
 
   ionViewDidLoad() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "none";
+    if (claseTabs[0]) {
+      claseTabs[0].style.display = "none";
+    }
     this.obtenerLocalizacion();
   }
 
   ionViewWillLeave() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "flex";
+    if (claseTabs[0]) {
+      claseTabs[0].style.display = "flex";
+    }
   }
 
 
@@ -102,36 +111,49 @@ export class MapaProveedoresPage {
     //this.loadingService.show().then(() => {
 
     if (this.platform.is("android") && !this.emulado) {
+      console.log(1);
+
       //debugger;
       this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
         result => {
+          console.log(2);
           //debugger;
           if (!result.hasPermission) {
+            console.log(3);
             this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then((resReq) => {
               this.loadingService.hide();
+              this.navCtrl.pop();
             });
           } else {
+            console.log(4);
             this.diagnostic.isLocationAvailable().then((res: any) => {
+              console.log(5);
               //debugger;
               if (!res) {
+                console.log(6);
                 this.loadingService.hide();
                 //debugger;
                 this.openNativeSettings.open("location").then((res2) => {
+                  console.log(7);
                   //debugger;
                   this.loadingService.hide();
                   this.diagnostic.isLocationAvailable().then((res: any) => {
                     //debugger;
+                    console.log(8);
                     if (!res) {
+                      this.navCtrl.pop();
                       this.loadingService.hide();
                       //aqui apagar geolocation
                       //this.selecciones.cercaDeMi = false;
                     } else {
+                      console.log(9);
                       //debugger;
                       this.getPosition();
                     }
                   });
                 });
               } else {
+                console.log(10);
                 this.getPosition();
               }
             });
@@ -199,6 +221,7 @@ export class MapaProveedoresPage {
       this.diagnostic.isLocationEnabled().then((res: any) => {
         //debugger;
         if (!res) {
+          this.navCtrl.pop();
           //aqui apagar geolocation
           //this.selecciones.cercaDeMi = false;
         } else {
@@ -210,6 +233,8 @@ export class MapaProveedoresPage {
   }
 
   getPosition(): any {
+    console.log("getPosition");
+
     this.geolocation.getCurrentPosition()
       .then(response => {
         this.loadMap(response);
@@ -219,6 +244,8 @@ export class MapaProveedoresPage {
   }
 
   loadMap(position: Geoposition) {
+    console.log("-------------------------");
+
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
     // create a new map by passing HTMLElement
@@ -228,23 +255,24 @@ export class MapaProveedoresPage {
 
 
     var gj = leaflet.geoJson(this.geo);
-    var nearest = leafletKnn(gj).nearest([latitude, longitude], 50, 5000);//punto de partida, estaciones máximas a encontrar, diámetro de busqueda en metros
-   
+    var nearest = leafletKnn(gj).nearest([latitude, longitude], 50, 1000000);//5000);//punto de partida, estaciones máximas a encontrar, diámetro de busqueda en metros
 
-    // create map
-    this.map = new google.maps.Map(mapEle, {
-      center: myLatLng,
-      zoom: 15
-    });
 
-    this.muestraMapa = true;
-    google.maps.event.addListenerOnce(this.map, 'idle', () => {
+    if (nearest.length > 0) {
+      // create map
+      this.map = new google.maps.Map(mapEle, {
+        center: myLatLng,
+        zoom: 15
+      });
 
-      nearest.forEach(item => {
-        this.proveedoresGeolocate.push(item.layer.feature.properties.proveedor);
-        let ll = { lat: Number(item.lon), lng: Number(item.lat) };
+      this.muestraMapa = true;
+      google.maps.event.addListenerOnce(this.map, 'idle', () => {
+        let primero: number = 0;
+        nearest.forEach(item => {
+          this.proveedoresGeolocate.push(item.layer.feature.properties.proveedor);
+          let ll = { lat: Number(item.lon), lng: Number(item.lat) };
 
-        let info: any = `
+          let info: any = `
         <div>
           <div style="    text-align: center;
           font-weight: 700;
@@ -260,33 +288,41 @@ export class MapaProveedoresPage {
           </div>
         </div>`;
 
-        let infowindow: any = new google.maps.InfoWindow({
-          content: info
+          let infowindow: any = new google.maps.InfoWindow({
+            content: info
+          });
+
+          let marker = new google.maps.Marker({
+            position: ll,//{ lat: -0.179041, lng: -78.499211 },
+            map: this.map,
+            title: item.layer.feature.properties.proveedor.proveedor.nombre,
+            id: `${item.layer.feature.properties.proveedor.id}`,
+            //draggable: true,
+            icon: environment.icons['proveedor'].icon
+          });
+
+
+
+          //this.map.setCenter(marker.position);
+          marker.setMap(this.map);
+
+          let componente: any = this;
+          marker.addListener('click', () => {
+            infowindow.open(this.map, marker);
+            componente.changeInfoCard(marker);
+          });
+          if (primero == 0) {
+            new google.maps.event.trigger(marker, 'click');
+          }
+          primero++;
         });
 
-        let marker = new google.maps.Marker({
-          position: ll,//{ lat: -0.179041, lng: -78.499211 },
-          map: this.map,
-          title: item.layer.feature.properties.proveedor.proveedor.nombre,
-          id: `${item.layer.feature.properties.proveedor.id}`,
-          //draggable: true,
-          icon: environment.icons['proveedor'].icon
-        });
-
-
-
-        //this.map.setCenter(marker.position);
-        marker.setMap(this.map);
-
-        let componente: any = this;
-        marker.addListener('click', () => {
-          infowindow.open(this.map, marker);
-          componente.changeInfoCard(marker);
-        });
+        mapEle.classList.add('show-map');
       });
-
-      mapEle.classList.add('show-map');
-    });
+    } else {
+      this.alertaService.warnAlertGeneric("Lo sentimos, no hay proveedores cerca de tu ubicación");
+      this.navCtrl.pop();
+    }
   }
 
   changeInfoCard(marker: any) {
@@ -297,10 +333,30 @@ export class MapaProveedoresPage {
     );
 
     this.proveedorActivo = this.proveedoresTotal[position];
+      console.log(this.proveedorActivo);
+      
+  }
+
+  viewDetail(producto: any) {
+    //consumir servicio de imagenes completas
+    this.loadingService.show().then(() => {
+      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
+        
+        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.loadingService.hide();
+      }, (error: HttpErrorResponse) => {
+        this.loadingService.hide();
+        let err: any = error.error;
+        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      });
+    });
+    //
 
   }
 
   comparativa() {
+    console.log(this.proveedoresGeolocate);
+    
     this.navCtrl.push(ComparaPreciosProveedorPage, { proveedoresGeolocate: this.proveedoresGeolocate });
   }
 
@@ -308,7 +364,7 @@ export class MapaProveedoresPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/proveedor/${proveedor.proveedorId}`).subscribe((response: any) => {
-        
+
 
         this.loadingService.hide();
         this.navCtrl.push(ArticuloProveedoresPage, { productos: response, proveedor });
@@ -335,7 +391,7 @@ export class MapaProveedoresPage {
           body.cantidad = 1;
           this.loadingService.hide();
           this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
-          this.events.publish("totalCarrito");
+          this.events.publish("totalCarrito2");
           //this.verificarCarritoModificarCantidad(producto);
         }, (error: HttpErrorResponse) => {
           this.alertaService.errorAlertGeneric(error.error.title);

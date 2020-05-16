@@ -28,6 +28,9 @@ import { AppVersion } from '@ionic-native/app-version';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HeaderColor } from '@ionic-native/header-color';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { PushNotificationService } from './services/pushNotifications.service';
+import { FileOpener } from '@ionic-native/file-opener';
+import { File } from '@ionic-native/file';
 
 @NgModule({
     providers: [
@@ -62,7 +65,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
         AppVersion,
         ScreenOrientation,
         HeaderColor,
-        InAppBrowser
+        InAppBrowser,
+        PushNotificationService,
+        File,
+        FileOpener
     ]
 })
 export class ProvidersModule { }

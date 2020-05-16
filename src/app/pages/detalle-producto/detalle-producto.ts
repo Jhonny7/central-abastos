@@ -19,6 +19,8 @@ export class DetalleProductoPage {
 
   public producto: any = null;
 
+  public fromCarritos: boolean = false;
+
   public productosTemp: any = [];
   public gallery: any;
 
@@ -41,6 +43,9 @@ export class DetalleProductoPage {
     private loadingService: LoadingService,
     private alertaService: AlertaService) {
     this.producto = navParams.get("producto");
+
+    this.fromCarritos = navParams.get("fromCarritos");
+
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
 
     this.producto.photos = [];
@@ -59,7 +64,8 @@ export class DetalleProductoPage {
     }
     this.events.subscribe("actualizarCantidad", data => {
       try {
-        this.actualizarCantidad();
+          this.actualizarCantidad(data.fromLogin);
+        
       } catch (error) {
       }
     });
@@ -84,7 +90,7 @@ export class DetalleProductoPage {
     });
   }
 
-  actualizarCantidad() {
+  actualizarCantidad(fromLogin:boolean = false) {
     let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     
     let position: any = carritos.findIndex(

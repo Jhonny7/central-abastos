@@ -29,9 +29,11 @@ export class CarritoComprasPage {
 
   public env: any = environment;
 
-  public stripe = Stripe('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+  public stripe = Stripe(environment.stripe.keyPublic);
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
+
+  public recarga:boolean = false;
 
   public cards: any = null;
 
@@ -87,7 +89,7 @@ export class CarritoComprasPage {
       type: "text",
       formName: "cp",
       value: null,
-      disabled: true
+      disabled: false
     },
   ];
 
@@ -116,7 +118,40 @@ export class CarritoComprasPage {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     this.productosCarritoReplica = this.productosCarrito;
+
+    this.recarga = navParams.get("recarga");
+    console.log(this.recarga);
+    
     this.getCards();
+  }
+
+  ionViewDidLoad() {
+    if(this.recarga){
+      let claseTabs: any = document.getElementsByClassName("tabbar");
+      if(claseTabs[0]){
+        //claseTabs[0].style.display = "none";
+      }
+      this.verCarrito();
+    }
+  }
+
+  verCarrito() {
+    if (this.genericService.getTotalCarrito() > 0) {
+
+      //nav.pop();
+      this.cargarProductosCarrito();
+
+    }
+  }
+
+  cargarProductosCarrito() {
+    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
+      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      this.productosCarritoReplica = this.productosCarrito;
+    }, (error: HttpErrorResponse) => {
+    });
   }
 
   seleccionar(card: any) {
@@ -145,11 +180,6 @@ export class CarritoComprasPage {
       this.cards = null;
       //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
     });
-  }
-
-  ionViewDidLoad() {
-    //this.cargarProductosCarrito();
-    //this.setupStripe();
   }
 
   setupStripe() {
@@ -191,7 +221,7 @@ export class CarritoComprasPage {
       c.exp_year = expYear;
     }
     if (!bandera) {
-      Stripe.setPublishableKey('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+      Stripe.setPublishableKey(environment.stripe.keyPublic);
       this.loadingService.show().then(() => {
         let clase: any = this;
         Stripe.card.createToken(c, (status, response) => {
@@ -343,7 +373,7 @@ export class CarritoComprasPage {
             }
           }
         }
-        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.navCtrl.push(DetalleProductoPage, { producto: response, fromCarritos: true });
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();

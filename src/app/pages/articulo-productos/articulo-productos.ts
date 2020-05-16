@@ -85,11 +85,11 @@ export class ArticuloProductosPage {
     params = params.append('sort', "id");
     params = params.append('tipoArticuloId', this.articulo.tipoArticulo.id.toString());
 
-    this.genericService.sendGetParams(`${environment.productos}/search`, params).subscribe((response: any) => {
+    this.genericService.sendGetParams(`${environment.proveedorProductos}/search`, params).subscribe((response: any) => {
       this.resultadoPost = response;
       response.forEach(element => {
-        this.productos.push(element);
-        this.replicaProductos.push(element);
+        this.productos.push(element.producto);
+        this.replicaProductos.push(element.producto);
       });
 
       this.paginaActual++;

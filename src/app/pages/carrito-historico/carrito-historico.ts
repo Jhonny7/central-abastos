@@ -29,7 +29,7 @@ export class CarritoHistoricoPage {
   public productosCarrito: any = [];
   public listaCarritoReplica: any = [];
 
-  public stripe = Stripe('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+  public stripe = Stripe(environment.stripe.keyPublic);
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
 
@@ -554,7 +554,7 @@ export class CarritoHistoricoPage {
       c.exp_year = expYear;
     }
     if (!bandera) {
-      Stripe.setPublishableKey('pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI');
+      Stripe.setPublishableKey(environment.stripe.keyPublic);
       this.loadingService.show().then(() => {
         let clase: any = this;
         Stripe.card.createToken(c, (status, response) => {

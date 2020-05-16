@@ -29,6 +29,8 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { DocumentosPage } from './pages-proveedor/documentos/documentos';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HeaderColor } from '@ionic-native/header-color';
+import { HistorialPedidosDetailPage } from './pages/historial-pedidos-detail/historial-pedidos-detail';
+import { PushNotificationService } from './services/pushNotifications.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -52,7 +54,8 @@ export class MyApp {
     private genericService: GenericService,
     private fcm: FCM,
     private headerColor: HeaderColor,
-    private screenOrientation: ScreenOrientation) {
+    private screenOrientation: ScreenOrientation,
+    private pushNotificationService: PushNotificationService) {
     platform.ready().then(() => {
 
       this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
@@ -101,11 +104,16 @@ export class MyApp {
           };
           this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
             this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+            this.readNotify();
           }, (error: HttpErrorResponse) => {
 
           });
           console.log("*********************");
         });
+      } else {
+        console.log("lectura normal");
+
+        this.readNotify();
       }
       /**Armar menu */
       switch (environment.perfil.activo) {
@@ -201,29 +209,12 @@ export class MyApp {
 
   }
 
+
+
   readNotify() {
     if (this.platform.is('ios') || this.platform.is('android')) {
-      this.fcm.onNotification().subscribe(data => {
-        if (data.wasTapped) {
-          //Notification was received on device tray and tapped by the user.
-          console.log(JSON.stringify(data));
-          //var date = this.datePipe.transform(new Date(), "yyyy-MM-dd").toString();
-          //console.log(date);
-          //this.badge.increase(1);
-          /* this.localNotifications.schedule({
-            text: data.body,
-            led: 'FF0000',
-            //icon: 'http://www.soyluzradio.com/logo.png',
-            icon: 'assets://imgs/logo.png',
-            title: "Suite Home",
-            vibrate: true,
-            badge: 1
-          }); */
-        } else {
-          //Notification was received in foreground. Maybe the user needs to be notified.
-          console.log(JSON.stringify(data));
-          //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
-        }
+      this.fcm.onNotification().subscribe((data: any) => {
+        this.pushNotificationService.evaluateNotification(data);
       });
     } else {
 

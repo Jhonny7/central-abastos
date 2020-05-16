@@ -75,7 +75,23 @@
     },
     "cordova-plugin-inappbrowser": {
       "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "es6-promise-plugin": {
+      "PACKAGE_NAME": "mx.com.sharkit.luegoluego.cliente"
+    }
+  }
 }

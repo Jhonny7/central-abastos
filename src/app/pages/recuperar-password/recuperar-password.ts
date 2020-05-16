@@ -53,6 +53,8 @@ export class ProveedorPage {
   }
 
   viewDetailAll(proveedor: any) {
+    console.log(proveedor);
+    
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/proveedor/${proveedor.id}`).subscribe((response: any) => {

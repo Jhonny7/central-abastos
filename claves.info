@@ -1,0 +1,6 @@
+/*LLAVE DE LA APP CLIENTE*/
+keyFile: luegoluegocliente.jks
+contraseña: luegoluegocliente
+datos: todo es Sharkit y código de país MX
+alias: luegoluegocliente
+

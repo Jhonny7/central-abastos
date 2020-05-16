@@ -46745,6 +46745,10 @@ if(carta.activo){
   animation-name: slideOutUp;
 }
 
+.title-md {
+  padding-right: 40px !important;
+}
+
 .action-sheet-md {
   text-align: center;
   left: 0;
@@ -48023,6 +48027,349 @@ ion-spinner.spinner-dots circle {
   z-index: 9;
 }
 
+cmpt-card-producto .slider-io {
+  position: relative;
+}
+
+cmpt-card-producto .slider-io .arrows-lateral {
+  position: absolute;
+  top: 60px;
+  z-index: 1;
+  width: 100%;
+  padding: 9px;
+}
+
+cmpt-card-producto .slider-io .arrows-lateral div {
+  display: inline-block;
+}
+
+cmpt-card-producto .slider-io .arrows-lateral div .icon {
+  color: #ee333e;
+  text-shadow: 1px 1px 1px #ffffff;
+  font-size: 3.5em;
+}
+
+cmpt-card-producto .slider-io .arrows-lateral div:nth-child(1) {
+  position: absolute;
+  left: 8px;
+}
+
+cmpt-card-producto .slider-io .arrows-lateral div:nth-child(2) {
+  position: absolute;
+  right: 8px;
+}
+
+cmpt-card-producto .slide-zoom {
+  height: 100%;
+}
+
+cmpt-card-producto .slide-zoom img {
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+}
+
+cmpt-card-producto .white {
+  color: #ffffff !important;
+}
+
+cmpt-card-producto .resaltado {
+  text-shadow: 1px 1px 1px #123;
+}
+
+cmpt-card-producto .buttonImg {
+  border-radius: 8px !important;
+  -webkit-box-shadow: 1px 1px 1px #9c9c9c !important;
+  box-shadow: 1px 1px 1px #9c9c9c !important;
+  position: absolute;
+  bottom: 10px;
+  left: calc(50% - 73px);
+  width: 146px;
+}
+
+cmpt-card-producto .elipsis {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+cmpt-card-producto .overflow {
+  display: -webkit-inline-box;
+  display: -webkit-box !important;
+  max-width: 400px;
+  height: 28px;
+  margin: 0 auto;
+  font-size: 20px;
+  line-height: 1.4;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 356px) and (min-width: 0px) {
+  cmpt-card-producto .boton-entretenimiento {
+    margin-top: 63px !important;
+  }
+  cmpt-card-producto .titlesAlign {
+    margin-left: -25%;
+    margin-top: -3%;
+  }
+  cmpt-card-producto .ionSlidesAndroid {
+    display: block;
+    width: 100%;
+    height: 200px;
+  }
+  cmpt-card-producto .ionSlidesAndroid ion-slide {
+    /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+  cmpt-card-producto .textoGana {
+    color: #fff;
+    position: absolute;
+    text-align: left;
+    left: 10px;
+    top: 20px;
+    font-weight: 700;
+    font-size: 80%;
+    width: 90%;
+    text-shadow: 1px 1px 1px #123;
+  }
+  cmpt-card-producto .divSpinner {
+    height: 200px;
+    text-align: center;
+  }
+  cmpt-card-producto .divSpinner ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+}
+
+@media only screen and (max-width: 360px) and (min-width: 357px) {
+  cmpt-card-producto .boton-entretenimiento {
+    margin-top: 63px !important;
+  }
+  cmpt-card-producto .titlesAlign {
+    margin-left: -25%;
+    margin-top: -3%;
+  }
+  cmpt-card-producto .ionSlidesAndroid {
+    display: block;
+    width: 100%;
+    height: 200px;
+  }
+  cmpt-card-producto .ionSlidesAndroid ion-slide {
+    /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+  cmpt-card-producto .textoGana {
+    color: #fff;
+    position: absolute;
+    text-align: left;
+    left: 10px;
+    top: 20px;
+    font-weight: 700;
+    font-size: 80%;
+    width: 90%;
+    text-shadow: 1px 1px 1px #123;
+  }
+  cmpt-card-producto .divSpinner {
+    height: 200px;
+    text-align: center;
+  }
+  cmpt-card-producto .divSpinner ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+}
+
+@media only screen and (max-width: 375px) and (min-width: 361px) {
+  cmpt-card-producto .boton-entretenimiento {
+    margin-top: 63px !important;
+  }
+  cmpt-card-producto .titlesAlign {
+    margin-left: -17%;
+    margin-top: -3%;
+  }
+  cmpt-card-producto .topTitle {
+    margin-top: 32px;
+  }
+  cmpt-card-producto .truncate {
+    white-space: nowrap;
+    width: 331px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  cmpt-card-producto .divSpinner {
+    height: 200px;
+    text-align: center;
+  }
+  cmpt-card-producto .divSpinner ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+  cmpt-card-producto .divSpinner ion-spinner svg {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    color: aqua;
+    fill: beige;
+  }
+  cmpt-card-producto .textoGana {
+    color: #fff;
+    position: absolute;
+    text-align: left;
+    left: 10px;
+    top: 20px;
+    font-weight: 700;
+    font-size: 80%;
+    width: 84%;
+    text-shadow: 1px 1px 1px #123;
+  }
+  cmpt-card-producto .ionSlidesAndroid {
+    display: block;
+    width: 100%;
+    /*height: 281px;*/
+    height: 200px;
+  }
+  cmpt-card-producto .ionSlidesAndroid ion-slide {
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+}
+
+@media only screen and (max-width: 746px) and (min-width: 376px) {
+  cmpt-card-producto .boton-entretenimiento {
+    margin-top: 63px !important;
+  }
+  cmpt-card-producto .titlesAlign {
+    margin-left: -25%;
+    margin-top: -3%;
+  }
+  cmpt-card-producto .divSpinner {
+    height: 200px;
+    text-align: center;
+  }
+  cmpt-card-producto .divSpinner ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+  cmpt-card-producto .divSpinner ion-spinner svg {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    color: aqua;
+    fill: beige;
+  }
+  cmpt-card-producto .textoGana {
+    color: #fff;
+    position: absolute;
+    text-align: left;
+    left: 10px;
+    top: 20px;
+    font-weight: 700;
+    font-size: 80%;
+    width: 81%;
+    text-shadow: 1px 1px 1px #123;
+  }
+  cmpt-card-producto .ionSlidesAndroid {
+    display: block;
+    width: 100%;
+    height: 200px;
+  }
+  cmpt-card-producto .ionSlidesAndroid ion-slide {
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+}
+
+@media only screen and (max-width: 768px) and (min-width: 747px) {
+  cmpt-card-producto .boton-entretenimiento {
+    margin-top: 63px !important;
+  }
+  cmpt-card-producto .titlesAlign {
+    margin-left: -9%;
+    margin-top: -3%;
+  }
+  cmpt-card-producto .divSpinner {
+    height: 200px;
+    text-align: center;
+  }
+  cmpt-card-producto .divSpinner ion-spinner {
+    position: relative;
+    display: inline-block;
+    width: 128px !important;
+    height: 28px;
+    margin-top: 11%;
+  }
+  cmpt-card-producto .divSpinner ion-spinner svg {
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    color: aqua;
+    fill: beige;
+  }
+  cmpt-card-producto .textoGana {
+    color: #fff;
+    position: absolute;
+    text-align: left;
+    left: 10px;
+    top: 20px;
+    font-weight: 700;
+    font-size: 116%;
+    width: 62%;
+    text-shadow: 1px 1px 1px #123;
+  }
+  cmpt-card-producto .ionSlidesAndroid {
+    display: block;
+    width: 100%;
+    height: 400px;
+  }
+  cmpt-card-producto .ionSlidesAndroid ion-slide {
+    /*background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;*/
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+}
+
 app-control-messages .validators {
   padding-left: 20px;
   padding-right: 16px;
@@ -48959,6 +49306,50 @@ page-ayuda .separado-icons .icono img {
 page-ayuda .separado-icons .text {
   display: inline-block;
   width: 49%;
+}
+
+page-calificacion .vendor {
+  margin-top: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+page-calificacion .vendor img {
+  width: 20%;
+}
+
+page-calificacion .calificacion {
+  text-align: center;
+}
+
+page-calificacion .calificacion .texto {
+  font-size: 20px;
+  color: grey;
+  margin-top: 20px;
+}
+
+page-calificacion .calificacion .contenedor-stars {
+  width: 80%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+page-calificacion .calificacion .contenedor-stars .estrella {
+  display: inline-block;
+  width: 19%;
+  font-size: 30px;
+  text-align: center;
+}
+
+page-calificacion .calificacion .queja {
+  margin-top: 15px;
+  padding: 30px;
+}
+
+page-calificacion .calificacion .queja textarea {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
 }
 
 page-cambio-contrasenia .correo {
@@ -51028,8 +51419,8 @@ page-historial-pedidos-detail .mapa .direccion {
 page-historial-pedidos-detail .mapa .direct {
   margin-bottom: 0px;
   padding: 10px;
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 15px;
 }
 
 page-historial-pedidos-detail .mapa #map_canvas {

@@ -1,5 +1,7 @@
-export const pathPrincipal = "http://localhost:8080/api/";
-export const pathChat = "http://localhost:8080/";
+//export const pathPrincipal = "http://localhost:8080/api/";
+export const pathPrincipal = "https://dev-cabasto.sharktech.com.mx/api/";
+export const pathChat = "https://dev-cabasto.sharktech.com.mx/";
+//export const pathChat = "http://localhost:8080/";
 
 export const appCliente = 1;
 export const appProveedor = 2;
@@ -16,7 +18,7 @@ export const environment = {
   proveedores: `${pathPrincipal}proveedors`,
 
   proveedoresFull: `${pathPrincipal}proveedores`,
-
+  proveedor: `${pathPrincipal}proveedor`,
   proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
 
   registro: `${pathPrincipal}register`,
@@ -35,6 +37,8 @@ export const environment = {
 
   pedidosProveedores: `${pathPrincipal}proveedor/pedido-proveedores`,
   pedidosTransportistas: `${pathPrincipal}transportista/pedido-proveedores`,
+
+  calificacionServicio: `${pathPrincipal}pedido-proveedores/calificacion-servicio`,
 
   usuarios: `${pathPrincipal}usuarios`,
 
@@ -69,12 +73,20 @@ export const environment = {
   keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
 
   //Fines de pruebas
-  emulado: true,
+  emulado: false,
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
     activo: appCliente,
     //activo: appProveedor
     //activo: appTransportista
+  },
+
+  stripe:{
+    keyPublic: 'pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI'
+    //keyPublic: 'pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd',
+
+    //keyPrivate: 'sk_live_fcKnhw5seaKkY2ERdjJcKBOC007a6LoXl0',
+    //keyPrivate: 'sk_test_BDQpRihwXwK00K7EN1aMifQc00CHosOopt',
   }
 };

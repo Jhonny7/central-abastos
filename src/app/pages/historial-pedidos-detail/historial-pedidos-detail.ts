@@ -4,7 +4,7 @@ import { ChatPage } from './../chat/chat';
 import { LoadingService } from './../../services/loading.service';
 import { VerProductosPage } from './../../pages-proveedor/ver-productos/ver-productos';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform } from 'ionic-angular';
 import { User } from '../../models/User';
 import { GenericService } from '../../services/generic.service';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
@@ -12,9 +12,14 @@ import { AlertaService } from '../../services/alerta.service';
 import { environment } from '../../../environments/environment.prod';
 import { PedidosDetailPage } from '../pedidos-detail/pedidos-detail';
 import { ProblemasPedidoPage } from '../problemas-pedido/problemas-pedido';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpClient } from '@angular/common/http';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
+
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { FileOpener } from '@ionic-native/file-opener';
+
 declare var google;
 
 @Component({
@@ -27,6 +32,9 @@ export class HistorialPedidosDetailPage {
   public map: any;
 
   public tipoUsuario: any = environment.perfil.activo;
+
+  public ref: any;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,11 +45,15 @@ export class HistorialPedidosDetailPage {
     private qrScanner: QRScanner,
     private alertCtrl: AlertController,
     private actionSheetCtrl: ActionSheetController,
-    private iab: InAppBrowser) {
+    private iab: InAppBrowser,
+    private httpClient: HttpClient,
+    private platform: Platform,
+    private file: File,
+    private fileOpener: FileOpener) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.pedido = navParams.get("pedido");
     console.log(this.pedido);
-    
+
   }
 
   ionViewDidLoad() {
@@ -127,12 +139,107 @@ export class HistorialPedidosDetailPage {
     });
   }
 
-  completarServicio(tokenEntrada:any) {
+  verRecibo() {
+    if (this.pedido.receiptUrl && this.pedido.receiptUrl.length > 0) {
+      //this.returnDocument(this.pedido.folio.toString(),this.pedido.receiptUrl,'application/pdf');
+      this.aceptarRedirect(this.pedido.receiptUrl);
+    }else{
+      this.alertaService.warnAlertGeneric("No se ha generado el ticket de tu pedido, contacta al administrador");
+    }
+    //
+  }
+  /**Accept redirect android */
+  async aceptarRedirectAndroid(linkTemp: any) {
+    let script:any = "window.print();"
+    let ref = this.iab.create(linkTemp, '_blank', 'location=yes');
+
+
+    ref.on('loadstop').subscribe((event: InAppBrowserEvent) => {
+      console.log("script ejecuta");
+      
+        ref.executeScript({ code: script });
+    });
+    ref.on('exit').subscribe((event: InAppBrowserEvent) => {
+    });
+    ref.on('loadstart').subscribe((event: InAppBrowserEvent) => {
+    });
+  }
+
+  /**Accept redirect android */
+  async aceptarRedirectIOS(linkTemp: any) {
+
+    if (this.ref) {
+      this.ref.close();
+      this.ref = undefined;
+    }
+    this.ref = this.iab.create(linkTemp, '_blank', 'location=yes');
+
+
+    let script:any = "window.print();"
+
+
+    this.ref.on('loadstop').subscribe((event: InAppBrowserEvent) => {
+     
+        this.ref.executeScript({ code: script });
+
+    });
+    this.ref.on('exit').subscribe((event: InAppBrowserEvent) => {
+      
+    });
+    this.ref.on('loadstart').subscribe((event: InAppBrowserEvent) => {
+
+    });
+  }
+
+  /**Método que hace el redirect y genera un autoclick en el formulario que se envia */
+  async aceptarRedirect(linkTemp: any) {
+    if (this.platform.is("ios")) {
+      this.aceptarRedirectIOS(linkTemp);
+    } else {
+      this.aceptarRedirectAndroid(linkTemp);
+    }
+  }
+
+  returnDocument(titulo: string, filePath: string, mimeType: string) {
+    /* this.fileOpener.open(filePath, mimeType)
+      .then(() => console.log('File is opened'))
+      .catch(e => console.log('Error opening file', e)); */
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+
+    this.httpClient.get(filePath, { headers: headers, responseType: 'blob' }).subscribe((resp: any) => {
+      console.log(resp);
+
+      let path = null;
+      if (this.platform.is('ios')) {
+        path = this.file.tempDirectory;
+      } else {
+        path = this.file.externalRootDirectory;
+      }
+      console.log(path);
+
+      console.log(this.platform.is('ios'));
+
+
+      this.file.writeExistingFile(path, `${titulo}.pdf`, resp).then((response) => {
+        console.log('successfully wrote to file', response);
+        this.fileOpener.open(path + `${titulo}.pdf`, 'application/pdf').then((response) => {
+          console.log('opened PDF file successfully', response);
+        }).catch((err) => {
+          console.log('error in opening pdf file', err);
+        });
+      }).catch((err) => {
+        console.log('error writing to file', err);
+      });
+    });
+  }
+
+  completarServicio(tokenEntrada: any) {
     let body: any = {
       pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
       token: tokenEntrada
     }
-    this.loadingService.show().then(()=>{
+    this.loadingService.show().then(() => {
       this.genericService.sendPutRequest(`${environment.pedidosTransportistas}/terminar-servicio`, body).subscribe((response: any) => {
         this.loadingService.hide();
         this.alertaService.successAlertGeneric("El servició terminó correctamente");

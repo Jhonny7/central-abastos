@@ -1,7 +1,7 @@
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angular';
 import { ChatService } from '../../services/chat.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment.prod';
   selector: 'page-chat',
   templateUrl: 'chat.html',
 })
-export class ChatPage {
+export class ChatPage implements OnDestroy{
 
   public chat: any = null;
 
@@ -59,6 +59,18 @@ export class ChatPage {
       } catch (error) {
       }
     });
+
+
+    this.events.subscribe("updateChat", data => {
+      try {
+        this.verChat();
+      } catch (error) {
+      }
+    });
+  }
+
+  ngOnDestroy(){
+    this.events.unsubscribe("updateChat");
   }
 
   handleSelection(event) {
@@ -73,12 +85,12 @@ export class ChatPage {
 
     let claseTabs: any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "none";
+    let dimensions = this.content.getContentDimensions();
+    this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
 
     this.intervalo = setInterval(() => {
       this.verChat();
     }, 2000);
-    let dimensions = this.content.getContentDimensions();
-    this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
   }
 
 
@@ -93,7 +105,12 @@ export class ChatPage {
     switch (environment.perfil.activo) {
       case 1:
         this.genericService.sendGetRequest(`${environment.chats}/${this.chat.id}`).subscribe((response: any) => {
+          if(this.chat.chatDetalles.length < response.chatDetalles){
+            let dimensions = this.content.getContentDimensions();
+            this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+          }
           this.chat = response;
+          
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
           //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
@@ -102,6 +119,10 @@ export class ChatPage {
 
       case 2:
         this.genericService.sendGetRequest(`${environment.chatsProveedor}${this.pedido.pedidoProveedores[0].id}/tipoChat/1`).subscribe((response: any) => {
+          if(this.chat.chatDetalles.length < response.chatDetalles){
+            let dimensions = this.content.getContentDimensions();
+            this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+          }
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
@@ -110,6 +131,10 @@ export class ChatPage {
         break;
       case 3:
         this.genericService.sendGetRequest(`${environment.chatsProveedor}${this.pedido.pedidoProveedores[0].id}/tipoChat/2`).subscribe((response: any) => {
+          if(this.chat.chatDetalles.length < response.chatDetalles){
+            let dimensions = this.content.getContentDimensions();
+            this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+          }
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;

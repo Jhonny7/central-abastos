@@ -183,6 +183,7 @@ export class HomeGeoProveedoresPage {
         result => {
           //debugger;
           if (!result.hasPermission) {
+            this.navCtrl.pop();
             this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then((resReq) => {
               this.loadingService.hide();
             });

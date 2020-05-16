@@ -18,7 +18,9 @@
       <div class="formulario" *ngIf="formGroup">
         <form [formGroup]="formGroup">
           <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">
-
+            <div style="    width: 100%;
+            font-size: 14px;
+            color: #123;">{{dato.name}}</div>
             <input class="inp" [attr.disabled]="dato.disabled ? '' : null" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"
               type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != 'date' && dato.type != 'checkbox' && dato.type != 'select'"
               [ngStyle]="{'width': dato.name == 'Dirección' ? '88%' : '100%'}" placeholder="{{dato.name}}">
@@ -46,7 +48,7 @@
             </app-control-messages>
           </div>
           <div class="contenedor-boton">
-            <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{'background-color': genericService.getColorHex()}">Registrarme</button>
+            <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{'background-color': genericService.getColorHex()}">Aceptar</button>
           </div>
         </form>
 
