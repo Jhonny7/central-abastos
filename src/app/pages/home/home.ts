@@ -64,6 +64,8 @@ export class HomePage implements OnDestroy, OnInit {
 
   public color: any = "#3b64c0";
 
+  public subscribe:any = null;
+
   constructor(
     public navCtrl: NavController,
     private modalController: ModalController,
@@ -180,7 +182,10 @@ export class HomePage implements OnDestroy, OnInit {
       this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
       nav.push(CarritoComprasPage);
     }, (error: HttpErrorResponse) => {
-    });
+      this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+    }); 
+
+    
   }
 
   buscando() {
@@ -198,10 +203,16 @@ export class HomePage implements OnDestroy, OnInit {
     }
   }
 
+  borraPalabra(){
+    this.dataFilter.nombre = "";
+    this.buscarPorFiltros();
+  }
+
   verificarCarrito() {
     if (this.user) {
       let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-
+      console.log(productosStorage);
+      
       if (productosStorage) {
         productosStorage.forEach(item => {
           this.productos.forEach(element => {
@@ -430,8 +441,14 @@ export class HomePage implements OnDestroy, OnInit {
     }
 
 
+    if(this.subscribe){
+      this.subscribe.unsubscribe();
+      console.log("<--");
+    }else{
+      console.log("-->");
+    }
     this.productosBuscados = [];
-    this.genericService.sendGetParams(`${environment.proveedorProductos}/search`, params).subscribe((response: any) => {
+    this.subscribe = this.genericService.sendGetParams(`${environment.proveedorProductos}/search`, params).subscribe((response: any) => {
 
       this.productosBuscados = response;
       this.loadingService.hide();
@@ -511,12 +528,12 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   verCarrito() {
-    if (this.genericService.getTotalCarrito() > 0) {
+    //if (this.genericService.getTotalCarrito() > 0) {
 
       //nav.pop();
       this.cargarProductosCarrito();
 
-    }
+    //}
   }
 
   verOpciones() {

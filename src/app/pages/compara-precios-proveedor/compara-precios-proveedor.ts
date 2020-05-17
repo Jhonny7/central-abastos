@@ -14,12 +14,13 @@ import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 })
 export class ComparaPreciosProveedorPage {
 
-  public proveedoresGeolocate:any = null;
-  public proveedoresGeolocateReplica:any = null;
+  public proveedoresGeolocate: any = null;
+  public proveedoresGeolocateReplica: any = null;
   public env: any = environment;
 
   public palabra: string = "";
 
+  public multiple: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -28,9 +29,11 @@ export class ComparaPreciosProveedorPage {
     private loadingService: LoadingService,
     private localStorageEncryptService: LocalStorageEncryptService,
     private events: Events) {
-      this.proveedoresGeolocate = navParams.get("proveedoresGeolocate");
-      this.proveedoresGeolocateReplica = this.proveedoresGeolocate;
-      
+    this.proveedoresGeolocate = navParams.get("proveedoresGeolocate");
+    this.multiple = navParams.get("multiple");
+    this.proveedoresGeolocateReplica = this.proveedoresGeolocate;
+    console.log(this.proveedoresGeolocate);
+
   }
 
   ionViewDidLoad() {
@@ -46,7 +49,7 @@ export class ComparaPreciosProveedorPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
-        
+
         this.navCtrl.push(DetalleProductoPage, { producto: response });
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
@@ -59,17 +62,17 @@ export class ComparaPreciosProveedorPage {
 
   }
 
-  up(){
+  up() {
     this.proveedoresGeolocate = this.proveedoresGeolocateReplica;
-    this.proveedoresGeolocate.sort((mayor,menor)=>{
-        return mayor.precio - menor.precio;
-      });
+    this.proveedoresGeolocate.sort((mayor, menor) => {
+      return mayor.precio - menor.precio;
+    });
   }
 
-  down(){
+  down() {
     this.proveedoresGeolocate = this.proveedoresGeolocateReplica;
-    this.proveedoresGeolocate.sort((mayor,menor)=>{
-        return menor.precio - mayor.precio;
-      });
+    this.proveedoresGeolocate.sort((mayor, menor) => {
+      return menor.precio - mayor.precio;
+    });
   }
 }

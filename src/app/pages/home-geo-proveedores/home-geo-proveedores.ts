@@ -1,7 +1,7 @@
 import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform, Events, ViewController, PopoverController } from 'ionic-angular';
 
 import { Geolocation, Geoposition } from '@ionic-native/geolocation';
@@ -20,7 +20,7 @@ declare var google;
   selector: 'page-home-geo-proveedores',
   templateUrl: 'home-geo-proveedores.html',
 })
-export class HomeGeoProveedoresPage {
+export class HomeGeoProveedoresPage implements OnDestroy{
 
   public map: any;
 
@@ -286,7 +286,7 @@ export class HomeGeoProveedoresPage {
     });
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
     if(claseTabs[0]){
       claseTabs[0].style.display = "flex";

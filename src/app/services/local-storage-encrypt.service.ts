@@ -23,11 +23,17 @@ export class LocalStorageEncryptService {
    */
   setToLocalStorage(key: string, data: any) {
     let encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
+    //console.log("encriptado",encryptedData);
+    
     let encryptedKey = CryptoJS.SHA256(key).toString();
 
     encryptedData = JSON.stringify(data);
     encryptedKey = key;
     localStorage.setItem(encryptedKey, encryptedData);
+  }
+
+  yayirobe(data){
+    return CryptoJS.AES.decrypt(data, this.secretKey).toString(CryptoJS.enc.Utf8);
   }
 
   /**

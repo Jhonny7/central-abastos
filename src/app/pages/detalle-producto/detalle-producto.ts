@@ -317,5 +317,6 @@ export class DetalleProductoPage {
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
     this.events.publish("totalCarrito");
+    this.events.publish("carritoTab");
   }
 }

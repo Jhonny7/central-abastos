@@ -518,18 +518,12 @@ var LoginPage = /** @class */ (function () {
             }
         });
     }
-    LoginPage_1 = LoginPage;
     LoginPage.prototype.ionViewDidLoad = function () {
         //this.loadingService.show();
     };
     LoginPage.prototype.regresar = function () {
-        try {
-            this.navCtrl.pop();
-        }
-        catch (error) {
-            var nav = this.app.getRootNav();
-            nav.setRoot(LoginPage_1);
-        }
+        var nav = this.app.getRootNav();
+        nav.setRoot(__WEBPACK_IMPORTED_MODULE_9__tabs_tabs__["a" /* TabsPage */]);
     };
     LoginPage.prototype.login = function () {
         var _this = this;
@@ -609,7 +603,7 @@ var LoginPage = /** @class */ (function () {
     LoginPage.prototype.olvideContrasenia = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_10__recupera_contrasenia_recupera_contrasenia__["a" /* RecuperaContraseniaPage */]);
     };
-    LoginPage = LoginPage_1 = __decorate([
+    LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/login/login.html"*/'<!-- background-color: #258649; -->\n<ion-icon *ngIf="env.perfil.activo == 1" id="icn-5" name="ios-arrow-back" class="arrow-generada" (click)="regresar()" [ngStyle]="{\'color\': color}"></ion-icon>\n<ion-content class="max-contenedor" padding style="background-image: url(assets/imgs/login/loginFondo.png);"\n[style.background-image]="\'url(\'+genericService.imgLogin()+\')\'">\n  <section class="container animated rubberBand">\n    <section class="flex">\n      <img src="assets/imgs/logo.png" alt="" class="animated fadeIn">\n\n      <section class="input-section">\n        <input [(ngModel)]="dataLogin.user" type="email" placeholder="{{\'EMAIL\' | translate}}">\n        <div class="interno">\n          <input [(ngModel)]="dataLogin.password" type="{{configuraciones.visible ? \'text\' : \'password\'}}" placeholder="{{\'PASSWORD\' | translate}}">\n          <section (touchstart)="visible()" (touchend)="visible()">\n            <ion-icon ios="ios-eye" md="ios-eye"></ion-icon>\n          </section>\n        </div>\n\n        <button (click)="login()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">{{\'LOGIN\' | translate}}</button>\n      </section>\n      <section class="registrate">\n        <a (click)="goToRegister()" [ngStyle]="{\'color\': genericService.getColorHex()}">¿Aún no te has registrado?</a>\n      </section>\n      <section class="registrate">\n        <a (click)="olvideContrasenia()" [ngStyle]="{\'color\': genericService.getColorHex()}">Olvidé mi contraseña</a>\n      </section>\n    </section>\n  </section>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/login/login.html"*/,
         }),
@@ -626,7 +620,6 @@ var LoginPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_0__services_pushNotifications_service__["a" /* PushNotificationService */]])
     ], LoginPage);
     return LoginPage;
-    var LoginPage_1;
 }());
 
 //# sourceMappingURL=login.js.map

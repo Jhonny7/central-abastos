@@ -9,6 +9,11 @@
     <ion-spinner></ion-spinner>
   </div>
 
+  <div class="nacionales" *ngIf="proveedorActivo">
+    <button (click)="nacional()">Nacional</button>
+    <button (click)="local()">Local</button>
+  </div>
+
   <div class="mapp">
     <div id="map_canvas" class="mapita-google">
 
@@ -18,7 +23,7 @@
   </div>
 
   <div class="contenedor-card" *ngIf="proveedorActivo" [ngStyle]="{'background-color': genericService.getColorHex()}">
-    <ion-slides autoplay="5000" zoom="true" loop="true" #slides3 loop="false" *ngIf="slideProve">
+    <ion-slides autoplay="2000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">
       <ion-slide *ngFor="let p of proveedorActivo.productos; let i=index">
         <div id="card-{{i}}" class="card animated lightSpeedIn">
           <!-- <div class="tacha">
@@ -65,6 +70,24 @@
       </ion-slide>
     </ion-slides>
     
+    <div style="    position: absolute;
+    left: -5px;
+    padding: 10px;
+    top: 35%;
+    z-index: 9;
+    color: #5d5d5d;
+    font-size: 30px;" (click)="prev()" *ngIf="slideProve">
+        <ion-icon name="ios-arrow-back"></ion-icon>
+    </div>
+    <div style="    position: absolute;
+    right: -5px;
+    padding: 10px;
+    top: 35%;
+    z-index: 9;
+    color: #5d5d5d;
+    font-size: 30px;" (click)="next()" *ngIf="slideProve">
+        <ion-icon name="ios-arrow-forward"></ion-icon>
+    </div>
     
     <div *ngIf="!slideProve">
       <div id="card-{{i}}" class="card animated lightSpeedIn">

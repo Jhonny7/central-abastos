@@ -51,6 +51,11 @@ export const environment = {
   chatsProveedor: `${pathPrincipal}proveedor/chats/pedido-proveedor/`,
 
   cambioContraseña: `${pathPrincipal}account/change-password`,
+
+
+  carritoComprasProveedor: `${pathPrincipal}carrito-compras-proveedor`,
+
+
   reset: `${pathPrincipal}account/reset-password/init`,
   logout: null,
   icons: {
@@ -73,7 +78,7 @@ export const environment = {
   keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
 
   //Fines de pruebas
-  emulado: false,
+  emulado: true,
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
@@ -82,11 +87,11 @@ export const environment = {
     //activo: appTransportista
   },
 
-  stripe:{
-    keyPublic: 'pk_test_TNjRZggfGMHinhrlBVIP1P1B00d8WURtiI'
-    //keyPublic: 'pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd',
+  st:{
+    keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
+    //keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
 
-    //keyPrivate: 'sk_live_fcKnhw5seaKkY2ERdjJcKBOC007a6LoXl0',
-    //keyPrivate: 'sk_test_BDQpRihwXwK00K7EN1aMifQc00CHosOopt',
+    //keyPrivate: 'U2FsdGVkX19W1AyfRoSSbNw8oIdfLjnf3UQeotHdZqr1rYN4T18H6zwDbrHkmyja0dUUj4LDJnpLPe+SQaLxGQ==',
+    //keyPrivate: 'U2FsdGVkX1/EQueHLsYwQ6B2ODXYMBoJfhGHqnYFwcLTncp34qy/VFy3TkRzIhtmcYaaLMhFvRzUIJunS8QfqA==',
   }
 };

@@ -65,13 +65,8 @@ export class LoginPage {
   }
 
   regresar() {
-
-    try {
-      this.navCtrl.pop();
-    } catch (error) {
-      let nav:any = this.app.getRootNav();
-      nav.setRoot(LoginPage);
-    }
+    let nav:any = this.app.getRootNav();
+    nav.setRoot(TabsPage);
   }
 
   login() {

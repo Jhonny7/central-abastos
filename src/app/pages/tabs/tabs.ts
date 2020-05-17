@@ -10,7 +10,7 @@ import { ContactPage } from '../contact/contact';
 import { HomePage } from '../home/home';
 import { TarjetasFrecuentesPage } from '../tarjetas-frecuentes/tarjetas-frecuentes';
 import { HistorialPedidosPage } from '../historial-pedidos/historial-pedidos';
-import { Nav, App } from 'ionic-angular';
+import { Nav, App, Events } from 'ionic-angular';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -26,7 +26,8 @@ export class TabsPage {
   constructor(
     private genericService: GenericService,
     private localStorageEncryptService: LocalStorageEncryptService,
-    private app: App) {
+    private app: App,
+    private events: Events) {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
       
     
@@ -51,6 +52,6 @@ export class TabsPage {
 
   actualizaCarrito(){
     console.log("---->");
-    
+    this.events.publish("carritoTab");
   }
 }

@@ -1,4 +1,19 @@
 page-carrito-compras {
+  
+ 
+
+  .scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .name-pro {
+    padding: 10px;
+    font-size: 15px;
+    color: #f07c1c;
+    text-decoration: underline;
+  }
   .card {
     display: inline-block;
     position: relative;
@@ -110,6 +125,21 @@ page-carrito-compras {
 .seleccionado {
   background-color: #d0d0d0;
   border-radius: 4px;
+}
+.totales{
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: sans-serif;
+  .tot{
+    margin-bottom: 8px;
+  }
+  .borde-total{
+    border-bottom: 1px solid #b5b5b5;
+    padding-top: 7px;
+    margin-bottom: 7px;
+    width: 80%;
+  }
 }
 
 .form-row {
@@ -372,4 +402,10 @@ page-carrito-compras {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }

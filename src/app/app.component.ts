@@ -154,8 +154,6 @@ export class MyApp {
       }
       /** */
 
-
-
       switch (environment.perfil.activo) {
         case 1:
           if (this.user) {

@@ -2,7 +2,7 @@ import { LocalStorageEncryptService } from './../../services/local-storage-encry
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, AlertController, ModalController } from 'ionic-angular';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,7 @@ declare var Stripe;
   selector: 'page-carrito-historico',
   templateUrl: 'carrito-historico.html',
 })
-export class CarritoHistoricoPage {
+export class CarritoHistoricoPage implements OnDestroy{
 
   public user: User = null;
 
@@ -29,7 +29,7 @@ export class CarritoHistoricoPage {
   public productosCarrito: any = [];
   public listaCarritoReplica: any = [];
 
-  public stripe = Stripe(environment.stripe.keyPublic);
+  public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
 
@@ -101,6 +101,9 @@ export class CarritoHistoricoPage {
 
   public check: boolean = false;
   
+  public agrupado: any[] = [];
+
+  public totales:any = null;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -116,12 +119,44 @@ export class CarritoHistoricoPage {
       this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
       this.listaCarrito = navParams.get("lista");
+
+      console.log(this.listaCarrito);
+      
       this.listaCarritoReplica = this.listaCarrito;
       this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
       
       this.getCards();
-  }
-
+      this.agruparTotales();
+    }
+  
+    agruparTotales(){
+      this.agrupado = [];
+      let unique = this.listaCarrito.carritoHistoricoDetalles.filter((valorActual, indiceActual, arreglo) => {
+        //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
+        return arreglo.findIndex(valorDelArreglo => valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId) === indiceActual
+      });
+  
+      unique.forEach(prov => {
+        prov.carritoAgrupado = [];
+        this.listaCarrito.carritoHistoricoDetalles.forEach(element => {
+          if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
+            prov.carritoAgrupado.push(element);
+          }
+        });
+        this.agrupado.push(prov);
+      });
+      console.log(this.agrupado);
+      this.getTotales();
+    }
+  
+    getTotales(){
+      this.genericService.sendGetRequest(environment.carritoComprasProveedor).subscribe((response: any) => {
+        console.log(response);
+        this.totales = response;
+      }, (error: HttpErrorResponse) => {
+        this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+      });
+    }
   getCards() {
     this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
       
@@ -153,11 +188,15 @@ export class CarritoHistoricoPage {
   }
 
   ionViewDidLoad() {
+    console.log("---------------------.");
+    
     let claseTabs: any = document.getElementsByClassName("tabbar");
+    console.log(claseTabs);
+    
     claseTabs[0].style.display = "none";
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "flex";
   }
@@ -185,7 +224,7 @@ export class CarritoHistoricoPage {
             }
           }
         }
-        this.navCtrl.push(DetalleProductoPage, { producto: response });
+        this.navCtrl.push(DetalleProductoPage, { producto: response, fromCarritos: true });
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
@@ -199,7 +238,12 @@ export class CarritoHistoricoPage {
 
   decrementar(p: any) {
     p.cantidad--;
-    this.borrarToCarritoBack(p);
+    if(p.cantidad == 0){
+      p.cantidad = 1;
+    }else{
+      this.borrarToCarritoBack(p);
+    }
+    
   }
 
   borrarToCarritoBack(producto: any) {
@@ -266,6 +310,7 @@ export class CarritoHistoricoPage {
       });
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+    this.events.publish("carritoTab");
   }
 
   incrementa(p: any) {
@@ -554,7 +599,7 @@ export class CarritoHistoricoPage {
       c.exp_year = expYear;
     }
     if (!bandera) {
-      Stripe.setPublishableKey(environment.stripe.keyPublic);
+      Stripe.setPublishableKey(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
       this.loadingService.show().then(() => {
         let clase: any = this;
         Stripe.card.createToken(c, (status, response) => {

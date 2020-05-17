@@ -49383,6 +49383,19 @@ page-cambio-contrasenia .boton {
   font-size: 16px;
 }
 
+page-carrito-compras .scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+page-carrito-compras .name-pro {
+  padding: 10px;
+  font-size: 15px;
+  color: #f07c1c;
+  text-decoration: underline;
+}
+
 page-carrito-compras .card {
   display: inline-block;
   position: relative;
@@ -49522,6 +49535,24 @@ page-carrito-compras .card .contenedor-carrito .mas div {
 .seleccionado {
   background-color: #d0d0d0;
   border-radius: 4px;
+}
+
+.totales {
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: sans-serif;
+}
+
+.totales .tot {
+  margin-bottom: 8px;
+}
+
+.totales .borde-total {
+  border-bottom: 1px solid #b5b5b5;
+  padding-top: 7px;
+  margin-bottom: 7px;
+  width: 80%;
 }
 
 .form-row input {
@@ -49781,6 +49812,12 @@ page-carrito-compras .card .contenedor-carrito .mas div {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.scrolling-wrapper {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
 page-carrito-historico .card {
@@ -52293,6 +52330,20 @@ page-login .max-contenedor {
   }
 }
 
+page-mapa-proveedores .nacionales {
+  padding: 5px;
+}
+
+page-mapa-proveedores .nacionales button {
+  padding: 10px;
+  font-size: 15px;
+  background-color: #ffffff;
+  color: #f07c1c;
+  width: 49%;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
 page-mapa-proveedores .todos {
   position: absolute;
   width: 100%;
@@ -52495,6 +52546,15 @@ page-mapa-proveedores .mapp .boton-mapa {
   padding: 10px;
   color: #fff;
   border-radius: 4px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #f07c1c;
+  opacity: 1;
+}
+
+.swiper-pagination-fraction, .swiper-pagination-custom, .swiper-container-horizontal > .swiper-pagination-bullets {
+  display: none;
 }
 
 .gmnoprint {

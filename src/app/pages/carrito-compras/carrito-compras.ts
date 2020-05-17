@@ -29,11 +29,11 @@ export class CarritoComprasPage {
 
   public env: any = environment;
 
-  public stripe = Stripe(environment.stripe.keyPublic);
+  public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
 
-  public recarga:boolean = false;
+  public recarga: boolean = false;
 
   public cards: any = null;
 
@@ -102,6 +102,10 @@ export class CarritoComprasPage {
   public objetoRegistroCopy: any = [];
 
   public check: boolean = false;
+
+  public agrupado: any[] = [];
+
+  public totales:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -119,20 +123,66 @@ export class CarritoComprasPage {
     this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
     this.productosCarritoReplica = this.productosCarrito;
 
+    
+
     this.recarga = navParams.get("recarga");
     console.log(this.recarga);
-    
+
     this.getCards();
+
+    this.agruparTotales();
+  }
+
+  agruparTotales(){
+    this.agrupado = [];
+    let unique = this.productosCarrito.filter((valorActual, indiceActual, arreglo) => {
+      //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
+      return arreglo.findIndex(valorDelArreglo => valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId) === indiceActual
+    });
+
+    unique.forEach(prov => {
+      prov.carritoAgrupado = [];
+      this.productosCarrito.forEach(element => {
+        if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
+          prov.carritoAgrupado.push(element);
+        }
+      });
+      this.agrupado.push(prov);
+    });
+    console.log(this.agrupado);
+    this.getTotales();
+  }
+
+  getTotales(){
+    this.genericService.sendGetRequest(environment.carritoComprasProveedor).subscribe((response: any) => {
+      console.log(response);
+      this.totales = response;
+    }, (error: HttpErrorResponse) => {
+      this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+    });
   }
 
   ionViewDidLoad() {
-    if(this.recarga){
+    if (this.recarga) {
       let claseTabs: any = document.getElementsByClassName("tabbar");
-      if(claseTabs[0]){
+      if (claseTabs[0]) {
         //claseTabs[0].style.display = "none";
       }
-      this.verCarrito();
+      //this.verCarrito();
     }
+
+    this.events.subscribe('carritoTab', (data) => {
+      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      this.productosCarritoReplica = this.productosCarrito;
+
+      this.agruparTotales();
+    });
+    this.events.subscribe('carritoTab2', (data) => {
+      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      this.productosCarritoReplica = this.productosCarrito;
+
+      this.agruparTotales();
+    });
   }
 
   verCarrito() {
@@ -167,7 +217,7 @@ export class CarritoComprasPage {
 
   getCards() {
     this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
-      
+
       this.cards = response;
       this.cards.forEach(element => {
         element.selected = false;
@@ -221,7 +271,7 @@ export class CarritoComprasPage {
       c.exp_year = expYear;
     }
     if (!bandera) {
-      Stripe.setPublishableKey(environment.stripe.keyPublic);
+      Stripe.setPublishableKey(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
       this.loadingService.show().then(() => {
         let clase: any = this;
         Stripe.card.createToken(c, (status, response) => {
@@ -233,7 +283,7 @@ export class CarritoComprasPage {
 
             // Get the token ID:
             console.log(response);
-            
+
             //clase.loadingService.hide();
             var token = response.id;
             let body: any = {
@@ -354,13 +404,13 @@ export class CarritoComprasPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoProveedor.id}`).subscribe((response: any) => {
-        
+
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          
+
           if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {
@@ -398,7 +448,7 @@ export class CarritoComprasPage {
     body.cantidad = producto.cantidad;
 
     this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
-    
+
       if (producto.cantidad == 0) {
         this.genericService.sendDelete(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
 
@@ -453,6 +503,7 @@ export class CarritoComprasPage {
       });
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+    this.events.publish("carritoTab");
   }
 
   infoContact() {
@@ -497,12 +548,16 @@ export class CarritoComprasPage {
       putObj
     );
     //
-    modal.style.display = "block";
+    if(modal){
+      modal.style.display = "block";
+    }
   }
 
   closeInfoContact() {
     let modal: any = document.getElementById("myModal2");
-    modal.style.display = "none";
+    if(modal){
+      modal.style.display = "none";
+    }
 
     this.objetoRegistro.forEach(item => {
       item.value = null;
@@ -696,17 +751,19 @@ export class CarritoComprasPage {
     alert.present();
   }
 
-  up(){
+  up() {
+    console.log(this.productosCarrito);
+    console.log(this.productosCarritoReplica);
     this.productosCarrito = this.productosCarritoReplica;
-    this.productosCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
-        return mayor.precio - menor.precio;
-      });
+    this.productosCarrito.sort((mayor, menor) => {
+      return mayor.precio - menor.precio;
+    });
   }
 
-  down(){
+  down() {
     this.productosCarrito = this.productosCarritoReplica;
-    this.productosCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
-        return menor.precio - mayor.precio;
-      });
+    this.productosCarrito.sort((mayor, menor) => {
+      return menor.precio - mayor.precio;
+    });
   }
 }

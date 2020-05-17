@@ -71,6 +71,10 @@ export class ChatPage implements OnDestroy{
 
   ngOnDestroy(){
     this.events.unsubscribe("updateChat");
+    let claseTabs: any = document.getElementsByClassName("tabbar");
+    claseTabs[0].style.display = "flex";
+    clearInterval(this.intervalo);
+    this.intervalo = null;
   }
 
   handleSelection(event) {
@@ -93,13 +97,6 @@ export class ChatPage implements OnDestroy{
     }, 2000);
   }
 
-
-  ionViewWillLeave() {
-    let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "flex";
-    clearInterval(this.intervalo);
-    this.intervalo = null;
-  }
 
   verChat() {
     switch (environment.perfil.activo) {

@@ -26,6 +26,11 @@ export class ListaCarritoComprasPage {
     this.cargarListas();
   }
 
+  ionViewWillLeave() {
+    let claseTabs: any = document.getElementsByClassName("tabbar");
+    //claseTabs[0].style.display = "flex";
+  }
+
   /**Método para cargar productos en base a especificaciones */
   cargarListas() {
     this.genericService.sendGetRequest(environment.carritoHistorico).subscribe((response: any) => {

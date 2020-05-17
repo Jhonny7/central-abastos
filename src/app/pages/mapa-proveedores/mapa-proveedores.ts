@@ -1,8 +1,8 @@
 import { User } from './../../models/User';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { ComparaPreciosProveedorPage } from './../compara-precios-proveedor/compara-precios-proveedor';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, Events } from 'ionic-angular';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, Platform, Events, Slides } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
 import { LoadingService } from '../../services/loading.service';
 import { AlertaService } from '../../services/alerta.service';
@@ -23,7 +23,7 @@ import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
   selector: 'page-mapa-proveedores',
   templateUrl: 'mapa-proveedores.html',
 })
-export class MapaProveedoresPage {
+export class MapaProveedoresPage implements OnDestroy{
 
   public emulado: boolean = environment.emulado;
   public muestraMapa: boolean = false;
@@ -48,6 +48,11 @@ export class MapaProveedoresPage {
   public env: any = environment;
 
   public user: User = null;
+
+  public objGeo: any = {};
+
+  @ViewChild('slides') slider: Slides;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -66,10 +71,12 @@ export class MapaProveedoresPage {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.proveedoresTotal = navParams.get("proveedores");
 
+    console.log(this.proveedoresTotal);
+    
     this.producto = navParams.get("producto");
 
     this.slideProve = navParams.get("slideProve");
-    
+
     this.geo = [];
     this.proveedoresTotal.forEach(proveedorT => {
 
@@ -96,7 +103,7 @@ export class MapaProveedoresPage {
     this.obtenerLocalizacion();
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
     if (claseTabs[0]) {
       claseTabs[0].style.display = "flex";
@@ -243,11 +250,23 @@ export class MapaProveedoresPage {
       })
   }
 
+  nacional() {
+    this.map.setZoom(5);
+  }
+
+  local() {
+    this.map.setZoom(15);
+    this.map.setCenter(new google.maps.LatLng(this.objGeo.latitude, this.objGeo.longitude));
+  }
+
   loadMap(position: Geoposition) {
     console.log("-------------------------");
 
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
+
+    this.objGeo.latitude = latitude;
+    this.objGeo.longitude = longitude;
     // create a new map by passing HTMLElement
     let mapEle: HTMLElement = document.getElementById('map_canvas');
 
@@ -256,7 +275,9 @@ export class MapaProveedoresPage {
 
     var gj = leaflet.geoJson(this.geo);
     var nearest = leafletKnn(gj).nearest([latitude, longitude], 50, 1000000);//5000);//punto de partida, estaciones máximas a encontrar, diámetro de busqueda en metros
+    console.log(nearest);
 
+    this.objGeo.nearest = nearest;
 
     if (nearest.length > 0) {
       // create map
@@ -333,15 +354,15 @@ export class MapaProveedoresPage {
     );
 
     this.proveedorActivo = this.proveedoresTotal[position];
-      console.log(this.proveedorActivo);
-      
+    console.log(this.proveedorActivo);
+
   }
 
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoId}`).subscribe((response: any) => {
-        
+
         this.navCtrl.push(DetalleProductoPage, { producto: response });
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
@@ -356,8 +377,12 @@ export class MapaProveedoresPage {
 
   comparativa() {
     console.log(this.proveedoresGeolocate);
-    
-    this.navCtrl.push(ComparaPreciosProveedorPage, { proveedoresGeolocate: this.proveedoresGeolocate });
+
+    if (this.slideProve) {
+      this.navCtrl.push(ComparaPreciosProveedorPage, { proveedoresGeolocate: this.proveedoresGeolocate, multiple: true });
+    } else {
+      this.navCtrl.push(ComparaPreciosProveedorPage, { proveedoresGeolocate: this.proveedoresGeolocate });
+    }
   }
 
   viewDetailAll(proveedor: any) {
@@ -392,6 +417,7 @@ export class MapaProveedoresPage {
           this.loadingService.hide();
           this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
           this.events.publish("totalCarrito2");
+          this.events.publish("carritoTab");
           //this.verificarCarritoModificarCantidad(producto);
         }, (error: HttpErrorResponse) => {
           this.alertaService.errorAlertGeneric(error.error.title);
@@ -401,6 +427,15 @@ export class MapaProveedoresPage {
         this.auth.events.publish("startSession");
       }
     });
+  }
+
+  /**Métodos de navegacion del slide */
+  next() {
+    this.slider.slideNext();
+  }
+
+  prev() {
+    this.slider.slidePrev();
   }
 
 

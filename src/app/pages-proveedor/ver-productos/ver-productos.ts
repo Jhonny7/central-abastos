@@ -1,6 +1,6 @@
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   selector: 'page-ver-productos',
   templateUrl: 'ver-productos.html',
 })
-export class VerProductosPage {
+export class VerProductosPage implements OnDestroy{
 
   public pedidos: any = null;
 
@@ -34,7 +34,7 @@ export class VerProductosPage {
     claseTabs[0].style.display = "none";
   }
 
-  ionViewWillLeave() {
+  ngOnDestroy() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
     claseTabs[0].style.display = "flex";
   }
