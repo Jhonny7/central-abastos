@@ -86,7 +86,7 @@
           </ion-col>
 
           <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
-            interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
+            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
             <ion-option *ngFor="let op of dato.opts" [value]="op.id">
               {{op.value}}
             </ion-option>
@@ -211,7 +211,10 @@
 
 
     <div *ngFor="let proveedor of agrupado">
-      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">{{proveedor.productoProveedor.proveedor.nombre}}</div>
+      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}" style="color: rgb(240, 124, 27);
+      font-weight: 600;
+      font-size: 17px;
+      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>
 
       <div class="scrolling-wrapper">
         <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">
@@ -243,10 +246,18 @@
         </div>
       </div>
 
-
+      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">Información</div>
+      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;
+      border-style: dashed;">
+          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>
+          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>
+          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>
+          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>
+    
+        </div>
     </div>
 
-    <div *ngIf="totales" class="totales">
+    <div *ngIf="totales && totales.listHistoricoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">
       <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
       <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
       <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>
@@ -258,7 +269,7 @@
     </div>
   </div>
 </ion-content>
-<ion-footer class="footer-button-class">
+<ion-footer class="footer-button-class" *ngIf="!enCompra">
   <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar
     pedido</button>
 </ion-footer>

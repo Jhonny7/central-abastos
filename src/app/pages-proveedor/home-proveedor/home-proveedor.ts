@@ -21,6 +21,11 @@ export class HomeProveedorPage implements OnDestroy{
   public pedidos: any = [];
   public pedidosReplica: any = [];
 
+  public botones: any = {
+    boton1: false,
+    boton2: false,
+    boton3: false
+  };
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -87,31 +92,95 @@ export class HomeProveedorPage implements OnDestroy{
   ordenPor(opc) {
     this.pedidos = this.pedidosReplica;
     //item.fecha = moment(fechaF, 'DD-MM-YYYY HH:mm:ss').format("D [de] MMMM [de] YYYY HH:mm:ss");
+    console.log(opc);
+    console.log(this.pedidos);
+
     switch (opc) {
       case 1:
         //fecha solicitud
         this.pedidos.sort((mayor, menor) => {
-          var dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
-          return dateA - dateB;
+          let dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          console.log(dateA);
+          console.log(dateB);
+
+          return dateB - dateA;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });
+        this.botones.boton1 = !this.botones.boton1;
         break;
       case 2:
         //fecha entrega
         this.pedidos.sort((mayor, menor) => {
-          var dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
-          return dateA - dateB;
+          let dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          return dateB - dateA;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });
+        this.botones.boton2 = !this.botones.boton2;
         break;
       case 3:
         //estatus
         this.pedidos.sort((mayor, menor) => {
-          return mayor.estatus.nombre > menor.estatus.nombre;
+          let a: any = mayor.estatus.nombre;
+          let b: any = menor.estatus.nombre;
+          console.log(a);
+          console.log(b);
+          if (a > b) {
+            return -1;
+          }
+          if (b > a) {
+            return 1;
+          }
+          return 0;
         });
+        this.botones.boton3 = !this.botones.boton3;
+        break;
+
+
+      case 4:
+        //fecha solicitud
+        this.pedidos.sort((mayor, menor) => {
+          let dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          console.log(dateA);
+          console.log(dateB);
+
+          return dateA - dateB;
+          //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+        });
+        this.botones.boton1 = !this.botones.boton1;
+        break;
+      case 5:
+        //fecha entrega
+        this.pedidos.sort((mayor, menor) => {
+          let dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          return dateA - dateB;
+          //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+        });
+        this.botones.boton2 = !this.botones.boton2;
+        break;
+      case 6:
+        //estatus
+        this.pedidos.sort((mayor, menor) => {
+          let a: any = mayor.estatus.nombre;
+          let b: any = menor.estatus.nombre;
+          console.log(a);
+          console.log(b);
+          if (a < b) {
+            return -1;
+          }
+          if (b < a) {
+            return 1;
+          }
+          return 0;
+        });
+        this.botones.boton3 = !this.botones.boton3;
         break;
     }
 
+    console.log(this.pedidos);
   }
 
 }

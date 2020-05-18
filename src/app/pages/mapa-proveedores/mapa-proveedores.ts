@@ -418,6 +418,7 @@ export class MapaProveedoresPage implements OnDestroy{
           this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
           this.events.publish("totalCarrito2");
           this.events.publish("carritoTab");
+          //this.events.publish("carritoTab2");
           //this.verificarCarritoModificarCantidad(producto);
         }, (error: HttpErrorResponse) => {
           this.alertaService.errorAlertGeneric(error.error.title);

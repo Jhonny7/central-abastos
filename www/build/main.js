@@ -1606,6 +1606,7 @@ var environment = {
     chatsProveedor: pathPrincipal + "proveedor/chats/pedido-proveedor/",
     cambioContraseña: pathPrincipal + "account/change-password",
     carritoComprasProveedor: pathPrincipal + "carrito-compras-proveedor",
+    carritoHistoricosProveedor: pathPrincipal + "carrito-historicos-proveedores",
     reset: pathPrincipal + "account/reset-password/init",
     logout: null,
     icons: {
@@ -1626,7 +1627,7 @@ var environment = {
     geocodeGoogle: "https://maps.googleapis.com/maps/api/geocode/json",
     keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
     //Fines de pruebas
-    emulado: true,
+    emulado: false,
     //Aqui "cambiamos" la app en ejecución
     perfil: {
         activo: appCliente,
@@ -1634,8 +1635,6 @@ var environment = {
     st: {
         keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
         //keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
-        //keyPrivate: 'U2FsdGVkX19W1AyfRoSSbNw8oIdfLjnf3UQeotHdZqr1rYN4T18H6zwDbrHkmyja0dUUj4LDJnpLPe+SQaLxGQ==',
-        //keyPrivate: 'U2FsdGVkX1/EQueHLsYwQ6B2ODXYMBoJfhGHqnYFwcLTncp34qy/VFy3TkRzIhtmcYaaLMhFvRzUIJunS8QfqA==',
     }
 };
 //# sourceMappingURL=environment.prod.js.map
@@ -1812,6 +1811,11 @@ var HomeProveedorPage = /** @class */ (function () {
         this.user = null;
         this.pedidos = [];
         this.pedidosReplica = [];
+        this.botones = {
+            boton1: false,
+            boton2: false,
+            boton3: false
+        };
         /**Obtenci{on de usuario en sesión */
         this.menuCtrl.enable(true);
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
@@ -1857,34 +1861,93 @@ var HomeProveedorPage = /** @class */ (function () {
     HomeProveedorPage.prototype.ordenPor = function (opc) {
         this.pedidos = this.pedidosReplica;
         //item.fecha = moment(fechaF, 'DD-MM-YYYY HH:mm:ss').format("D [de] MMMM [de] YYYY HH:mm:ss");
+        console.log(opc);
+        console.log(this.pedidos);
         switch (opc) {
             case 1:
                 //fecha solicitud
                 this.pedidos.sort(function (mayor, menor) {
-                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
-                    return dateA - dateB;
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    console.log(dateA);
+                    console.log(dateB);
+                    return dateB - dateA;
                     //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
                 });
+                this.botones.boton1 = !this.botones.boton1;
                 break;
             case 2:
                 //fecha entrega
                 this.pedidos.sort(function (mayor, menor) {
-                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
-                    return dateA - dateB;
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    return dateB - dateA;
                     //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
                 });
+                this.botones.boton2 = !this.botones.boton2;
                 break;
             case 3:
                 //estatus
                 this.pedidos.sort(function (mayor, menor) {
-                    return mayor.estatus.nombre > menor.estatus.nombre;
+                    var a = mayor.estatus.nombre;
+                    var b = menor.estatus.nombre;
+                    console.log(a);
+                    console.log(b);
+                    if (a > b) {
+                        return -1;
+                    }
+                    if (b > a) {
+                        return 1;
+                    }
+                    return 0;
                 });
+                this.botones.boton3 = !this.botones.boton3;
+                break;
+            case 4:
+                //fecha solicitud
+                this.pedidos.sort(function (mayor, menor) {
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    console.log(dateA);
+                    console.log(dateB);
+                    return dateA - dateB;
+                    //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+                });
+                this.botones.boton1 = !this.botones.boton1;
+                break;
+            case 5:
+                //fecha entrega
+                this.pedidos.sort(function (mayor, menor) {
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    return dateA - dateB;
+                    //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+                });
+                this.botones.boton2 = !this.botones.boton2;
+                break;
+            case 6:
+                //estatus
+                this.pedidos.sort(function (mayor, menor) {
+                    var a = mayor.estatus.nombre;
+                    var b = menor.estatus.nombre;
+                    console.log(a);
+                    console.log(b);
+                    if (a < b) {
+                        return -1;
+                    }
+                    if (b < a) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                this.botones.boton3 = !this.botones.boton3;
                 break;
         }
+        console.log(this.pedidos);
     };
     HomeProveedorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-home-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Bienvenid@</ion-title>\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)">\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(2)">\n      <ion-icon name="md-calendar"></ion-icon>\n    </button>\n    <button (click)="ordenPor(3)">\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>  \n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/,
+            selector: 'page-home-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Bienvenid@</ion-title>\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n      <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n        <div style="font-size: 12px;">Fecha solicitud</div>\n        <ion-icon name="ios-calendar-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n          <div style="font-size: 12px;">Fecha solicitud</div>\n          <ion-icon name="ios-calendar"></ion-icon>\n        </button>\n      <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n        <div style="font-size: 12px;">Fecha entrega</div>\n        <ion-icon name="ios-list-box-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n          <div style="font-size: 12px;">Fecha entrega</div>\n          <ion-icon name="ios-list-box"></ion-icon>\n        </button>\n      <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n        <div style="font-size: 12px;">Estatus</div>\n        <ion-icon name="ios-checkbox-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n        <div style="font-size: 12px;">Estatus</div>\n        <ion-icon name="ios-checkbox"></ion-icon>\n      </button>\n    </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>  \n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
@@ -2884,20 +2947,23 @@ var TabsPage = /** @class */ (function () {
         console.log(hijito);
         var component = this;
         hijito.addEventListener("click", function (e) {
+            console.log(hijito);
             component.actualizaCarrito();
         });
     };
     TabsPage.prototype.actualizaCarrito = function () {
         console.log("---->");
-        this.events.publish("carritoTab");
+        //this.events.publish("carritoTab");
     };
     TabsPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/tabs/tabs.html"*/'<ion-tabs color="{{genericService.getColor()}}" selectedIndex="1">\n  <ion-tab [root]="tab1Root" tabTitle="Buscar" tabIcon="home"></ion-tab>\n  <ion-tab [root]="tab3Root" tabTitle="Proveedores" tabIcon="ios-body"></ion-tab>\n\n  <ion-tab [root]="tab2Root" tabTitle="Mi historial" tabIcon="ios-albums-outline" *ngIf="genericService.getUser()"></ion-tab>\n  <ion-tab [root]="tab4Root" [rootParams]="{recarga: true}" tabTitle="Mi carrito" tabIcon="ios-cart-outline" *ngIf="genericService.getUser()" (click)="actualizaCarrito()"></ion-tab>\n\n</ion-tabs>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/tabs/tabs.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["c" /* App */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["e" /* Events */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["c" /* App */],
+            __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["e" /* Events */]])
     ], TabsPage);
     return TabsPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=tabs.js.map
@@ -2946,6 +3012,7 @@ var CarritoComprasPage = /** @class */ (function () {
     function CarritoComprasPage(navCtrl, navParams, localStorageEncryptService, events, modalController, 
         //private productoService: ProductoService,
         genericService, alertCtrl, alertaService, loadingService, formBuilder, currencyPipe) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.localStorageEncryptService = localStorageEncryptService;
@@ -2957,6 +3024,9 @@ var CarritoComprasPage = /** @class */ (function () {
         this.loadingService = loadingService;
         this.formBuilder = formBuilder;
         this.currencyPipe = currencyPipe;
+        this.selectOptions = {
+            cssClass: 'action-sheet-class'
+        };
         this.user = null;
         this.productosCarrito = [];
         this.productosCarritoReplica = [];
@@ -2998,25 +3068,9 @@ var CarritoComprasPage = /** @class */ (function () {
                 value: null,
                 disabled: false
             },
-            {
-                name: "Dirección",
-                required: true,
-                length: 200,
-                type: "text",
-                formName: "direc",
-                value: null,
-                disabled: true
-            },
-            {
-                name: "Código postal",
-                required: false,
-                length: 6,
-                type: "text",
-                formName: "cp",
-                value: null,
-                disabled: false
-            },
         ];
+        this.enCompra = false;
+        this.objetoRegistroOriginal = [];
         this.formGroup = null;
         this.btnHabilitado = true;
         this.data = null;
@@ -3025,12 +3079,18 @@ var CarritoComprasPage = /** @class */ (function () {
         this.agrupado = [];
         this.totales = null;
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-        this.productosCarritoReplica = this.productosCarrito;
-        this.recarga = navParams.get("recarga");
-        console.log(this.recarga);
-        this.getCards();
-        this.agruparTotales();
+        if (this.user) {
+            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+            this.productosCarritoReplica = this.productosCarrito;
+            this.objetoRegistro.forEach(function (element) {
+                _this.objetoRegistroOriginal.push(element);
+            });
+            console.log(this.objetoRegistroOriginal);
+            this.recarga = navParams.get("recarga");
+            console.log(this.recarga);
+            this.getCards();
+            this.agruparTotales();
+        }
     }
     CarritoComprasPage.prototype.agruparTotales = function () {
         var _this = this;
@@ -3051,14 +3111,126 @@ var CarritoComprasPage = /** @class */ (function () {
         console.log(this.agrupado);
         this.getTotales();
     };
+    CarritoComprasPage.prototype.armaObjRegistro = function () {
+        this.objetoRegistro = [
+            {
+                name: "Nombre del contacto",
+                required: true,
+                length: 50,
+                type: "text",
+                formName: "name",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Teléfono",
+                required: true,
+                length: 10,
+                type: "number",
+                formName: "tel",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Correo electrónico",
+                required: true,
+                length: 100,
+                type: "email",
+                formName: "email",
+                value: null,
+                disabled: false
+            },
+        ];
+        if (this.totales.listCarritoProveedores.length > 1) {
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+        else {
+            this.objetoRegistro.push({
+                name: "Picking",
+                required: true,
+                length: 11,
+                type: "select",
+                formName: "sex",
+                value: false,
+                opts: [
+                    {
+                        id: false,
+                        value: "Entrega a domicilio"
+                    },
+                    {
+                        id: true,
+                        value: "Entrega en domicilio de proveedor"
+                    }
+                ]
+            });
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+    };
     CarritoComprasPage.prototype.getTotales = function () {
+        //debugger;
         var _this = this;
         this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoComprasProveedor).subscribe(function (response) {
             console.log(response);
             _this.totales = response;
+            _this.agrupado.forEach(function (element) {
+                if (element.totalAgrupado) {
+                    delete element.totalAgrupado;
+                }
+            });
+            _this.totales.listCarritoProveedores.forEach(function (item) {
+                _this.agrupado.forEach(function (element) {
+                    if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
+                        element.totalAgrupado = {
+                            comisionTransporte: item.comisionTransporte,
+                            tiempoEntrega: item.tiempoEntrega,
+                            total: item.total,
+                            totalProductos: item.totalProductos
+                        };
+                    }
+                });
+            });
+            console.log(_this.agrupado);
+            _this.armaObjRegistro();
         }, function (error) {
-            _this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+            //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
         });
+    };
+    CarritoComprasPage.prototype.ngOnDestroy = function () {
+        this.events.publish("carritoTab");
     };
     CarritoComprasPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -3070,21 +3242,15 @@ var CarritoComprasPage = /** @class */ (function () {
             //this.verCarrito();
         }
         this.events.subscribe('carritoTab', function (data) {
-            _this.productosCarrito = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
-            _this.productosCarritoReplica = _this.productosCarrito;
-            _this.agruparTotales();
+            _this.verCarrito();
         });
         this.events.subscribe('carritoTab2', function (data) {
-            _this.productosCarrito = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
-            _this.productosCarritoReplica = _this.productosCarrito;
-            _this.agruparTotales();
+            _this.verCarrito();
         });
     };
     CarritoComprasPage.prototype.verCarrito = function () {
-        if (this.genericService.getTotalCarrito() > 0) {
-            //nav.pop();
-            this.cargarProductosCarrito();
-        }
+        //nav.pop();
+        this.cargarProductosCarrito();
     };
     CarritoComprasPage.prototype.cargarProductosCarrito = function () {
         var _this = this;
@@ -3092,6 +3258,7 @@ var CarritoComprasPage = /** @class */ (function () {
             _this.localStorageEncryptService.setToLocalStorage("" + _this.user.id_token, response);
             _this.productosCarrito = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
             _this.productosCarritoReplica = _this.productosCarrito;
+            _this.agruparTotales();
         }, function (error) {
         });
     };
@@ -3202,6 +3369,9 @@ var CarritoComprasPage = /** @class */ (function () {
         this.cards.forEach(function (element) {
             element.selected = false;
         });
+        ///Aqui ejecutar el limpiado de carrito
+        this.enCompra = false;
+        this.events.publish("carritoTab");
     };
     CarritoComprasPage.prototype.deleteFavorito = function (producto) {
         var nuevoArrarCarrito = [];
@@ -3223,6 +3393,7 @@ var CarritoComprasPage = /** @class */ (function () {
         }
     };
     CarritoComprasPage.prototype.incrementa = function (p) {
+        //debugger;
         var bandera = false;
         if (p.cantidad) {
             p.cantidad++;
@@ -3235,9 +3406,11 @@ var CarritoComprasPage = /** @class */ (function () {
             p.cantidad = 1;
             bandera = true;
         }
+        console.log(p.cantidad);
         this.agregarToCarritoBack(bandera, p);
     };
     CarritoComprasPage.prototype.agregarToCarrito = function (producto) {
+        //debugger;
         var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
         var productos = [];
         productos.push(producto);
@@ -3256,6 +3429,7 @@ var CarritoComprasPage = /** @class */ (function () {
     };
     CarritoComprasPage.prototype.agregarToCarritoBack = function (bandera, producto) {
         var _this = this;
+        //debugger;
         var body = {
             precio: producto.precio,
             productoProveedorId: producto.productoProveedor.id
@@ -3268,8 +3442,11 @@ var CarritoComprasPage = /** @class */ (function () {
         service.subscribe(function (response) {
             if (bandera) {
                 _this.agregarToCarrito(producto);
+                _this.verificarCarritoModificarCantidad(producto);
             }
-            _this.verificarCarritoModificarCantidad(producto);
+            else {
+                _this.verificarCarritoModificarCantidad(producto);
+            }
         }, function (error) {
             if (producto.cantidad == 1) {
                 producto.cantidad = 1;
@@ -3362,6 +3539,7 @@ var CarritoComprasPage = /** @class */ (function () {
         }
     };
     CarritoComprasPage.prototype.verificarCarritoModificarCantidad = function (element) {
+        //debugger;
         var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
         if (productosStorage) {
             productosStorage.forEach(function (item) {
@@ -3370,13 +3548,17 @@ var CarritoComprasPage = /** @class */ (function () {
                 }
             });
         }
+        console.log(productosStorage);
         this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productosStorage);
-        this.events.publish("carritoTab");
+        this.getTotales();
+        //this.agruparTotales();
+        //this.events.publish("carritoTab");
     };
     CarritoComprasPage.prototype.infoContact = function () {
         var _this = this;
         var modal = document.getElementById("myModal2");
         //
+        this.enCompra = true;
         var putObj = {};
         this.objetoRegistro.forEach(function (item) {
             var tmp = [];
@@ -3409,7 +3591,8 @@ var CarritoComprasPage = /** @class */ (function () {
             modal.style.display = "block";
         }
     };
-    CarritoComprasPage.prototype.closeInfoContact = function () {
+    CarritoComprasPage.prototype.closeInfoContact = function (aun) {
+        if (aun === void 0) { aun = true; }
         var modal = document.getElementById("myModal2");
         if (modal) {
             modal.style.display = "none";
@@ -3419,20 +3602,56 @@ var CarritoComprasPage = /** @class */ (function () {
         });
         this.formGroup = null;
         this.btnHabilitado = true;
+        if (aun) {
+            this.enCompra = false;
+        }
     };
-    CarritoComprasPage.prototype.cerrarModal3 = function () {
+    CarritoComprasPage.prototype.cerrarModal3 = function (aun) {
+        if (aun === void 0) { aun = true; }
         var modal = document.getElementById("myModal3");
         modal.style.display = "none";
+        if (aun) {
+            this.enCompra = false;
+        }
     };
     CarritoComprasPage.prototype.openModal3 = function () {
         var modal = document.getElementById("myModal3");
         modal.style.display = "block";
     };
     /**Verifica validaciones */
-    CarritoComprasPage.prototype.ejecutaValidator = function () {
+    CarritoComprasPage.prototype.ejecutaValidator = function (opc, evt) {
+        if (opc === void 0) { opc = false; }
+        if (evt === void 0) { evt = null; }
+        if (opc) {
+            console.log(evt);
+            if (evt) {
+                this.objetoRegistro.push({
+                    name: "Dirección",
+                    required: true,
+                    length: 200,
+                    type: "text",
+                    formName: "direc",
+                    value: null,
+                    disabled: true
+                });
+                this.objetoRegistro.push({
+                    name: "Código postal",
+                    required: false,
+                    length: 6,
+                    type: "text",
+                    formName: "cp",
+                    value: null,
+                    disabled: false
+                });
+            }
+            else {
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+            }
+        }
         var validacion = 0;
-        for (var name in this.formGroup.controls) {
-            var n = this.formGroup.controls[name];
+        for (var name_1 in this.formGroup.controls) {
+            var n = this.formGroup.controls[name_1];
             if (n.invalid) {
                 validacion++;
             }
@@ -3442,11 +3661,15 @@ var CarritoComprasPage = /** @class */ (function () {
               fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
             } */
         }
+        console.log(validacion);
         if (validacion <= 0) {
             this.btnHabilitado = false;
         }
         else {
             this.btnHabilitado = true;
+        }
+        if (validacion == 1 && this.objetoRegistro[3].value == false) {
+            this.btnHabilitado = false;
         }
     };
     CarritoComprasPage.prototype.getMapa = function () {
@@ -3457,11 +3680,17 @@ var CarritoComprasPage = /** @class */ (function () {
             if (data) {
                 if (data != null) {
                     _this.data = data.data;
-                    _this.objetoRegistro[3].value = _this.data.direccion;
-                    _this.objetoRegistro[4].value = _this.data.codigoPostal;
+                    if (_this.objetoRegistro[3].value == true || _this.objetoRegistro[3].value == false) {
+                        _this.objetoRegistro[4].value = _this.data.direccion;
+                        _this.objetoRegistro[5].value = _this.data.codigoPostal;
+                    }
+                    else {
+                        _this.objetoRegistro[3].value = _this.data.direccion;
+                        _this.objetoRegistro[4].value = _this.data.codigoPostal;
+                    }
                     setTimeout(function () {
                         _this.ejecutaValidator();
-                    }, 1000);
+                    }, 500);
                 }
             }
         });
@@ -3476,7 +3705,7 @@ var CarritoComprasPage = /** @class */ (function () {
             nombreContacto: this.objetoRegistroCopy[0].value,
             telefonoContacto: this.objetoRegistroCopy[1].value,
             correoContacto: this.objetoRegistroCopy[2].value,
-            direccionContacto: {
+            direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
                 id: this.data.id ? this.data.id : null,
                 codigoPostal: this.data.codigoPostal,
                 direccion: this.data.direccion,
@@ -3485,6 +3714,12 @@ var CarritoComprasPage = /** @class */ (function () {
             },
             productos: []
         };
+        if (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == true) {
+            body.picking = this.objetoRegistro[3].value;
+        }
+        else {
+            body.picking = false;
+        }
         this.productosCarrito.forEach(function (item) {
             body.productos.push({
                 cantidad: item.cantidad,
@@ -3497,7 +3732,7 @@ var CarritoComprasPage = /** @class */ (function () {
                 _this.pagoActual = response;
                 _this.loadingService.hide();
                 //this.comprar();
-                _this.closeInfoContact();
+                _this.closeInfoContact(false);
                 setTimeout(function () {
                     _this.openModal3();
                 }, 300);
@@ -3509,7 +3744,7 @@ var CarritoComprasPage = /** @class */ (function () {
     };
     CarritoComprasPage.prototype.comprar = function () {
         if (this.check) {
-            this.cerrarModal3();
+            this.cerrarModal3(false);
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             this.check = false;
@@ -3604,12 +3839,21 @@ var CarritoComprasPage = /** @class */ (function () {
     };
     CarritoComprasPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Mi carrito</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n    padding: 7px;\n    color: #fff;\n    border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n<ion-content padding>\n\n  <!-- <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n      </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                            <div class="mini-tacha">\n                                <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                            </div>\n                          </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n\n    </div>\n\n    <div *ngIf="totales" class="totales">\n        <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n        <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n        <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n        <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n        <div class="borde-total"></div>\n\n        <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n\n\n</ion-content>\n\n<ion-fab right bottom *ngIf="recarga" style="    bottom: 64px;">\n  <button ion-fab style="color: #fff;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="arrow-dropleft"></ion-icon>\n  </button>\n  <ion-fab-list side="left">\n    <button (tap)="addToList()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n    <button (tap)="infoContact()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar pedido</button>\n  </ion-fab-list>\n</ion-fab>\n\n<ion-footer class="footer-button-class" *ngIf="!recarga">\n  <button (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n  <button (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/,
+            selector: 'page-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Mi carrito</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"\n            formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n    padding: 7px;\n    color: #fff;\n    border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n<ion-content padding class="">\n\n  <!-- <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n      </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                            <div class="mini-tacha">\n                                <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                            </div>\n                          </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;" >\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length <= 0">\n      <div><img style="    border-radius: 4px;\n        box-shadow: 0px 0px 4px 0px #a0a0a0;" src="assets/imgs/lista-carrito/carritoComprado.png"\n          alt=""></div>\n      <div>Sin articulos en carrito, agrega algunos y aparecerán en esta sección</div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n\n\n</ion-content>\n\n<ion-fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">\n  <button ion-fab style="color: #fff;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="arrow-dropleft"></ion-icon>\n  </button>\n  <ion-fab-list side="left">\n    <button (tap)="addToList()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n    <button (tap)="infoContact()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;width: 98px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar pedido</button>\n  </ion-fab-list>\n</ion-fab>\n\n<ion-footer class="footer-button-class" *ngIf="totales && totales.listCarritoProveedores?.length > 0 && !recarga && !enCompra">\n  <button (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n  <button (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormBuilder */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_11__angular_common__["c" /* CurrencyPipe */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__angular_common__["c" /* CurrencyPipe */]) === "function" && _l || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_11__angular_common__["c" /* CurrencyPipe */]])
     ], CarritoComprasPage);
     return CarritoComprasPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 }());
 
 //# sourceMappingURL=carrito-compras.js.map
@@ -3894,7 +4138,7 @@ var MapaProveedoresPage = /** @class */ (function () {
                 //alert(JSON.stringify(res));
                 if (!resIOS) {
                     _this.loadingService.hide();
-                    var alert = _this.alertCtrl.create({
+                    var alert_1 = _this.alertCtrl.create({
                         title: "<div class='notificacionError'>\n                <div><img class='headerImg' src='assets/imgs/alerts/success.png'/></div>\n                <div class='textoTitle'>Para acceder a \u00E9sta funci\u00F3n necesitas habilitar tu <strong>GPS</strong></div>\n                <div>",
                         message: null,
                         cssClass: _this.genericService.getColorClass(),
@@ -3912,8 +4156,8 @@ var MapaProveedoresPage = /** @class */ (function () {
                             }
                         ]
                     });
-                    alert.present();
-                    alert.onDidDismiss(function (res) {
+                    alert_1.present();
+                    alert_1.onDidDismiss(function (res) {
                     });
                 }
                 else {
@@ -4084,6 +4328,7 @@ var MapaProveedoresPage = /** @class */ (function () {
                     _this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
                     _this.events.publish("totalCarrito2");
                     _this.events.publish("carritoTab");
+                    //this.events.publish("carritoTab2");
                     //this.verificarCarritoModificarCantidad(producto);
                 }, function (error) {
                     _this.alertaService.errorAlertGeneric(error.error.title);
@@ -4104,16 +4349,28 @@ var MapaProveedoresPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_8" /* ViewChild */])('slides'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* Slides */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* Slides */])
     ], MapaProveedoresPage.prototype, "slider", void 0);
     MapaProveedoresPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
-            selector: 'page-mapa-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{producto.producto.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="nacionales" *ngIf="proveedorActivo">\n    <button (click)="nacional()">Nacional</button>\n    <button (click)="local()">Local</button>\n  </div>\n\n  <div class="mapp">\n    <div id="map_canvas" class="mapita-google">\n\n    </div>\n    <button *ngIf="proveedorActivo" class="boton-mapa" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comparativa()">\n      Comparar precios</button>\n  </div>\n\n  <div class="contenedor-card" *ngIf="proveedorActivo" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-slides autoplay="2000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">\n      <ion-slide *ngFor="let p of proveedorActivo.productos; let i=index">\n        <div id="card-{{i}}" class="card animated lightSpeedIn">\n          <!-- <div class="tacha">\n                        <div class="mini-tacha">\n                            <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                            <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                        </div>\n                      </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n    \n            <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n    \n          <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div> -->\n        </div>\n        <div class="informa">\n          <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n    \n          <div class="ofrece">A tu servicio: </div>\n          <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n    \n          <div class="ofrece">Estamos ubicados en</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n          <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n            {{proveedorActivo.proveedor.direccion.colonia}}</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n        </div>\n    \n        <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n        <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n      </ion-slide>\n    </ion-slides>\n    \n    <div style="    position: absolute;\n    left: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="prev()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-back"></ion-icon>\n    </div>\n    <div style="    position: absolute;\n    right: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="next()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-forward"></ion-icon>\n    </div>\n    \n    <div *ngIf="!slideProve">\n      <div id="card-{{i}}" class="card animated lightSpeedIn">\n        <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n        <div class="container-card" (click)="viewDetail(proveedorActivo)">\n  \n          <img src="{{env.getImagenIndividual}}{{proveedorActivo.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.nombre}}</div>\n        <div class="description" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.descripcion}}</div>\n        <div class="precio" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.precio | currency}}</div>\n  \n        <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n          <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n          </div>\n          <div class="cantidad" *ngIf="p.cantidad > 0">\n            <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n          </div>\n          <div class="mas" (click)="incrementa(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n          </div>\n        </div> -->\n      </div>\n      <div class="informa">\n        <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n  \n        <div class="ofrece">A tu servicio: </div>\n        <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n  \n        <div class="ofrece">Estamos ubicados en</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n        <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n          {{proveedorActivo.proveedor.direccion.colonia}}</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n      </div>\n  \n      <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n      <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n    </div>\n  </div>\n</ion-content>\n\n<ion-footer class="footer-detalle" *ngIf="proveedorActivo" style="box-shadow: none;">\n  <div class="cont-e">\n    <!-- <div class="suma">\n        <div class="menos" (click)="decrementar(producto)" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{producto.cantidad}} {{producto.cantidad == 1 ? \'pza\' : \'pzas\'}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(producto)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div> -->\n    <button style="width:100%" (click)="agregarCarrito()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      Agregar a carrito\n    </button>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/,
+            selector: 'page-mapa-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{producto.producto.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="nacionales" *ngIf="proveedorActivo">\n    <button (click)="nacional()">Nacional</button>\n    <button (click)="local()">Local</button>\n  </div>\n\n  <div class="mapp">\n    <div id="map_canvas" class="mapita-google">\n\n    </div>\n    <button *ngIf="proveedorActivo" class="boton-mapa" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comparativa()">\n      Comparar precios</button>\n  </div>\n\n  <div class="contenedor-card" *ngIf="proveedorActivo" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-slides autoplay="2000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">\n      <ion-slide *ngFor="let p of proveedorActivo.productos; let i=index">\n        <div id="card-{{i}}" class="card animated lightSpeedIn">\n          <!-- <div class="tacha">\n                        <div class="mini-tacha">\n                            <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                            <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                        </div>\n                      </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n    \n            <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n    \n          <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div> -->\n        </div>\n        <div class="informa">\n          <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n    \n          <div class="ofrece">A tu servicio: </div>\n          <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n    \n          <div class="ofrece">Estamos ubicados en</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n          <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n            {{proveedorActivo.proveedor.direccion.colonia}}</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n        </div>\n    \n        <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n        <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n      </ion-slide>\n    </ion-slides>\n    \n    <div style="    position: absolute;\n    left: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="prev()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-back"></ion-icon>\n    </div>\n    <div style="    position: absolute;\n    right: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="next()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-forward"></ion-icon>\n    </div>\n    \n    <div *ngIf="!slideProve">\n      <div id="card-{{i}}" class="card animated lightSpeedIn">\n        <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n        <div class="container-card" (click)="viewDetail(proveedorActivo)">\n  \n          <img src="{{env.getImagenIndividual}}{{proveedorActivo.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.nombre}}</div>\n        <div class="description" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.descripcion}}</div>\n        <div class="precio" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.precio | currency}}</div>\n  \n        <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n          <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n          </div>\n          <div class="cantidad" *ngIf="p.cantidad > 0">\n            <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n          </div>\n          <div class="mas" (click)="incrementa(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n          </div>\n        </div> -->\n      </div>\n      <div class="informa">\n        <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n  \n        <div class="ofrece">A tu servicio: </div>\n        <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n  \n        <div class="ofrece">Estamos ubicados en</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n        <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n          {{proveedorActivo.proveedor.direccion.colonia}}</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n      </div>\n  \n      <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n      <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n    </div>\n  </div>\n</ion-content>\n\n<ion-footer class="footer-detalle" *ngIf="proveedorActivo" style="box-shadow: none;background-color: rgba(142, 113, 89, 0.85);">\n  <div class="cont-e">\n    <!-- <div class="suma">\n        <div class="menos" (click)="decrementar(producto)" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{producto.cantidad}} {{producto.cantidad == 1 ? \'pza\' : \'pzas\'}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(producto)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div> -->\n    <button style="width:100%" (click)="agregarCarrito()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      Agregar a carrito\n    </button>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__["a" /* Diagnostic */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__["a" /* Diagnostic */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__["a" /* OpenNativeSettings */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__["a" /* OpenNativeSettings */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__["a" /* AndroidPermissions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__["a" /* AndroidPermissions */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* Platform */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_15__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_15__services_auth_service__["a" /* AuthService */]) === "function" && _p || Object, typeof (_q = typeof __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _q || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */],
+            __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__["a" /* Diagnostic */],
+            __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__["a" /* OpenNativeSettings */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__["a" /* AndroidPermissions */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_15__services_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]])
     ], MapaProveedoresPage);
     return MapaProveedoresPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
 }());
 
 //# sourceMappingURL=mapa-proveedores.js.map
@@ -4263,10 +4520,13 @@ var ListaCarritoComprasPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-lista-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-carrito-compras/lista-carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Colecciones</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="spinner-carrito" *ngIf="renderSlide">\n      <ion-spinner></ion-spinner>\n  </div>\n\n  <ion-list>\n      <ion-item-sliding #item *ngFor="let card of listas">\n        <ion-item class="item-list-card" (click)="view(card)">\n          <ion-avatar slot="start">\n            <img src="assets/imgs/lista-carrito/shopping-cart.png" alt="">\n          </ion-avatar>\n          <div class="datos-tarjetas">\n            <div class="name">{{card.nombre}}</div>\n            <div class="number">{{card.fecha}}</div>\n          </div>\n        </ion-item>\n    \n        <ion-item-options side="right">\n          <button ion-button (click)="borrar(card)" color="danger">\n            <ion-icon name="ios-trash-outline"></ion-icon>\n            Borrar\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-carrito-compras/lista-carrito-compras.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */]])
     ], ListaCarritoComprasPage);
     return ListaCarritoComprasPage;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=lista-carrito-compras.js.map
@@ -4689,10 +4949,12 @@ var VerProductosPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-ver-productos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/ver-productos/ver-productos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Pedido Checklist</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list *ngIf="pedidos && pedidos?.pedidoProveedores.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos.pedidoProveedores[0].pedidoDetalles">\n      <div class="round" style="vertical-align:middle">\n        <input type="checkbox" id="checkbox-{{p.productoProveedor.producto.nombre}}" [(ngModel)]="p.activado"/>\n        <label for="checkbox-{{p.productoProveedor.producto.nombre}}"></label>\n      </div>\n      <div class="datos-tarjetas" style="vertical-align:middle">\n        <div class="name" style="font-size: 15px;">Producto <strong>{{p.productoProveedor.producto.nombre}}</strong></div>\n\n        <div class="number" style="font-size: 13px;">Cantidad <strong>{{p.cantidad}}</strong></div>\n        <div class="number" style="font-size: 13px;">Costo <strong>{{p.total | currency}}</strong></div>\n        \n      </div>\n\n    </ion-item>\n  </ion-list>\n\n  <div class="totals" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n\n      <div>Envio</div>\n      <div>=</div>\n      <div><strong>{{pedidos.pedidoProveedores[0].comisionTransportista | currency}}</strong></div>\n\n      <div>Costo</div>\n      <div>=</div>\n      <div><strong>{{pedidos.pedidoProveedores[0].comisionTransportista + pedidos.total | currency}}</strong></div>\n\n    <div>Total</div>\n    <div>=</div>\n    <div><strong>{{pedidos.total | currency}}</strong></div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class">\n    <button (tap)="solicitar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}" *ngIf="env.perfil.activo == 2">Solicitar cambio</button>\n    <button (tap)="confirmar()" [ngStyle]="{\'background-color\': genericService.getColorHex(),\'width\': env.perfil.activo == 3 ? \'100%\' : \'\'}">{{env.perfil.activo == 2 ? \'Confirmar pedido\' : \'Enviar pedido\'}}</button>\n  </ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/ver-productos/ver-productos.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
     ], VerProductosPage);
     return VerProductosPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=ver-productos.js.map
@@ -5190,16 +5452,22 @@ var DetalleProductoPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["_8" /* ViewChild */])('slides2'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["p" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["p" /* Slides */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["p" /* Slides */])
     ], DetalleProductoPage.prototype, "slider2", void 0);
     DetalleProductoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
             selector: 'page-detalle-producto',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-producto/detalle-producto.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>{{producto.producto.nombre}}</ion-title>\n\n\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="compartir()">\n        <ion-icon name="md-share" style="font-size: 2.4rem;"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div class="slider-io animated bounceInLeft" *ngIf="producto.photos.length > 0">\n    <ion-slides autoplay="5000" zoom="true" loop="true" #slides2 loop="false">\n      <ion-slide *ngFor="let photo of producto.photos; let i=index" (click)="imagesLoaded(i)">\n        <div>\n          <img src="{{photo.img}}" alt="">\n          <div class="div-foto">\n            <ion-icon ios="ios-images-outline" md="ios-images-outline"></ion-icon>\n            <p>{{i+1}}/{{producto.photos.length}}</p>\n          </div>\n        </div>\n      </ion-slide>\n    </ion-slides>\n    <div class="arrows-lateral" *ngIf="1===2">\n      <div (tap)="prev1()">\n        <ion-icon ios="ios-arrow-back" md="ios-arrow-back"></ion-icon>\n      </div>\n      <div (tap)="next1()">\n        <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward"></ion-icon>\n      </div>\n    </div>\n  </div>\n\n  <div class="descripcion" [ngStyle]="{\'color\': color}">\n    {{producto.precio | currency}} MXN\n  </div>\n\n  <div class="space-desc">\n    <ion-icon name="ios-arrow-up-outline" *ngIf="verDescripcion" (click)="verDes()"></ion-icon>\n    <ion-icon name="ios-arrow-down-outline" *ngIf="!verDescripcion" (click)="verDes()"></ion-icon>\n    <h4>Descripción</h4>\n    <div class="descripcion-gral" *ngIf="verDescripcion">{{producto.producto.descripcion}}</div>\n  </div>\n\n\n\n  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 2;">\n\n    <!-- Background of PhotoSwipe. \n         It\'s a separate element, as animating opacity is faster than rgba(). -->\n    <div class="pswp__bg"></div>\n\n    <!-- Slides wrapper with overflow:hidden. -->\n    <div class="pswp__scroll-wrap">\n\n      <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->\n      <!-- don\'t modify these 3 pswp__item elements, data is added later on. -->\n      <div class="pswp__container">\n        <div class="pswp__item"></div>\n        <div class="pswp__item"></div>\n        <div class="pswp__item"></div>\n      </div>\n\n      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->\n      <div class="pswp__ui pswp__ui--hidden">\n\n        <div class="pswp__top-bar" style="opacity: 1;z-index: 99999999;" [ngStyle]="{\'top\': fixedContentTop == \'56\' ? \'56px\' : \'44px\'}">\n\n          <!--  Controls are self-explanatory. Order can be changed. -->\n\n          <div class="pswp__counter"></div>\n\n          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>\n\n          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>\n\n          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>\n\n          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->\n          <!-- element will get class pswp__preloader--active when preloader is running -->\n          <div class="pswp__preloader">\n            <div class="pswp__preloader__icn">\n              <div class="pswp__preloader__cut">\n                <div class="pswp__preloader__donut"></div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">\n          <div class="pswp__share-tooltip"></div>\n        </div>\n\n        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">\n        </button>\n\n        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">\n        </button>\n\n        <div class="pswp__caption">\n          <div class="pswp__caption__center"></div>\n        </div>\n\n      </div>\n\n    </div>\n\n  </div>\n</ion-content>\n<ion-footer class="footer-detalle" *ngIf="!fromCarritos">\n  <div class="cont-e">\n    <div class="suma">\n      <div class="menos" (click)="decrementar(producto)" >\n        <div [ngStyle]="{\'color\': color, \'border-color\': color}">-</div>\n      </div>\n      <div class="cantidad" >\n        <div [ngStyle]="{\'color\': color}">{{producto.cantidad}} {{producto.cantidad == 1 ? \'pza\' : \'pzas\'}}</div>\n      </div>\n      <div class="mas" (click)="incrementa(producto)">\n        <div [ngStyle]="{\'color\': color, \'border-color\': color}">+</div>\n      </div>\n    </div>\n    <button (click)="agregarCarrito(producto)" [ngStyle]="{\'background-color\': color}">\n      Agregar a carrito\n    </button>\n  </div>\n</ion-footer>\n<!-- Root element of PhotoSwipe. Must have class pswp. -->'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-producto/detalle-producto.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["e" /* Events */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]) === "function" && _j || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
     ], DetalleProductoPage);
     return DetalleProductoPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 }());
 
 //# sourceMappingURL=detalle-producto.js.map
@@ -6499,10 +6767,21 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Productos</ion-title>\n\n\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="verCarrito()" class="carrito" *ngIf="user">\n        <ion-badge *ngIf="totalCarrito > 0" [ngStyle]="{\'color\': genericService.getColorHex()}">{{totalCarrito}}</ion-badge>\n        <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>\n\n      </button>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n  <div class="division" [ngStyle]="{\'background-color\': color}">\n    <label for="search"></label>\n    <div class="input-image" (click)="close()" [style.background-image]="\'url(\'+imgBusqueda+\')\'"></div>\n    <input type="text" placeholder="Buscar" class="input-text" id="search" [(ngModel)]="dataFilter.nombre" (keyup)="buscarPorFiltros()">\n    <ion-icon name="close" style="    position: absolute;\n    right: 14px;\n    /* top: 0px; */\n    padding: 8px;\n    font-size: 19px;" (click)="borraPalabra()"></ion-icon>\n  </div>\n</ion-header>\n\n<div class="filtro" *ngIf="1==2">\n  <button ion-button (click)="openFilters()">\n    <ion-icon ios="ios-options" md="ios-options"></ion-icon>\n  </button>\n</div>\n\n<ion-content>\n\n  <div *ngIf="dataFilter.nombre.length > 0" class="contenedor-busqueda">\n    <div class="resultado" *ngFor="let p of productosBuscados" (click)="viewDetail(p)">\n      <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" alt=""></div>\n      <div class="r">{{ p.producto.nombre }} - {{p.proveedor.nombre}}</div>\n    </div>\n\n    <div *ngIf="productosBuscados.length <= 0" class="no-en">\n      No se encontraron resultados\n    </div>\n  </div>\n\n  <div *ngIf="dataFilter.nombre.length<=0">\n    <div style="margin-top: 8px"></div>\n\n    <div class="scrolling-wrapper-flexbox" style="margin-top:0px">\n      <div class="promociones" [style.background-image]="\'url(\'+env.getImagenIndividual+promo.adjuntoId+\')\'" *ngFor="let promo of promociones">\n        <div class="contenedor-imagen">\n          <!-- <img src="assets/imgs/home/images.jpeg" alt=""> -->\n        </div>\n        <div class="info">\n          <p class="titulo">{{promo.titulo}}</p>\n          <p class="subtitulo">{{promo.descripcion}}</p>\n        </div>\n      </div>\n    </div>\n\n    <div class="scrolling-wrapper" style="margin-top: 15px">\n      <div class="buttons">\n        <button [ngStyle]="{\'background-color\': color}" (click)="ordena(1)">\n          <img src="assets/imgs/home/milk.png" alt="">\n          Artículos\n        </button>\n      </div>\n      <div class="buttons">\n        <button [ngStyle]="{\'background-color\': color}" (click)="ordena(2)">\n          <img src="assets/imgs/home/services.png" alt="">\n          Servicios\n        </button>\n      </div>\n\n    </div>\n\n    <div class="card-super" *ngIf="productosCategorias.length > 0">\n      <div class="cont">\n        <div class="principal" (click)="irToCategoria(productosCategorias[0])">\n          <img src="{{env.getImagenIndividual}}{{productosCategorias[0].categoria.adjuntoId}}" alt="">\n          <div class="seccion-principal" [ngStyle]="{\'color\': color}">{{productosCategorias[0].categoria.nombre}}</div>\n        </div>\n\n        <div class="borde-b"></div>\n\n        <div class="contenedor-tres">\n          <div class="contenedor-int" (click)="irToCategoria(cat)" *ngFor="let cat of productosCategoriasSub">\n            <img src="{{env.getImagenIndividual}}{{cat.categoria.adjuntoId}}" alt="">\n            <div class="seccion-sub-principal" [ngStyle]="{\'color\': color}">{{cat.categoria.nombre}}</div>\n          </div>\n\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_6__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_generic_service__["a" /* GenericService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__["a" /* AlertaService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_action_sheet__["a" /* ActionSheet */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_action_sheet__["a" /* ActionSheet */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__["a" /* StringUtilsService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__["a" /* StringUtilsService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* PopoverController */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */]) === "function" && _o || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_6__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_action_sheet__["a" /* ActionSheet */],
+            __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__["a" /* StringUtilsService */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */]])
     ], HomePage);
     return HomePage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 }());
 
 //# sourceMappingURL=home.js.map
@@ -7028,10 +7307,15 @@ var ArticuloProductosPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
             selector: 'page-articulo-productos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-productos/articulo-productos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>{{articulo.tipoArticulo?.nombre}}</ion-title>\n    \n  </ion-navbar>\n  <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n    </div>\n</ion-header>\n\n<ion-content padding>\n    <div *ngIf="productos && productos?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n      </div>\n  <div class="spinner-carrito" *ngIf="!productos || productos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n\n\n  <div *ngIf="productos && productos.length > 0">\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index" (click)="viewDetail(p)">\n      <!-- <div class="tacha">\n                  <div class="mini-tacha">\n                      <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                      <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                  </div>\n                </div> -->\n      <div class="container-card">\n\n        <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />\n      </div>\n      <div class="container-text">{{p.nombre}}</div>\n      <div class="description">{{p.descripcion}}</div>\n      <div class="precio">{{p.precio | currency}}</div>\n    </div>\n  </div>\n\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="resultadoPost.length % 10 == 0">\n    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-productos/articulo-productos.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */]) === "function" && _g || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */]])
     ], ArticuloProductosPage);
     return ArticuloProductosPage;
-    var _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=articulo-productos.js.map
@@ -7238,10 +7522,15 @@ var ComparaPreciosProveedorPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-compara-precios-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/compara-precios-proveedor/compara-precios-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Comparativa</ion-title>\n\n  </ion-navbar>\n  <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí el proveedor" (keyup)="buscarPorPalabra()">\n  </div>\n</ion-header>\n\n<ion-content padding>\n    <div *ngIf="proveedoresGeolocate && proveedoresGeolocate?.length>0 && !multiple" class="ordenamiento" \n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio \n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n      </div>\n\n  <div class="spinner-carrito" *ngIf="!proveedoresGeolocate || proveedoresGeolocate.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n\n\n  <div *ngIf="proveedoresGeolocate && proveedoresGeolocate.length > 0 && !multiple" >\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedoresGeolocate; let i = index"\n      (click)="viewDetail(p)">\n      <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n      <div class="container-card">\n\n        <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text">{{p.producto.nombre}}</div>\n      <div class="description">{{p.producto.descripcion}}</div>\n      <div class="precio">{{p.producto.precio | currency}}</div>\n\n      <div style="text-align: center;\n      font-weight: 600;">Proveedor:</div>\n      <div style="text-align: center;text-overflow: ellipsis;\n      white-space: nowrap;\n      overflow: hidden;">{{p.proveedor.nombre}}, {{p.proveedor.empresa.nombre}}</div>\n    </div>\n  </div>\n\n  <div *ngIf="proveedoresGeolocate && proveedoresGeolocate.length > 0 && multiple" >\n      <div *ngFor="let pr of proveedoresGeolocate; let i = index">\n          <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">{{pr.proveedor.nombre}}</div>\n\n          <div class="scrolling-wrapper">\n              <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of pr.productos; let i = index"\n              (click)="viewDetail(p)">\n              <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n              <div class="container-card">\n        \n                <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n              </div>\n              <div class="container-text">{{p.producto.nombre}}</div>\n              <div class="description">{{p.producto.descripcion}}</div>\n              <div class="precio">{{p.producto.precio | currency}}</div>\n        \n              <div style="text-align: center;\n              font-weight: 600;">Proveedor:</div>\n              <div style="text-align: center;text-overflow: ellipsis;\n              white-space: nowrap;\n              overflow: hidden;">{{p.proveedor.nombre}}, {{p.proveedor.empresa.nombre}}</div>\n            </div>\n          </div>\n      </div>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/compara-precios-proveedor/compara-precios-proveedor.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */]) === "function" && _g || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */]])
     ], ComparaPreciosProveedorPage);
     return ComparaPreciosProveedorPage;
-    var _a, _b, _c, _d, _e, _f, _g;
 }());
 
 //# sourceMappingURL=compara-precios-proveedor.js.map
@@ -7298,6 +7587,11 @@ var HistorialPedidosPage = /** @class */ (function () {
         this.pedidos = [];
         this.pedidosReplica = [];
         this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
+        this.botones = {
+            boton1: false,
+            boton2: false,
+            boton3: false
+        };
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
         this.cargarPedidos();
         this.events.subscribe("cargarPedidos", function (data) {
@@ -7344,34 +7638,93 @@ var HistorialPedidosPage = /** @class */ (function () {
     HistorialPedidosPage.prototype.ordenPor = function (opc) {
         this.pedidos = this.pedidosReplica;
         //item.fecha = moment(fechaF, 'DD-MM-YYYY HH:mm:ss').format("D [de] MMMM [de] YYYY HH:mm:ss");
+        console.log(opc);
+        console.log(this.pedidos);
         switch (opc) {
             case 1:
                 //fecha solicitud
                 this.pedidos.sort(function (mayor, menor) {
-                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
-                    return dateA - dateB;
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    console.log(dateA);
+                    console.log(dateB);
+                    return dateB - dateA;
                     //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
                 });
+                this.botones.boton1 = !this.botones.boton1;
                 break;
             case 2:
                 //fecha entrega
                 this.pedidos.sort(function (mayor, menor) {
-                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate(), dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
-                    return dateA - dateB;
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    return dateB - dateA;
                     //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
                 });
+                this.botones.boton2 = !this.botones.boton2;
                 break;
             case 3:
                 //estatus
                 this.pedidos.sort(function (mayor, menor) {
-                    return mayor.estatus.nombre > menor.estatus.nombre;
+                    var a = mayor.estatus.nombre;
+                    var b = menor.estatus.nombre;
+                    console.log(a);
+                    console.log(b);
+                    if (a > b) {
+                        return -1;
+                    }
+                    if (b > a) {
+                        return 1;
+                    }
+                    return 0;
                 });
+                this.botones.boton3 = !this.botones.boton3;
+                break;
+            case 4:
+                //fecha solicitud
+                this.pedidos.sort(function (mayor, menor) {
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    console.log(dateA);
+                    console.log(dateB);
+                    return dateA - dateB;
+                    //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+                });
+                this.botones.boton1 = !this.botones.boton1;
+                break;
+            case 5:
+                //fecha entrega
+                this.pedidos.sort(function (mayor, menor) {
+                    var dateA = __WEBPACK_IMPORTED_MODULE_8_moment__(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    var dateB = __WEBPACK_IMPORTED_MODULE_8_moment__(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+                    return dateA - dateB;
+                    //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
+                });
+                this.botones.boton2 = !this.botones.boton2;
+                break;
+            case 6:
+                //estatus
+                this.pedidos.sort(function (mayor, menor) {
+                    var a = mayor.estatus.nombre;
+                    var b = menor.estatus.nombre;
+                    console.log(a);
+                    console.log(b);
+                    if (a < b) {
+                        return -1;
+                    }
+                    if (b < a) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                this.botones.boton3 = !this.botones.boton3;
                 break;
         }
+        console.log(this.pedidos);
     };
     HistorialPedidosPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
-            selector: 'page-historial-pedidos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title *ngIf="env.perfil.activo == 2">Mi historial</ion-title>\n\n    <button ion-button menuToggle *ngIf="env.perfil.activo == 1">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mi historial</ion-title>\n\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)">\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(2)">\n      <ion-icon name="md-calendar"></ion-icon>\n    </button>\n    <button (click)="ordenPor(3)">\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido Num. <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/,
+            selector: 'page-historial-pedidos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title *ngIf="env.perfil.activo == 2">Mi historial</ion-title>\n\n    <button ion-button menuToggle *ngIf="env.perfil.activo == 1">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mi historial</ion-title>\n\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n        <div style="font-size: 12px;">Fecha solicitud</div>\n        <ion-icon name="ios-calendar"></ion-icon>\n      </button>\n    <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n        <div style="font-size: 12px;">Fecha entrega</div>\n        <ion-icon name="ios-list-box"></ion-icon>\n      </button>\n    <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido Num. <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */],
@@ -7507,11 +7860,15 @@ var CarritoHistoricoPage = /** @class */ (function () {
         this.currencyPipe = currencyPipe;
         this.formBuilder = formBuilder;
         this.modalController = modalController;
+        this.selectOptions = {
+            cssClass: 'action-sheet-class'
+        };
         this.user = null;
         this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
         this.listaCarrito = null;
         this.productosCarrito = [];
         this.listaCarritoReplica = [];
+        this.enCompra = false;
         this.stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].st.keyPublic)));
         this.cards = null;
         this.dataCard = {
@@ -7575,12 +7932,14 @@ var CarritoHistoricoPage = /** @class */ (function () {
         this.agrupado = [];
         this.totales = null;
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.listaCarrito = navParams.get("lista");
-        console.log(this.listaCarrito);
-        this.listaCarritoReplica = this.listaCarrito;
-        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-        this.getCards();
-        this.agruparTotales();
+        if (this.user) {
+            this.listaCarrito = navParams.get("lista");
+            console.log(this.listaCarrito);
+            this.listaCarritoReplica = this.listaCarrito;
+            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+            this.getCards();
+            this.agruparTotales();
+        }
     }
     CarritoHistoricoPage.prototype.agruparTotales = function () {
         var _this = this;
@@ -7601,11 +7960,118 @@ var CarritoHistoricoPage = /** @class */ (function () {
         console.log(this.agrupado);
         this.getTotales();
     };
+    CarritoHistoricoPage.prototype.armaObjRegistro = function () {
+        this.objetoRegistro = [
+            {
+                name: "Nombre del contacto",
+                required: true,
+                length: 50,
+                type: "text",
+                formName: "name",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Teléfono",
+                required: true,
+                length: 10,
+                type: "number",
+                formName: "tel",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Correo electrónico",
+                required: true,
+                length: 100,
+                type: "email",
+                formName: "email",
+                value: null,
+                disabled: false
+            },
+        ];
+        if (this.totales.listHistoricoProveedores.length > 1) {
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+        else {
+            this.objetoRegistro.push({
+                name: "Picking",
+                required: true,
+                length: 11,
+                type: "select",
+                formName: "sex",
+                value: false,
+                opts: [
+                    {
+                        id: false,
+                        value: "Entrega a domicilio"
+                    },
+                    {
+                        id: true,
+                        value: "Entrega en domicilio de proveedor"
+                    }
+                ]
+            });
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+    };
     CarritoHistoricoPage.prototype.getTotales = function () {
         var _this = this;
-        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoComprasProveedor).subscribe(function (response) {
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoHistoricosProveedor + "/" + this.listaCarrito.id).subscribe(function (response) {
             console.log(response);
             _this.totales = response;
+            _this.agrupado.forEach(function (element) {
+                if (element.totalAgrupado) {
+                    delete element.totalAgrupado;
+                }
+            });
+            _this.totales.listHistoricoProveedores.forEach(function (item) {
+                _this.agrupado.forEach(function (element) {
+                    if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
+                        element.totalAgrupado = {
+                            comisionTransporte: item.comisionTransporte,
+                            tiempoEntrega: item.tiempoEntrega,
+                            total: item.total,
+                            totalProductos: item.totalProductos
+                        };
+                    }
+                });
+            });
+            _this.armaObjRegistro();
         }, function (error) {
             _this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
         });
@@ -7637,6 +8103,8 @@ var CarritoHistoricoPage = /** @class */ (function () {
         this.cards.forEach(function (element) {
             element.selected = false;
         });
+        this.enCompra = false;
+        this.agruparTotales();
     };
     CarritoHistoricoPage.prototype.ionViewDidLoad = function () {
         console.log("---------------------.");
@@ -7745,7 +8213,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
             });
         }
         this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productosStorage);
-        this.events.publish("carritoTab");
+        this.getTotales();
     };
     CarritoHistoricoPage.prototype.incrementa = function (p) {
         var bandera = false;
@@ -7793,8 +8261,11 @@ var CarritoHistoricoPage = /** @class */ (function () {
         service.subscribe(function (response) {
             if (bandera) {
                 _this.agregarToCarrito(producto);
+                _this.verificarCarritoModificarCantidad(producto);
             }
-            _this.verificarCarritoModificarCantidad(producto);
+            else {
+                _this.verificarCarritoModificarCantidad(producto);
+            }
         }, function (error) {
             if (producto.cantidad == 1) {
                 producto.cantidad = 1;
@@ -7808,6 +8279,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
         var _this = this;
         var modal = document.getElementById("myModal2");
         //
+        this.enCompra = true;
         var putObj = {};
         this.objetoRegistro.forEach(function (item) {
             var tmp = [];
@@ -7838,7 +8310,8 @@ var CarritoHistoricoPage = /** @class */ (function () {
         //
         modal.style.display = "block";
     };
-    CarritoHistoricoPage.prototype.closeInfoContact = function () {
+    CarritoHistoricoPage.prototype.closeInfoContact = function (aun) {
+        if (aun === void 0) { aun = true; }
         var modal = document.getElementById("myModal2");
         modal.style.display = "none";
         this.objetoRegistro.forEach(function (item) {
@@ -7846,20 +8319,54 @@ var CarritoHistoricoPage = /** @class */ (function () {
         });
         this.formGroup = null;
         this.btnHabilitado = true;
+        this.enCompra = false;
     };
-    CarritoHistoricoPage.prototype.cerrarModal3 = function () {
+    CarritoHistoricoPage.prototype.cerrarModal3 = function (aun) {
+        if (aun === void 0) { aun = true; }
         var modal = document.getElementById("myModal3");
         modal.style.display = "none";
+        if (aun) {
+            this.enCompra = false;
+        }
     };
     CarritoHistoricoPage.prototype.openModal3 = function () {
         var modal = document.getElementById("myModal3");
         modal.style.display = "block";
     };
     /**Verifica validaciones */
-    CarritoHistoricoPage.prototype.ejecutaValidator = function () {
+    CarritoHistoricoPage.prototype.ejecutaValidator = function (opc, evt) {
+        if (opc === void 0) { opc = false; }
+        if (evt === void 0) { evt = null; }
+        if (opc) {
+            console.log(evt);
+            if (evt) {
+                this.objetoRegistro.push({
+                    name: "Dirección",
+                    required: true,
+                    length: 200,
+                    type: "text",
+                    formName: "direc",
+                    value: null,
+                    disabled: true
+                });
+                this.objetoRegistro.push({
+                    name: "Código postal",
+                    required: false,
+                    length: 6,
+                    type: "text",
+                    formName: "cp",
+                    value: null,
+                    disabled: false
+                });
+            }
+            else {
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+            }
+        }
         var validacion = 0;
-        for (var name in this.formGroup.controls) {
-            var n = this.formGroup.controls[name];
+        for (var name_1 in this.formGroup.controls) {
+            var n = this.formGroup.controls[name_1];
             if (n.invalid) {
                 validacion++;
             }
@@ -7869,11 +8376,15 @@ var CarritoHistoricoPage = /** @class */ (function () {
               fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
             } */
         }
+        console.log(validacion);
         if (validacion <= 0) {
             this.btnHabilitado = false;
         }
         else {
             this.btnHabilitado = true;
+        }
+        if (validacion == 1 && this.objetoRegistro[3].value == false) {
+            this.btnHabilitado = false;
         }
     };
     CarritoHistoricoPage.prototype.getMapa = function () {
@@ -7884,8 +8395,14 @@ var CarritoHistoricoPage = /** @class */ (function () {
             if (data) {
                 if (data != null) {
                     _this.data = data.data;
-                    _this.objetoRegistro[3].value = _this.data.direccion;
-                    _this.objetoRegistro[4].value = _this.data.codigoPostal;
+                    if (_this.objetoRegistro[3].value == true || _this.objetoRegistro[3].value == false) {
+                        _this.objetoRegistro[4].value = _this.data.direccion;
+                        _this.objetoRegistro[5].value = _this.data.codigoPostal;
+                    }
+                    else {
+                        _this.objetoRegistro[3].value = _this.data.direccion;
+                        _this.objetoRegistro[4].value = _this.data.codigoPostal;
+                    }
                     setTimeout(function () {
                         _this.ejecutaValidator();
                     }, 1000);
@@ -7903,7 +8420,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
             nombreContacto: this.objetoRegistroCopy[0].value,
             telefonoContacto: this.objetoRegistroCopy[1].value,
             correoContacto: this.objetoRegistroCopy[2].value,
-            direccionContacto: {
+            direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
                 id: this.data.id ? this.data.id : null,
                 codigoPostal: this.data.codigoPostal,
                 direccion: this.data.direccion,
@@ -7924,7 +8441,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
                 _this.pagoActual = response;
                 _this.loadingService.hide();
                 //this.comprar();
-                _this.closeInfoContact();
+                _this.closeInfoContact(false);
                 setTimeout(function () {
                     _this.openModal3();
                 }, 300);
@@ -7936,7 +8453,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
     };
     CarritoHistoricoPage.prototype.comprar = function () {
         if (this.check) {
-            this.cerrarModal3();
+            this.cerrarModal3(false);
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
             this.check = false;
@@ -8051,12 +8568,21 @@ var CarritoHistoricoPage = /** @class */ (function () {
     };
     CarritoHistoricoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-carrito-historico',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{listaCarrito.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n        padding: 7px;\n        color: #fff;\n        border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n\n<ion-content padding>\n  <div *ngIf="2==3 && listaCarrito.carritoHistoricoDetalles && listaCarrito.carritoHistoricoDetalles?.length>0" class="ordenamiento"\n    [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <div class="texto-ordena">\n      Ordenar por precio\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <!--<div>\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of listaCarrito.carritoHistoricoDetalles; let i = index">\n     \n      <div class="container-card" (click)="viewDetail(p)">\n\n        <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n      <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n      <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n      <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n        <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" *ngIf="p.cantidad > 0">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div>\n    </div>\n  </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n\n    </div>\n\n    <div *ngIf="totales" class="totales">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class">\n  <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/,
+            selector: 'page-carrito-historico',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{listaCarrito.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n        padding: 7px;\n        color: #fff;\n        border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n\n<ion-content padding>\n  <div *ngIf="2==3 && listaCarrito.carritoHistoricoDetalles && listaCarrito.carritoHistoricoDetalles?.length>0" class="ordenamiento"\n    [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <div class="texto-ordena">\n      Ordenar por precio\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <!--<div>\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of listaCarrito.carritoHistoricoDetalles; let i = index">\n     \n      <div class="container-card" (click)="viewDetail(p)">\n\n        <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n      <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n      <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n      <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n        <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" *ngIf="p.cantidad > 0">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div>\n    </div>\n  </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;">\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n\n    <div *ngIf="totales && totales.listHistoricoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class" *ngIf="!enCompra">\n  <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_10__angular_common__["c" /* CurrencyPipe */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__angular_common__["c" /* CurrencyPipe */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_8__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__angular_forms__["a" /* FormBuilder */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */]) === "function" && _l || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_common__["c" /* CurrencyPipe */],
+            __WEBPACK_IMPORTED_MODULE_8__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */]])
     ], CarritoHistoricoPage);
     return CarritoHistoricoPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
 }());
 
 //# sourceMappingURL=carrito-historico.js.map
@@ -10170,7 +10696,7 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
                 //alert(JSON.stringify(res));
                 if (!resIOS) {
                     _this.loadingService.hide();
-                    var alert = _this.alertCtrl.create({
+                    var alert_1 = _this.alertCtrl.create({
                         title: "<div class='notificacionError'>\n                <div><img class='headerImg' src='assets/imgs/alerts/success.png'/></div>\n                <div class='textoTitle'>Para acceder a \u00E9sta funci\u00F3n necesitas habilitar tu <strong>GPS</strong></div>\n                <div>",
                         message: null,
                         cssClass: _this.genericService.getColorClass(),
@@ -10188,8 +10714,8 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
                             }
                         ]
                     });
-                    alert.present();
-                    alert.onDidDismiss(function (res) {
+                    alert_1.present();
+                    alert_1.onDidDismiss(function (res) {
                     });
                 }
                 else {
@@ -10559,10 +11085,22 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-home-geo-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title *ngIf="!fromModal">\n      {{!direccion ? \'Alta de dirección\' : \'Actualizar de dirección\'}}\n    </ion-title>\n    <ion-title *ngIf="fromModal">\n      Datos de contacto\n    </ion-title>\n\n    <ion-buttons start *ngIf="fromModal">\n      <button ion-button (click)="dismiss(false)">\n        <span color="secundary" showWhen="ios">Cancel</span>\n        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div id="locationField" class="buscador">\n    <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />\n\n    <div *ngIf="!fromModal">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n\n    <div *ngIf="fromModal" (click)="selectFrecuente()">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n  </div>\n\n  <div id="map_canvas" class="mapita-google"></div>\n\n  <div id="map" style="height: 50%;" *ngIf="1==2"></div>\n\n  <div class="card-proveedor">\n\n  </div>\n</ion-content>\n\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && !fromModal">\n  <button style="width:100%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">{{!direccion\n    ? \'Agregar\' : \'Actualizar\'}} dirección</button>\n</ion-footer>\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">\n  <button style="width:49%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Guardar\n    y aceptar</button>\n  <button style="width:49%" (tap)="backData()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Aceptar</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__["a" /* Geolocation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__["a" /* Geolocation */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__["a" /* Diagnostic */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__["a" /* Diagnostic */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__["a" /* OpenNativeSettings */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__["a" /* OpenNativeSettings */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__["a" /* AndroidPermissions */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__["a" /* AndroidPermissions */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* Platform */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["q" /* ViewController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["q" /* ViewController */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* PopoverController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* PopoverController */]) === "function" && _p || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__["a" /* Geolocation */],
+            __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__["a" /* Diagnostic */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__["a" /* OpenNativeSettings */],
+            __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__["a" /* AndroidPermissions */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["q" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* PopoverController */]])
     ], HomeGeoProveedoresPage);
     return HomeGeoProveedoresPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
 }());
 
 //# sourceMappingURL=home-geo-proveedores.js.map
@@ -10730,16 +11268,21 @@ var ChatPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* Content */]),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* Content */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* Content */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* Content */])
     ], ChatPage.prototype, "content", void 0);
     ChatPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-chat',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/chat/chat.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title style="text-align:center">Chat</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="contenedor-chat">\n    <div class="cont-msj">\n      <div class="msj" style="margin-bottom: 10px;" [ngClass]="{\'msj\' : user.username == c.usuarioEmisorLogin, \'msj-r\' : user.username != c.usuarioEmisorLogin}"\n        *ngFor="let c of chat.chatDetalles">\n        <div class="{{user.username == c.usuarioEmisorLogin ? genericService.getColorClassChat() : \'m\'}}" [ngStyle]="{\'background-color\': user.username == c.usuarioEmisorLogin ? genericService.getColorHex(): \'\'}">\n          <div>{{c.mensaje}}</div>\n          <div style="font-size:9px">{{c.fecha}}</div>\n        </div>\n      </div>\n    </div>\n    <!-- <div class="uno">\n      <span>\n        <div class="dos">\n          <span class="span1"></span>\n          <span class="span2"></span>\n          <div class="tres">\n              <div class="cuatro">\n                  <div class="cinco">\n                      <div class="seis">\n                        <span>\n                          <span>Hola</span>\n                        </span>\n                      </div>\n                  </div>\n              </div>\n          </div>\n        </div>\n      </span>\n    </div> -->\n  </div>\n\n\n</ion-content>\n<ion-footer class="footer-chat">\n  <div>\n    <!-- <button class="emoji" ion-button clear icon-only (click)="toggled = !toggled" [(emojiPickerIf)]="toggled" [emojiPickerDirection]="\'top\'"\n      (emojiPickerSelect)="handleSelection($event)">\n      <ion-icon name="ios-happy-outline"></ion-icon>\n    </button> -->\n    <input type="text" style="width:89%" placeholder="Escribe un mensaje aquí" [(ngModel)]="mensaje">\n    <div>\n      <button (click)="sendMessage()">\n        <ion-icon name="md-send"></ion-icon>\n      </button>\n    </div>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/chat/chat.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_5__services_chat_service__["a" /* ChatService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_chat_service__["a" /* ChatService */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]) === "function" && _h || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_chat_service__["a" /* ChatService */],
+            __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
     ], ChatPage);
     return ChatPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h;
 }());
 
 //# sourceMappingURL=chat.js.map
@@ -11426,10 +11969,22 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/app.html"*/'<ion-menu [content]="content" *ngIf="user">\n  <ion-header>\n    <ion-item class="item item-thumbnail-left" style="\n                  background-image: url(assets/imgs/menu/market.jpg);\n                  background-size: 100%;\n                  background-position: center center;">\n      <img src="assets/imgs/logo.png" alt="Fry" class="animated myImagen" style="top: 16px !important;left: 16px !important;height: 65px !important;border-radius: 0px !important;width: 67px !important;opacity: -1.6;">\n      <div class="menu-bottom" style="color: rgba(0, 0, 0, 0.99);\n      background-color: rgba(255, 255, 255, 0.74);\n      padding: 7px;\n      font-size: 15px;\n      font-weight: 700;\n      font-family: sans-serif;\n      border-radius: 4px;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n      overflow: hidden;">\n        {{user.nombre}}\n      </div>\n    </ion-item>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n\n      <div *ngFor="let p of pages">\n        <ion-item menuClose class="item item-icon-right" (click)="openPage(p)" style="border-top: 1px solid #ddd;box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.07);">\n          <img src="{{p.img}}" alt="logo" style="    /* height: 35%; */\n              width: 11%;\n              /* margin-top: 1px; */\n              position: absolute;" />\n          <h2 style="display: inline-block;\n            margin-left: 44px;\n            margin-top: 8px;\n            font-size: 17px;\n            font-weight: 600;\n            font-family: sans-serif;">{{\n            p.nombre }}</h2>\n        </ion-item>\n      </div>\n    </ion-list>\n  </ion-content>\n  <ion-footer>\n    <ion-toolbar>\n      <div>\n        <button ion-button outline style="width: 48%;" (click)="exitApp()"\n        [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n          <ion-icon name="close-circle" class="botonFooter"></ion-icon>\n          Salir\n        </button>\n      </div>\n    </ion-toolbar>\n  </ion-footer>\n\n</ion-menu>\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false">\n\n</ion-nav>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["n" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["n" /* Platform */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_12__ngx_translate_core__["c" /* TranslateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__ngx_translate_core__["c" /* TranslateService */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["e" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["e" /* Events */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["c" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["c" /* App */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["b" /* AlertController */]) === "function" && _j || Object, typeof (_k = typeof __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */]) === "function" && _k || Object, typeof (_l = typeof __WEBPACK_IMPORTED_MODULE_22__ionic_native_fcm__["a" /* FCM */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_22__ionic_native_fcm__["a" /* FCM */]) === "function" && _l || Object, typeof (_m = typeof __WEBPACK_IMPORTED_MODULE_25__ionic_native_header_color__["a" /* HeaderColor */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_25__ionic_native_header_color__["a" /* HeaderColor */]) === "function" && _m || Object, typeof (_o = typeof __WEBPACK_IMPORTED_MODULE_23__ionic_native_screen_orientation__["a" /* ScreenOrientation */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_23__ionic_native_screen_orientation__["a" /* ScreenOrientation */]) === "function" && _o || Object, typeof (_p = typeof __WEBPACK_IMPORTED_MODULE_26__services_pushNotifications_service__["a" /* PushNotificationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_26__services_pushNotifications_service__["a" /* PushNotificationService */]) === "function" && _p || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_8_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
+            __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
+            __WEBPACK_IMPORTED_MODULE_12__ngx_translate_core__["c" /* TranslateService */],
+            __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["c" /* App */],
+            __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_8_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_22__ionic_native_fcm__["a" /* FCM */],
+            __WEBPACK_IMPORTED_MODULE_25__ionic_native_header_color__["a" /* HeaderColor */],
+            __WEBPACK_IMPORTED_MODULE_23__ionic_native_screen_orientation__["a" /* ScreenOrientation */],
+            __WEBPACK_IMPORTED_MODULE_26__services_pushNotifications_service__["a" /* PushNotificationService */]])
     ], MyApp);
     return MyApp;
-    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
 }());
 
 //# sourceMappingURL=app.component.js.map

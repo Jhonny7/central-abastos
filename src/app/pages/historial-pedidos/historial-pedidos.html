@@ -25,14 +25,29 @@
   </div>
 
   <div class="filtros" [ngStyle]="{'background-color' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">
-    <button (click)="ordenPor(1)">
+    <button (click)="ordenPor(1)" *ngIf="!botones.boton1">
+      <div style="font-size: 12px;">Fecha solicitud</div>
       <ion-icon name="ios-calendar-outline"></ion-icon>
     </button>
-    <button (click)="ordenPor(2)">
-      <ion-icon name="md-calendar"></ion-icon>
+    <button (click)="ordenPor(4)" *ngIf="botones.boton1">
+        <div style="font-size: 12px;">Fecha solicitud</div>
+        <ion-icon name="ios-calendar"></ion-icon>
+      </button>
+    <button (click)="ordenPor(2)" *ngIf="!botones.boton2">
+      <div style="font-size: 12px;">Fecha entrega</div>
+      <ion-icon name="ios-list-box-outline"></ion-icon>
     </button>
-    <button (click)="ordenPor(3)">
+    <button (click)="ordenPor(5)" *ngIf="botones.boton2">
+        <div style="font-size: 12px;">Fecha entrega</div>
+        <ion-icon name="ios-list-box"></ion-icon>
+      </button>
+    <button (click)="ordenPor(3)" *ngIf="!botones.boton3">
+      <div style="font-size: 12px;">Estatus</div>
       <ion-icon name="ios-checkbox-outline"></ion-icon>
+    </button>
+    <button (click)="ordenPor(6)" *ngIf="botones.boton3">
+      <div style="font-size: 12px;">Estatus</div>
+      <ion-icon name="ios-checkbox"></ion-icon>
     </button>
   </div>
 

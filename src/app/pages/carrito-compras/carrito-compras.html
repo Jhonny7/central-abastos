@@ -87,7 +87,8 @@
           </ion-col>
 
           <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
-            interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
+            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"
+            formControlName="{{dato.formName}}">
             <ion-option *ngFor="let op of dato.opts" [value]="op.id">
               {{op.value}}
             </ion-option>
@@ -163,7 +164,7 @@
   </div>
 </div>
 
-<ion-content padding>
+<ion-content padding class="">
 
   <!-- <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{'background-color': genericService.getColorHex()}">
         <div class="texto-ordena">
@@ -188,10 +189,13 @@
 
 
     <div *ngFor="let proveedor of agrupado">
-      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">{{proveedor.productoProveedor.proveedor.nombre}}</div>
+      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}" style="color: rgb(240, 124, 27);
+      font-weight: 600;
+      font-size: 17px;
+      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>
 
       <div class="scrolling-wrapper">
-        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">
+        <div id="card-{{i}}" class="card" *ngFor="let p of proveedor.carritoAgrupado; let i = index">
           <!-- <div class="tacha">
                             <div class="mini-tacha">
                                 <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>
@@ -220,25 +224,38 @@
         </div>
       </div>
 
-
+      <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">Información</div>
+      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;
+      border-style: dashed;" >
+          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>
+          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>
+          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>
+          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>
+    
+        </div>
     </div>
+    <div *ngIf="totales && totales.listCarritoProveedores?.length <= 0">
+      <div><img style="    border-radius: 4px;
+        box-shadow: 0px 0px 4px 0px #a0a0a0;" src="assets/imgs/lista-carrito/carritoComprado.png"
+          alt=""></div>
+      <div>Sin articulos en carrito, agrega algunos y aparecerán en esta sección</div>
+    </div>
+    <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">
+      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
+      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
+      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>
+      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>
 
-    <div *ngIf="totales" class="totales">
-        <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
-        <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
-        <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>
-        <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>
+      <div class="borde-total"></div>
 
-        <div class="borde-total"></div>
-
-        <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>
+      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>
     </div>
   </div>
 
 
 </ion-content>
 
-<ion-fab right bottom *ngIf="recarga" style="    bottom: 64px;">
+<ion-fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">
   <button ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}">
     <ion-icon name="arrow-dropleft"></ion-icon>
   </button>
@@ -255,12 +272,13 @@
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 4px;
-    margin-left: 6px;"
+    margin-left: 6px;width: 98px;"
       [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar pedido</button>
   </ion-fab-list>
 </ion-fab>
 
-<ion-footer class="footer-button-class" *ngIf="!recarga">
+<ion-footer class="footer-button-class" *ngIf="totales && totales.listCarritoProveedores?.length > 0 && !recarga && !enCompra">
   <button (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Agregar a una lista</button>
-  <button (tap)="infoContact()" [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar pedido</button>
+  <button (tap)="infoContact()" [ngStyle]="{'background-color': genericService.getColorHex()}">Realizar
+    pedido</button>
 </ion-footer>

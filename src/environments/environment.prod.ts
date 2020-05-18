@@ -55,6 +55,7 @@ export const environment = {
 
   carritoComprasProveedor: `${pathPrincipal}carrito-compras-proveedor`,
 
+  carritoHistoricosProveedor: `${pathPrincipal}carrito-historicos-proveedores`,
 
   reset: `${pathPrincipal}account/reset-password/init`,
   logout: null,
@@ -78,7 +79,7 @@ export const environment = {
   keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
 
   //Fines de pruebas
-  emulado: true,
+  emulado: false,
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
@@ -90,8 +91,5 @@ export const environment = {
   st:{
     keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
     //keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
-
-    //keyPrivate: 'U2FsdGVkX19W1AyfRoSSbNw8oIdfLjnf3UQeotHdZqr1rYN4T18H6zwDbrHkmyja0dUUj4LDJnpLPe+SQaLxGQ==',
-    //keyPrivate: 'U2FsdGVkX1/EQueHLsYwQ6B2ODXYMBoJfhGHqnYFwcLTncp34qy/VFy3TkRzIhtmcYaaLMhFvRzUIJunS8QfqA==',
   }
 };

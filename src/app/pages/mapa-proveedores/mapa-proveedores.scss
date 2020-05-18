@@ -21,6 +21,7 @@ page-mapa-proveedores {
   }
   .contenedor-card {
     position: relative;
+    margin-bottom: 70px;
     .card {
       display: inline-block;
       position: relative;
@@ -171,7 +172,7 @@ page-mapa-proveedores {
   .mapp {
     position: relative;
     display: block;
-    height: 50%;
+    height: 60%;
     width: 100%;
     .boton-mapa {
       position: absolute;

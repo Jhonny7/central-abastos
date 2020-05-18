@@ -46,12 +46,14 @@ export class TabsPage {
     console.log(hijito);
     let component:any = this;
     hijito.addEventListener("click", (e: Event) => {
+      console.log(hijito);
+      
       component.actualizaCarrito();
     });
   }
 
   actualizaCarrito(){
     console.log("---->");
-    this.events.publish("carritoTab");
+    //this.events.publish("carritoTab");
   }
 }

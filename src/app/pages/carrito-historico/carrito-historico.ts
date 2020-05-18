@@ -18,17 +18,20 @@ declare var Stripe;
   selector: 'page-carrito-historico',
   templateUrl: 'carrito-historico.html',
 })
-export class CarritoHistoricoPage implements OnDestroy{
+export class CarritoHistoricoPage implements OnDestroy {
+  public selectOptions: any = {
+    cssClass: 'action-sheet-class'
+  };
 
   public user: User = null;
 
   public env: any = environment;
 
-  public listaCarrito:any = null;
-  
+  public listaCarrito: any = null;
+
   public productosCarrito: any = [];
   public listaCarritoReplica: any = [];
-
+  public enCompra:boolean = false;
   public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
@@ -100,12 +103,12 @@ export class CarritoHistoricoPage implements OnDestroy{
   public objetoRegistroCopy: any = [];
 
   public check: boolean = false;
-  
+
   public agrupado: any[] = [];
 
-  public totales:any = null;
+  public totales: any = null;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
     private alertaService: AlertaService,
@@ -116,50 +119,163 @@ export class CarritoHistoricoPage implements OnDestroy{
     private currencyPipe: CurrencyPipe,
     public formBuilder: FormBuilder,
     private modalController: ModalController) {
-      this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
+    this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
+    if(this.user){
       this.listaCarrito = navParams.get("lista");
 
       console.log(this.listaCarrito);
-      
+  
       this.listaCarritoReplica = this.listaCarrito;
       this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-      
+  
       this.getCards();
       this.agruparTotales();
     }
-  
-    agruparTotales(){
-      this.agrupado = [];
-      let unique = this.listaCarrito.carritoHistoricoDetalles.filter((valorActual, indiceActual, arreglo) => {
-        //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
-        return arreglo.findIndex(valorDelArreglo => valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId) === indiceActual
+  }
+
+  agruparTotales() {
+    this.agrupado = [];
+    let unique = this.listaCarrito.carritoHistoricoDetalles.filter((valorActual, indiceActual, arreglo) => {
+      //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
+      return arreglo.findIndex(valorDelArreglo => valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId) === indiceActual
+    });
+
+    unique.forEach(prov => {
+      prov.carritoAgrupado = [];
+      this.listaCarrito.carritoHistoricoDetalles.forEach(element => {
+        if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
+          prov.carritoAgrupado.push(element);
+        }
       });
-  
-      unique.forEach(prov => {
-        prov.carritoAgrupado = [];
-        this.listaCarrito.carritoHistoricoDetalles.forEach(element => {
-          if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
-            prov.carritoAgrupado.push(element);
+      this.agrupado.push(prov);
+    });
+    console.log(this.agrupado);
+    this.getTotales();
+  }
+  armaObjRegistro() {
+    this.objetoRegistro = [
+      {
+        name: "Nombre del contacto",
+        required: true,
+        length: 50,
+        type: "text",
+        formName: "name",
+        value: null,
+        disabled: false
+      },
+      {
+        name: "Teléfono",
+        required: true,
+        length: 10,
+        type: "number",
+        formName: "tel",
+        value: null,
+        disabled: false
+      },
+      {
+        name: "Correo electrónico",
+        required: true,
+        length: 100,
+        type: "email",
+        formName: "email",
+        value: null,
+        disabled: false
+      },
+
+    ];
+
+    if (this.totales.listHistoricoProveedores.length > 1) {
+
+      this.objetoRegistro.push({
+        name: "Dirección",
+        required: true,
+        length: 200,
+        type: "text",
+        formName: "direc",
+        value: null,
+        disabled: true
+      });
+      this.objetoRegistro.push({
+        name: "Código postal",
+        required: false,
+        length: 6,
+        type: "text",
+        formName: "cp",
+        value: null,
+        disabled: false
+      });
+    } else {
+      this.objetoRegistro.push({
+        name: "Picking",
+        required: true,
+        length: 11,
+        type: "select",
+        formName: "sex",
+        value: false,
+        opts: [
+          {
+            id: false,
+            value: "Entrega a domicilio"
+          },
+          {
+            id: true,
+            value: "Entrega en domicilio de proveedor"
+          }
+        ]
+      });
+      this.objetoRegistro.push({
+        name: "Dirección",
+        required: true,
+        length: 200,
+        type: "text",
+        formName: "direc",
+        value: null,
+        disabled: true
+      });
+      this.objetoRegistro.push({
+        name: "Código postal",
+        required: false,
+        length: 6,
+        type: "text",
+        formName: "cp",
+        value: null,
+        disabled: false
+      });
+    }
+  }
+
+  getTotales() {
+    this.genericService.sendGetRequest(`${environment.carritoHistoricosProveedor}/${this.listaCarrito.id}`).subscribe((response: any) => {
+      console.log(response);
+      this.totales = response;
+      this.agrupado.forEach(element => {
+        if(element.totalAgrupado){
+          delete element.totalAgrupado;
+        }
+      });
+      this.totales.listHistoricoProveedores.forEach(item => {
+        this.agrupado.forEach(element => {
+          if(!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id){
+            element.totalAgrupado = {
+              comisionTransporte: item.comisionTransporte,
+              tiempoEntrega: item.tiempoEntrega,
+              total: item.total,
+              totalProductos: item.totalProductos
+            };
           }
         });
-        this.agrupado.push(prov);
       });
-      console.log(this.agrupado);
-      this.getTotales();
-    }
-  
-    getTotales(){
-      this.genericService.sendGetRequest(environment.carritoComprasProveedor).subscribe((response: any) => {
-        console.log(response);
-        this.totales = response;
-      }, (error: HttpErrorResponse) => {
-        this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
-      });
-    }
+
+      this.armaObjRegistro();
+    }, (error: HttpErrorResponse) => {
+      this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+    });
+  }
+
   getCards() {
     this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
-      
+
       this.cards = response;
       this.cards.forEach(element => {
         element.selected = false;
@@ -185,15 +301,18 @@ export class CarritoHistoricoPage implements OnDestroy{
     this.cards.forEach(element => {
       element.selected = false;
     });
+    this.enCompra = false;
+    this.agruparTotales();
   }
 
   ionViewDidLoad() {
     console.log("---------------------.");
-    
+
     let claseTabs: any = document.getElementsByClassName("tabbar");
     console.log(claseTabs);
-    
+
     claseTabs[0].style.display = "none";
+
   }
 
   ngOnDestroy() {
@@ -205,20 +324,20 @@ export class CarritoHistoricoPage implements OnDestroy{
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoProveedor.id}`).subscribe((response: any) => {
-      
+
         //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
           let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-          
-          if(carritos){
+
+          if (carritos) {
             let position: any = carritos.findIndex(
               (carrito) => {
                 return carrito.id == response.id;
               }
             );
-  
+
             if (position >= 0) {
               response.cantidad = carritos[position].cantidad;
             }
@@ -238,12 +357,12 @@ export class CarritoHistoricoPage implements OnDestroy{
 
   decrementar(p: any) {
     p.cantidad--;
-    if(p.cantidad == 0){
+    if (p.cantidad == 0) {
       p.cantidad = 1;
-    }else{
+    } else {
       this.borrarToCarritoBack(p);
     }
-    
+
   }
 
   borrarToCarritoBack(producto: any) {
@@ -254,7 +373,7 @@ export class CarritoHistoricoPage implements OnDestroy{
     body.cantidad = producto.cantidad;
 
     this.genericService.sendPutRequest(environment.carritoHistoricoDetalle, body).subscribe((response1: any) => {
-      
+
       if (producto.cantidad == 0) {
         this.genericService.sendDelete(`${environment.carritoHistoricoDetalle}/${producto.id}`).subscribe((response2: any) => {
 
@@ -310,7 +429,7 @@ export class CarritoHistoricoPage implements OnDestroy{
       });
     }
     this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
-    this.events.publish("carritoTab");
+    this.getTotales();
   }
 
   incrementa(p: any) {
@@ -359,12 +478,15 @@ export class CarritoHistoricoPage implements OnDestroy{
     service.subscribe((response: any) => {
       if (bandera) {
         this.agregarToCarrito(producto);
-      }
-      this.verificarCarritoModificarCantidad(producto);
-    }, (error: HttpErrorResponse) => {
-      if(producto.cantidad == 1){
-        producto.cantidad = 1;
+        this.verificarCarritoModificarCantidad(producto);
       }else{
+        this.verificarCarritoModificarCantidad(producto);
+      }
+      
+    }, (error: HttpErrorResponse) => {
+      if (producto.cantidad == 1) {
+        producto.cantidad = 1;
+      } else {
         producto.cantidad--;
       }
     });
@@ -374,6 +496,7 @@ export class CarritoHistoricoPage implements OnDestroy{
   infoContact() {
     let modal: any = document.getElementById("myModal2");
     //
+    this.enCompra = true;
     let putObj: any = {};
     this.objetoRegistro.forEach(item => {
       let tmp: any[] = [];
@@ -415,7 +538,7 @@ export class CarritoHistoricoPage implements OnDestroy{
     modal.style.display = "block";
   }
 
-  closeInfoContact() {
+  closeInfoContact(aun:boolean = true) {
     let modal: any = document.getElementById("myModal2");
     modal.style.display = "none";
 
@@ -425,11 +548,15 @@ export class CarritoHistoricoPage implements OnDestroy{
 
     this.formGroup = null;
     this.btnHabilitado = true;
+    this.enCompra = false;
   }
 
-  cerrarModal3() {
+  cerrarModal3(aun:boolean = true) {
     let modal: any = document.getElementById("myModal3");
     modal.style.display = "none";
+    if(aun){
+      this.enCompra = false;
+    }
   }
 
   openModal3() {
@@ -438,7 +565,33 @@ export class CarritoHistoricoPage implements OnDestroy{
   }
 
   /**Verifica validaciones */
-  ejecutaValidator() {
+  ejecutaValidator(opc: boolean = false, evt: any = null) {
+    if (opc) {
+      console.log(evt);
+      if (evt) {
+        this.objetoRegistro.push({
+          name: "Dirección",
+          required: true,
+          length: 200,
+          type: "text",
+          formName: "direc",
+          value: null,
+          disabled: true
+        });
+        this.objetoRegistro.push({
+          name: "Código postal",
+          required: false,
+          length: 6,
+          type: "text",
+          formName: "cp",
+          value: null,
+          disabled: false
+        });
+      } else {
+        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
+        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
+      }
+    }
     let validacion: number = 0;
     for (const name in this.formGroup.controls) {
 
@@ -454,10 +607,16 @@ export class CarritoHistoricoPage implements OnDestroy{
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
+    console.log(validacion);
+
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {
       this.btnHabilitado = true;
+    }
+
+    if (validacion == 1 && this.objetoRegistro[3].value == false) {
+      this.btnHabilitado = false;
     }
   }
 
@@ -469,8 +628,13 @@ export class CarritoHistoricoPage implements OnDestroy{
       if (data) {
         if (data != null) {
           this.data = data.data;
-          this.objetoRegistro[3].value = this.data.direccion;
-          this.objetoRegistro[4].value = this.data.codigoPostal;
+          if(this.objetoRegistro[3].value == true || this.objetoRegistro[3].value == false ){
+            this.objetoRegistro[4].value = this.data.direccion;
+            this.objetoRegistro[5].value = this.data.codigoPostal;
+          }else{
+            this.objetoRegistro[3].value = this.data.direccion;
+            this.objetoRegistro[4].value = this.data.codigoPostal;
+          }
           setTimeout(() => {
             this.ejecutaValidator();
           }, 1000);
@@ -490,7 +654,7 @@ export class CarritoHistoricoPage implements OnDestroy{
       nombreContacto: this.objetoRegistroCopy[0].value,
       telefonoContacto: this.objetoRegistroCopy[1].value,
       correoContacto: this.objetoRegistroCopy[2].value,
-      direccionContacto: {
+      direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
         id: this.data.id ? this.data.id : null,
         codigoPostal: this.data.codigoPostal,
         direccion: this.data.direccion,
@@ -515,7 +679,7 @@ export class CarritoHistoricoPage implements OnDestroy{
         this.pagoActual = response;
         this.loadingService.hide();
         //this.comprar();
-        this.closeInfoContact();
+        this.closeInfoContact(false);
         setTimeout(() => {
           this.openModal3();
         }, 300);
@@ -528,7 +692,7 @@ export class CarritoHistoricoPage implements OnDestroy{
 
   comprar() {
     if (this.check) {
-      this.cerrarModal3();
+      this.cerrarModal3(false);
       let modal: any = document.getElementById("myModal");
       modal.style.display = "block";
       this.check = false;
@@ -635,17 +799,17 @@ export class CarritoHistoricoPage implements OnDestroy{
     }
   }
 
-  up(){
+  up() {
     this.listaCarrito = this.listaCarritoReplica;
-    this.listaCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
-        return mayor.precio - menor.precio;
-      });
+    this.listaCarrito.carritoHistoricoDetalles.sort((mayor, menor) => {
+      return mayor.precio - menor.precio;
+    });
   }
 
-  down(){
+  down() {
     this.listaCarrito = this.listaCarritoReplica;
-    this.listaCarrito.carritoHistoricoDetalles.sort((mayor,menor)=>{
-        return menor.precio - mayor.precio;
-      });
+    this.listaCarrito.carritoHistoricoDetalles.sort((mayor, menor) => {
+      return menor.precio - mayor.precio;
+    });
   }
 }
