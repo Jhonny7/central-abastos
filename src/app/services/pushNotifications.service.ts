@@ -32,8 +32,10 @@ export class PushNotificationService {
         this.loadingService.show().then(() => {
 
             let path: any = `${environment.pedidos}/`;
-            if (environment.perfil.activo == 2 || environment.perfil.activo == 3) {
+            if (environment.perfil.activo == 2) {
                 path = `${environment.proveedor}/pedidos/`;
+            } else if (environment.perfil.activo == 3) {
+                path = `${environment.transportista}/pedidos/`;
             }
 
             this.genericService.sendGetRequest(`${path}${id}`).subscribe((response: any) => {
@@ -147,17 +149,378 @@ export class PushNotificationService {
         }
     }
 
-    evaluateNotification(data: any) {
-        if (data.wasTapped) {
-            console.log(data);
-            console.log("-----------------------------------------------");
-            //Notification was received on device tray and tapped by the user.
+    lecturaBackground(data: any) {
+        console.log(data);
+        console.log("-----------------------------------------------");
+
+        let currentPageName: any = this.app.getActiveNav();
+        console.log(currentPageName);
+
+
+        let currentPage: any = "";
+        if (currentPageName.viewCtrl) {
+            currentPage = currentPageName.viewCtrl.name;
+        } else if (currentPageName.root) {
+            currentPage = currentPageName.root.name;
+        }
+
+        //Notification was received on device tray and tapped by the user.
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        switch (Number(data.view)) {
+            case 1:
+                ///Primera pantalla pago a proveedor
+                if (this.user && environment.perfil.activo == 2) {
+                    let pedido: any = JSON.parse(data.pedidoId);
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedido(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && environment.perfil.activo == 2) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
+                break;
+            case 10:
+                let idPedidoFromChat: any = this.localStorageEncryptService.getFromLocalStorage("pedidoChat");
+                let chatId: any = JSON.parse(data.chatId);
+                let pedidoId: any = JSON.parse(data.pedidoId);
+
+                let pedidoReal: boolean = false;
+
+                if (idPedidoFromChat) {
+                    if (idPedidoFromChat == pedidoId) {
+                        pedidoReal = true;
+                    } else {
+                        pedidoReal = false;
+                    }
+                }
+
+
+                if (this.user && !pedidoReal) {
+
+                    this.chatId = chatId;
+                    if (currentPage == "ChatPage" && !pedidoReal) {
+                        this.alertaService.successAlertGeneric(data.body);
+                        this.events.publish("updateChat");
+                    } else if (!pedidoReal) {
+                        this.alertaChat(`${data.title}: ${data.body}`, pedidoId);
+                    }
+
+                } else if (!this.user) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
+                } else {
+                    this.events.publish("updateChat");
+                }
+
+                break;
+            case 2:
+                //Notificación confirmación pedido
+                let pedidoPedido: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                let pedido: any = JSON.parse(data.pedidoId);
+                let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+
+                let pedidoPedidoR: boolean = false;
+
+                if (pedidoPedido) {
+                    if (pedidoPedido == pedido) {
+                        pedidoPedidoR = true;
+                    } else {
+                        pedidoPedidoR = false;
+                    }
+                }
+
+                if (this.user && (environment.perfil.activo == 1 || environment.perfil.activo == 3) && !pedidoPedidoR && currentPage != "HistorialPedidosDetailPage") {
+
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: `${data.title}, deseas ir a verlo?`,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedido(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && (environment.perfil.activo == 1 || environment.perfil.activo == 3) && !pedidoPedidoR) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                } else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+            case 3:
+
+                let pedidoPedido3: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                let pedido3: any = JSON.parse(data.pedidoId);
+                let pedidoProveedor3: any = JSON.parse(data.pedidoProveedorId);
+
+                let pedidoPedidoR3: boolean = false;
+
+                if (pedidoPedido3) {
+                    if (pedidoPedido3 == pedido3) {
+                        pedidoPedidoR3 = true;
+                    } else {
+                        pedidoPedidoR3 = false;
+                    }
+                }
+
+                if (this.user && environment.perfil.activo == 3 && !pedidoPedidoR3 && currentPage != "HistorialPedidosDetailPage") {
+                    let pedido: any = pedido3;
+                    let pedidoProveedor: any = pedidoProveedor3;
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: `${data.title}, deseas ir a verlo?`,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedido(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && environment.perfil.activo == 3 && !pedidoPedidoR3) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                } else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+            case 6:
+
+                let pedidoPedido6: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                let pedido6: any = JSON.parse(data.pedidoId);
+                let pedidoProveedor6: any = JSON.parse(data.pedidoProveedorId);
+
+                let pedidoPedidoR6: boolean = false;
+
+                if (pedidoPedido6) {
+                    if (pedidoPedido6 == pedido6) {
+                        pedidoPedidoR6 = true;
+                    } else {
+                        pedidoPedidoR6 = false;
+                    }
+                }
+                if (this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6 && currentPage != "HistorialPedidosDetailPage") {
+                    let pedido: any = pedido6;
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: `${data.title}, deseas ver tu pedido?`,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedido(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                } else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+
+            case 4:
+                if (this.user && environment.perfil.activo == 1) {
+                    let pedido: any = JSON.parse(data.pedidoId);
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Pedido Entregado',
+                        message: `${data.title}`,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedidoCalificar(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && environment.perfil.activo == 1) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                break;
+
+
+                case 12:
+
+                let pedidoPedido7: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                let pedido7: any = JSON.parse(data.pedidoId);
+                let pedidoProveedor7: any = JSON.parse(data.pedidoProveedorId);
+
+                let pedidoPedidoR7: boolean = false;
+
+                if (pedidoPedido7) {
+                    if (pedidoPedido7 == pedido7) {
+                        pedidoPedidoR7 = true;
+                    } else {
+                        pedidoPedidoR7 = false;
+                    }
+                }
+                if (this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR7 && currentPage != "HistorialPedidosDetailPage") {
+                    let pedido: any = pedido7;
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    let alert = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: `El transportista está en tu domicilio, deseas ver tu pedido?`,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: () => {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: () => {
+                                    try {
+                                        alert.dismiss();
+                                    } catch (error) {
+
+                                    }
+                                    this.goToPedido(Number(pedido));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert.present();
+                } else if (!this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                } else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+        }
+    }
+
+    lecturaForeground(data: any) {
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        console.log("-----------------------------------------------");
+
+        console.log(data);
+
+        let currentPageName: any = this.app.getActiveNav();
+        console.log(currentPageName);
+
+
+        let currentPage: any = "";
+        if (currentPageName.viewCtrl) {
+            currentPage = currentPageName.viewCtrl.name;
+        } else if (currentPageName.root) {
+            currentPage = currentPageName.root.name;
+        }
+
+        console.log(currentPage);
+
+        //let parseado:any = JSON.parse(data.pedido);
+        //Notification was received in foreground. Maybe the user needs to be notified.
+        try {
             switch (Number(data.view)) {
                 case 1:
                     ///Primera pantalla pago a proveedor
                     if (this.user && environment.perfil.activo == 2) {
-                        let pedido: any = JSON.parse(data.data);
+                        console.log(data);
+                        console.log("..................");
+                        console.log(data.data);
+                        console.log("..................");
+
+                        let pedido: any = JSON.parse(data.pedidoId);
+                        console.log(pedido);
+
                         this.events.publish("cargarPedidos");
+
+                        /* if (currentPage == "TabsProveedorPage") {
+                            this.alertaService.successAlertGeneric("Recibiste un nuevo pedido y hemos actualizado tu lista, para que puedas verlo");
+                        } else { */
                         let alert = this.alertCtrl.create({
                             title: 'Confirmación',
                             message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
@@ -175,7 +538,7 @@ export class PushNotificationService {
                                         try {
                                             alert.dismiss();
                                         } catch (error) {
-                                            
+
                                         }
                                         this.goToPedido(Number(pedido));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
@@ -184,30 +547,64 @@ export class PushNotificationService {
                             ]
                         });
                         alert.present();
+                        //}
+
                     } else if (!this.user && environment.perfil.activo == 2) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
                     }
                     //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
                     break;
                 case 10:
+                    let idPedidoFromChat: any = this.localStorageEncryptService.getFromLocalStorage("pedidoChat");
+                    let chatId: any = JSON.parse(data.chatId);
+                    let pedidoId: any = JSON.parse(data.pedidoId);
 
-                    if (this.user) {
-                        let chatId: any = JSON.parse(data.chatId);
-                        let pedidoId: any = JSON.parse(data.pedidoId);
-                        console.log(data);
+                    let pedidoReal: boolean = false;
+
+                    if (idPedidoFromChat) {
+                        if (idPedidoFromChat == pedidoId) {
+                            pedidoReal = true;
+                        } else {
+                            pedidoReal = false;
+                        }
+                    }
+
+
+                    if (this.user && !pedidoReal) {
 
                         this.chatId = chatId;
-                        this.alertaChat(`${data.title}: ${data.body}`, pedidoId);
+                        if (currentPage == "ChatPage" && !pedidoReal) {
+                            this.alertaService.successAlertGeneric(data.body);
+                            this.events.publish("updateChat");
+                        } else if (!pedidoReal) {
+                            this.alertaChat(`${data.title}: ${data.body}`, pedidoId);
+                        }
+
                     } else if (!this.user) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
+                    } else {
+                        this.events.publish("updateChat");
                     }
 
                     break;
                 case 2:
                     //Notificación confirmación pedido
-                    if (this.user && environment.perfil.activo == 1) {
-                        let pedido: any = JSON.parse(data.pedidoId);
-                        let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    let pedidoPedido: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    let pedido: any = JSON.parse(data.pedidoId);
+                    let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+
+                    let pedidoPedidoR: boolean = false;
+
+                    if (pedidoPedido) {
+                        if (pedidoPedido == pedido) {
+                            pedidoPedidoR = true;
+                        } else {
+                            pedidoPedidoR = false;
+                        }
+                    }
+
+                    if (this.user && environment.perfil.activo == 1 && !pedidoPedidoR && currentPage != "HistorialPedidosDetailPage") {
+
                         this.events.publish("cargarPedidos");
                         let alert = this.alertCtrl.create({
                             title: 'Confirmación',
@@ -226,7 +623,7 @@ export class PushNotificationService {
                                         try {
                                             alert.dismiss();
                                         } catch (error) {
-                                            
+
                                         }
                                         this.goToPedido(Number(pedido));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
@@ -235,14 +632,31 @@ export class PushNotificationService {
                             ]
                         });
                         alert.present();
-                    } else if (!this.user && environment.perfil.activo == 1) {
+                    } else if (!this.user && environment.perfil.activo == 1 && !pedidoPedidoR) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    } else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
                 case 3:
-                    if (this.user && environment.perfil.activo == 3) {
-                        let pedido: any = JSON.parse(data.pedidoId);
-                        let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+
+                    let pedidoPedido3: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    let pedido3: any = JSON.parse(data.pedidoId);
+                    let pedidoProveedor3: any = JSON.parse(data.pedidoProveedorId);
+
+                    let pedidoPedidoR3: boolean = false;
+
+                    if (pedidoPedido3) {
+                        if (pedidoPedido3 == pedido3) {
+                            pedidoPedidoR3 = true;
+                        } else {
+                            pedidoPedidoR3 = false;
+                        }
+                    }
+
+                    if (this.user && environment.perfil.activo == 3 && !pedidoPedidoR3 && currentPage != "HistorialPedidosDetailPage") {
+                        let pedido: any = pedido3;
+                        let pedidoProveedor: any = pedidoProveedor3;
                         this.events.publish("cargarPedidos");
                         let alert = this.alertCtrl.create({
                             title: 'Confirmación',
@@ -261,7 +675,7 @@ export class PushNotificationService {
                                         try {
                                             alert.dismiss();
                                         } catch (error) {
-                                            
+
                                         }
                                         this.goToPedido(Number(pedido));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
@@ -270,18 +684,33 @@ export class PushNotificationService {
                             ]
                         });
                         alert.present();
-                    } else if (!this.user && environment.perfil.activo == 3) {
+                    } else if (!this.user && environment.perfil.activo == 3 && !pedidoPedidoR3) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    } else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
                 case 6:
-                    if (this.user && environment.perfil.activo == 3 || environment.perfil.activo == 2) {
-                        let pedido: any = JSON.parse(data.pedido);
+                    let pedidoPedido6: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    let pedido6: any = JSON.parse(data.pedidoId);
+                    let pedidoProveedor6: any = JSON.parse(data.pedidoProveedorId);
+
+                    let pedidoPedidoR6: boolean = false;
+
+                    if (pedidoPedido6) {
+                        if (pedidoPedido6 == pedido6) {
+                            pedidoPedidoR6 = true;
+                        } else {
+                            pedidoPedidoR6 = false;
+                        }
+                    }
+                    if (this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6 && currentPage != "HistorialPedidosDetailPage") {
+                        let pedido: any = pedido6;
                         //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
                         this.events.publish("cargarPedidos");
                         let alert = this.alertCtrl.create({
                             title: 'Confirmación',
-                            message: `${data.title}, deseas ir a verlo?`,
+                            message: `${data.title}, deseas ver tu pedido?`,
                             cssClass: this.genericService.getColorClassTWO(),
                             buttons: [
                                 {
@@ -296,7 +725,7 @@ export class PushNotificationService {
                                         try {
                                             alert.dismiss();
                                         } catch (error) {
-                                            
+
                                         }
                                         this.goToPedido(Number(pedido));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
@@ -305,18 +734,19 @@ export class PushNotificationService {
                             ]
                         });
                         alert.present();
-                    } else if (!this.user && environment.perfil.activo == 3 || environment.perfil.activo == 2) {
+                    } else if (!this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    } else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
-
                 case 4:
                     if (this.user && environment.perfil.activo == 1) {
                         let pedido: any = JSON.parse(data.pedidoId);
                         //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
                         this.events.publish("cargarPedidos");
                         let alert = this.alertCtrl.create({
-                            title: 'Confirmación',
+                            title: 'Pedido Entregado',
                             message: `${data.title}`,
                             cssClass: this.genericService.getColorClassTWO(),
                             buttons: [
@@ -332,7 +762,7 @@ export class PushNotificationService {
                                         try {
                                             alert.dismiss();
                                         } catch (error) {
-                                            
+
                                         }
                                         this.goToPedidoCalificar(Number(pedido));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
@@ -345,251 +775,70 @@ export class PushNotificationService {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
                     }
                     break;
+
+                case 12:
+                    let pedidoPedido7: any = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    let pedido7: any = JSON.parse(data.pedidoId);
+                    let pedidoProveedor7: any = JSON.parse(data.pedidoProveedorId);
+
+                    let pedidoPedidoR7: boolean = false;
+
+                    if (pedidoPedido7) {
+                        if (pedidoPedido7 == pedido6) {
+                            pedidoPedidoR7 = true;
+                        } else {
+                            pedidoPedidoR7 = false;
+                        }
+                    }
+                    if (this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR7 && currentPage != "HistorialPedidosDetailPage") {
+                        let pedido: any = pedido7;
+                        //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                        this.events.publish("cargarPedidos");
+                        let alert = this.alertCtrl.create({
+                            title: 'Confirmación',
+                            message: `El transportista está en tu domicilio, deseas ver tu pedido?`,
+                            cssClass: this.genericService.getColorClassTWO(),
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel',
+                                    handler: () => {
+                                    }
+                                },
+                                {
+                                    text: 'Aceptar',
+                                    handler: () => {
+                                        try {
+                                            alert.dismiss();
+                                        } catch (error) {
+
+                                        }
+                                        this.goToPedido(Number(pedido));
+                                        //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                    }
+                                }
+                            ]
+                        });
+                        alert.present();
+                    } else if (!this.user && (environment.perfil.activo == 3 || environment.perfil.activo == 2) && !pedidoPedidoR6) {
+                        this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    } else {
+                        this.events.publish("cargarPedidos");
+                    }
+                    break;
             }
+        } catch (error) {
+            console.log(error);
+
+        }
+        //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
+    }
+
+    evaluateNotification(data: any) {
+        if (data.wasTapped) {
+            this.lecturaBackground(data);
         } else {
-
-            console.log("-----------------------------------------------");
-
-            console.log(data);
-
-            let currentPageName: any = this.app.getActiveNav();
-            console.log(currentPageName);
-
-
-            let currentPage: any = "";
-            if (currentPageName.viewCtrl) {
-                currentPage = currentPageName.viewCtrl.name;
-            } else if (currentPageName.root) {
-                currentPage = currentPageName.root.name;
-            }
-
-            console.log(currentPage);
-
-            //let parseado:any = JSON.parse(data.pedido);
-            //Notification was received in foreground. Maybe the user needs to be notified.
-            try {
-                switch (Number(data.view)) {
-                    case 1:
-                        ///Primera pantalla pago a proveedor
-                        if (this.user && environment.perfil.activo == 2) {
-                            let pedido: any = JSON.parse(data.data);
-                            this.events.publish("cargarPedidos");
-
-                            /* if (currentPage == "TabsProveedorPage") {
-                                this.alertaService.successAlertGeneric("Recibiste un nuevo pedido y hemos actualizado tu lista, para que puedas verlo");
-                            } else { */
-                            let alert = this.alertCtrl.create({
-                                title: 'Confirmación',
-                                message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
-                                cssClass: this.genericService.getColorClassTWO(),
-                                buttons: [
-                                    {
-                                        text: 'Cancelar',
-                                        role: 'cancel',
-                                        handler: () => {
-                                        }
-                                    },
-                                    {
-                                        text: 'Aceptar',
-                                        handler: () => {
-                                            try {
-                                                alert.dismiss();
-                                            } catch (error) {
-                                                
-                                            }
-                                            this.goToPedido(Number(pedido));
-                                            //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                        }
-                                    }
-                                ]
-                            });
-                            alert.present();
-                            //}
-
-                        } else if (!this.user && environment.perfil.activo == 2) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
-                        break;
-                    case 10:
-
-                        if (this.user) {
-                            let chatId: any = JSON.parse(data.chatId);
-                            let pedidoId: any = JSON.parse(data.pedidoId);
-                            console.log(data);
-
-                            this.chatId = chatId;
-                            if (currentPage == "ChatPage") {
-                                this.alertaService.successAlertGeneric(data.body);
-                                this.events.publish("updateChat");
-                            } else {
-                                this.alertaChat(`${data.title}: ${data.body}`, pedidoId);
-                            }
-
-                        } else if (!this.user) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
-                        }
-
-                        break;
-                    case 2:
-                        //Notificación confirmación pedido
-                        if (this.user && environment.perfil.activo == 1) {
-                            let pedido: any = JSON.parse(data.pedidoId);
-                            let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            } else {
-                                let alert = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: `${data.title}, deseas ir a verlo?`,
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: () => {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: () => {
-                                                try {
-                                                    alert.dismiss();
-                                                } catch (error) {
-                                                    
-                                                }
-                                                this.goToPedido(Number(pedido));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert.present();
-                            }
-                        } else if (!this.user && environment.perfil.activo == 1) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 3:
-                        if (this.user && environment.perfil.activo == 3) {
-                            let pedido: any = JSON.parse(data.pedidoId);
-                            let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            } else {
-                                let alert = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: `${data.title}, deseas ir a verlo?`,
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: () => {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: () => {
-                                                try {
-                                                    alert.dismiss();
-                                                } catch (error) {
-                                                    
-                                                }
-                                                this.goToPedido(Number(pedido));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert.present();
-                            }
-                        } else if (!this.user && environment.perfil.activo == 3) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 6:
-                        if (this.user && environment.perfil.activo == 3 || environment.perfil.activo == 2) {
-                            let pedido: any = JSON.parse(data.pedido);
-                            //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            } else {
-                                let alert = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: `${data.title}, deseas ir a verlo?`,
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: () => {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: () => {
-                                                try {
-                                                    alert.dismiss();
-                                                } catch (error) {
-                                                    
-                                                }
-                                                this.goToPedido(Number(pedido));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert.present();
-                            }
-                        } else if (!this.user && environment.perfil.activo == 3 || environment.perfil.activo == 2) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 4:
-                        if (this.user && environment.perfil.activo == 1) {
-                            let pedido: any = JSON.parse(data.pedidoId);
-                            //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            let alert = this.alertCtrl.create({
-                                title: 'Confirmación',
-                                message: `${data.title}`,
-                                cssClass: this.genericService.getColorClassTWO(),
-                                buttons: [
-                                    {
-                                        text: 'Cancelar',
-                                        role: 'cancel',
-                                        handler: () => {
-                                        }
-                                    },
-                                    {
-                                        text: 'Aceptar',
-                                        handler: () => {
-                                            try {
-                                                alert.dismiss();
-                                            } catch (error) {
-                                                
-                                            }
-                                            this.goToPedidoCalificar(Number(pedido));
-                                            //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                        }
-                                    }
-                                ]
-                            });
-                            alert.present();
-                        } else if (!this.user && environment.perfil.activo == 1) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                }
-            } catch (error) {
-                console.log(error);
-
-            }
-            //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
+            this.lecturaForeground(data);
         }
     }
 }

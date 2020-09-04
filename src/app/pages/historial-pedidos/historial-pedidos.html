@@ -20,6 +20,12 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles" refreshingText="">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">
     <ion-spinner></ion-spinner>
   </div>
@@ -30,17 +36,17 @@
       <ion-icon name="ios-calendar-outline"></ion-icon>
     </button>
     <button (click)="ordenPor(4)" *ngIf="botones.boton1">
-        <div style="font-size: 12px;">Fecha solicitud</div>
-        <ion-icon name="ios-calendar"></ion-icon>
-      </button>
+      <div style="font-size: 12px;">Fecha solicitud</div>
+      <ion-icon name="ios-calendar"></ion-icon>
+    </button>
     <button (click)="ordenPor(2)" *ngIf="!botones.boton2">
       <div style="font-size: 12px;">Fecha entrega</div>
       <ion-icon name="ios-list-box-outline"></ion-icon>
     </button>
     <button (click)="ordenPor(5)" *ngIf="botones.boton2">
-        <div style="font-size: 12px;">Fecha entrega</div>
-        <ion-icon name="ios-list-box"></ion-icon>
-      </button>
+      <div style="font-size: 12px;">Fecha entrega</div>
+      <ion-icon name="ios-list-box"></ion-icon>
+    </button>
     <button (click)="ordenPor(3)" *ngIf="!botones.boton3">
       <div style="font-size: 12px;">Estatus</div>
       <ion-icon name="ios-checkbox-outline"></ion-icon>

@@ -5,11 +5,23 @@
 </ion-header>
 
 <ion-content>
-
+  <section>
+      <div style="padding: 15px;
+      font-size: 17px;
+      display: inline-block;
+      width: 85%;">
+        Desliza hacia la izquierda cada pedido para ver mas opciones
+      </div>
+      <div style="padding: 15px;
+      display: inline-block;
+      width: 14%;vertical-align: top;">
+        <img src="assets/imgs/des.png" alt="">
+      </div>
+  </section>
 
   <ion-list *ngIf="!fromPop">
     <ion-item-sliding #item *ngFor="let p of detalle">
-      <ion-item class="item-list-card" >
+      <ion-item class="item-list-card">
         <div class="datos-tarjetas" (click)="verProductos(p)">
           <div class="name">{{p.proveedor?.nombre}}</div>
           <div class="number">{{p.total | currency}}</div>
@@ -17,17 +29,25 @@
           <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>
         </div>
         <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>
-        <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar pedido</button>
+        <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar
+          pedido</button>
       </ion-item>
 
       <ion-item-options side="right">
+        <button ion-button (click)="queja(p)" color="danger">
+          <ion-icon name="ios-chatbubbles-outline"></ion-icon>
+          <div>Queja</div>
+          <div>Contact center</div>
+        </button>
         <button ion-button (click)="verChatProveedor(p)" color="primary">
           <ion-icon name="ios-chatbubbles-outline"></ion-icon>
-          Chat proveedor
+          <div>Chat</div>
+          <div>proveedor</div>
         </button>
-        <button ion-button (click)="verChatTransportista(p)" color="danger">
+        <button ion-button (click)="verChatTransportista(p)" color="primary3">
           <ion-icon name="ios-chatbubbles-outline"></ion-icon>
-          Chat transportista
+          <div>Chat</div>
+          <div>transportista</div>
         </button>
       </ion-item-options>
     </ion-item-sliding>

@@ -102,11 +102,13 @@ export class MyApp {
             login: this.user.username,
             token: token
           };
+          console.log("consumiendo?????");
+          
           this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
             this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
             this.readNotify();
           }, (error: HttpErrorResponse) => {
-
+            console.log(error);
           });
           console.log("*********************");
         });
@@ -152,8 +154,9 @@ export class MyApp {
           this.pages.push(new Menu("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", TerminosCondicionesPage));
           break;
       }
-      /** */
-
+      /** LIMPIAR VARIABLES DE NOTIFICACIONES */
+      this.localStorageEncryptService.clearProperty("pedidoChat");
+      this.localStorageEncryptService.clearProperty("pedidoPedido");
       switch (environment.perfil.activo) {
         case 1:
           if (this.user) {

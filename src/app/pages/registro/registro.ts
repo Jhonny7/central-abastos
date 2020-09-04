@@ -129,6 +129,8 @@ export class RegistroPage {
   public user: any = null;
 
   public data: any = null;
+
+  public env:any = environment;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -247,7 +249,9 @@ export class RegistroPage {
       }
 
       if (item.type == "password") {
-        tmp[1].push(ValidationService.passwordValidator);
+        tmp[1].push(ValidationService.minLengthPassValidator);
+        tmp[1].push(ValidationService.maxLengthPassValidator);
+        //tmp[1].push(ValidationService.passwordValidator);
       }
 
       if (item.type == "select") {
@@ -284,10 +288,12 @@ export class RegistroPage {
   }
 
   registrar() {
-
+    console.log(this.objetoRegistro);
     if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
-    } else if (environment.perfil.activo == 2 || environment.perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+    } else if (environment.perfil.activo == 2 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+      this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    } else if (environment.perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
     } else {
 

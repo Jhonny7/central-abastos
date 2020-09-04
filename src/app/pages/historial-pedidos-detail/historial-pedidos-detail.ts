@@ -3,7 +3,7 @@ import { QrPage } from './../qr/qr';
 import { ChatPage } from './../chat/chat';
 import { LoadingService } from './../../services/loading.service';
 import { VerProductosPage } from './../../pages-proveedor/ver-productos/ver-productos';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform } from 'ionic-angular';
 import { User } from '../../models/User';
 import { GenericService } from '../../services/generic.service';
@@ -26,7 +26,7 @@ declare var google;
   selector: 'page-historial-pedidos-detail',
   templateUrl: 'historial-pedidos-detail.html',
 })
-export class HistorialPedidosDetailPage {
+export class HistorialPedidosDetailPage implements OnDestroy {
   public user: User = null;
   public pedido: any = null;
   public map: any;
@@ -34,6 +34,8 @@ export class HistorialPedidosDetailPage {
   public tipoUsuario: any = environment.perfil.activo;
 
   public ref: any;
+
+  public idGenerado:number = 1;
 
   constructor(
     public navCtrl: NavController,
@@ -53,11 +55,16 @@ export class HistorialPedidosDetailPage {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.pedido = navParams.get("pedido");
     console.log(this.pedido);
+      this.idGenerado = Math.floor(new Date().getTime() / 1000.0);
+  }
 
+  ngOnDestroy() {
+    this.localStorageEncryptService.clearProperty("pedidoPedido");
   }
 
   ionViewDidLoad() {
     this.loadMap();
+    this.localStorageEncryptService.setToLocalStorage("pedidoPedido", this.pedido.id);
   }
 
   loadMap() {
@@ -65,8 +72,11 @@ export class HistorialPedidosDetailPage {
     let longitude = this.pedido.direccionContacto.longitud;
 
     // create a new map by passing HTMLElement
-    let mapEle: HTMLElement = document.getElementById('map_canvas');
-
+    console.log(this.idGenerado);
+    
+    let mapEle: HTMLElement = document.getElementById(`${this.idGenerado}-map`);
+    console.log(mapEle);
+    
     // create LatLng object
 
     let myLatLng = { lat: Number(latitude), lng: Number(longitude) };
@@ -77,6 +87,8 @@ export class HistorialPedidosDetailPage {
       zoom: 15
     });
 
+    console.log(this.map);
+    
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
 
       let info: any = `<div>Ejemplo de window</div>`;
@@ -114,7 +126,22 @@ export class HistorialPedidosDetailPage {
   }
 
   problemasPedido() {
-    this.navCtrl.push(ProblemasPedidoPage);
+    this.navCtrl.push(ProblemasPedidoPage, { pedidoProblem: this.pedido });
+  }
+
+  terminarPedido() {
+    let body: any = {
+      pedidoProveedorId: this.pedido.pedidoProveedores[0].id
+    };
+
+    this.genericService.sendPutRequest(environment.llegada, body).subscribe(
+      (response1: any) => {
+        this.alertaService.successAlertGeneric(`Se ha notificado al usuario de tu llegada al domicilio`);
+      },
+      (error: HttpErrorResponse) => {
+        this.alertaService.errorAlertGeneric('Ocurrió un error, por favor intenta nuevamente.');
+      }
+    );
   }
 
   verProductos() {
@@ -143,21 +170,21 @@ export class HistorialPedidosDetailPage {
     if (this.pedido.receiptUrl && this.pedido.receiptUrl.length > 0) {
       //this.returnDocument(this.pedido.folio.toString(),this.pedido.receiptUrl,'application/pdf');
       this.aceptarRedirect(this.pedido.receiptUrl);
-    }else{
+    } else {
       this.alertaService.warnAlertGeneric("No se ha generado el ticket de tu pedido, contacta al administrador");
     }
     //
   }
   /**Accept redirect android */
   async aceptarRedirectAndroid(linkTemp: any) {
-    let script:any = "window.print();"
+    let script: any = "window.print();"
     let ref = this.iab.create(linkTemp, '_blank', 'location=yes');
 
 
     ref.on('loadstop').subscribe((event: InAppBrowserEvent) => {
       console.log("script ejecuta");
-      
-        ref.executeScript({ code: script });
+
+      ref.executeScript({ code: script });
     });
     ref.on('exit').subscribe((event: InAppBrowserEvent) => {
     });
@@ -175,16 +202,16 @@ export class HistorialPedidosDetailPage {
     this.ref = this.iab.create(linkTemp, '_blank', 'location=yes');
 
 
-    let script:any = "window.print();"
+    let script: any = "window.print();"
 
 
     this.ref.on('loadstop').subscribe((event: InAppBrowserEvent) => {
-     
-        this.ref.executeScript({ code: script });
+
+      this.ref.executeScript({ code: script });
 
     });
     this.ref.on('exit').subscribe((event: InAppBrowserEvent) => {
-      
+
     });
     this.ref.on('loadstart').subscribe((event: InAppBrowserEvent) => {
 

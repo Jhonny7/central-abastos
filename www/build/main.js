@@ -29,7 +29,7 @@ var ReciboPagoPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-recibo-pago',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recibo-pago/recibo-pago.html"*/'<!--\n  Generated template for the ReciboPagoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>recibo-pago</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recibo-pago/recibo-pago.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
     ], ReciboPagoPage);
     return ReciboPagoPage;
 }());
@@ -47,7 +47,7 @@ var ReciboPagoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -157,14 +157,14 @@ var CardProductoComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], CardProductoComponent.prototype, "retornarImagen", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */])
     ], CardProductoComponent.prototype, "slider", void 0);
     CardProductoComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'cmpt-card-producto',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/components/card-producto/card-producto.html"*/'<div *ngIf="showSpinner && cards?.length == 0" class="divSpinner animated fadeIn">\n  <ion-spinner></ion-spinner>\n</div>\n<div style="box-shadow: 1px 1px 6px 1px #646467;" class="animated fadeIn">\n  <img src="{{imagen}}" alt="" style="width: 100%;">\n</div>\n<div class="slider-io">\n  <ion-slides class="ionSlidesAndroid animated fadeIn" autoplay="5000" loop="false" speed="500" pager\n  (ionSlideDidChange)="didChange($event)">\n    <ion-slide *ngFor="let slide of cards; let i = index" [ngClass]="{\'adjustEntertaiment\' : isEntertaiment}">\n      <img src="{{slide.url}}" alt="" (click)="changeImage(i)">\n      <div class="textoGana" [ngStyle]="{\'margin-top\': titleUp ? \'0%\' :  !showButton ? \'0%\' : \'\'}" *ngIf="!isEntertaiment">\n      </div>\n      <div *ngIf="isEntertaiment" class="titlesAlign">\n      </div>\n    </ion-slide>\n  </ion-slides>\n  <div class="arrows-lateral">\n    <div (tap)="prev()">\n      <ion-icon ios="ios-arrow-back" md="ios-arrow-back" [ngStyle]="{\'display\': !leftArrow ? \'none\' : \'block\', \'text-shadow\': !leftArrow ? \'none\' : \'\'}"></ion-icon>\n    </div>\n    <div (tap)="next()" *ngIf="cards?.length > 0">\n      <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" [ngStyle]="{\'display\': !rigthArrow ? \'none\' : \'block\', \'text-shadow\': !rigthArrow ? \'none\' : \'\'}"></ion-icon>\n    </div>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/components/card-producto/card-producto.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]])
@@ -176,290 +176,22 @@ var CardProductoComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 11:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocalStorageEncryptService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_crypto_js__ = __webpack_require__(645);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_crypto_js__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-/**Clase que guarda información en localstorage pero de forma
- * encriptada para no dejar a la vista del usuario o de terceros, la
- * información detallada de lo que se requiere utilizar durante el ciclo de vida
- * de la aplicación
- */
-var LocalStorageEncryptService = /** @class */ (function () {
-    function LocalStorageEncryptService() {
-        /**
-         * Llave secreta para encriptar y desencriptar la informacion almacenada
-         */
-        this.secretKey = 'RG5vt457u%$5bj78c452YBBc24432c%#T7&$tv657bu6B&BvH76hvv64';
-    }
-    /**
-     * Almacena encriptado los datos necesarios en el localstorage
-     * @param key Llave a almacenar
-     * @param data Dato a almacenar
-     */
-    LocalStorageEncryptService.prototype.setToLocalStorage = function (key, data) {
-        var encryptedData = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["AES"].encrypt(JSON.stringify(data), this.secretKey).toString();
-        //console.log("encriptado",encryptedData);
-        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](key).toString();
-        encryptedData = JSON.stringify(data);
-        encryptedKey = key;
-        localStorage.setItem(encryptedKey, encryptedData);
-    };
-    LocalStorageEncryptService.prototype.yayirobe = function (data) {
-        return __WEBPACK_IMPORTED_MODULE_1_crypto_js__["AES"].decrypt(data, this.secretKey).toString(__WEBPACK_IMPORTED_MODULE_1_crypto_js__["enc"].Utf8);
-    };
-    /**
-     * Recupera valores del localstorage por medio de la llave
-     * @param key Llave a obtener
-     */
-    LocalStorageEncryptService.prototype.getFromLocalStorage = function (key) {
-        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](key).toString();
-        encryptedKey = key;
-        var item = localStorage.getItem(encryptedKey);
-        if (item === undefined || item === null) {
-            return null;
-        }
-        var dencryptedData; // = CryptoJS.AES.decrypt(item, this.secretKey).toString(CryptoJS.enc.Utf8);
-        dencryptedData = 1;
-        if (dencryptedData == 1) {
-            return JSON.parse(item);
-        }
-        else {
-            if (this.isJson(dencryptedData)) {
-                return JSON.parse(dencryptedData);
-            }
-            else {
-                return dencryptedData;
-            }
-        }
-    };
-    /**
-     * Limpia todo el localstorage
-     */
-    LocalStorageEncryptService.prototype.clear = function () {
-        localStorage.clear();
-    };
-    /**
-     * Remueve una propiedad especifica del local storage
-     * @param property Propiedad a eliminar
-     */
-    LocalStorageEncryptService.prototype.clearProperty = function (property) {
-        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](property).toString();
-        //localStorage.removeItem(encryptedKey);
-        localStorage.removeItem(property);
-    };
-    /**
-     * Valida si una cadena cumple el formato JSON
-     * @param str Cadena a validar
-     * @returns True si cumple el formato False no cumple el formato
-     */
-    LocalStorageEncryptService.prototype.isJson = function (str) {
-        try {
-            JSON.parse(str);
-        }
-        catch (e) {
-            return false;
-        }
-        return true;
-    };
-    LocalStorageEncryptService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [])
-    ], LocalStorageEncryptService);
-    return LocalStorageEncryptService;
-}());
-
-//# sourceMappingURL=local-storage-encrypt.service.js.map
-
-/***/ }),
-
-/***/ 118:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OpcionesMenuPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cambio_contrasenia_cambio_contrasenia__ = __webpack_require__(413);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lista_carrito_compras_lista_carrito_compras__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_header_color__ = __webpack_require__(221);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-var OpcionesMenuPage = /** @class */ (function () {
-    function OpcionesMenuPage(navCtrl, navParams, localStorageEncryptService, alertCtrl, app, viewCtrl, events, genericService, headerColor) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.localStorageEncryptService = localStorageEncryptService;
-        this.alertCtrl = alertCtrl;
-        this.app = app;
-        this.viewCtrl = viewCtrl;
-        this.events = events;
-        this.genericService = genericService;
-        this.headerColor = headerColor;
-        this.user = null;
-        this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
-        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.events.subscribe("reloadUser", function (data) {
-            try {
-                _this.user = _this.localStorageEncryptService.getFromLocalStorage("userSession");
-            }
-            catch (error) {
-            }
-        });
-    }
-    OpcionesMenuPage.prototype.ionViewDidLoad = function () {
-    };
-    OpcionesMenuPage.prototype.logout = function () {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: "Confirmación",
-            message: "¿Estás segur@ de cerrar sesión?",
-            cssClass: this.genericService.getColorClassTWO(),
-            buttons: [
-                {
-                    text: "Cancelar",
-                    role: 'cancel',
-                    handler: function () {
-                    }
-                },
-                {
-                    text: 'Ok',
-                    handler: function () {
-                        _this.confirmar();
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
-    OpcionesMenuPage.prototype.confirmar = function () {
-        try {
-            this.localStorageEncryptService.clearProperty("userSession");
-            this.viewCtrl.dismiss();
-            var nav = this.app.getRootNav();
-            nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */]);
-        }
-        catch (error) {
-        }
-    };
-    OpcionesMenuPage.prototype.openListCarrito = function () {
-        var nav = this.app.getRootNav();
-        this.viewCtrl.dismiss();
-        nav.push(__WEBPACK_IMPORTED_MODULE_6__lista_carrito_compras_lista_carrito_compras__["a" /* ListaCarritoComprasPage */]);
-    };
-    OpcionesMenuPage.prototype.change = function (opt) {
-        switch (opt) {
-            case 1:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
-                this.headerColor.tint("#3b64c0");
-                break;
-            case 2:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#be3b3b");
-                this.headerColor.tint("#be3b3b");
-                break;
-            case 3:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#3bb8be");
-                this.headerColor.tint("#3bb8be");
-                break;
-            case 4:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#74be3b");
-                this.headerColor.tint("#74be3b");
-                break;
-            case 5:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#292929");
-                this.headerColor.tint("#292929");
-                break;
-            case 6:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
-                this.headerColor.tint("#F07C1B");
-                break;
-            default:
-                this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
-                this.headerColor.tint("#3b64c0");
-                break;
-        }
-        this.events.publish("changeColor");
-    };
-    OpcionesMenuPage.prototype.login = function () {
-        this.viewCtrl.dismiss();
-        this.app.getRootNav().push(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */]);
-    };
-    OpcionesMenuPage.prototype.cambiarContra = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__cambio_contrasenia_cambio_contrasenia__["a" /* CambioContraseniaPage */]);
-    };
-    OpcionesMenuPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
-            selector: 'page-opciones-menu',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/opciones-menu/opciones-menu.html"*/'<div>\n  <ion-list>\n    <ion-list-header style="margin: 0px;">General</ion-list-header>\n\n    <!-- <div style="padding: 10px;text-align: center;">Elige un tema</div>\n    <ion-row class="rowi">\n      <ion-col col-2 class="tema-6">\n        <button (click)="change(6)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-1">\n        <button (click)="change(1)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-2">\n        <button (click)="change(2)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-3">\n        <button (click)="change(3)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-4">\n        <button (click)="change(4)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-5">\n        <button (click)="change(5)"></button>\n      </ion-col>\n    </ion-row> -->\n\n    <button ion-item (click)="openListCarrito()" *ngIf="user && env.perfil.activo == 1">\n      <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>\n      Listas de carrito\n    </button>\n\n    <button ion-item (click)="cambiarContra()" *ngIf="user">\n      <ion-icon name="ios-construct-outline" style="font-size: 2.4rem;"></ion-icon>\n      Cambiar contraseña\n    </button>\n\n    <button ion-item (click)="logout()" *ngIf="user">\n      <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>\n      Cerrar sesión\n    </button>\n\n    <button ion-item (click)="login()" *ngIf="!user">\n      <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>\n      Iniciar sesión\n    </button>\n  </ion-list>\n</div>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/opciones-menu/opciones-menu.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["q" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_8__ionic_native_header_color__["a" /* HeaderColor */]])
-    ], OpcionesMenuPage);
-    return OpcionesMenuPage;
-}());
-
-//# sourceMappingURL=opciones-menu.js.map
-
-/***/ }),
-
 /***/ 119:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_pushNotifications_service__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_pushNotifications_service__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registro_registro__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__registro_registro__ = __webpack_require__(453);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__tabs_tabs__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__recupera_contrasenia_recupera_contrasenia__ = __webpack_require__(589);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__tabs_tabs__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__recupera_contrasenia_recupera_contrasenia__ = __webpack_require__(590);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_proveedor_tabs_tabs__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__ = __webpack_require__(219);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -529,6 +261,24 @@ var LoginPage = /** @class */ (function () {
         var nav = this.app.getRootNav();
         nav.setRoot(__WEBPACK_IMPORTED_MODULE_9__tabs_tabs__["a" /* TabsPage */]);
     };
+    LoginPage.prototype.actualizarToken = function (response) {
+        var _this = this;
+        this.fcm.getToken().then(function (token) {
+            console.log("*********************");
+            console.log(token);
+            //localStorage.setItem("token", token);
+            var body = {
+                login: response.username,
+                token: token
+            };
+            _this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].usuarios, body).subscribe(function (response) {
+                _this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+                _this.readNotify();
+            }, function (error) {
+            });
+            console.log("*********************");
+        });
+    };
     LoginPage.prototype.login = function () {
         var _this = this;
         this.loadingService.show().then(function () {
@@ -562,21 +312,7 @@ var LoginPage = /** @class */ (function () {
                         default:
                             break;
                     }
-                    _this.fcm.getToken().then(function (token) {
-                        console.log("*********************");
-                        console.log(token);
-                        //localStorage.setItem("token", token);
-                        var body = {
-                            login: response.username,
-                            token: token
-                        };
-                        _this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].usuarios, body).subscribe(function (response) {
-                            _this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
-                            _this.readNotify();
-                        }, function (error) {
-                        });
-                        console.log("*********************");
-                    });
+                    _this.actualizarToken(response);
                 }
                 else {
                     _this.alertaService.warnAlertGeneric("No has dado de alta tu usuario, por favor, registrate");
@@ -611,8 +347,8 @@ var LoginPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-login',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/login/login.html"*/'<!-- background-color: #258649; -->\n<ion-icon *ngIf="env.perfil.activo == 1" id="icn-5" name="ios-arrow-back" class="arrow-generada" (click)="regresar()" [ngStyle]="{\'color\': color}"></ion-icon>\n<ion-content class="max-contenedor" padding style="background-image: url(assets/imgs/login/loginFondo.png);"\n[style.background-image]="\'url(\'+genericService.imgLogin()+\')\'">\n  <section class="container animated rubberBand">\n    <section class="flex">\n      <img src="assets/imgs/logo.png" alt="" class="animated fadeIn">\n\n      <section class="input-section">\n        <input [(ngModel)]="dataLogin.user" type="email" placeholder="{{\'EMAIL\' | translate}}">\n        <div class="interno">\n          <input [(ngModel)]="dataLogin.password" type="{{configuraciones.visible ? \'text\' : \'password\'}}" placeholder="{{\'PASSWORD\' | translate}}">\n          <section (touchstart)="visible()" (touchend)="visible()">\n            <ion-icon ios="ios-eye" md="ios-eye"></ion-icon>\n          </section>\n        </div>\n\n        <button (click)="login()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">{{\'LOGIN\' | translate}}</button>\n      </section>\n      <section class="registrate">\n        <a (click)="goToRegister()" [ngStyle]="{\'color\': genericService.getColorHex()}">¿Aún no te has registrado?</a>\n      </section>\n      <section class="registrate">\n        <a (click)="olvideContrasenia()" [ngStyle]="{\'color\': genericService.getColorHex()}">Olvidé mi contraseña</a>\n      </section>\n    </section>\n  </section>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/login/login.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_6__services_generic_service__["a" /* GenericService */],
@@ -620,7 +356,7 @@ var LoginPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
             __WEBPACK_IMPORTED_MODULE_12__ionic_native_fcm__["a" /* FCM */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* Platform */],
             __WEBPACK_IMPORTED_MODULE_0__services_pushNotifications_service__["a" /* PushNotificationService */]])
     ], LoginPage);
     return LoginPage;
@@ -634,9 +370,1698 @@ var LoginPage = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export pathPrincipal */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return pathChat; });
+/* unused harmony export appCliente */
+/* unused harmony export appProveedor */
+/* unused harmony export appTransportista */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+//export const pathPrincipal = "http://localhost:8080/api/";
+//export const pathPrincipal = "https://dev-cabasto.sharktech.com.mx/api/";
+//export const pathChat = "https://dev-cabasto.sharktech.com.mx/";
+/**PATH PRODUCTIVO */
+var pathPrincipal = "https://app.luegoluego.com.mx/api/";
+var pathChat = "https://app.luegoluego.com.mx/";
+//export const pathChat = "http://localhost:8080/";
+var appCliente = 1;
+var appProveedor = 2;
+var appTransportista = 3;
+var environment = {
+    production: true,
+    productos: pathPrincipal + "productos",
+    productosCategoria: pathPrincipal + "productos/home",
+    proveedorProductos: pathPrincipal + "proveedor-productos",
+    categoria: pathPrincipal + "proveedor-productos/categoria/",
+    secciones: pathPrincipal + "seccions",
+    categorias: pathPrincipal + "categorias",
+    proveedores: pathPrincipal + "proveedors",
+    proveedoresFull: pathPrincipal + "proveedores",
+    proveedor: pathPrincipal + "proveedor",
+    transportista: pathPrincipal + "transportista",
+    proveedoresProducto: pathPrincipal + "proveedores/producto/",
+    registro: pathPrincipal + "register",
+    login: pathPrincipal + "authenticate",
+    carritoCompras: pathPrincipal + "carrito-compras",
+    carritoHistorico: pathPrincipal + "carrito-historicos",
+    carritoHistoricoDetalle: pathPrincipal + "carrito-historico-detalles",
+    getImagenIndividual: pathPrincipal + "adjuntos/download/",
+    promociones: pathPrincipal + "promociones",
+    tarjetas: pathPrincipal + "tarjetas",
+    direcciones: pathPrincipal + "usuario-direcciones",
+    tipoDirecciones: pathPrincipal + "tipo-direcciones",
+    pedidos: pathPrincipal + "pedidos",
+    pedidosProveedor: pathPrincipal + "proveedor/pedidos",
+    pedidosTransportista: pathPrincipal + "transportista/pedidos",
+    pedidosProveedores: pathPrincipal + "proveedor/pedido-proveedores",
+    pedidosTransportistas: pathPrincipal + "transportista/pedido-proveedores",
+    calificacionServicio: pathPrincipal + "pedido-proveedores/calificacion-servicio",
+    usuarios: pathPrincipal + "usuarios",
+    llegada: pathPrincipal + "transportista/pedido-proveedores/notificacion-llegada",
+    queja: pathPrincipal + "quejas",
+    usuarioDocumentos: pathPrincipal + "usuario-documentos",
+    users: pathPrincipal + "users",
+    chats: pathPrincipal + "chats",
+    chatsProveedor: pathPrincipal + "proveedor/chats/pedido-proveedor/",
+    cambioContraseña: pathPrincipal + "account/change-password",
+    carritoComprasProveedor: pathPrincipal + "carrito-compras-proveedor",
+    carritoHistoricosProveedor: pathPrincipal + "carrito-historicos-proveedores",
+    reset: pathPrincipal + "account/reset-password/init",
+    logout: null,
+    icons: {
+        persona: {
+            icon: "assets/imgs/direcciones/m3.png"
+        },
+        casa: {
+            icon: "assets/imgs/direcciones/m2.png"
+        },
+        lugar: {
+            icon: "assets/imgs/direcciones/m1.png"
+        },
+        proveedor: {
+            icon: "assets/imgs/direcciones/m4.png"
+        }
+    },
+    //info de GOOGLE
+    geocodeGoogle: "https://maps.googleapis.com/maps/api/geocode/json",
+    keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
+    //Fines de pruebas
+    emulado: false,
+    //Aqui "cambiamos" la app en ejecución
+    perfil: {
+        activo: appCliente,
+    },
+    st: {
+        //keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
+        keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
+    }
+};
+//# sourceMappingURL=environment.prod.js.map
+
+/***/ }),
+
+/***/ 120:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HistorialPedidosDetailPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_lista_chat_lista_chat__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__qr_qr__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_chat__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_loading_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_proveedor_ver_productos_ver_productos__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pedidos_detail_pedidos_detail__ = __webpack_require__(446);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__problemas_pedido_problemas_pedido__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_common_http__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_qr_scanner__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_in_app_browser__ = __webpack_require__(450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_file__ = __webpack_require__(451);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_opener__ = __webpack_require__(452);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var HistorialPedidosDetailPage = /** @class */ (function () {
+    function HistorialPedidosDetailPage(navCtrl, navParams, genericService, localStorageEncryptService, alertaService, loadingService, qrScanner, alertCtrl, actionSheetCtrl, iab, httpClient, platform, file, fileOpener) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.genericService = genericService;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.alertaService = alertaService;
+        this.loadingService = loadingService;
+        this.qrScanner = qrScanner;
+        this.alertCtrl = alertCtrl;
+        this.actionSheetCtrl = actionSheetCtrl;
+        this.iab = iab;
+        this.httpClient = httpClient;
+        this.platform = platform;
+        this.file = file;
+        this.fileOpener = fileOpener;
+        this.user = null;
+        this.pedido = null;
+        this.tipoUsuario = __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo;
+        this.idGenerado = 1;
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        this.pedido = navParams.get("pedido");
+        console.log(this.pedido);
+        this.idGenerado = Math.floor(new Date().getTime() / 1000.0);
+    }
+    HistorialPedidosDetailPage.prototype.ngOnDestroy = function () {
+        this.localStorageEncryptService.clearProperty("pedidoPedido");
+    };
+    HistorialPedidosDetailPage.prototype.ionViewDidLoad = function () {
+        this.loadMap();
+        this.localStorageEncryptService.setToLocalStorage("pedidoPedido", this.pedido.id);
+    };
+    HistorialPedidosDetailPage.prototype.loadMap = function () {
+        var _this = this;
+        var latitude = this.pedido.direccionContacto.latitud;
+        var longitude = this.pedido.direccionContacto.longitud;
+        // create a new map by passing HTMLElement
+        console.log(this.idGenerado);
+        var mapEle = document.getElementById(this.idGenerado + "-map");
+        console.log(mapEle);
+        // create LatLng object
+        var myLatLng = { lat: Number(latitude), lng: Number(longitude) };
+        // create map
+        this.map = new google.maps.Map(mapEle, {
+            center: myLatLng,
+            zoom: 15
+        });
+        console.log(this.map);
+        google.maps.event.addListenerOnce(this.map, 'idle', function () {
+            var info = "<div>Ejemplo de window</div>";
+            var infowindow = new google.maps.InfoWindow({
+                content: info
+            });
+            var component = _this;
+            component.marker = new google.maps.Marker({
+                position: myLatLng,
+                map: _this.map,
+                title: 'Hello World!',
+                id: "marcador-1",
+                //draggable: true,
+                icon: __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].icons['persona'].icon
+            });
+            component.marker.addListener('click', function () {
+                //infowindow.open(this.map, this.marker);
+                //component.changeInfoCard();
+            });
+            /* marker.addEventListener("click", (e: Event) => {
+             
+              
+            }); */
+            mapEle.classList.add('show-map');
+        });
+    };
+    HistorialPedidosDetailPage.prototype.verDetalle = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_11__pedidos_detail_pedidos_detail__["a" /* PedidosDetailPage */], { detalle: this.pedido.pedidoProveedores, id: this.pedido.id });
+    };
+    HistorialPedidosDetailPage.prototype.problemasPedido = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_12__problemas_pedido_problemas_pedido__["a" /* ProblemasPedidoPage */], { pedidoProblem: this.pedido });
+    };
+    HistorialPedidosDetailPage.prototype.terminarPedido = function () {
+        var _this = this;
+        var body = {
+            pedidoProveedorId: this.pedido.pedidoProveedores[0].id
+        };
+        this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].llegada, body).subscribe(function (response1) {
+            _this.alertaService.successAlertGeneric("Se ha notificado al usuario de tu llegada al domicilio");
+        }, function (error) {
+            _this.alertaService.errorAlertGeneric('Ocurrió un error, por favor intenta nuevamente.');
+        });
+    };
+    HistorialPedidosDetailPage.prototype.verProductos = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__pages_proveedor_ver_productos_ver_productos__["a" /* VerProductosPage */], { pedidos: this.pedido });
+    };
+    HistorialPedidosDetailPage.prototype.terminarServicio = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_1__qr_qr__["a" /* QrPage */], { pedido: this.pedido });
+    };
+    HistorialPedidosDetailPage.prototype.enviarPedido = function () {
+        var _this = this;
+        var body = {
+            pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
+            estatusId: 18 //antes 14
+        };
+        this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].pedidosProveedores, body).subscribe(function (response1) {
+            _this.alertaService.successAlertGeneric("El pedido se ha enviado al transportista");
+        }, function (error) {
+            _this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");
+        });
+    };
+    HistorialPedidosDetailPage.prototype.verRecibo = function () {
+        if (this.pedido.receiptUrl && this.pedido.receiptUrl.length > 0) {
+            //this.returnDocument(this.pedido.folio.toString(),this.pedido.receiptUrl,'application/pdf');
+            this.aceptarRedirect(this.pedido.receiptUrl);
+        }
+        else {
+            this.alertaService.warnAlertGeneric("No se ha generado el ticket de tu pedido, contacta al administrador");
+        }
+        //
+    };
+    /**Accept redirect android */
+    HistorialPedidosDetailPage.prototype.aceptarRedirectAndroid = function (linkTemp) {
+        return __awaiter(this, void 0, void 0, function () {
+            var script, ref;
+            return __generator(this, function (_a) {
+                script = "window.print();";
+                ref = this.iab.create(linkTemp, '_blank', 'location=yes');
+                ref.on('loadstop').subscribe(function (event) {
+                    console.log("script ejecuta");
+                    ref.executeScript({ code: script });
+                });
+                ref.on('exit').subscribe(function (event) {
+                });
+                ref.on('loadstart').subscribe(function (event) {
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    /**Accept redirect android */
+    HistorialPedidosDetailPage.prototype.aceptarRedirectIOS = function (linkTemp) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var script;
+            return __generator(this, function (_a) {
+                if (this.ref) {
+                    this.ref.close();
+                    this.ref = undefined;
+                }
+                this.ref = this.iab.create(linkTemp, '_blank', 'location=yes');
+                script = "window.print();";
+                this.ref.on('loadstop').subscribe(function (event) {
+                    _this.ref.executeScript({ code: script });
+                });
+                this.ref.on('exit').subscribe(function (event) {
+                });
+                this.ref.on('loadstart').subscribe(function (event) {
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    /**Método que hace el redirect y genera un autoclick en el formulario que se envia */
+    HistorialPedidosDetailPage.prototype.aceptarRedirect = function (linkTemp) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                if (this.platform.is("ios")) {
+                    this.aceptarRedirectIOS(linkTemp);
+                }
+                else {
+                    this.aceptarRedirectAndroid(linkTemp);
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    HistorialPedidosDetailPage.prototype.returnDocument = function (titulo, filePath, mimeType) {
+        var _this = this;
+        /* this.fileOpener.open(filePath, mimeType)
+          .then(() => console.log('File is opened'))
+          .catch(e => console.log('Error opening file', e)); */
+        var headers = new __WEBPACK_IMPORTED_MODULE_13__angular_common_http__["d" /* HttpHeaders */]();
+        headers = headers.set('Accept', 'application/pdf');
+        this.httpClient.get(filePath, { headers: headers, responseType: 'blob' }).subscribe(function (resp) {
+            console.log(resp);
+            var path = null;
+            if (_this.platform.is('ios')) {
+                path = _this.file.tempDirectory;
+            }
+            else {
+                path = _this.file.externalRootDirectory;
+            }
+            console.log(path);
+            console.log(_this.platform.is('ios'));
+            _this.file.writeExistingFile(path, titulo + ".pdf", resp).then(function (response) {
+                console.log('successfully wrote to file', response);
+                _this.fileOpener.open(path + (titulo + ".pdf"), 'application/pdf').then(function (response) {
+                    console.log('opened PDF file successfully', response);
+                }).catch(function (err) {
+                    console.log('error in opening pdf file', err);
+                });
+            }).catch(function (err) {
+                console.log('error writing to file', err);
+            });
+        });
+    };
+    HistorialPedidosDetailPage.prototype.completarServicio = function (tokenEntrada) {
+        var _this = this;
+        var body = {
+            pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
+            token: tokenEntrada
+        };
+        this.loadingService.show().then(function () {
+            _this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].pedidosTransportistas + "/terminar-servicio", body).subscribe(function (response) {
+                _this.loadingService.hide();
+                _this.alertaService.successAlertGeneric("El servició terminó correctamente");
+            }, function (error) {
+                _this.loadingService.hide();
+                _this.alertaService.errorAlertGeneric("Ocurrió un error, por favor vuelve a intentarlo");
+            });
+        });
+    };
+    HistorialPedidosDetailPage.prototype.presentActionSheet = function () {
+        var _this = this;
+        var actionSheet = this.actionSheetCtrl.create({
+            title: 'Selecciona',
+            buttons: [
+                {
+                    text: 'Escanear',
+                    icon: 'ios-barcode-outline',
+                    handler: function () {
+                        _this.qrScanner.prepare()
+                            .then(function (status) {
+                            if (status.authorized) {
+                                // camera permission was granted
+                                // start scanning
+                                var scanSub_1 = _this.qrScanner.scan().subscribe(function (text) {
+                                    console.log('Scanned something', text);
+                                    ///LOGICA DE ESCANEO Y MANDADO EL TEXTO
+                                    _this.completarServicio(text);
+                                    ///
+                                    _this.qrScanner.hide(); // hide camera preview
+                                    scanSub_1.unsubscribe(); // stop scanning
+                                });
+                            }
+                            else if (status.denied) {
+                                // camera permission was permanently denied
+                                // you must use QRScanner.openSettings() method to guide the user to the settings page
+                                // then they can grant the permission from there
+                                _this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
+                            }
+                            else {
+                                // permission was denied, but not permanently. You can ask for permission again at a later time.
+                                _this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
+                            }
+                        })
+                            .catch(function (e) { return console.log('Error is', e); });
+                    }
+                },
+                {
+                    text: 'Ingresar manual',
+                    icon: 'create',
+                    handler: function () {
+                        var alert = _this.alertCtrl.create({
+                            title: 'Escaneo de código',
+                            inputs: [
+                                {
+                                    name: 'token',
+                                    placeholder: 'Código'
+                                }
+                            ],
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel',
+                                    handler: function (data) {
+                                        console.log('Cancel clicked');
+                                    }
+                                },
+                                {
+                                    text: 'Aceptar',
+                                    handler: function (data) {
+                                        //data.token
+                                        _this.completarServicio(data.token);
+                                    }
+                                }
+                            ]
+                        });
+                        alert.present();
+                    }
+                },
+                {
+                    text: 'Cancelar',
+                    role: 'destructive',
+                    handler: function () {
+                        console.log('Cancel clicked');
+                    }
+                }
+            ]
+        });
+        actionSheet.present();
+    };
+    HistorialPedidosDetailPage.prototype.verMapa = function () {
+        if (__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
+            //http://google.com/maps/@?api=1&map_action=map&center=-33.712206,150.311941&zoom=1
+            var latitude = this.pedido.direccionContacto.latitud;
+            var longitude = this.pedido.direccionContacto.longitud;
+            window.open("https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=" + latitude + "," + longitude + "&zoom=18");
+        }
+    };
+    HistorialPedidosDetailPage.prototype.verChat = function () {
+        var _this = this;
+        switch (__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo) {
+            case 1:
+                if (!this.pedido.pedidoProveedores[0].chatProveedorid) {
+                    this.alertaService.warnAlertGeneric("El proveedor aun no inicia el chat, espera a que él se comunique contigo");
+                }
+                else {
+                    /* this.loadingService.show().then(() => {
+                      this.genericService.sendGetRequest(`${environment.chats}/${this.pedido.pedidoProveedores[0].chatProveedorid}`).subscribe((response: any) => {
+                        */
+                    this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__pages_lista_chat_lista_chat__["a" /* ListaChatPage */], { chats: this.pedido.pedidoProveedores, pedido: this.pedido });
+                    /* this.loadingService.hide();
+                  }, (error: HttpErrorResponse) => {
+                    this.loadingService.hide();
+                    let err: any = error.error;
+                    this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+                  });
+                }); */
+                }
+                break;
+            case 2:
+                this.loadingService.show().then(function () {
+                    _this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].chatsProveedor + _this.pedido.pedidoProveedores[0].id + "/tipoChat/1").subscribe(function (response) {
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__chat_chat__["a" /* ChatPage */], { chat: response, pedido: _this.pedido });
+                        _this.loadingService.hide();
+                    }, function (error) {
+                        _this.loadingService.hide();
+                        var err = error.error;
+                        _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+                    });
+                });
+                break;
+            case 3:
+                this.loadingService.show().then(function () {
+                    _this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].chatsProveedor + _this.pedido.pedidoProveedores[0].id + "/tipoChat/2").subscribe(function (response) {
+                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__chat_chat__["a" /* ChatPage */], { chat: response, pedido: _this.pedido });
+                        _this.loadingService.hide();
+                    }, function (error) {
+                        _this.loadingService.hide();
+                        var err = error.error;
+                        _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+                    });
+                });
+                break;
+        }
+    };
+    HistorialPedidosDetailPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
+            selector: 'page-historial-pedidos-detail',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos-detail/historial-pedidos-detail.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title style="padding:0px">Pedido <strong>{{pedido.folio}}</strong></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <section class="estatus">\n    <div class="number">Costo <strong>{{pedido.total | currency}}</strong></div>\n    <div class="number">Fecha Solicitud <strong>{{pedido.fechaAlta}}</strong></div>\n    <div class="number" *ngIf="pedido.fechaEntrega">Fecha Entrega <strong>{{pedido.fechaEntrega}}</strong></div>\n    <div class="number">Estatus <strong>{{pedido.estatus.nombre}}</strong></div>\n  </section>\n\n  <section class="mapa">\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}" *ngIf="tipoUsuario == 3">Proveedor</div>\n    <div class="direct" *ngIf="tipoUsuario == 3">{{pedido.cliente.firstName}}\n      {{pedido.cliente.lastName}}</div>\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">Cliente</div>\n    <div class="direct" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">{{pedido.cliente.firstName}}\n      {{pedido.cliente.lastName}}</div>\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}">Dirección de entrega</div>\n    <div class="direct">{{pedido.direccionContacto.direccion}}</div>\n\n\n\n    <div id="{{idGenerado}}-map" class="mapita-google" (click)="verMapa()" style="margin-bottom: 10%;height: 100%;\n    border-radius: 4px;\n    box-shadow: 0px 0px 5px #b3b3b3;"></div>\n\n\n    <section class="botones" *ngIf="tipoUsuario == 1" style="margin-top:0px">\n      <!-- <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="terminarServicio()"><ion-icon name="md-done-all"></ion-icon>Terminar servicio</button> -->\n      <button class="boton-detalle" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verDetalle()">\n        <ion-icon name="ios-clipboard-outline"></ion-icon>Ver detalle\n      </button>\n      <!-- <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n        <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n        Chat\n      </button> -->\n      <button class="boton-recibo" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verRecibo()">\n        <ion-icon name="ios-document-outline"></ion-icon>Ver recibo\n      </button>\n    </section>\n\n    <section class="botones" *ngIf="tipoUsuario == 2" style="margin-top:0px">\n      <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verProductos()">\n        <ion-icon name="md-done-all"></ion-icon>Ver productos\n      </button>\n      <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n        <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n        Chat\n      </button>\n      <button class="boton-recibo" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="enviarPedido()"\n        style="font-size: 11px;">\n        <ion-icon name="ios-send-outline"></ion-icon>Enviar a transportista\n      </button>\n      <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}"\n        (click)="problemasPedido()">\n        <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido\n      </button>\n    </section>\n\n    <section class="botones" *ngIf="tipoUsuario == 3" style="margin-top:0px">\n      <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verProductos()">\n        <ion-icon name="md-done-all"></ion-icon>Ver productos\n      </button>\n      <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n        <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n        Chat\n      </button>\n      <button class="boton-problemas2" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="presentActionSheet()">\n        <ion-icon name="ios-flash-outline"></ion-icon>Terminar pedido\n      </button>\n      <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}"\n        (click)="problemasPedido()">\n        <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido\n      </button>\n\n      <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}"\n        (click)="terminarPedido()">\n        <ion-icon name="ios-flash-outline"></ion-icon>En domicilio\n      </button>\n    </section>\n  </section>\n\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos-detail/historial-pedidos-detail.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_7__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_9__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_14__ionic_native_qr_scanner__["a" /* QRScanner */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["a" /* ActionSheetController */],
+            __WEBPACK_IMPORTED_MODULE_15__ionic_native_in_app_browser__["a" /* InAppBrowser */],
+            __WEBPACK_IMPORTED_MODULE_13__angular_common_http__["b" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["o" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_16__ionic_native_file__["a" /* File */],
+            __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_opener__["a" /* FileOpener */]])
+    ], HistorialPedidosDetailPage);
+    return HistorialPedidosDetailPage;
+}());
+
+//# sourceMappingURL=historial-pedidos-detail.js.map
+
+/***/ }),
+
+/***/ 123:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticuloProveedoresPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loading_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__detalle_producto_detalle_producto__ = __webpack_require__(45);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var ArticuloProveedoresPage = /** @class */ (function () {
+    function ArticuloProveedoresPage(navCtrl, navParams, genericService, alertaService, loadingService, localStorageEncryptService, events) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.genericService = genericService;
+        this.alertaService = alertaService;
+        this.loadingService = loadingService;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.events = events;
+        this.productos = [];
+        this.replicaProductos = [];
+        this.palabra = "";
+        this.env = __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__["a" /* environment */];
+        this.proveedor = null;
+        this.fromCliente = false;
+        this.proveedor = navParams.get("proveedor");
+        this.productos = navParams.get("productos");
+        this.fromCliente = navParams.get("fromCliente");
+        this.replicaProductos = this.productos;
+    }
+    ArticuloProveedoresPage.prototype.ionViewDidLoad = function () {
+    };
+    ArticuloProveedoresPage.prototype.viewDetail = function (producto) {
+        var _this = this;
+        //consumir servicio de imagenes completas
+        if (!this.fromCliente) {
+            this.loadingService.show().then(function () {
+                _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__["a" /* environment */].proveedorProductos + "/" + producto.id).subscribe(function (response) {
+                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__detalle_producto_detalle_producto__["a" /* DetalleProductoPage */], { producto: response });
+                    _this.loadingService.hide();
+                }, function (error) {
+                    _this.loadingService.hide();
+                    var err = error.error;
+                    _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+                });
+            });
+        }
+        //
+    };
+    ArticuloProveedoresPage.prototype.buscarPorPalabra = function () {
+        var _this = this;
+        this.productos = this.replicaProductos;
+        this.productos = this.productos.filter(function (item) { return item.producto.nombre.toUpperCase().includes(_this.palabra.toUpperCase()); });
+    };
+    ArticuloProveedoresPage.prototype.up = function () {
+        this.palabra = "";
+        this.productos = this.replicaProductos;
+        this.productos.sort(function (mayor, menor) {
+            return mayor.precio - menor.precio;
+        });
+    };
+    ArticuloProveedoresPage.prototype.down = function () {
+        this.palabra = "";
+        this.productos = this.replicaProductos;
+        this.productos.sort(function (mayor, menor) {
+            return menor.precio - mayor.precio;
+        });
+    };
+    ArticuloProveedoresPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-articulo-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-proveedores/articulo-proveedores.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n        <ion-title *ngIf="proveedor.proveedor">{{proveedor.proveedor?.nombre}}</ion-title>\n        <ion-title *ngIf="!proveedor.proveedor">{{proveedor.nombre}}</ion-title>\n    </ion-navbar>\n    <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n      </div>\n  </ion-header>\n  \n  <ion-content padding>\n      <div *ngIf="productos && productos?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n          <div class="texto-ordena">\n            Ordenar por precio\n          </div>\n          <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n          </div>\n          <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n          </div>\n        </div>\n    <div class="spinner-carrito" *ngIf="!productos || productos.length <= 0">\n      <ion-spinner></ion-spinner>\n    </div>\n  \n  \n  \n    <div *ngIf="productos && productos.length > 0">\n      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index" (click)="viewDetail(p)">\n        <!-- <div class="tacha">\n                    <div class="mini-tacha">\n                        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                    </div>\n                  </div> -->\n        <div class="container-card">\n  \n          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text">{{p.producto.nombre}}</div>\n        <div class="description">{{p.producto.descripcion}}</div>\n        <div class="precio">{{p.precio | currency}}</div>\n      </div>\n    </div>\n  </ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-proveedores/articulo-proveedores.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* Events */]])
+    ], ArticuloProveedoresPage);
+    return ArticuloProveedoresPage;
+}());
+
+//# sourceMappingURL=articulo-proveedores.js.map
+
+/***/ }),
+
+/***/ 124:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loading_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(119);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+/**Clase provider que conecta con servicios de autenticación */
+var AuthService = /** @class */ (function () {
+    function AuthService(http, app, events, localStorageEncryptService, loadingService) {
+        this.http = http;
+        this.app = app;
+        this.events = events;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.loadingService = loadingService;
+    }
+    /**Método que retorna si el usuario esta logueado */
+    AuthService.prototype.isAuthenticated = function () {
+        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        return user.id_token != null;
+    };
+    /**Método de logout, cierra sesión */
+    AuthService.prototype.logout = function () {
+        this.app.getRootNav().push(__WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */]);
+    };
+    AuthService.prototype.getToken = function () {
+        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        return user === null ? null : user.id_token;
+    };
+    /**Return gatway auth key */
+    AuthService.prototype.getGatewayToken = function () {
+        var gatewayInfo = this.localStorageEncryptService.getFromLocalStorage('gateway_token');
+        if (gatewayInfo !== null) {
+            var gi = gatewayInfo;
+            return gi.access_token;
+        }
+        else {
+            return null;
+        }
+    };
+    /**Return session key */
+    AuthService.prototype.getSessionToken = function () {
+        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        return user.id_token;
+    };
+    AuthService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["c" /* App */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_4__local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_0__loading_service__["a" /* LoadingService */]])
+    ], AuthService);
+    return AuthService;
+}());
+
+//# sourceMappingURL=auth.service.js.map
+
+/***/ }),
+
+/***/ 127:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarritoComprasPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_geo_proveedores_home_geo_proveedores__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__detalle_producto_detalle_producto__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_validation_service__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_forms__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common__ = __webpack_require__(46);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+var CarritoComprasPage = /** @class */ (function () {
+    function CarritoComprasPage(navCtrl, navParams, localStorageEncryptService, events, modalController, 
+        //private productoService: ProductoService,
+        genericService, alertCtrl, alertaService, loadingService, formBuilder, currencyPipe) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.events = events;
+        this.modalController = modalController;
+        this.genericService = genericService;
+        this.alertCtrl = alertCtrl;
+        this.alertaService = alertaService;
+        this.loadingService = loadingService;
+        this.formBuilder = formBuilder;
+        this.currencyPipe = currencyPipe;
+        this.selectOptions = {
+            cssClass: 'action-sheet-class'
+        };
+        this.user = null;
+        this.productosCarrito = [];
+        this.productosCarritoReplica = [];
+        this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
+        this.first = true;
+        this.stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].st.keyPublic)));
+        this.recarga = false;
+        this.cards = null;
+        this.dataCard = {
+            tarj: "",
+            cvc: "",
+            dtime: ""
+        };
+        this.pagoActual = null;
+        this.objetoRegistro = [
+            {
+                name: "Nombre del contacto",
+                required: true,
+                length: 50,
+                type: "text",
+                formName: "name",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Teléfono",
+                required: true,
+                length: 10,
+                type: "number",
+                formName: "tel",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Correo electrónico",
+                required: true,
+                length: 100,
+                type: "email",
+                formName: "email",
+                value: null,
+                disabled: false
+            },
+        ];
+        this.enCompra = false;
+        this.objetoRegistroOriginal = [];
+        this.formGroup = null;
+        this.btnHabilitado = true;
+        this.data = null;
+        this.objetoRegistroCopy = [];
+        this.check = false;
+        this.agrupado = [];
+        this.totales = null;
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        if (this.user) {
+            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+            this.productosCarritoReplica = this.productosCarrito;
+            this.objetoRegistro.forEach(function (element) {
+                _this.objetoRegistroOriginal.push(element);
+            });
+            console.log(this.objetoRegistroOriginal);
+            this.recarga = navParams.get("recarga");
+            console.log(this.recarga);
+            this.getCards();
+            this.agruparTotales();
+        }
+    }
+    CarritoComprasPage.prototype.ionViewDidEnter = function () {
+        this.events.publish("backHome");
+        this.events.publish("backHistorial");
+        this.events.publish("backProveedor");
+    };
+    CarritoComprasPage.prototype.ionViewWillLeave = function () {
+    };
+    CarritoComprasPage.prototype.agruparTotales = function () {
+        var _this = this;
+        this.agrupado = [];
+        var unique = this.productosCarrito.filter(function (valorActual, indiceActual, arreglo) {
+            //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
+            return arreglo.findIndex(function (valorDelArreglo) { return valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId; }) === indiceActual;
+        });
+        unique.forEach(function (prov) {
+            prov.carritoAgrupado = [];
+            _this.productosCarrito.forEach(function (element) {
+                if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
+                    prov.carritoAgrupado.push(element);
+                }
+            });
+            _this.agrupado.push(prov);
+        });
+        console.log(this.agrupado);
+        this.getTotales();
+    };
+    CarritoComprasPage.prototype.armaObjRegistro = function () {
+        var _this = this;
+        this.objetoRegistro = [
+            {
+                name: "Nombre del contacto",
+                required: true,
+                length: 50,
+                type: "text",
+                formName: "name",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Teléfono",
+                required: true,
+                length: 10,
+                type: "number",
+                formName: "tel",
+                value: null,
+                disabled: false
+            },
+            {
+                name: "Correo electrónico",
+                required: true,
+                length: 100,
+                type: "email",
+                formName: "email",
+                value: null,
+                disabled: false
+            },
+        ];
+        if (this.totales.listCarritoProveedores.length > 1) {
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+        else {
+            this.objetoRegistro.push({
+                name: "Picking",
+                required: true,
+                length: 11,
+                type: "select",
+                formName: "sex",
+                value: false,
+                opts: [
+                    {
+                        id: false,
+                        value: "Entrega a domicilio"
+                    },
+                    {
+                        id: true,
+                        value: "Entrega en domicilio de proveedor"
+                    }
+                ]
+            });
+            this.objetoRegistro.push({
+                name: "Dirección",
+                required: true,
+                length: 200,
+                type: "text",
+                formName: "direc",
+                value: null,
+                disabled: true
+            });
+            this.objetoRegistro.push({
+                name: "Código postal",
+                required: false,
+                length: 6,
+                type: "text",
+                formName: "cp",
+                value: null,
+                disabled: false
+            });
+        }
+        if (!this.enCompra) {
+            setTimeout(function () {
+                _this.fab.toggleList();
+            }, 500);
+        }
+    };
+    CarritoComprasPage.prototype.getTotales = function () {
+        //debugger;
+        var _this = this;
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoComprasProveedor).subscribe(function (response) {
+            console.log(response);
+            _this.totales = response;
+            _this.agrupado.forEach(function (element) {
+                if (element.totalAgrupado) {
+                    delete element.totalAgrupado;
+                }
+            });
+            _this.totales.listCarritoProveedores.forEach(function (item) {
+                _this.agrupado.forEach(function (element) {
+                    if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
+                        element.totalAgrupado = {
+                            comisionTransporte: item.comisionTransporte,
+                            tiempoEntrega: item.tiempoEntrega,
+                            total: item.total,
+                            totalProductos: item.totalProductos
+                        };
+                    }
+                });
+            });
+            _this.armaObjRegistro();
+        }, function (error) {
+            //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+        });
+    };
+    CarritoComprasPage.prototype.ngOnDestroy = function () {
+        this.events.publish("carritoTab");
+    };
+    CarritoComprasPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        if (this.recarga) {
+            var claseTabs = document.getElementsByClassName("tabbar");
+            if (claseTabs[0]) {
+                //claseTabs[0].style.display = "none";
+            }
+            //this.verCarrito();
+        }
+        this.events.subscribe('carritoTab', function (data) {
+            _this.verCarrito();
+        });
+        this.events.subscribe('carritoTab2', function (data) {
+            _this.verCarrito();
+        });
+    };
+    CarritoComprasPage.prototype.verCarrito = function () {
+        //nav.pop();
+        this.cargarProductosCarrito();
+    };
+    CarritoComprasPage.prototype.cargarProductosCarrito = function () {
+        var _this = this;
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras).subscribe(function (response) {
+            _this.localStorageEncryptService.setToLocalStorage("" + _this.user.id_token, response);
+            _this.productosCarrito = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
+            _this.productosCarritoReplica = _this.productosCarrito;
+            _this.agruparTotales();
+        }, function (error) {
+        });
+    };
+    CarritoComprasPage.prototype.seleccionar = function (card) {
+        if (!card.selected) {
+            this.cards.forEach(function (element) {
+                element.selected = false;
+            });
+            card.selected = true;
+        }
+        else {
+            card.selected = false;
+        }
+    };
+    CarritoComprasPage.prototype.getCards = function () {
+        var _this = this;
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].tarjetas).subscribe(function (response) {
+            _this.cards = response;
+            _this.cards.forEach(function (element) {
+                element.selected = false;
+            });
+            if (_this.cards.length <= 0) {
+                //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
+            }
+        }, function (error) {
+            var err = error.error;
+            _this.cards = null;
+            //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        });
+    };
+    CarritoComprasPage.prototype.setupStripe = function () {
+        var _this = this;
+        var position = this.cards.findIndex(function (carrito) {
+            return carrito.selected;
+        });
+        var c = {
+            number: "4242424242424242",
+            cvc: "123",
+            exp_month: 12,
+            exp_year: 2025
+        };
+        var bandera = false;
+        if (this.cards[position]) {
+            var item = this.cards[position];
+            var fechaFormat = item.fechaCaducidad.split("-");
+            item.expMont = fechaFormat[1];
+            item.expYear = fechaFormat[0];
+            c.number = item.numeroTarjeta;
+            c.cvc = item.numeroSeguridad;
+            c.exp_month = item.expMont;
+            c.exp_year = item.expYear;
+        }
+        else if (this.dataCard.dtime.length == 0 || this.dataCard.tarj.length == 0 || this.dataCard.cvc.length == 0) {
+            bandera = true;
+        }
+        else {
+            c.number = this.dataCard.tarj;
+            c.cvc = this.dataCard.cvc;
+            var fechaFormat = this.dataCard.dtime.split("-");
+            var expMont = fechaFormat[1];
+            var expYear = fechaFormat[0];
+            c.exp_month = expMont;
+            c.exp_year = expYear;
+        }
+        if (!bandera) {
+            Stripe.setPublishableKey(JSON.parse(this.localStorageEncryptService.yayirobe(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].st.keyPublic)));
+            this.loadingService.show().then(function () {
+                var clase = _this;
+                Stripe.card.createToken(c, function (status, response) {
+                    if (response.error) {
+                        clase.loadingService.hide();
+                        clase.alertaService.errorAlertGeneric("Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta");
+                    }
+                    else {
+                        // Get the token ID:
+                        console.log(response);
+                        //clase.loadingService.hide();
+                        var token = response.id;
+                        var body = {
+                            pedidoId: clase.pagoActual.id,
+                            token: token
+                        };
+                        var service = clase.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos + "/pago", body);
+                        service.subscribe(function (response) {
+                            clase.loadingService.hide();
+                            clase.events.publish("totalCarrito");
+                            clase.events.publish("cargarPedidos");
+                            clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
+                            clase.cerrar();
+                        }, function (error) {
+                            clase.loadingService.hide();
+                            clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+                        });
+                    }
+                });
+            });
+        }
+        else {
+            this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+        }
+    };
+    CarritoComprasPage.prototype.cerrar = function () {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+        this.dataCard = {
+            tarj: "",
+            cvc: "",
+            dtime: ""
+        };
+        this.cards.forEach(function (element) {
+            element.selected = false;
+        });
+        ///Aqui ejecutar el limpiado de carrito
+        this.enCompra = false;
+        this.events.publish("carritoTab");
+    };
+    CarritoComprasPage.prototype.deleteFavorito = function (producto) {
+        var nuevoArrarCarrito = [];
+        var productoDelete = null;
+        this.productosCarrito.forEach(function (element) {
+            if (producto.id != element.id) {
+                nuevoArrarCarrito.push(element);
+            }
+            else {
+                productoDelete = element;
+            }
+        });
+        this.productosCarrito = nuevoArrarCarrito;
+        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, this.productosCarrito);
+        //Llamar a events
+        this.events.publish('updateProductos', { productoDelete: productoDelete });
+        if (this.productosCarrito.length <= 0) {
+            this.navCtrl.pop();
+        }
+    };
+    CarritoComprasPage.prototype.incrementa = function (p) {
+        //debugger;
+        var bandera = false;
+        if (p.cantidad) {
+            p.cantidad++;
+        }
+        else if (p.cantidad == 0) {
+            p.cantidad = 1;
+            bandera = true;
+        }
+        else {
+            p.cantidad = 1;
+            bandera = true;
+        }
+        console.log(p.cantidad);
+        this.agregarToCarritoBack(bandera, p);
+    };
+    CarritoComprasPage.prototype.agregarToCarrito = function (producto) {
+        //debugger;
+        var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+        var productos = [];
+        productos.push(producto);
+        if (productosStorage) {
+            productosStorage.forEach(function (element) {
+                productos.push(element);
+            });
+        }
+        producto.carrito = true;
+        try {
+            this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productos);
+        }
+        catch (error) {
+            producto.carrito = false;
+        }
+    };
+    CarritoComprasPage.prototype.agregarToCarritoBack = function (bandera, producto) {
+        var _this = this;
+        //debugger;
+        var body = {
+            precio: producto.precio,
+            productoProveedorId: producto.productoProveedor.id
+        };
+        var service = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body);
+        if (producto.cantidad > 1) {
+            body.cantidad = producto.cantidad;
+            service = this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body);
+        }
+        service.subscribe(function (response) {
+            if (bandera) {
+                _this.agregarToCarrito(producto);
+                _this.verificarCarritoModificarCantidad(producto);
+            }
+            else {
+                _this.verificarCarritoModificarCantidad(producto);
+            }
+        }, function (error) {
+            if (producto.cantidad == 1) {
+                producto.cantidad = 1;
+            }
+            else {
+                producto.cantidad--;
+            }
+        });
+    };
+    CarritoComprasPage.prototype.viewDetail = function (producto) {
+        var _this = this;
+        //consumir servicio de imagenes completas
+        this.loadingService.show().then(function () {
+            _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].proveedorProductos + "/" + producto.productoProveedor.id).subscribe(function (response) {
+                //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
+                //let nav = this.app.getRootNav();
+                //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+                if (_this.user) {
+                    var carritos = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
+                    if (carritos) {
+                        var position = carritos.findIndex(function (carrito) {
+                            return carrito.id == response.id;
+                        });
+                        if (position >= 0) {
+                            response.cantidad = carritos[position].cantidad;
+                        }
+                    }
+                }
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_8__detalle_producto_detalle_producto__["a" /* DetalleProductoPage */], { producto: response, fromCarritos: true });
+                _this.loadingService.hide();
+            }, function (error) {
+                _this.loadingService.hide();
+                var err = error.error;
+                _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+            });
+        });
+        //
+    };
+    CarritoComprasPage.prototype.decrementar = function (p) {
+        p.cantidad--;
+        this.borrarToCarritoBack(p);
+    };
+    CarritoComprasPage.prototype.borrarToCarritoBack = function (producto) {
+        var _this = this;
+        var body = {
+            precio: producto.precio,
+            productoProveedorId: producto.productoProveedor.id
+        };
+        body.cantidad = producto.cantidad;
+        this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body).subscribe(function (response1) {
+            if (producto.cantidad == 0) {
+                _this.genericService.sendDelete(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras + "/" + producto.id).subscribe(function (response2) {
+                    if (producto.cantidad == 0) {
+                        _this.events.publish("totalCarrito");
+                        _this.deleteFavoritoService(producto);
+                        //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+                    }
+                    _this.verificarCarritoModificarCantidad(producto);
+                }, function (error) {
+                    producto.cantidad++;
+                });
+            }
+            else {
+                _this.verificarCarritoModificarCantidad(producto);
+            }
+        }, function (error) {
+            producto.cantidad++;
+        });
+    };
+    CarritoComprasPage.prototype.deleteFavoritoService = function (producto) {
+        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+        var nuevoArrarCarrito = [];
+        var productoDelete = null;
+        this.productosCarrito.forEach(function (element) {
+            if (producto.productoProveedor.producto.id != element.productoProveedor.producto.id) {
+                nuevoArrarCarrito.push(element);
+            }
+            else {
+                productoDelete = element;
+                productoDelete.carrito = false;
+                producto.carrito = false;
+            }
+        });
+        this.productosCarrito = nuevoArrarCarrito;
+        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, this.productosCarrito);
+        //Llamar a events
+        this.events.publish('updateProductos', { productoDelete: productoDelete });
+        if (this.productosCarrito.length <= 0) {
+            this.navCtrl.pop();
+        }
+    };
+    CarritoComprasPage.prototype.verificarCarritoModificarCantidad = function (element) {
+        //debugger;
+        var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
+        if (productosStorage) {
+            productosStorage.forEach(function (item) {
+                if (item.id == element.id) {
+                    item.cantidad = element.cantidad;
+                }
+            });
+        }
+        console.log(productosStorage);
+        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productosStorage);
+        this.getTotales();
+        //this.agruparTotales();
+        //this.events.publish("carritoTab");
+    };
+    CarritoComprasPage.prototype.infoContact = function () {
+        var _this = this;
+        //debugger;
+        var modal = document.getElementById("myModal2");
+        //
+        this.enCompra = true;
+        var putObj = {};
+        this.objetoRegistro.forEach(function (item) {
+            var tmp = [];
+            tmp[0] = null;
+            tmp[1] = [];
+            if (item.required) {
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_10__angular_forms__["g" /* Validators */].required);
+            }
+            if (item.type == "number") {
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].phoneValidator);
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].maxLengthValidator);
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].minLengthValidator);
+            }
+            if (item.type == "email") {
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].emailValidator);
+            }
+            if (item.type == "password") {
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].passwordValidator);
+            }
+            if (item.type == "select") {
+                tmp[0] = item.opts[0].value;
+            }
+            if (_this.user) {
+            }
+            putObj[item.formName] = tmp;
+        });
+        this.formGroup = this.formBuilder.group(putObj);
+        //
+        //if (modal) {
+        try {
+            modal.style.display = "block";
+        }
+        catch (error) {
+        }
+        //}
+    };
+    CarritoComprasPage.prototype.closeInfoContact = function (aun) {
+        if (aun === void 0) { aun = true; }
+        var modal = document.getElementById('myModal2');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+        this.objetoRegistro.forEach(function (item) {
+            if (item.name == 'Picking') {
+                item.value = false;
+            }
+            else {
+                item.value = null;
+            }
+        });
+        this.armaObjRegistro();
+        this.formGroup = null;
+        this.btnHabilitado = true;
+        if (aun) {
+            this.enCompra = false;
+        }
+    };
+    CarritoComprasPage.prototype.cerrarModal3 = function (aun) {
+        if (aun === void 0) { aun = true; }
+        var modal = document.getElementById("myModal3");
+        modal.style.display = "none";
+        if (aun) {
+            this.enCompra = false;
+        }
+    };
+    CarritoComprasPage.prototype.openModal3 = function () {
+        var modal = document.getElementById("myModal3");
+        modal.style.display = "block";
+    };
+    /**Verifica validaciones */
+    CarritoComprasPage.prototype.ejecutaValidator = function (opc, evt) {
+        if (opc === void 0) { opc = false; }
+        if (evt === void 0) { evt = null; }
+        if (opc) {
+            console.log(evt);
+            if (!evt) {
+                this.objetoRegistro.push({
+                    name: "Dirección",
+                    required: true,
+                    length: 200,
+                    type: "text",
+                    formName: "direc",
+                    value: null,
+                    disabled: true
+                });
+                this.objetoRegistro.push({
+                    name: "Código postal",
+                    required: false,
+                    length: 6,
+                    type: "text",
+                    formName: "cp",
+                    value: null,
+                    disabled: false
+                });
+            }
+            else {
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
+            }
+        }
+        var validacion = 0;
+        for (var name_1 in this.formGroup.controls) {
+            var n = this.formGroup.controls[name_1];
+            if (n.invalid) {
+                validacion++;
+            }
+            /*
+            if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
+              invalid.push(this.translatePipe.instant(String(name).toUpperCase()));
+              fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
+            } */
+        }
+        console.log(validacion);
+        if (validacion <= 0) {
+            this.btnHabilitado = false;
+        }
+        else {
+            this.btnHabilitado = true;
+        }
+        if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
+            this.btnHabilitado = false;
+        }
+    };
+    CarritoComprasPage.prototype.getMapa = function () {
+        var _this = this;
+        var modal = this.modalController.create(__WEBPACK_IMPORTED_MODULE_0__home_geo_proveedores_home_geo_proveedores__["a" /* HomeGeoProveedoresPage */], { fromModal: true });
+        modal.present();
+        modal.onDidDismiss(function (data) {
+            if (data) {
+                if (data != null) {
+                    _this.data = data.data;
+                    if (_this.objetoRegistro[3].value == 'true' ||
+                        _this.objetoRegistro[3].value == true ||
+                        _this.objetoRegistro[3].value == 'false' ||
+                        _this.objetoRegistro[3].value == false) {
+                        _this.objetoRegistro[4].value = _this.data.direccion;
+                        _this.objetoRegistro[5].value = _this.data.codigoPostal;
+                    }
+                    else {
+                        _this.objetoRegistro[3].value = _this.data.direccion;
+                        _this.objetoRegistro[4].value = _this.data.codigoPostal;
+                    }
+                    setTimeout(function () {
+                        _this.ejecutaValidator();
+                    }, 500);
+                }
+            }
+        });
+    };
+    CarritoComprasPage.prototype.precompra = function () {
+        var _this = this;
+        this.objetoRegistroCopy = [];
+        this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
+        this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
+        this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
+        var h = null;
+        console.log(this.totales.listCarritoProveedores);
+        if (this.totales.listCarritoProveedores.length > 1) {
+            h = true;
+        }
+        var body = {
+            nombreContacto: this.objetoRegistroCopy[0].value,
+            telefonoContacto: this.objetoRegistroCopy[1].value,
+            correoContacto: this.objetoRegistroCopy[2].value,
+            direccionContacto: this.objetoRegistro[3].value == 'true' ||
+                this.objetoRegistro[3].value == true ||
+                this.objetoRegistro[3].value == 'false' ||
+                this.objetoRegistro[3].value == false || h ? {
+                id: this.data.id ? this.data.id : null,
+                codigoPostal: this.data.codigoPostal,
+                direccion: this.data.direccion,
+                latitud: this.data.latitud,
+                longitud: this.data.longitud
+            } : null,
+            productos: []
+        };
+        if (this.objetoRegistro[3].value == 'true' ||
+            this.objetoRegistro[3].value == true ||
+            this.objetoRegistro[3].value == 'false' ||
+            this.objetoRegistro[3].value == false) {
+            body.picking = this.objetoRegistro[3].value;
+        }
+        else {
+            body.picking = false;
+        }
+        if (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == true) {
+            body.picking = this.objetoRegistro[3].value;
+        }
+        else {
+            body.picking = false;
+        }
+        console.log(this.productosCarrito);
+        this.productosCarrito.forEach(function (item) {
+            body.productos.push({
+                cantidad: item.cantidad,
+                productoProveedorId: item.productoProveedorId
+            });
+        });
+        var service = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos, body);
+        this.loadingService.show().then(function () {
+            service.subscribe(function (response) {
+                _this.pagoActual = response;
+                _this.loadingService.hide();
+                //this.comprar();
+                _this.closeInfoContact(false);
+                setTimeout(function () {
+                    _this.openModal3();
+                }, 300);
+            }, function (error) {
+                _this.loadingService.hide();
+                _this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
+            });
+        });
+    };
+    CarritoComprasPage.prototype.comprar = function () {
+        if (this.check) {
+            this.cerrarModal3(false);
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+            this.check = false;
+        }
+        else {
+            this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
+        }
+    };
+    CarritoComprasPage.prototype.confirmar = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: "Confirmación",
+            message: "Se realizar\u00E1 un cargo a su tarjeta por " + this.currencyPipe.transform(this.pagoActual.total) + " \u00BFEst\u00E1s de acuerdo?",
+            cssClass: this.genericService.getColorClassTWO(),
+            buttons: [
+                {
+                    text: "No",
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                },
+                {
+                    text: 'Si',
+                    handler: function () {
+                        //this.confirmar();
+                        _this.setupStripe();
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    CarritoComprasPage.prototype.addToList = function () {
+        var _this = this;
+        var inputs = [
+            {
+                name: 'nombre',
+                placeholder: 'Nombre de mi lista',
+                type: 'text',
+                id: "i-1-name"
+            }
+        ];
+        var buttons = [
+            {
+                text: "Agregar",
+                handler: function (data) {
+                    var body = {
+                        nombre: data.nombre
+                    };
+                    var service = _this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoHistorico, body);
+                    _this.loadingService.show().then(function () {
+                        service.subscribe(function (response) {
+                            _this.alertaService.successAlertGeneric("Lista frecuente agregada con éxito");
+                            _this.loadingService.hide();
+                            return true;
+                        }, function (error) {
+                            _this.loadingService.hide();
+                            _this.alertaService.errorAlertGeneric("No se ha podido agregar tu lista frecuente, intenta nuevamente");
+                            return true;
+                        });
+                    });
+                }
+            }
+        ];
+        var data = {
+            title: "Mi lista frecuente",
+            message: "Ingresa el nombre de tu lista frecuente, \u00E9sta aparecer\u00E1 en tu men\u00FA de listas de carrito frecuentes",
+            inputs: inputs,
+        };
+        var alert = this.alertCtrl.create({
+            title: data.title,
+            cssClass: this.genericService.getColorClass(),
+            message: data.message,
+            inputs: data.inputs,
+            buttons: buttons
+        });
+        alert.present();
+    };
+    CarritoComprasPage.prototype.up = function () {
+        console.log(this.productosCarrito);
+        console.log(this.productosCarritoReplica);
+        this.productosCarrito = this.productosCarritoReplica;
+        this.productosCarrito.sort(function (mayor, menor) {
+            return mayor.precio - menor.precio;
+        });
+    };
+    CarritoComprasPage.prototype.down = function () {
+        this.productosCarrito = this.productosCarritoReplica;
+        this.productosCarrito.sort(function (mayor, menor) {
+            return menor.precio - mayor.precio;
+        });
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["_8" /* ViewChild */])('fab'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["f" /* FabContainer */])
+    ], CarritoComprasPage.prototype, "fab", void 0);
+    CarritoComprasPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
+            selector: 'page-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Mi carrito</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"\n            formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n    padding: 7px;\n    color: #fff;\n    border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n<ion-content padding class="">\n\n  <!-- <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n      </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                            <div class="mini-tacha">\n                                <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                            </div>\n                          </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;" >\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length <= 0">\n      <div><img style="    border-radius: 4px;\n        box-shadow: 0px 0px 4px 0px #a0a0a0;" src="assets/imgs/lista-carrito/carritoComprado.png"\n          alt=""></div>\n      <div>Sin articulos en carrito, agrega algunos y aparecerán en esta sección</div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n\n\n</ion-content>\n\n<ion-fab #fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">\n  <button id="botonsin" ion-fab style="color: #fff;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="arrow-dropleft"></ion-icon>\n  </button>\n  <ion-fab-list side="left">\n    <button (tap)="addToList()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n    <button (tap)="infoContact()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;width: 98px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar pedido</button>\n  </ion-fab-list>\n</ion-fab>\n\n<ion-footer class="footer-button-class" *ngIf="totales && totales.listCarritoProveedores?.length > 0 && !recarga && !enCompra">\n  <button (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n  <button (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormBuilder */],
+            __WEBPACK_IMPORTED_MODULE_11__angular_common__["c" /* CurrencyPipe */]])
+    ], CarritoComprasPage);
+    return CarritoComprasPage;
+}());
+
+//# sourceMappingURL=carrito-compras.js.map
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AlertaService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ngx_translate_core__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
@@ -919,728 +2344,6 @@ var AlertaService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 120:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HistorialPedidosDetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_lista_chat_lista_chat__ = __webpack_require__(414);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__qr_qr__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__chat_chat__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_proveedor_ver_productos_ver_productos__ = __webpack_require__(444);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pedidos_detail_pedidos_detail__ = __webpack_require__(445);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__problemas_pedido_problemas_pedido__ = __webpack_require__(446);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__angular_common_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_qr_scanner__ = __webpack_require__(447);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__ionic_native_in_app_browser__ = __webpack_require__(449);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_file__ = __webpack_require__(450);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_opener__ = __webpack_require__(451);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var HistorialPedidosDetailPage = /** @class */ (function () {
-    function HistorialPedidosDetailPage(navCtrl, navParams, genericService, localStorageEncryptService, alertaService, loadingService, qrScanner, alertCtrl, actionSheetCtrl, iab, httpClient, platform, file, fileOpener) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.genericService = genericService;
-        this.localStorageEncryptService = localStorageEncryptService;
-        this.alertaService = alertaService;
-        this.loadingService = loadingService;
-        this.qrScanner = qrScanner;
-        this.alertCtrl = alertCtrl;
-        this.actionSheetCtrl = actionSheetCtrl;
-        this.iab = iab;
-        this.httpClient = httpClient;
-        this.platform = platform;
-        this.file = file;
-        this.fileOpener = fileOpener;
-        this.user = null;
-        this.pedido = null;
-        this.tipoUsuario = __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo;
-        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.pedido = navParams.get("pedido");
-        console.log(this.pedido);
-    }
-    HistorialPedidosDetailPage.prototype.ionViewDidLoad = function () {
-        this.loadMap();
-    };
-    HistorialPedidosDetailPage.prototype.loadMap = function () {
-        var _this = this;
-        var latitude = this.pedido.direccionContacto.latitud;
-        var longitude = this.pedido.direccionContacto.longitud;
-        // create a new map by passing HTMLElement
-        var mapEle = document.getElementById('map_canvas');
-        // create LatLng object
-        var myLatLng = { lat: Number(latitude), lng: Number(longitude) };
-        // create map
-        this.map = new google.maps.Map(mapEle, {
-            center: myLatLng,
-            zoom: 15
-        });
-        google.maps.event.addListenerOnce(this.map, 'idle', function () {
-            var info = "<div>Ejemplo de window</div>";
-            var infowindow = new google.maps.InfoWindow({
-                content: info
-            });
-            var component = _this;
-            component.marker = new google.maps.Marker({
-                position: myLatLng,
-                map: _this.map,
-                title: 'Hello World!',
-                id: "marcador-1",
-                //draggable: true,
-                icon: __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].icons['persona'].icon
-            });
-            component.marker.addListener('click', function () {
-                //infowindow.open(this.map, this.marker);
-                //component.changeInfoCard();
-            });
-            /* marker.addEventListener("click", (e: Event) => {
-             
-              
-            }); */
-            mapEle.classList.add('show-map');
-        });
-    };
-    HistorialPedidosDetailPage.prototype.verDetalle = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_11__pedidos_detail_pedidos_detail__["a" /* PedidosDetailPage */], { detalle: this.pedido.pedidoProveedores, id: this.pedido.id });
-    };
-    HistorialPedidosDetailPage.prototype.problemasPedido = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_12__problemas_pedido_problemas_pedido__["a" /* ProblemasPedidoPage */]);
-    };
-    HistorialPedidosDetailPage.prototype.verProductos = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__pages_proveedor_ver_productos_ver_productos__["a" /* VerProductosPage */], { pedidos: this.pedido });
-    };
-    HistorialPedidosDetailPage.prototype.terminarServicio = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_1__qr_qr__["a" /* QrPage */], { pedido: this.pedido });
-    };
-    HistorialPedidosDetailPage.prototype.enviarPedido = function () {
-        var _this = this;
-        var body = {
-            pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
-            estatusId: 18 //antes 14
-        };
-        this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].pedidosProveedores, body).subscribe(function (response1) {
-            _this.alertaService.successAlertGeneric("El pedido se ha enviado al transportista");
-        }, function (error) {
-            _this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");
-        });
-    };
-    HistorialPedidosDetailPage.prototype.verRecibo = function () {
-        if (this.pedido.receiptUrl && this.pedido.receiptUrl.length > 0) {
-            //this.returnDocument(this.pedido.folio.toString(),this.pedido.receiptUrl,'application/pdf');
-            this.aceptarRedirect(this.pedido.receiptUrl);
-        }
-        else {
-            this.alertaService.warnAlertGeneric("No se ha generado el ticket de tu pedido, contacta al administrador");
-        }
-        //
-    };
-    /**Accept redirect android */
-    HistorialPedidosDetailPage.prototype.aceptarRedirectAndroid = function (linkTemp) {
-        return __awaiter(this, void 0, void 0, function () {
-            var script, ref;
-            return __generator(this, function (_a) {
-                script = "window.print();";
-                ref = this.iab.create(linkTemp, '_blank', 'location=yes');
-                ref.on('loadstop').subscribe(function (event) {
-                    console.log("script ejecuta");
-                    ref.executeScript({ code: script });
-                });
-                ref.on('exit').subscribe(function (event) {
-                });
-                ref.on('loadstart').subscribe(function (event) {
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    /**Accept redirect android */
-    HistorialPedidosDetailPage.prototype.aceptarRedirectIOS = function (linkTemp) {
-        return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
-            var script;
-            return __generator(this, function (_a) {
-                if (this.ref) {
-                    this.ref.close();
-                    this.ref = undefined;
-                }
-                this.ref = this.iab.create(linkTemp, '_blank', 'location=yes');
-                script = "window.print();";
-                this.ref.on('loadstop').subscribe(function (event) {
-                    _this.ref.executeScript({ code: script });
-                });
-                this.ref.on('exit').subscribe(function (event) {
-                });
-                this.ref.on('loadstart').subscribe(function (event) {
-                });
-                return [2 /*return*/];
-            });
-        });
-    };
-    /**Método que hace el redirect y genera un autoclick en el formulario que se envia */
-    HistorialPedidosDetailPage.prototype.aceptarRedirect = function (linkTemp) {
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                if (this.platform.is("ios")) {
-                    this.aceptarRedirectIOS(linkTemp);
-                }
-                else {
-                    this.aceptarRedirectAndroid(linkTemp);
-                }
-                return [2 /*return*/];
-            });
-        });
-    };
-    HistorialPedidosDetailPage.prototype.returnDocument = function (titulo, filePath, mimeType) {
-        var _this = this;
-        /* this.fileOpener.open(filePath, mimeType)
-          .then(() => console.log('File is opened'))
-          .catch(e => console.log('Error opening file', e)); */
-        var headers = new __WEBPACK_IMPORTED_MODULE_13__angular_common_http__["d" /* HttpHeaders */]();
-        headers = headers.set('Accept', 'application/pdf');
-        this.httpClient.get(filePath, { headers: headers, responseType: 'blob' }).subscribe(function (resp) {
-            console.log(resp);
-            var path = null;
-            if (_this.platform.is('ios')) {
-                path = _this.file.tempDirectory;
-            }
-            else {
-                path = _this.file.externalRootDirectory;
-            }
-            console.log(path);
-            console.log(_this.platform.is('ios'));
-            _this.file.writeExistingFile(path, titulo + ".pdf", resp).then(function (response) {
-                console.log('successfully wrote to file', response);
-                _this.fileOpener.open(path + (titulo + ".pdf"), 'application/pdf').then(function (response) {
-                    console.log('opened PDF file successfully', response);
-                }).catch(function (err) {
-                    console.log('error in opening pdf file', err);
-                });
-            }).catch(function (err) {
-                console.log('error writing to file', err);
-            });
-        });
-    };
-    HistorialPedidosDetailPage.prototype.completarServicio = function (tokenEntrada) {
-        var _this = this;
-        var body = {
-            pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
-            token: tokenEntrada
-        };
-        this.loadingService.show().then(function () {
-            _this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].pedidosTransportistas + "/terminar-servicio", body).subscribe(function (response) {
-                _this.loadingService.hide();
-                _this.alertaService.successAlertGeneric("El servició terminó correctamente");
-            }, function (error) {
-                _this.loadingService.hide();
-                _this.alertaService.errorAlertGeneric("Ocurrió un error, por favor vuelve a intentarlo");
-            });
-        });
-    };
-    HistorialPedidosDetailPage.prototype.presentActionSheet = function () {
-        var _this = this;
-        var actionSheet = this.actionSheetCtrl.create({
-            title: 'Selecciona',
-            buttons: [
-                {
-                    text: 'Escanear',
-                    icon: 'ios-barcode-outline',
-                    handler: function () {
-                        _this.qrScanner.prepare()
-                            .then(function (status) {
-                            if (status.authorized) {
-                                // camera permission was granted
-                                // start scanning
-                                var scanSub_1 = _this.qrScanner.scan().subscribe(function (text) {
-                                    console.log('Scanned something', text);
-                                    ///LOGICA DE ESCANEO Y MANDADO EL TEXTO
-                                    _this.completarServicio(text);
-                                    ///
-                                    _this.qrScanner.hide(); // hide camera preview
-                                    scanSub_1.unsubscribe(); // stop scanning
-                                });
-                            }
-                            else if (status.denied) {
-                                // camera permission was permanently denied
-                                // you must use QRScanner.openSettings() method to guide the user to the settings page
-                                // then they can grant the permission from there
-                                _this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
-                            }
-                            else {
-                                // permission was denied, but not permanently. You can ask for permission again at a later time.
-                                _this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
-                            }
-                        })
-                            .catch(function (e) { return console.log('Error is', e); });
-                    }
-                },
-                {
-                    text: 'Ingresar manual',
-                    icon: 'create',
-                    handler: function () {
-                        var alert = _this.alertCtrl.create({
-                            title: 'Escaneo de código',
-                            inputs: [
-                                {
-                                    name: 'token',
-                                    placeholder: 'Código'
-                                }
-                            ],
-                            buttons: [
-                                {
-                                    text: 'Cancelar',
-                                    role: 'cancel',
-                                    handler: function (data) {
-                                        console.log('Cancel clicked');
-                                    }
-                                },
-                                {
-                                    text: 'Aceptar',
-                                    handler: function (data) {
-                                        //data.token
-                                        _this.completarServicio(data.token);
-                                    }
-                                }
-                            ]
-                        });
-                        alert.present();
-                    }
-                },
-                {
-                    text: 'Cancelar',
-                    role: 'destructive',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                }
-            ]
-        });
-        actionSheet.present();
-    };
-    HistorialPedidosDetailPage.prototype.verMapa = function () {
-        if (__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
-            //http://google.com/maps/@?api=1&map_action=map&center=-33.712206,150.311941&zoom=1
-            var latitude = this.pedido.direccionContacto.latitud;
-            var longitude = this.pedido.direccionContacto.longitud;
-            window.open("https://www.google.com/maps/dir/?api=1&travelmode=driving&layer=traffic&destination=" + latitude + "," + longitude + "&zoom=18");
-        }
-    };
-    HistorialPedidosDetailPage.prototype.verChat = function () {
-        var _this = this;
-        switch (__WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].perfil.activo) {
-            case 1:
-                if (!this.pedido.pedidoProveedores[0].chatProveedorid) {
-                    this.alertaService.warnAlertGeneric("El proveedor aun no inicia el chat, espera a que él se comunique contigo");
-                }
-                else {
-                    /* this.loadingService.show().then(() => {
-                      this.genericService.sendGetRequest(`${environment.chats}/${this.pedido.pedidoProveedores[0].chatProveedorid}`).subscribe((response: any) => {
-                        */
-                    this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__pages_lista_chat_lista_chat__["a" /* ListaChatPage */], { chats: this.pedido.pedidoProveedores, pedido: this.pedido });
-                    /* this.loadingService.hide();
-                  }, (error: HttpErrorResponse) => {
-                    this.loadingService.hide();
-                    let err: any = error.error;
-                    this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-                  });
-                }); */
-                }
-                break;
-            case 2:
-                this.loadingService.show().then(function () {
-                    _this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].chatsProveedor + _this.pedido.pedidoProveedores[0].id + "/tipoChat/1").subscribe(function (response) {
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__chat_chat__["a" /* ChatPage */], { chat: response, pedido: _this.pedido });
-                        _this.loadingService.hide();
-                    }, function (error) {
-                        _this.loadingService.hide();
-                        var err = error.error;
-                        _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-                    });
-                });
-                break;
-            case 3:
-                this.loadingService.show().then(function () {
-                    _this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_10__environments_environment_prod__["a" /* environment */].chatsProveedor + _this.pedido.pedidoProveedores[0].id + "/tipoChat/2").subscribe(function (response) {
-                        _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__chat_chat__["a" /* ChatPage */], { chat: response, pedido: _this.pedido });
-                        _this.loadingService.hide();
-                    }, function (error) {
-                        _this.loadingService.hide();
-                        var err = error.error;
-                        _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-                    });
-                });
-                break;
-        }
-    };
-    HistorialPedidosDetailPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
-            selector: 'page-historial-pedidos-detail',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos-detail/historial-pedidos-detail.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title style="padding:0px">Pedido <strong>{{pedido.folio}}</strong></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <section class="estatus">\n    <div class="number">Costo <strong>{{pedido.total | currency}}</strong></div>\n    <div class="number">Fecha Solicitud <strong>{{pedido.fechaAlta}}</strong></div>\n    <div class="number" *ngIf="pedido.fechaEntrega">Fecha Entrega <strong>{{pedido.fechaEntrega}}</strong></div>\n    <div class="number">Estatus <strong>{{pedido.estatus.nombre}}</strong></div>\n  </section>\n\n  <section class="mapa">\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}" *ngIf="tipoUsuario == 3">Proveedor</div>\n    <div class="direct" *ngIf="tipoUsuario == 3">{{pedido.cliente.firstName}}\n      {{pedido.cliente.lastName}}</div>\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">Cliente</div>\n    <div class="direct" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">{{pedido.cliente.firstName}}\n      {{pedido.cliente.lastName}}</div>\n\n    <div class="direccion" [ngStyle]="{\'color\' : genericService.getColorHex()}">Dirección de entrega</div>\n    <div class="direct">{{pedido.direccionContacto.direccion}}</div>\n    <div id="map_canvas" class="mapita-google" (click)="verMapa()"></div>\n  </section>\n\n  <section class="botones" *ngIf="tipoUsuario == 1">\n    <!-- <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="terminarServicio()"><ion-icon name="md-done-all"></ion-icon>Terminar servicio</button> -->\n    <button class="boton-detalle" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verDetalle()">\n      <ion-icon name="ios-clipboard-outline"></ion-icon>Ver detalle\n    </button>\n    <!-- <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n      <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n      Chat\n    </button> -->\n    <button class="boton-recibo" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verRecibo()">\n      <ion-icon name="ios-document-outline"></ion-icon>Ver recibo\n    </button>\n    <button class="boton-problemas" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="problemasPedido()">\n      <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido\n    </button>\n  </section>\n\n  <section class="botones" *ngIf="tipoUsuario == 2" style="    margin-top: 84%;">\n    <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verProductos()">\n      <ion-icon name="md-done-all"></ion-icon>Ver productos\n    </button>\n    <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n      <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n      Chat\n    </button>\n    <button class="boton-recibo" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="enviarPedido()"\n      style="font-size: 11px;">\n      <ion-icon name="ios-send-outline"></ion-icon>Enviar a transportista\n    </button>\n    <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}"\n      (click)="problemasPedido()">\n      <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido\n    </button>\n  </section>\n\n  <section class="botones" *ngIf="tipoUsuario == 3" style="    margin-top: 84%;">\n    <button class="boton-terminar" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verProductos()">\n      <ion-icon name="md-done-all"></ion-icon>Ver productos\n    </button>\n    <button class="boton-chat" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="verChat()">\n      <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n      Chat\n    </button>\n    <button class="boton-problemas2" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="presentActionSheet()">\n      <ion-icon name="ios-flash-outline"></ion-icon>Terminar pedido\n    </button>\n    <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" (click)="problemasPedido()">\n      <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido\n    </button>\n  </section>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos-detail/historial-pedidos-detail.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_7__services_generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_8__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
-            __WEBPACK_IMPORTED_MODULE_9__services_alerta_service__["a" /* AlertaService */],
-            __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
-            __WEBPACK_IMPORTED_MODULE_14__ionic_native_qr_scanner__["a" /* QRScanner */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["a" /* ActionSheetController */],
-            __WEBPACK_IMPORTED_MODULE_15__ionic_native_in_app_browser__["a" /* InAppBrowser */],
-            __WEBPACK_IMPORTED_MODULE_13__angular_common_http__["b" /* HttpClient */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["n" /* Platform */],
-            __WEBPACK_IMPORTED_MODULE_16__ionic_native_file__["a" /* File */],
-            __WEBPACK_IMPORTED_MODULE_17__ionic_native_file_opener__["a" /* FileOpener */]])
-    ], HistorialPedidosDetailPage);
-    return HistorialPedidosDetailPage;
-}());
-
-//# sourceMappingURL=historial-pedidos-detail.js.map
-
-/***/ }),
-
-/***/ 123:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticuloProveedoresPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__detalle_producto_detalle_producto__ = __webpack_require__(45);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var ArticuloProveedoresPage = /** @class */ (function () {
-    function ArticuloProveedoresPage(navCtrl, navParams, genericService, alertaService, loadingService, localStorageEncryptService, events) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.genericService = genericService;
-        this.alertaService = alertaService;
-        this.loadingService = loadingService;
-        this.localStorageEncryptService = localStorageEncryptService;
-        this.events = events;
-        this.productos = [];
-        this.replicaProductos = [];
-        this.palabra = "";
-        this.env = __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__["a" /* environment */];
-        this.proveedor = null;
-        this.fromCliente = false;
-        this.proveedor = navParams.get("proveedor");
-        this.productos = navParams.get("productos");
-        this.fromCliente = navParams.get("fromCliente");
-        this.replicaProductos = this.productos;
-    }
-    ArticuloProveedoresPage.prototype.ionViewDidLoad = function () {
-    };
-    ArticuloProveedoresPage.prototype.viewDetail = function (producto) {
-        var _this = this;
-        //consumir servicio de imagenes completas
-        if (!this.fromCliente) {
-            this.loadingService.show().then(function () {
-                _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__["a" /* environment */].proveedorProductos + "/" + producto.id).subscribe(function (response) {
-                    _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__detalle_producto_detalle_producto__["a" /* DetalleProductoPage */], { producto: response });
-                    _this.loadingService.hide();
-                }, function (error) {
-                    _this.loadingService.hide();
-                    var err = error.error;
-                    _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-                });
-            });
-        }
-        //
-    };
-    ArticuloProveedoresPage.prototype.buscarPorPalabra = function () {
-        var _this = this;
-        this.productos = this.replicaProductos;
-        this.productos = this.productos.filter(function (item) { return item.producto.nombre.toUpperCase().includes(_this.palabra.toUpperCase()); });
-    };
-    ArticuloProveedoresPage.prototype.up = function () {
-        this.palabra = "";
-        this.productos = this.replicaProductos;
-        this.productos.sort(function (mayor, menor) {
-            return mayor.precio - menor.precio;
-        });
-    };
-    ArticuloProveedoresPage.prototype.down = function () {
-        this.palabra = "";
-        this.productos = this.replicaProductos;
-        this.productos.sort(function (mayor, menor) {
-            return menor.precio - mayor.precio;
-        });
-    };
-    ArticuloProveedoresPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-articulo-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-proveedores/articulo-proveedores.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n        <ion-title *ngIf="proveedor.proveedor">{{proveedor.proveedor?.nombre}}</ion-title>\n        <ion-title *ngIf="!proveedor.proveedor">{{proveedor.nombre}}</ion-title>\n    </ion-navbar>\n    <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n      </div>\n  </ion-header>\n  \n  <ion-content padding>\n      <div *ngIf="productos && productos?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n          <div class="texto-ordena">\n            Ordenar por precio\n          </div>\n          <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n          </div>\n          <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n          </div>\n        </div>\n    <div class="spinner-carrito" *ngIf="!productos || productos.length <= 0">\n      <ion-spinner></ion-spinner>\n    </div>\n  \n  \n  \n    <div *ngIf="productos && productos.length > 0">\n      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index" (click)="viewDetail(p)">\n        <!-- <div class="tacha">\n                    <div class="mini-tacha">\n                        <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                        <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                    </div>\n                  </div> -->\n        <div class="container-card">\n  \n          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text">{{p.producto.nombre}}</div>\n        <div class="description">{{p.producto.descripcion}}</div>\n        <div class="precio">{{p.precio | currency}}</div>\n      </div>\n    </div>\n  </ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-proveedores/articulo-proveedores.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
-            __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
-            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* Events */]])
-    ], ArticuloProveedoresPage);
-    return ArticuloProveedoresPage;
-}());
-
-//# sourceMappingURL=articulo-proveedores.js.map
-
-/***/ }),
-
-/***/ 124:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__ = __webpack_require__(196);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_add_observable_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(119);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-/**Clase provider que conecta con servicios de autenticación */
-var AuthService = /** @class */ (function () {
-    function AuthService(http, app, events, localStorageEncryptService, loadingService) {
-        this.http = http;
-        this.app = app;
-        this.events = events;
-        this.localStorageEncryptService = localStorageEncryptService;
-        this.loadingService = loadingService;
-    }
-    /**Método que retorna si el usuario esta logueado */
-    AuthService.prototype.isAuthenticated = function () {
-        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        return user.id_token != null;
-    };
-    /**Método de logout, cierra sesión */
-    AuthService.prototype.logout = function () {
-        this.app.getRootNav().push(__WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */]);
-    };
-    AuthService.prototype.getToken = function () {
-        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        return user === null ? null : user.id_token;
-    };
-    /**Return gatway auth key */
-    AuthService.prototype.getGatewayToken = function () {
-        var gatewayInfo = this.localStorageEncryptService.getFromLocalStorage('gateway_token');
-        if (gatewayInfo !== null) {
-            var gi = gatewayInfo;
-            return gi.access_token;
-        }
-        else {
-            return null;
-        }
-    };
-    /**Return session key */
-    AuthService.prototype.getSessionToken = function () {
-        var user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        return user.id_token;
-    };
-    AuthService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["c" /* App */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_4__local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
-            __WEBPACK_IMPORTED_MODULE_0__loading_service__["a" /* LoadingService */]])
-    ], AuthService);
-    return AuthService;
-}());
-
-//# sourceMappingURL=auth.service.js.map
-
-/***/ }),
-
-/***/ 13:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export pathPrincipal */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return pathChat; });
-/* unused harmony export appCliente */
-/* unused harmony export appProveedor */
-/* unused harmony export appTransportista */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
-//export const pathPrincipal = "http://localhost:8080/api/";
-var pathPrincipal = "https://dev-cabasto.sharktech.com.mx/api/";
-var pathChat = "https://dev-cabasto.sharktech.com.mx/";
-//export const pathChat = "http://localhost:8080/";
-var appCliente = 1;
-var appProveedor = 2;
-var appTransportista = 3;
-var environment = {
-    production: true,
-    productos: pathPrincipal + "productos",
-    productosCategoria: pathPrincipal + "productos/home",
-    proveedorProductos: pathPrincipal + "proveedor-productos",
-    categoria: pathPrincipal + "proveedor-productos/categoria/",
-    secciones: pathPrincipal + "seccions",
-    categorias: pathPrincipal + "categorias",
-    proveedores: pathPrincipal + "proveedors",
-    proveedoresFull: pathPrincipal + "proveedores",
-    proveedor: pathPrincipal + "proveedor",
-    proveedoresProducto: pathPrincipal + "proveedores/producto/",
-    registro: pathPrincipal + "register",
-    login: pathPrincipal + "authenticate",
-    carritoCompras: pathPrincipal + "carrito-compras",
-    carritoHistorico: pathPrincipal + "carrito-historicos",
-    carritoHistoricoDetalle: pathPrincipal + "carrito-historico-detalles",
-    getImagenIndividual: pathPrincipal + "adjuntos/download/",
-    promociones: pathPrincipal + "promociones",
-    tarjetas: pathPrincipal + "tarjetas",
-    direcciones: pathPrincipal + "usuario-direcciones",
-    tipoDirecciones: pathPrincipal + "tipo-direcciones",
-    pedidos: pathPrincipal + "pedidos",
-    pedidosProveedor: pathPrincipal + "proveedor/pedidos",
-    pedidosTransportista: pathPrincipal + "transportista/pedidos",
-    pedidosProveedores: pathPrincipal + "proveedor/pedido-proveedores",
-    pedidosTransportistas: pathPrincipal + "transportista/pedido-proveedores",
-    calificacionServicio: pathPrincipal + "pedido-proveedores/calificacion-servicio",
-    usuarios: pathPrincipal + "usuarios",
-    usuarioDocumentos: pathPrincipal + "usuario-documentos",
-    users: pathPrincipal + "users",
-    chats: pathPrincipal + "chats",
-    chatsProveedor: pathPrincipal + "proveedor/chats/pedido-proveedor/",
-    cambioContraseña: pathPrincipal + "account/change-password",
-    carritoComprasProveedor: pathPrincipal + "carrito-compras-proveedor",
-    carritoHistoricosProveedor: pathPrincipal + "carrito-historicos-proveedores",
-    reset: pathPrincipal + "account/reset-password/init",
-    logout: null,
-    icons: {
-        persona: {
-            icon: "assets/imgs/direcciones/m3.png"
-        },
-        casa: {
-            icon: "assets/imgs/direcciones/m2.png"
-        },
-        lugar: {
-            icon: "assets/imgs/direcciones/m1.png"
-        },
-        proveedor: {
-            icon: "assets/imgs/direcciones/m4.png"
-        }
-    },
-    //info de GOOGLE
-    geocodeGoogle: "https://maps.googleapis.com/maps/api/geocode/json",
-    keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
-    //Fines de pruebas
-    emulado: false,
-    //Aqui "cambiamos" la app en ejecución
-    perfil: {
-        activo: appCliente,
-    },
-    st: {
-        keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
-        //keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
-    }
-};
-//# sourceMappingURL=environment.prod.js.map
-
-/***/ }),
-
 /***/ 16:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1752,7 +2455,7 @@ var LoadingService = /** @class */ (function () {
     };
     LoadingService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* LoadingController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* LoadingController */]])
     ], LoadingService);
     return LoadingService;
 }());
@@ -1761,19 +2464,19 @@ var LoadingService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 194:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeProveedorPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_opciones_menu_opciones_menu__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_opciones_menu_opciones_menu__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_historial_pedidos_detail_historial_pedidos_detail__ = __webpack_require__(120);
@@ -1819,15 +2522,26 @@ var HomeProveedorPage = /** @class */ (function () {
         /**Obtenci{on de usuario en sesión */
         this.menuCtrl.enable(true);
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.cargarPedidos();
+        this.cargarPedidos(null);
         this.events.subscribe("cargarPedidos", function (data) {
             try {
-                _this.cargarPedidos();
+                _this.cargarPedidos(null);
             }
             catch (error) {
             }
         });
     }
+    /**Método que es lanzado al deslizar hacia arriba
+     * el usuario puede refrescar cada que haya algun problema con
+     * su conexión
+     */
+    HomeProveedorPage.prototype.doRefresh = function (refresher) {
+        var _this = this;
+        setTimeout(function () {
+            _this.user = _this.localStorageEncryptService.getFromLocalStorage("userSession");
+            _this.cargarPedidos(refresher);
+        }, 2000);
+    };
     HomeProveedorPage.prototype.ngOnDestroy = function () {
         this.events.unsubscribe("cargarPedidos");
     };
@@ -1837,8 +2551,9 @@ var HomeProveedorPage = /** @class */ (function () {
         var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_6__pages_opciones_menu_opciones_menu__["a" /* OpcionesMenuPage */], {}, { cssClass: "clase-Pop" });
         popover.present({});
     };
-    HomeProveedorPage.prototype.cargarPedidos = function () {
+    HomeProveedorPage.prototype.cargarPedidos = function (refresher) {
         var _this = this;
+        if (refresher === void 0) { refresher = null; }
         var path = "" + __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidosProveedor;
         if (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
             path = "" + __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidosTransportista;
@@ -1849,8 +2564,14 @@ var HomeProveedorPage = /** @class */ (function () {
                 _this.pedidos = null;
             }
             _this.pedidosReplica = _this.pedidos;
+            if (refresher) {
+                refresher.complete();
+            }
         }, function (error) {
             var err = error.error;
+            if (refresher) {
+                refresher.complete();
+            }
             _this.pedidos = null;
             _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
         });
@@ -1947,12 +2668,12 @@ var HomeProveedorPage = /** @class */ (function () {
     };
     HomeProveedorPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-home-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Bienvenid@</ion-title>\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n      <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n        <div style="font-size: 12px;">Fecha solicitud</div>\n        <ion-icon name="ios-calendar-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n          <div style="font-size: 12px;">Fecha solicitud</div>\n          <ion-icon name="ios-calendar"></ion-icon>\n        </button>\n      <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n        <div style="font-size: 12px;">Fecha entrega</div>\n        <ion-icon name="ios-list-box-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n          <div style="font-size: 12px;">Fecha entrega</div>\n          <ion-icon name="ios-list-box"></ion-icon>\n        </button>\n      <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n        <div style="font-size: 12px;">Estatus</div>\n        <ion-icon name="ios-checkbox-outline"></ion-icon>\n      </button>\n      <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n        <div style="font-size: 12px;">Estatus</div>\n        <ion-icon name="ios-checkbox"></ion-icon>\n      </button>\n    </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>  \n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/,
+            selector: 'page-home-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Bienvenid@</ion-title>\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content refreshingSpinner="circles" refreshingText="">\n    </ion-refresher-content>\n  </ion-refresher>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar"></ion-icon>\n    </button>\n    <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box"></ion-icon>\n    </button>\n    <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/home-proveedor/home-proveedor.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["o" /* PopoverController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["j" /* MenuController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["p" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* MenuController */],
             __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */],
@@ -1966,21 +2687,21 @@ var HomeProveedorPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 201:
+/***/ 202:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PushNotificationService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_calificacion_calificacion__ = __webpack_require__(202);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_calificacion_calificacion__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_historial_pedidos_detail_historial_pedidos_detail__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_chat_chat__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_chat_chat__ = __webpack_require__(91);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2018,8 +2739,11 @@ var PushNotificationService = /** @class */ (function () {
         if (goToChat === void 0) { goToChat = false; }
         this.loadingService.show().then(function () {
             var path = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos + "/";
-            if (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
+            if (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
                 path = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].proveedor + "/pedidos/";
+            }
+            else if (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
+                path = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].transportista + "/pedidos/";
             }
             _this.genericService.sendGetRequest("" + path + id).subscribe(function (response) {
                 if (goToChat) {
@@ -2118,19 +2842,363 @@ var PushNotificationService = /** @class */ (function () {
                 break;
         }
     };
-    PushNotificationService.prototype.evaluateNotification = function (data) {
+    PushNotificationService.prototype.lecturaBackground = function (data) {
         var _this = this;
-        if (data.wasTapped) {
-            console.log(data);
-            console.log("-----------------------------------------------");
-            //Notification was received on device tray and tapped by the user.
+        console.log(data);
+        console.log("-----------------------------------------------");
+        var currentPageName = this.app.getActiveNav();
+        console.log(currentPageName);
+        var currentPage = "";
+        if (currentPageName.viewCtrl) {
+            currentPage = currentPageName.viewCtrl.name;
+        }
+        else if (currentPageName.root) {
+            currentPage = currentPageName.root.name;
+        }
+        //Notification was received on device tray and tapped by the user.
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        switch (Number(data.view)) {
+            case 1:
+                ///Primera pantalla pago a proveedor
+                if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
+                    var pedido_1 = JSON.parse(data.pedidoId);
+                    this.events.publish("cargarPedidos");
+                    var alert_1 = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_1.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedido(Number(pedido_1));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_1.present();
+                }
+                else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
+                break;
+            case 10:
+                var idPedidoFromChat = this.localStorageEncryptService.getFromLocalStorage("pedidoChat");
+                var chatId = JSON.parse(data.chatId);
+                var pedidoId = JSON.parse(data.pedidoId);
+                var pedidoReal = false;
+                if (idPedidoFromChat) {
+                    if (idPedidoFromChat == pedidoId) {
+                        pedidoReal = true;
+                    }
+                    else {
+                        pedidoReal = false;
+                    }
+                }
+                if (this.user && !pedidoReal) {
+                    this.chatId = chatId;
+                    if (currentPage == "ChatPage" && !pedidoReal) {
+                        this.alertaService.successAlertGeneric(data.body);
+                        this.events.publish("updateChat");
+                    }
+                    else if (!pedidoReal) {
+                        this.alertaChat(data.title + ": " + data.body, pedidoId);
+                    }
+                }
+                else if (!this.user) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
+                }
+                else {
+                    this.events.publish("updateChat");
+                }
+                break;
+            case 2:
+                //Notificación confirmación pedido
+                var pedidoPedido = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                var pedido_2 = JSON.parse(data.pedidoId);
+                var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
+                var pedidoPedidoR = false;
+                if (pedidoPedido) {
+                    if (pedidoPedido == pedido_2) {
+                        pedidoPedidoR = true;
+                    }
+                    else {
+                        pedidoPedidoR = false;
+                    }
+                }
+                if (this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) && !pedidoPedidoR && currentPage != "HistorialPedidosDetailPage") {
+                    this.events.publish("cargarPedidos");
+                    var alert_2 = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: data.title + ", deseas ir a verlo?",
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_2.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedido(Number(pedido_2));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_2.present();
+                }
+                else if (!this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) && !pedidoPedidoR) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+            case 3:
+                var pedidoPedido3 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                var pedido3 = JSON.parse(data.pedidoId);
+                var pedidoProveedor3 = JSON.parse(data.pedidoProveedorId);
+                var pedidoPedidoR3 = false;
+                if (pedidoPedido3) {
+                    if (pedidoPedido3 == pedido3) {
+                        pedidoPedidoR3 = true;
+                    }
+                    else {
+                        pedidoPedidoR3 = false;
+                    }
+                }
+                if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && !pedidoPedidoR3 && currentPage != "HistorialPedidosDetailPage") {
+                    var pedido_3 = pedido3;
+                    var pedidoProveedor_1 = pedidoProveedor3;
+                    this.events.publish("cargarPedidos");
+                    var alert_3 = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: data.title + ", deseas ir a verlo?",
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_3.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedido(Number(pedido_3));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_3.present();
+                }
+                else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && !pedidoPedidoR3) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+            case 6:
+                var pedidoPedido6 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                var pedido6 = JSON.parse(data.pedidoId);
+                var pedidoProveedor6 = JSON.parse(data.pedidoProveedorId);
+                var pedidoPedidoR6 = false;
+                if (pedidoPedido6) {
+                    if (pedidoPedido6 == pedido6) {
+                        pedidoPedidoR6 = true;
+                    }
+                    else {
+                        pedidoPedidoR6 = false;
+                    }
+                }
+                if (this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6 && currentPage != "HistorialPedidosDetailPage") {
+                    var pedido_4 = pedido6;
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    var alert_4 = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: data.title + ", deseas ver tu pedido?",
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_4.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedido(Number(pedido_4));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_4.present();
+                }
+                else if (!this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+            case 4:
+                if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
+                    var pedido_5 = JSON.parse(data.pedidoId);
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    var alert_5 = this.alertCtrl.create({
+                        title: 'Pedido Entregado',
+                        message: "" + data.title,
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_5.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedidoCalificar(Number(pedido_5));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_5.present();
+                }
+                else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                break;
+            case 12:
+                var pedidoPedido7 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                var pedido7 = JSON.parse(data.pedidoId);
+                var pedidoProveedor7 = JSON.parse(data.pedidoProveedorId);
+                var pedidoPedidoR7 = false;
+                if (pedidoPedido7) {
+                    if (pedidoPedido7 == pedido7) {
+                        pedidoPedidoR7 = true;
+                    }
+                    else {
+                        pedidoPedidoR7 = false;
+                    }
+                }
+                if (this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR7 && currentPage != "HistorialPedidosDetailPage") {
+                    var pedido_6 = pedido7;
+                    //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                    this.events.publish("cargarPedidos");
+                    var alert_6 = this.alertCtrl.create({
+                        title: 'Confirmación',
+                        message: "El transportista est\u00E1 en tu domicilio, deseas ver tu pedido?",
+                        cssClass: this.genericService.getColorClassTWO(),
+                        buttons: [
+                            {
+                                text: 'Cancelar',
+                                role: 'cancel',
+                                handler: function () {
+                                }
+                            },
+                            {
+                                text: 'Aceptar',
+                                handler: function () {
+                                    try {
+                                        alert_6.dismiss();
+                                    }
+                                    catch (error) {
+                                    }
+                                    _this.goToPedido(Number(pedido_6));
+                                    //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                }
+                            }
+                        ]
+                    });
+                    alert_6.present();
+                }
+                else if (!this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6) {
+                    this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                }
+                else {
+                    this.events.publish("cargarPedidos");
+                }
+                break;
+        }
+    };
+    PushNotificationService.prototype.lecturaForeground = function (data) {
+        var _this = this;
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        console.log("-----------------------------------------------");
+        console.log(data);
+        var currentPageName = this.app.getActiveNav();
+        console.log(currentPageName);
+        var currentPage = "";
+        if (currentPageName.viewCtrl) {
+            currentPage = currentPageName.viewCtrl.name;
+        }
+        else if (currentPageName.root) {
+            currentPage = currentPageName.root.name;
+        }
+        console.log(currentPage);
+        //let parseado:any = JSON.parse(data.pedido);
+        //Notification was received in foreground. Maybe the user needs to be notified.
+        try {
             switch (Number(data.view)) {
                 case 1:
                     ///Primera pantalla pago a proveedor
                     if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                        var pedido_1 = JSON.parse(data.data);
+                        console.log(data);
+                        console.log("..................");
+                        console.log(data.data);
+                        console.log("..................");
+                        var pedido_7 = JSON.parse(data.pedidoId);
+                        console.log(pedido_7);
                         this.events.publish("cargarPedidos");
-                        var alert_1 = this.alertCtrl.create({
+                        /* if (currentPage == "TabsProveedorPage") {
+                            this.alertaService.successAlertGeneric("Recibiste un nuevo pedido y hemos actualizado tu lista, para que puedas verlo");
+                        } else { */
+                        var alert_7 = this.alertCtrl.create({
                             title: 'Confirmación',
                             message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
                             cssClass: this.genericService.getColorClassTWO(),
@@ -2145,17 +3213,18 @@ var PushNotificationService = /** @class */ (function () {
                                     text: 'Aceptar',
                                     handler: function () {
                                         try {
-                                            alert_1.dismiss();
+                                            alert_7.dismiss();
                                         }
                                         catch (error) {
                                         }
-                                        _this.goToPedido(Number(pedido_1));
+                                        _this.goToPedido(Number(pedido_7));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
                                     }
                                 }
                             ]
                         });
-                        alert_1.present();
+                        alert_7.present();
+                        //}
                     }
                     else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
@@ -2163,24 +3232,52 @@ var PushNotificationService = /** @class */ (function () {
                     //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
                     break;
                 case 10:
-                    if (this.user) {
-                        var chatId = JSON.parse(data.chatId);
-                        var pedidoId = JSON.parse(data.pedidoId);
-                        console.log(data);
+                    var idPedidoFromChat = this.localStorageEncryptService.getFromLocalStorage("pedidoChat");
+                    var chatId = JSON.parse(data.chatId);
+                    var pedidoId = JSON.parse(data.pedidoId);
+                    var pedidoReal = false;
+                    if (idPedidoFromChat) {
+                        if (idPedidoFromChat == pedidoId) {
+                            pedidoReal = true;
+                        }
+                        else {
+                            pedidoReal = false;
+                        }
+                    }
+                    if (this.user && !pedidoReal) {
                         this.chatId = chatId;
-                        this.alertaChat(data.title + ": " + data.body, pedidoId);
+                        if (currentPage == "ChatPage" && !pedidoReal) {
+                            this.alertaService.successAlertGeneric(data.body);
+                            this.events.publish("updateChat");
+                        }
+                        else if (!pedidoReal) {
+                            this.alertaChat(data.title + ": " + data.body, pedidoId);
+                        }
                     }
                     else if (!this.user) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
                     }
+                    else {
+                        this.events.publish("updateChat");
+                    }
                     break;
                 case 2:
                     //Notificación confirmación pedido
-                    if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                        var pedido_2 = JSON.parse(data.pedidoId);
-                        var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedido = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    var pedido_8 = JSON.parse(data.pedidoId);
+                    var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedidoR = false;
+                    if (pedidoPedido) {
+                        if (pedidoPedido == pedido_8) {
+                            pedidoPedidoR = true;
+                        }
+                        else {
+                            pedidoPedidoR = false;
+                        }
+                    }
+                    if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1 && !pedidoPedidoR && currentPage != "HistorialPedidosDetailPage") {
                         this.events.publish("cargarPedidos");
-                        var alert_2 = this.alertCtrl.create({
+                        var alert_8 = this.alertCtrl.create({
                             title: 'Confirmación',
                             message: data.title + ", deseas ir a verlo?",
                             cssClass: this.genericService.getColorClassTWO(),
@@ -2195,28 +3292,43 @@ var PushNotificationService = /** @class */ (function () {
                                     text: 'Aceptar',
                                     handler: function () {
                                         try {
-                                            alert_2.dismiss();
+                                            alert_8.dismiss();
                                         }
                                         catch (error) {
                                         }
-                                        _this.goToPedido(Number(pedido_2));
+                                        _this.goToPedido(Number(pedido_8));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
                                     }
                                 }
                             ]
                         });
-                        alert_2.present();
+                        alert_8.present();
                     }
-                    else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
+                    else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1 && !pedidoPedidoR) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    }
+                    else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
                 case 3:
-                    if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
-                        var pedido_3 = JSON.parse(data.pedidoId);
-                        var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedido3 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    var pedido3 = JSON.parse(data.pedidoId);
+                    var pedidoProveedor3 = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedidoR3 = false;
+                    if (pedidoPedido3) {
+                        if (pedidoPedido3 == pedido3) {
+                            pedidoPedidoR3 = true;
+                        }
+                        else {
+                            pedidoPedidoR3 = false;
+                        }
+                    }
+                    if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && !pedidoPedidoR3 && currentPage != "HistorialPedidosDetailPage") {
+                        var pedido_9 = pedido3;
+                        var pedidoProveedor_2 = pedidoProveedor3;
                         this.events.publish("cargarPedidos");
-                        var alert_3 = this.alertCtrl.create({
+                        var alert_9 = this.alertCtrl.create({
                             title: 'Confirmación',
                             message: data.title + ", deseas ir a verlo?",
                             cssClass: this.genericService.getColorClassTWO(),
@@ -2231,30 +3343,45 @@ var PushNotificationService = /** @class */ (function () {
                                     text: 'Aceptar',
                                     handler: function () {
                                         try {
-                                            alert_3.dismiss();
+                                            alert_9.dismiss();
                                         }
                                         catch (error) {
                                         }
-                                        _this.goToPedido(Number(pedido_3));
+                                        _this.goToPedido(Number(pedido_9));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
                                     }
                                 }
                             ]
                         });
-                        alert_3.present();
+                        alert_9.present();
                     }
-                    else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
+                    else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && !pedidoPedidoR3) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    }
+                    else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
                 case 6:
-                    if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                        var pedido_4 = JSON.parse(data.pedido);
+                    var pedidoPedido6 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    var pedido6 = JSON.parse(data.pedidoId);
+                    var pedidoProveedor6 = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedidoR6 = false;
+                    if (pedidoPedido6) {
+                        if (pedidoPedido6 == pedido6) {
+                            pedidoPedidoR6 = true;
+                        }
+                        else {
+                            pedidoPedidoR6 = false;
+                        }
+                    }
+                    if (this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6 && currentPage != "HistorialPedidosDetailPage") {
+                        var pedido_10 = pedido6;
                         //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
                         this.events.publish("cargarPedidos");
-                        var alert_4 = this.alertCtrl.create({
+                        var alert_10 = this.alertCtrl.create({
                             title: 'Confirmación',
-                            message: data.title + ", deseas ir a verlo?",
+                            message: data.title + ", deseas ver tu pedido?",
                             cssClass: this.genericService.getColorClassTWO(),
                             buttons: [
                                 {
@@ -2267,29 +3394,32 @@ var PushNotificationService = /** @class */ (function () {
                                     text: 'Aceptar',
                                     handler: function () {
                                         try {
-                                            alert_4.dismiss();
+                                            alert_10.dismiss();
                                         }
                                         catch (error) {
                                         }
-                                        _this.goToPedido(Number(pedido_4));
+                                        _this.goToPedido(Number(pedido_10));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
                                     }
                                 }
                             ]
                         });
-                        alert_4.present();
+                        alert_10.present();
                     }
-                    else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
+                    else if (!this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    }
+                    else {
+                        this.events.publish("cargarPedidos");
                     }
                     break;
                 case 4:
                     if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                        var pedido_5 = JSON.parse(data.pedidoId);
+                        var pedido_11 = JSON.parse(data.pedidoId);
                         //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
                         this.events.publish("cargarPedidos");
-                        var alert_5 = this.alertCtrl.create({
-                            title: 'Confirmación',
+                        var alert_11 = this.alertCtrl.create({
+                            title: 'Pedido Entregado',
                             message: "" + data.title,
                             cssClass: this.genericService.getColorClassTWO(),
                             buttons: [
@@ -2303,266 +3433,86 @@ var PushNotificationService = /** @class */ (function () {
                                     text: 'Aceptar',
                                     handler: function () {
                                         try {
-                                            alert_5.dismiss();
+                                            alert_11.dismiss();
                                         }
                                         catch (error) {
                                         }
-                                        _this.goToPedidoCalificar(Number(pedido_5));
+                                        _this.goToPedidoCalificar(Number(pedido_11));
                                         //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
                                     }
                                 }
                             ]
                         });
-                        alert_5.present();
+                        alert_11.present();
                     }
                     else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
                         this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
                     }
                     break;
+                case 12:
+                    var pedidoPedido7 = this.localStorageEncryptService.getFromLocalStorage("pedidoPedido");
+                    var pedido7 = JSON.parse(data.pedidoId);
+                    var pedidoProveedor7 = JSON.parse(data.pedidoProveedorId);
+                    var pedidoPedidoR7 = false;
+                    if (pedidoPedido7) {
+                        if (pedidoPedido7 == pedido6) {
+                            pedidoPedidoR7 = true;
+                        }
+                        else {
+                            pedidoPedidoR7 = false;
+                        }
+                    }
+                    if (this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR7 && currentPage != "HistorialPedidosDetailPage") {
+                        var pedido_12 = pedido7;
+                        //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
+                        this.events.publish("cargarPedidos");
+                        var alert_12 = this.alertCtrl.create({
+                            title: 'Confirmación',
+                            message: "El transportista est\u00E1 en tu domicilio, deseas ver tu pedido?",
+                            cssClass: this.genericService.getColorClassTWO(),
+                            buttons: [
+                                {
+                                    text: 'Cancelar',
+                                    role: 'cancel',
+                                    handler: function () {
+                                    }
+                                },
+                                {
+                                    text: 'Aceptar',
+                                    handler: function () {
+                                        try {
+                                            alert_12.dismiss();
+                                        }
+                                        catch (error) {
+                                        }
+                                        _this.goToPedido(Number(pedido_12));
+                                        //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
+                                    }
+                                }
+                            ]
+                        });
+                        alert_12.present();
+                    }
+                    else if (!this.user && (__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) && !pedidoPedidoR6) {
+                        this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
+                    }
+                    else {
+                        this.events.publish("cargarPedidos");
+                    }
+                    break;
             }
         }
+        catch (error) {
+            console.log(error);
+        }
+        //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
+    };
+    PushNotificationService.prototype.evaluateNotification = function (data) {
+        if (data.wasTapped) {
+            this.lecturaBackground(data);
+        }
         else {
-            console.log("-----------------------------------------------");
-            console.log(data);
-            var currentPageName = this.app.getActiveNav();
-            console.log(currentPageName);
-            var currentPage = "";
-            if (currentPageName.viewCtrl) {
-                currentPage = currentPageName.viewCtrl.name;
-            }
-            else if (currentPageName.root) {
-                currentPage = currentPageName.root.name;
-            }
-            console.log(currentPage);
-            //let parseado:any = JSON.parse(data.pedido);
-            //Notification was received in foreground. Maybe the user needs to be notified.
-            try {
-                switch (Number(data.view)) {
-                    case 1:
-                        ///Primera pantalla pago a proveedor
-                        if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                            var pedido_6 = JSON.parse(data.data);
-                            this.events.publish("cargarPedidos");
-                            /* if (currentPage == "TabsProveedorPage") {
-                                this.alertaService.successAlertGeneric("Recibiste un nuevo pedido y hemos actualizado tu lista, para que puedas verlo");
-                            } else { */
-                            var alert_6 = this.alertCtrl.create({
-                                title: 'Confirmación',
-                                message: 'Recibiste un nuevo pedido, deseas ir a verlo?',
-                                cssClass: this.genericService.getColorClassTWO(),
-                                buttons: [
-                                    {
-                                        text: 'Cancelar',
-                                        role: 'cancel',
-                                        handler: function () {
-                                        }
-                                    },
-                                    {
-                                        text: 'Aceptar',
-                                        handler: function () {
-                                            try {
-                                                alert_6.dismiss();
-                                            }
-                                            catch (error) {
-                                            }
-                                            _this.goToPedido(Number(pedido_6));
-                                            //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                        }
-                                    }
-                                ]
-                            });
-                            alert_6.present();
-                            //}
-                        }
-                        else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        //this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
-                        break;
-                    case 10:
-                        if (this.user) {
-                            var chatId = JSON.parse(data.chatId);
-                            var pedidoId = JSON.parse(data.pedidoId);
-                            console.log(data);
-                            this.chatId = chatId;
-                            if (currentPage == "ChatPage") {
-                                this.alertaService.successAlertGeneric(data.body);
-                                this.events.publish("updateChat");
-                            }
-                            else {
-                                this.alertaChat(data.title + ": " + data.body, pedidoId);
-                            }
-                        }
-                        else if (!this.user) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder ver los chats");
-                        }
-                        break;
-                    case 2:
-                        //Notificación confirmación pedido
-                        if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                            var pedido_7 = JSON.parse(data.pedidoId);
-                            var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            }
-                            else {
-                                var alert_7 = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: data.title + ", deseas ir a verlo?",
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: function () {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: function () {
-                                                try {
-                                                    alert_7.dismiss();
-                                                }
-                                                catch (error) {
-                                                }
-                                                _this.goToPedido(Number(pedido_7));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert_7.present();
-                            }
-                        }
-                        else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 3:
-                        if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
-                            var pedido_8 = JSON.parse(data.pedidoId);
-                            var pedidoProveedor = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            }
-                            else {
-                                var alert_8 = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: data.title + ", deseas ir a verlo?",
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: function () {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: function () {
-                                                try {
-                                                    alert_8.dismiss();
-                                                }
-                                                catch (error) {
-                                                }
-                                                _this.goToPedido(Number(pedido_8));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert_8.present();
-                            }
-                        }
-                        else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 6:
-                        if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                            var pedido_9 = JSON.parse(data.pedido);
-                            //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            if (currentPage == "HistorialPedidosDetailPage") {
-                                this.alertaService.successAlertGeneric(data.title);
-                            }
-                            else {
-                                var alert_9 = this.alertCtrl.create({
-                                    title: 'Confirmación',
-                                    message: data.title + ", deseas ir a verlo?",
-                                    cssClass: this.genericService.getColorClassTWO(),
-                                    buttons: [
-                                        {
-                                            text: 'Cancelar',
-                                            role: 'cancel',
-                                            handler: function () {
-                                            }
-                                        },
-                                        {
-                                            text: 'Aceptar',
-                                            handler: function () {
-                                                try {
-                                                    alert_9.dismiss();
-                                                }
-                                                catch (error) {
-                                                }
-                                                _this.goToPedido(Number(pedido_9));
-                                                //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                            }
-                                        }
-                                    ]
-                                });
-                                alert_9.present();
-                            }
-                        }
-                        else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 3 || __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                    case 4:
-                        if (this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                            var pedido_10 = JSON.parse(data.pedidoId);
-                            //let pedidoProveedor: any = JSON.parse(data.pedidoProveedorId);
-                            this.events.publish("cargarPedidos");
-                            var alert_10 = this.alertCtrl.create({
-                                title: 'Confirmación',
-                                message: "" + data.title,
-                                cssClass: this.genericService.getColorClassTWO(),
-                                buttons: [
-                                    {
-                                        text: 'Cancelar',
-                                        role: 'cancel',
-                                        handler: function () {
-                                        }
-                                    },
-                                    {
-                                        text: 'Aceptar',
-                                        handler: function () {
-                                            try {
-                                                alert_10.dismiss();
-                                            }
-                                            catch (error) {
-                                            }
-                                            _this.goToPedidoCalificar(Number(pedido_10));
-                                            //this.app.getActiveNav().push(HistorialPedidosDetailPage, { pedido });
-                                        }
-                                    }
-                                ]
-                            });
-                            alert_10.present();
-                        }
-                        else if (!this.user && __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].perfil.activo == 1) {
-                            this.alertaService.warnAlertGeneric("Debes iniciar sesión para poder visualizar tus pedidos");
-                        }
-                        break;
-                }
-            }
-            catch (error) {
-                console.log(error);
-            }
-            //this.alertaService.alertaBasica("Soy Luz Radio Notifica", data.body, null);
+            this.lecturaForeground(data);
         }
     };
     PushNotificationService = __decorate([
@@ -2582,17 +3532,17 @@ var PushNotificationService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 202:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CalificacionPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2702,8 +3652,8 @@ var CalificacionPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-calificacion',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/calificacion/calificacion.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Calificar</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div style="text-align: center;\n  padding: 15px;\n  font-size: 20px;\n  font-weight: 400;">{{nombre}}</div>\n  <div class="vendor" *ngIf="!pedido">\n    <img src="assets/imgs/chat/vendor.png" alt="">\n  </div>\n  <div class="vendor" *ngIf="pedido">\n    <img src="assets/imgs/chat/vendor.png" *ngIf="!p.proveedor.transportista.usuario.adjuntoId">\n    <img src="{{env.getImagenIndividual}}{{p.proveedor.transportista.usuario.adjuntoId}}" *ngIf="p.proveedor.transportista.usuario.adjuntoId"/>\n  </div>\n  <div class="calificacion">\n    <div class="texto">{{calificacionActual}}</div>\n    <div class="contenedor-stars">\n      <div *ngFor="let s of stars" class="estrella" [ngStyle]="{\'color\': genericService.getColorHex()}" (click)="selecciona(s)">\n        <ion-icon name="ios-star" *ngIf="s.selected" (click)="selecciona(s)"></ion-icon>\n        <ion-icon name="ios-star-outline" *ngIf="!s.selected" (click)="selecciona(s)"></ion-icon>\n      </div>\n    </div>\n    <div class="queja">\n      <textarea name="" id="" cols="30" rows="4" [(ngModel)]="queja" placeholder="Escríbe aquí que salió bien o mal"></textarea>\n    </div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class">\n  <button (tap)="enviar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}" style="width:100%;font-size: 20px;">Enviar</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/calificacion/calificacion.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
@@ -2715,7 +3665,7 @@ var CalificacionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 207:
+/***/ 208:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2752,8 +3702,8 @@ var QrPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'page-qr',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/qr/qr.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n      <ion-title>Terminar servicio</ion-title>\n    </ion-navbar>\n  </ion-header>\n\n<ion-content padding>\n\n    <div class="titlee" [ngStyle]="{\'border-color\' : genericService.getColorHex()}">Pedido: <strong>{{pedido.folio}}</strong></div>\n    <div class="titlee" [ngStyle]="{\'border-color\' : genericService.getColorHex()}">Proveedor: <strong>{{pedido.proveedor.nombre}}</strong></div>\n    <div class="titlee" [ngStyle]="{\'border-color\' : genericService.getColorHex()}" style="margin-bottom: 40px">Código: <strong>{{pedido.token}}</strong></div>\n\n    <div class="miqr">\n        <qrcode [qrdata]="qrCode"></qrcode>\n    </div>\n\n    <div style="    margin-top: 20px;\n    font-size: 17px;\n    text-align: center;">Muestra este código QR a la persona que entrega el pedido</div>\n\n    \n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/qr/qr.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_0__services_generic_service__["a" /* GenericService */]])
     ], QrPage);
     return QrPage;
@@ -2763,18 +3713,18 @@ var QrPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 213:
+/***/ 214:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DireccionesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_geo_proveedores_home_geo_proveedores__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2877,13 +3827,13 @@ var DireccionesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
             selector: 'page-direcciones',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/direcciones/direcciones.html"*/'<ion-header *ngIf="!fromPop">\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Mis direcciones</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content [ngStyle]="{\'padding\': !fromPop ? \'16px\' : \'0px\'}">\n  <div class="spinner-carrito" *ngIf="!render">\n    <ion-spinner></ion-spinner>\n  </div>\n  <div *ngIf="fromPop" style="padding: 10px;\n  text-align: center;\n  color: #fff;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    Selecciona una dirección frecuente\n  </div>\n\n  <ion-list *ngIf="!fromPop">\n    <ion-item-sliding #item *ngFor="let card of listaDirecciones">\n      <ion-item class="item-list-card" (click)="view(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/direcciones/maps-and-flags.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.direccion.direccion}}</div>\n        </div>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button (click)="borrar(card)" color="danger">\n          <ion-icon name="ios-trash-outline"></ion-icon>\n          Borrar\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n  <ion-list *ngIf="fromPop">\n    <ion-item class="item-list-card" (click)="select(card)" *ngFor="let card of listaDirecciones">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/direcciones/maps-and-flags.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">{{card.alias}}</div>\n        <div class="number">{{card.direccion.direccion}}</div>\n      </div>\n    </ion-item>\n  </ion-list>\n</ion-content>\n<ion-fab bottom right class="fab-cards animated swing" *ngIf="!fromPop">\n  <button ion-fab (click)="nuevaLista()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="add"></ion-icon>\n  </button>\n</ion-fab>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/direcciones/direcciones.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["q" /* ViewController */]])
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["r" /* ViewController */]])
     ], DireccionesPage);
     return DireccionesPage;
 }());
@@ -2892,18 +3842,18 @@ var DireccionesPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 214:
+/***/ 215:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__carrito_compras_carrito_compras__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__carrito_compras_carrito_compras__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__recuperar_password_recuperar_password__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(581);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__historial_pedidos_historial_pedidos__ = __webpack_require__(588);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(582);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__historial_pedidos_historial_pedidos__ = __webpack_require__(589);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2970,908 +3920,21 @@ var TabsPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 215:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarritoComprasPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__home_geo_proveedores_home_geo_proveedores__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__detalle_producto_detalle_producto__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_validation_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_forms__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common__ = __webpack_require__(46);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-var CarritoComprasPage = /** @class */ (function () {
-    function CarritoComprasPage(navCtrl, navParams, localStorageEncryptService, events, modalController, 
-        //private productoService: ProductoService,
-        genericService, alertCtrl, alertaService, loadingService, formBuilder, currencyPipe) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.localStorageEncryptService = localStorageEncryptService;
-        this.events = events;
-        this.modalController = modalController;
-        this.genericService = genericService;
-        this.alertCtrl = alertCtrl;
-        this.alertaService = alertaService;
-        this.loadingService = loadingService;
-        this.formBuilder = formBuilder;
-        this.currencyPipe = currencyPipe;
-        this.selectOptions = {
-            cssClass: 'action-sheet-class'
-        };
-        this.user = null;
-        this.productosCarrito = [];
-        this.productosCarritoReplica = [];
-        this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
-        this.stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].st.keyPublic)));
-        this.recarga = false;
-        this.cards = null;
-        this.dataCard = {
-            tarj: "",
-            cvc: "",
-            dtime: ""
-        };
-        this.pagoActual = null;
-        this.objetoRegistro = [
-            {
-                name: "Nombre del contacto",
-                required: true,
-                length: 50,
-                type: "text",
-                formName: "name",
-                value: null,
-                disabled: false
-            },
-            {
-                name: "Teléfono",
-                required: true,
-                length: 10,
-                type: "number",
-                formName: "tel",
-                value: null,
-                disabled: false
-            },
-            {
-                name: "Correo electrónico",
-                required: true,
-                length: 100,
-                type: "email",
-                formName: "email",
-                value: null,
-                disabled: false
-            },
-        ];
-        this.enCompra = false;
-        this.objetoRegistroOriginal = [];
-        this.formGroup = null;
-        this.btnHabilitado = true;
-        this.data = null;
-        this.objetoRegistroCopy = [];
-        this.check = false;
-        this.agrupado = [];
-        this.totales = null;
-        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        if (this.user) {
-            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-            this.productosCarritoReplica = this.productosCarrito;
-            this.objetoRegistro.forEach(function (element) {
-                _this.objetoRegistroOriginal.push(element);
-            });
-            console.log(this.objetoRegistroOriginal);
-            this.recarga = navParams.get("recarga");
-            console.log(this.recarga);
-            this.getCards();
-            this.agruparTotales();
-        }
-    }
-    CarritoComprasPage.prototype.agruparTotales = function () {
-        var _this = this;
-        this.agrupado = [];
-        var unique = this.productosCarrito.filter(function (valorActual, indiceActual, arreglo) {
-            //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
-            return arreglo.findIndex(function (valorDelArreglo) { return valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId; }) === indiceActual;
-        });
-        unique.forEach(function (prov) {
-            prov.carritoAgrupado = [];
-            _this.productosCarrito.forEach(function (element) {
-                if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
-                    prov.carritoAgrupado.push(element);
-                }
-            });
-            _this.agrupado.push(prov);
-        });
-        console.log(this.agrupado);
-        this.getTotales();
-    };
-    CarritoComprasPage.prototype.armaObjRegistro = function () {
-        this.objetoRegistro = [
-            {
-                name: "Nombre del contacto",
-                required: true,
-                length: 50,
-                type: "text",
-                formName: "name",
-                value: null,
-                disabled: false
-            },
-            {
-                name: "Teléfono",
-                required: true,
-                length: 10,
-                type: "number",
-                formName: "tel",
-                value: null,
-                disabled: false
-            },
-            {
-                name: "Correo electrónico",
-                required: true,
-                length: 100,
-                type: "email",
-                formName: "email",
-                value: null,
-                disabled: false
-            },
-        ];
-        if (this.totales.listCarritoProveedores.length > 1) {
-            this.objetoRegistro.push({
-                name: "Dirección",
-                required: true,
-                length: 200,
-                type: "text",
-                formName: "direc",
-                value: null,
-                disabled: true
-            });
-            this.objetoRegistro.push({
-                name: "Código postal",
-                required: false,
-                length: 6,
-                type: "text",
-                formName: "cp",
-                value: null,
-                disabled: false
-            });
-        }
-        else {
-            this.objetoRegistro.push({
-                name: "Picking",
-                required: true,
-                length: 11,
-                type: "select",
-                formName: "sex",
-                value: false,
-                opts: [
-                    {
-                        id: false,
-                        value: "Entrega a domicilio"
-                    },
-                    {
-                        id: true,
-                        value: "Entrega en domicilio de proveedor"
-                    }
-                ]
-            });
-            this.objetoRegistro.push({
-                name: "Dirección",
-                required: true,
-                length: 200,
-                type: "text",
-                formName: "direc",
-                value: null,
-                disabled: true
-            });
-            this.objetoRegistro.push({
-                name: "Código postal",
-                required: false,
-                length: 6,
-                type: "text",
-                formName: "cp",
-                value: null,
-                disabled: false
-            });
-        }
-    };
-    CarritoComprasPage.prototype.getTotales = function () {
-        //debugger;
-        var _this = this;
-        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoComprasProveedor).subscribe(function (response) {
-            console.log(response);
-            _this.totales = response;
-            _this.agrupado.forEach(function (element) {
-                if (element.totalAgrupado) {
-                    delete element.totalAgrupado;
-                }
-            });
-            _this.totales.listCarritoProveedores.forEach(function (item) {
-                _this.agrupado.forEach(function (element) {
-                    if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
-                        element.totalAgrupado = {
-                            comisionTransporte: item.comisionTransporte,
-                            tiempoEntrega: item.tiempoEntrega,
-                            total: item.total,
-                            totalProductos: item.totalProductos
-                        };
-                    }
-                });
-            });
-            console.log(_this.agrupado);
-            _this.armaObjRegistro();
-        }, function (error) {
-            //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
-        });
-    };
-    CarritoComprasPage.prototype.ngOnDestroy = function () {
-        this.events.publish("carritoTab");
-    };
-    CarritoComprasPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        if (this.recarga) {
-            var claseTabs = document.getElementsByClassName("tabbar");
-            if (claseTabs[0]) {
-                //claseTabs[0].style.display = "none";
-            }
-            //this.verCarrito();
-        }
-        this.events.subscribe('carritoTab', function (data) {
-            _this.verCarrito();
-        });
-        this.events.subscribe('carritoTab2', function (data) {
-            _this.verCarrito();
-        });
-    };
-    CarritoComprasPage.prototype.verCarrito = function () {
-        //nav.pop();
-        this.cargarProductosCarrito();
-    };
-    CarritoComprasPage.prototype.cargarProductosCarrito = function () {
-        var _this = this;
-        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras).subscribe(function (response) {
-            _this.localStorageEncryptService.setToLocalStorage("" + _this.user.id_token, response);
-            _this.productosCarrito = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
-            _this.productosCarritoReplica = _this.productosCarrito;
-            _this.agruparTotales();
-        }, function (error) {
-        });
-    };
-    CarritoComprasPage.prototype.seleccionar = function (card) {
-        if (!card.selected) {
-            this.cards.forEach(function (element) {
-                element.selected = false;
-            });
-            card.selected = true;
-        }
-        else {
-            card.selected = false;
-        }
-    };
-    CarritoComprasPage.prototype.getCards = function () {
-        var _this = this;
-        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].tarjetas).subscribe(function (response) {
-            _this.cards = response;
-            _this.cards.forEach(function (element) {
-                element.selected = false;
-            });
-            if (_this.cards.length <= 0) {
-                //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
-            }
-        }, function (error) {
-            var err = error.error;
-            _this.cards = null;
-            //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-        });
-    };
-    CarritoComprasPage.prototype.setupStripe = function () {
-        var _this = this;
-        var position = this.cards.findIndex(function (carrito) {
-            return carrito.selected;
-        });
-        var c = {
-            number: "4242424242424242",
-            cvc: "123",
-            exp_month: 12,
-            exp_year: 2025
-        };
-        var bandera = false;
-        if (this.cards[position]) {
-            var item = this.cards[position];
-            var fechaFormat = item.fechaCaducidad.split("-");
-            item.expMont = fechaFormat[1];
-            item.expYear = fechaFormat[0];
-            c.number = item.numeroTarjeta;
-            c.cvc = item.numeroSeguridad;
-            c.exp_month = item.expMont;
-            c.exp_year = item.expYear;
-        }
-        else if (this.dataCard.dtime.length == 0 || this.dataCard.tarj.length == 0 || this.dataCard.cvc.length == 0) {
-            bandera = true;
-        }
-        else {
-            c.number = this.dataCard.tarj;
-            c.cvc = this.dataCard.cvc;
-            var fechaFormat = this.dataCard.dtime.split("-");
-            var expMont = fechaFormat[1];
-            var expYear = fechaFormat[0];
-            c.exp_month = expMont;
-            c.exp_year = expYear;
-        }
-        if (!bandera) {
-            Stripe.setPublishableKey(JSON.parse(this.localStorageEncryptService.yayirobe(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].st.keyPublic)));
-            this.loadingService.show().then(function () {
-                var clase = _this;
-                Stripe.card.createToken(c, function (status, response) {
-                    if (response.error) {
-                        clase.loadingService.hide();
-                        clase.alertaService.errorAlertGeneric("Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta");
-                    }
-                    else {
-                        // Get the token ID:
-                        console.log(response);
-                        //clase.loadingService.hide();
-                        var token = response.id;
-                        var body = {
-                            pedidoId: clase.pagoActual.id,
-                            token: token
-                        };
-                        var service = clase.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos + "/pago", body);
-                        service.subscribe(function (response) {
-                            clase.loadingService.hide();
-                            clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
-                            clase.cerrar();
-                        }, function (error) {
-                            clase.loadingService.hide();
-                            clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
-                        });
-                    }
-                });
-            });
-        }
-        else {
-            this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
-        }
-    };
-    CarritoComprasPage.prototype.cerrar = function () {
-        var modal = document.getElementById("myModal");
-        modal.style.display = "none";
-        this.dataCard = {
-            tarj: "",
-            cvc: "",
-            dtime: ""
-        };
-        this.cards.forEach(function (element) {
-            element.selected = false;
-        });
-        ///Aqui ejecutar el limpiado de carrito
-        this.enCompra = false;
-        this.events.publish("carritoTab");
-    };
-    CarritoComprasPage.prototype.deleteFavorito = function (producto) {
-        var nuevoArrarCarrito = [];
-        var productoDelete = null;
-        this.productosCarrito.forEach(function (element) {
-            if (producto.id != element.id) {
-                nuevoArrarCarrito.push(element);
-            }
-            else {
-                productoDelete = element;
-            }
-        });
-        this.productosCarrito = nuevoArrarCarrito;
-        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, this.productosCarrito);
-        //Llamar a events
-        this.events.publish('updateProductos', { productoDelete: productoDelete });
-        if (this.productosCarrito.length <= 0) {
-            this.navCtrl.pop();
-        }
-    };
-    CarritoComprasPage.prototype.incrementa = function (p) {
-        //debugger;
-        var bandera = false;
-        if (p.cantidad) {
-            p.cantidad++;
-        }
-        else if (p.cantidad == 0) {
-            p.cantidad = 1;
-            bandera = true;
-        }
-        else {
-            p.cantidad = 1;
-            bandera = true;
-        }
-        console.log(p.cantidad);
-        this.agregarToCarritoBack(bandera, p);
-    };
-    CarritoComprasPage.prototype.agregarToCarrito = function (producto) {
-        //debugger;
-        var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-        var productos = [];
-        productos.push(producto);
-        if (productosStorage) {
-            productosStorage.forEach(function (element) {
-                productos.push(element);
-            });
-        }
-        producto.carrito = true;
-        try {
-            this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productos);
-        }
-        catch (error) {
-            producto.carrito = false;
-        }
-    };
-    CarritoComprasPage.prototype.agregarToCarritoBack = function (bandera, producto) {
-        var _this = this;
-        //debugger;
-        var body = {
-            precio: producto.precio,
-            productoProveedorId: producto.productoProveedor.id
-        };
-        var service = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body);
-        if (producto.cantidad > 1) {
-            body.cantidad = producto.cantidad;
-            service = this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body);
-        }
-        service.subscribe(function (response) {
-            if (bandera) {
-                _this.agregarToCarrito(producto);
-                _this.verificarCarritoModificarCantidad(producto);
-            }
-            else {
-                _this.verificarCarritoModificarCantidad(producto);
-            }
-        }, function (error) {
-            if (producto.cantidad == 1) {
-                producto.cantidad = 1;
-            }
-            else {
-                producto.cantidad--;
-            }
-        });
-    };
-    CarritoComprasPage.prototype.viewDetail = function (producto) {
-        var _this = this;
-        //consumir servicio de imagenes completas
-        this.loadingService.show().then(function () {
-            _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].proveedorProductos + "/" + producto.productoProveedor.id).subscribe(function (response) {
-                //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
-                //let nav = this.app.getRootNav();
-                //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-                if (_this.user) {
-                    var carritos = _this.localStorageEncryptService.getFromLocalStorage("" + _this.user.id_token);
-                    if (carritos) {
-                        var position = carritos.findIndex(function (carrito) {
-                            return carrito.id == response.id;
-                        });
-                        if (position >= 0) {
-                            response.cantidad = carritos[position].cantidad;
-                        }
-                    }
-                }
-                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_8__detalle_producto_detalle_producto__["a" /* DetalleProductoPage */], { producto: response, fromCarritos: true });
-                _this.loadingService.hide();
-            }, function (error) {
-                _this.loadingService.hide();
-                var err = error.error;
-                _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-            });
-        });
-        //
-    };
-    CarritoComprasPage.prototype.decrementar = function (p) {
-        p.cantidad--;
-        this.borrarToCarritoBack(p);
-    };
-    CarritoComprasPage.prototype.borrarToCarritoBack = function (producto) {
-        var _this = this;
-        var body = {
-            precio: producto.precio,
-            productoProveedorId: producto.productoProveedor.id
-        };
-        body.cantidad = producto.cantidad;
-        this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras, body).subscribe(function (response1) {
-            if (producto.cantidad == 0) {
-                _this.genericService.sendDelete(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoCompras + "/" + producto.id).subscribe(function (response2) {
-                    if (producto.cantidad == 0) {
-                        _this.events.publish("totalCarrito");
-                        _this.deleteFavoritoService(producto);
-                        //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-                    }
-                    _this.verificarCarritoModificarCantidad(producto);
-                }, function (error) {
-                    producto.cantidad++;
-                });
-            }
-            else {
-                _this.verificarCarritoModificarCantidad(producto);
-            }
-        }, function (error) {
-            producto.cantidad++;
-        });
-    };
-    CarritoComprasPage.prototype.deleteFavoritoService = function (producto) {
-        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-        var nuevoArrarCarrito = [];
-        var productoDelete = null;
-        this.productosCarrito.forEach(function (element) {
-            if (producto.productoProveedor.producto.id != element.productoProveedor.producto.id) {
-                nuevoArrarCarrito.push(element);
-            }
-            else {
-                productoDelete = element;
-                productoDelete.carrito = false;
-                producto.carrito = false;
-            }
-        });
-        this.productosCarrito = nuevoArrarCarrito;
-        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, this.productosCarrito);
-        //Llamar a events
-        this.events.publish('updateProductos', { productoDelete: productoDelete });
-        if (this.productosCarrito.length <= 0) {
-            this.navCtrl.pop();
-        }
-    };
-    CarritoComprasPage.prototype.verificarCarritoModificarCantidad = function (element) {
-        //debugger;
-        var productosStorage = this.localStorageEncryptService.getFromLocalStorage("" + this.user.id_token);
-        if (productosStorage) {
-            productosStorage.forEach(function (item) {
-                if (item.id == element.id) {
-                    item.cantidad = element.cantidad;
-                }
-            });
-        }
-        console.log(productosStorage);
-        this.localStorageEncryptService.setToLocalStorage("" + this.user.id_token, productosStorage);
-        this.getTotales();
-        //this.agruparTotales();
-        //this.events.publish("carritoTab");
-    };
-    CarritoComprasPage.prototype.infoContact = function () {
-        var _this = this;
-        var modal = document.getElementById("myModal2");
-        //
-        this.enCompra = true;
-        var putObj = {};
-        this.objetoRegistro.forEach(function (item) {
-            var tmp = [];
-            tmp[0] = null;
-            tmp[1] = [];
-            if (item.required) {
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_10__angular_forms__["g" /* Validators */].required);
-            }
-            if (item.type == "number") {
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].phoneValidator);
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].maxLengthValidator);
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].minLengthValidator);
-            }
-            if (item.type == "email") {
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].emailValidator);
-            }
-            if (item.type == "password") {
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_9__services_validation_service__["a" /* ValidationService */].passwordValidator);
-            }
-            if (item.type == "select") {
-                tmp[0] = item.opts[0].value;
-            }
-            if (_this.user) {
-            }
-            putObj[item.formName] = tmp;
-        });
-        this.formGroup = this.formBuilder.group(putObj);
-        //
-        if (modal) {
-            modal.style.display = "block";
-        }
-    };
-    CarritoComprasPage.prototype.closeInfoContact = function (aun) {
-        if (aun === void 0) { aun = true; }
-        var modal = document.getElementById("myModal2");
-        if (modal) {
-            modal.style.display = "none";
-        }
-        this.objetoRegistro.forEach(function (item) {
-            item.value = null;
-        });
-        this.formGroup = null;
-        this.btnHabilitado = true;
-        if (aun) {
-            this.enCompra = false;
-        }
-    };
-    CarritoComprasPage.prototype.cerrarModal3 = function (aun) {
-        if (aun === void 0) { aun = true; }
-        var modal = document.getElementById("myModal3");
-        modal.style.display = "none";
-        if (aun) {
-            this.enCompra = false;
-        }
-    };
-    CarritoComprasPage.prototype.openModal3 = function () {
-        var modal = document.getElementById("myModal3");
-        modal.style.display = "block";
-    };
-    /**Verifica validaciones */
-    CarritoComprasPage.prototype.ejecutaValidator = function (opc, evt) {
-        if (opc === void 0) { opc = false; }
-        if (evt === void 0) { evt = null; }
-        if (opc) {
-            console.log(evt);
-            if (evt) {
-                this.objetoRegistro.push({
-                    name: "Dirección",
-                    required: true,
-                    length: 200,
-                    type: "text",
-                    formName: "direc",
-                    value: null,
-                    disabled: true
-                });
-                this.objetoRegistro.push({
-                    name: "Código postal",
-                    required: false,
-                    length: 6,
-                    type: "text",
-                    formName: "cp",
-                    value: null,
-                    disabled: false
-                });
-            }
-            else {
-                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
-                this.objetoRegistro = this.objetoRegistro.slice(0, 4).concat(this.objetoRegistro.slice(4 + 1));
-            }
-        }
-        var validacion = 0;
-        for (var name_1 in this.formGroup.controls) {
-            var n = this.formGroup.controls[name_1];
-            if (n.invalid) {
-                validacion++;
-            }
-            /*
-            if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
-              invalid.push(this.translatePipe.instant(String(name).toUpperCase()));
-              fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
-            } */
-        }
-        console.log(validacion);
-        if (validacion <= 0) {
-            this.btnHabilitado = false;
-        }
-        else {
-            this.btnHabilitado = true;
-        }
-        if (validacion == 1 && this.objetoRegistro[3].value == false) {
-            this.btnHabilitado = false;
-        }
-    };
-    CarritoComprasPage.prototype.getMapa = function () {
-        var _this = this;
-        var modal = this.modalController.create(__WEBPACK_IMPORTED_MODULE_0__home_geo_proveedores_home_geo_proveedores__["a" /* HomeGeoProveedoresPage */], { fromModal: true });
-        modal.present();
-        modal.onDidDismiss(function (data) {
-            if (data) {
-                if (data != null) {
-                    _this.data = data.data;
-                    if (_this.objetoRegistro[3].value == true || _this.objetoRegistro[3].value == false) {
-                        _this.objetoRegistro[4].value = _this.data.direccion;
-                        _this.objetoRegistro[5].value = _this.data.codigoPostal;
-                    }
-                    else {
-                        _this.objetoRegistro[3].value = _this.data.direccion;
-                        _this.objetoRegistro[4].value = _this.data.codigoPostal;
-                    }
-                    setTimeout(function () {
-                        _this.ejecutaValidator();
-                    }, 500);
-                }
-            }
-        });
-    };
-    CarritoComprasPage.prototype.precompra = function () {
-        var _this = this;
-        this.objetoRegistroCopy = [];
-        this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
-        this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
-        this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
-        var body = {
-            nombreContacto: this.objetoRegistroCopy[0].value,
-            telefonoContacto: this.objetoRegistroCopy[1].value,
-            correoContacto: this.objetoRegistroCopy[2].value,
-            direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
-                id: this.data.id ? this.data.id : null,
-                codigoPostal: this.data.codigoPostal,
-                direccion: this.data.direccion,
-                latitud: this.data.latitud,
-                longitud: this.data.longitud
-            },
-            productos: []
-        };
-        if (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == true) {
-            body.picking = this.objetoRegistro[3].value;
-        }
-        else {
-            body.picking = false;
-        }
-        this.productosCarrito.forEach(function (item) {
-            body.productos.push({
-                cantidad: item.cantidad,
-                productoProveedorId: item.productoProveedorId
-            });
-        });
-        var service = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos, body);
-        this.loadingService.show().then(function () {
-            service.subscribe(function (response) {
-                _this.pagoActual = response;
-                _this.loadingService.hide();
-                //this.comprar();
-                _this.closeInfoContact(false);
-                setTimeout(function () {
-                    _this.openModal3();
-                }, 300);
-            }, function (error) {
-                _this.loadingService.hide();
-                _this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
-            });
-        });
-    };
-    CarritoComprasPage.prototype.comprar = function () {
-        if (this.check) {
-            this.cerrarModal3(false);
-            var modal = document.getElementById("myModal");
-            modal.style.display = "block";
-            this.check = false;
-        }
-        else {
-            this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
-        }
-    };
-    CarritoComprasPage.prototype.confirmar = function () {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: "Confirmación",
-            message: "Se realizar\u00E1 un cargo a su tarjeta por " + this.currencyPipe.transform(this.pagoActual.total) + " \u00BFEst\u00E1s de acuerdo?",
-            cssClass: this.genericService.getColorClassTWO(),
-            buttons: [
-                {
-                    text: "No",
-                    role: 'cancel',
-                    handler: function () {
-                    }
-                },
-                {
-                    text: 'Si',
-                    handler: function () {
-                        //this.confirmar();
-                        _this.setupStripe();
-                    }
-                }
-            ]
-        });
-        alert.present();
-    };
-    CarritoComprasPage.prototype.addToList = function () {
-        var _this = this;
-        var inputs = [
-            {
-                name: 'nombre',
-                placeholder: 'Nombre de mi lista',
-                type: 'text',
-                id: "i-1-name"
-            }
-        ];
-        var buttons = [
-            {
-                text: "Agregar",
-                handler: function (data) {
-                    var body = {
-                        nombre: data.nombre
-                    };
-                    var service = _this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].carritoHistorico, body);
-                    _this.loadingService.show().then(function () {
-                        service.subscribe(function (response) {
-                            _this.alertaService.successAlertGeneric("Lista frecuente agregada con éxito");
-                            _this.loadingService.hide();
-                            return true;
-                        }, function (error) {
-                            _this.loadingService.hide();
-                            _this.alertaService.errorAlertGeneric("No se ha podido agregar tu lista frecuente, intenta nuevamente");
-                            return true;
-                        });
-                    });
-                }
-            }
-        ];
-        var data = {
-            title: "Mi lista frecuente",
-            message: "Ingresa el nombre de tu lista frecuente, \u00E9sta aparecer\u00E1 en tu men\u00FA de listas de carrito frecuentes",
-            inputs: inputs,
-        };
-        var alert = this.alertCtrl.create({
-            title: data.title,
-            cssClass: this.genericService.getColorClass(),
-            message: data.message,
-            inputs: data.inputs,
-            buttons: buttons
-        });
-        alert.present();
-    };
-    CarritoComprasPage.prototype.up = function () {
-        console.log(this.productosCarrito);
-        console.log(this.productosCarritoReplica);
-        this.productosCarrito = this.productosCarritoReplica;
-        this.productosCarrito.sort(function (mayor, menor) {
-            return mayor.precio - menor.precio;
-        });
-    };
-    CarritoComprasPage.prototype.down = function () {
-        this.productosCarrito = this.productosCarritoReplica;
-        this.productosCarrito.sort(function (mayor, menor) {
-            return menor.precio - mayor.precio;
-        });
-    };
-    CarritoComprasPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Mi carrito</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"\n            formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n    padding: 7px;\n    color: #fff;\n    border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n        height: auto;\n        contain: none;\n        margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n<ion-content padding class="">\n\n  <!-- <div *ngIf="productosCarrito && productosCarrito?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="up()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n        <div class="botones">\n            <button ion-button outline style="width: 48%;" (click)="down()"\n            [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n              <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n            </button>\n        </div>\n      </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                            <div class="mini-tacha">\n                                <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                            </div>\n                          </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;" >\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length <= 0">\n      <div><img style="    border-radius: 4px;\n        box-shadow: 0px 0px 4px 0px #a0a0a0;" src="assets/imgs/lista-carrito/carritoComprado.png"\n          alt=""></div>\n      <div>Sin articulos en carrito, agrega algunos y aparecerán en esta sección</div>\n    </div>\n    <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n\n\n</ion-content>\n\n<ion-fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">\n  <button ion-fab style="color: #fff;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="arrow-dropleft"></ion-icon>\n  </button>\n  <ion-fab-list side="left">\n    <button (tap)="addToList()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n    <button (tap)="infoContact()" style="color: #fff;font-size: 12px;\n    width: 137px;\n    padding-top: 10px;\n    padding-bottom: 10px;\n    border-radius: 4px;\n    margin-left: 6px;width: 98px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar pedido</button>\n  </ion-fab-list>\n</ion-fab>\n\n<ion-footer class="footer-button-class" *ngIf="totales && totales.listCarritoProveedores?.length > 0 && !recarga && !enCompra">\n  <button (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Agregar a una lista</button>\n  <button (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-compras/carrito-compras.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */],
-            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */],
-            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
-            __WEBPACK_IMPORTED_MODULE_10__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_11__angular_common__["c" /* CurrencyPipe */]])
-    ], CarritoComprasPage);
-    return CarritoComprasPage;
-}());
-
-//# sourceMappingURL=carrito-compras.js.map
-
-/***/ }),
-
 /***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProveedorPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__articulo_proveedores_articulo_proveedores__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__articulo_proveedores_articulo_proveedores__ = __webpack_require__(123);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__opciones_menu_opciones_menu__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__carrito_compras_carrito_compras__ = __webpack_require__(127);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3881,6 +3944,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
 
 
 
@@ -3889,21 +3955,101 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var ProveedorPage = /** @class */ (function () {
-    function ProveedorPage(navCtrl, navParams, genericService, alertaService, loadingService) {
+    function ProveedorPage(navCtrl, navParams, genericService, alertaService, loadingService, events, popoverCtrl, menuCtrl, localStorageEncryptService, app) {
+        var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.genericService = genericService;
         this.alertaService = alertaService;
         this.loadingService = loadingService;
+        this.events = events;
+        this.popoverCtrl = popoverCtrl;
+        this.menuCtrl = menuCtrl;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.app = app;
         this.proveedores = [];
         this.proveedoresReplica = [];
         this.palabra = "";
-        this.env = __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__["a" /* environment */];
+        this.totalCarrito = 0;
+        this.env = __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */];
+        this.user = null;
         this.cargarProveedores();
+        this.menuCtrl.enable(true);
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        this.events.subscribe("reloadUser", function (data) {
+            try {
+                _this.user = _this.localStorageEncryptService.getFromLocalStorage("userSession");
+            }
+            catch (error) {
+            }
+        });
+        this.events.subscribe("totalCarrito", function (data) {
+            try {
+                if (data) {
+                    _this.totalCarrito = _this.getTotalCarrito(data.fromLogin);
+                }
+                else {
+                    _this.totalCarrito = _this.getTotalCarrito();
+                }
+            }
+            catch (error) {
+            }
+        });
+        this.events.subscribe("totalCarrito2", function (data) {
+            try {
+                if (data) {
+                    _this.totalCarrito = _this.getTotalCarrito(data.fromLogin);
+                }
+                else {
+                    _this.totalCarrito = _this.getTotalCarrito();
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
     }
+    ProveedorPage.prototype.ionViewDidEnter = function () {
+        this.events.publish("backHome");
+        this.events.publish("backCarrito");
+        this.events.publish("backHistorial");
+    };
+    ProveedorPage.prototype.verCarrito = function () {
+        //if (this.genericService.getTotalCarrito() > 0) {
+        //nav.pop();
+        this.cargarProductosCarrito();
+        //}
+    };
+    ProveedorPage.prototype.cargarProductosCarrito = function () {
+        var _this = this;
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].carritoCompras).subscribe(function (response) {
+            var nav = _this.app.getRootNav();
+            _this.localStorageEncryptService.setToLocalStorage("" + _this.user.id_token, response);
+            nav.push(__WEBPACK_IMPORTED_MODULE_9__carrito_compras_carrito_compras__["a" /* CarritoComprasPage */]);
+        }, function (error) {
+            _this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+        });
+    };
+    ProveedorPage.prototype.getTotalCarrito = function (fromLogin) {
+        var _this = this;
+        if (fromLogin === void 0) { fromLogin = false; }
+        console.log("-----------------------------------");
+        this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].carritoCompras).subscribe(function (response) {
+            _this.localStorageEncryptService.setToLocalStorage("" + _this.user.id_token, response);
+            _this.totalCarrito = response.length;
+            console.log(_this.totalCarrito);
+        }, function (error) {
+        });
+    };
+    ProveedorPage.prototype.verOpciones = function () {
+        var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_8__opciones_menu_opciones_menu__["a" /* OpcionesMenuPage */], {}, { cssClass: "clase-Pop" });
+        popover.present({});
+    };
+    ProveedorPage.prototype.ionViewWillLeave = function () {
+    };
     ProveedorPage.prototype.cargarProveedores = function () {
         var _this = this;
-        this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__["a" /* environment */].proveedoresFull).subscribe(function (response) {
+        this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].proveedoresFull).subscribe(function (response) {
             _this.proveedores = response;
             _this.proveedoresReplica = response;
         }, function (error) {
@@ -3913,6 +4059,14 @@ var ProveedorPage = /** @class */ (function () {
         });
     };
     ProveedorPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        console.log("--->");
+        this.events.subscribe('updateProductos', function (data) {
+            _this.getTotalCarrito();
+        });
+        if (this.user) {
+            this.getTotalCarrito();
+        }
     };
     ProveedorPage.prototype.regresar = function () {
         var id = document.getElementById("icn-2");
@@ -3926,9 +4080,9 @@ var ProveedorPage = /** @class */ (function () {
         console.log(proveedor);
         //consumir servicio de imagenes completas
         this.loadingService.show().then(function () {
-            _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__["a" /* environment */].proveedorProductos + "/proveedor/" + proveedor.id).subscribe(function (response) {
+            _this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].proveedorProductos + "/proveedor/" + proveedor.id).subscribe(function (response) {
                 _this.loadingService.hide();
-                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__articulo_proveedores_articulo_proveedores__["a" /* ArticuloProveedoresPage */], { productos: response, proveedor: proveedor });
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_7__articulo_proveedores_articulo_proveedores__["a" /* ArticuloProveedoresPage */], { productos: response, proveedor: proveedor });
             }, function (error) {
                 _this.loadingService.hide();
                 var err = error.error;
@@ -3943,14 +4097,19 @@ var ProveedorPage = /** @class */ (function () {
         this.proveedores = this.proveedores.filter(function (item) { return item.nombre.toUpperCase().includes(_this.palabra.toUpperCase()); });
     };
     ProveedorPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
-            selector: 'page-recuperar-password',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recuperar-password/recuperar-password.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Proveedores</ion-title>\n    </ion-navbar>\n    <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n    </div>\n</ion-header>\n\n<ion-content>\n    <div class="spinner-carrito" *ngIf="proveedores && proveedores.length <= 0">\n        <ion-spinner></ion-spinner>\n    </div>\n\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedores; let i = index">\n        <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n        <div class="container-card" (click)="viewDetailAll(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" *ngIf="p.adjuntoId" />\n            <img src="assets/imgs/menu/arrows.png" *ngIf="!p.adjuntoId" />\n        </div>\n        <div class="container-text" (click)="viewDetailAll(p)">{{p.nombre}}</div>\n        <div class="description" (click)="viewDetailAll(p)"><strong>Empresa</strong></div>\n        <div class="precio" (click)="viewDetailAll(p)" *ngIf="p.empresa">{{p.empresa.nombre}}</div>\n        <div class="precio" (click)="viewDetailAll(p)" *ngIf="!p.empresa">-</div>\n    </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recuperar-password/recuperar-password.html"*/,
+        Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
+            selector: 'page-recuperar-password',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recuperar-password/recuperar-password.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n        <button ion-button menuToggle>\n            <ion-icon name="menu"></ion-icon>\n        </button>\n        <ion-title>Proveedores</ion-title>\n\n        <ion-buttons end>\n            <button ion-button icon-only (click)="verCarrito()" class="carrito" *ngIf="user">\n                <ion-badge *ngIf="totalCarrito > 0" [ngStyle]="{\'color\': genericService.getColorHex()}">{{totalCarrito}}</ion-badge>\n                <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>\n\n            </button>\n\n            <button ion-button icon-only (click)="verOpciones()">\n                <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n            </button>\n\n        </ion-buttons>\n    </ion-navbar>\n    <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n    </div>\n</ion-header>\n\n<ion-content>\n    <div class="spinner-carrito" *ngIf="proveedores && proveedores.length <= 0">\n        <ion-spinner></ion-spinner>\n    </div>\n\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedores; let i = index">\n        <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n        <div class="container-card" (click)="viewDetailAll(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" *ngIf="p.adjuntoId" />\n            <img src="assets/imgs/menu/arrows.png" *ngIf="!p.adjuntoId" />\n        </div>\n        <div class="container-text" (click)="viewDetailAll(p)">{{p.nombre}}</div>\n        <div class="description" (click)="viewDetailAll(p)"><strong>Empresa</strong></div>\n        <div class="precio" (click)="viewDetailAll(p)" *ngIf="p.empresa">{{p.empresa.nombre}}</div>\n        <div class="precio" (click)="viewDetailAll(p)" *ngIf="!p.empresa">-</div>\n    </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recuperar-password/recuperar-password.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
-            __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */],
-            __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
+            __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["p" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* MenuController */],
+            __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["c" /* App */]])
     ], ProveedorPage);
     return ProveedorPage;
 }());
@@ -3964,19 +4123,19 @@ var ProveedorPage = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapaProveedoresPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compara_precios_proveedor_compara_precios_proveedor__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__compara_precios_proveedor_compara_precios_proveedor__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_leaflet__ = __webpack_require__(580);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_leaflet__ = __webpack_require__(581);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_leaflet__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_leaflet_knn__ = __webpack_require__(980);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_leaflet_knn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_leaflet_knn__);
@@ -4349,14 +4508,14 @@ var MapaProveedoresPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_8" /* ViewChild */])('slides'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["p" /* Slides */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["q" /* Slides */])
     ], MapaProveedoresPage.prototype, "slider", void 0);
     MapaProveedoresPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-mapa-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{producto.producto.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="nacionales" *ngIf="proveedorActivo">\n    <button (click)="nacional()">Nacional</button>\n    <button (click)="local()">Local</button>\n  </div>\n\n  <div class="mapp">\n    <div id="map_canvas" class="mapita-google">\n\n    </div>\n    <button *ngIf="proveedorActivo" class="boton-mapa" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comparativa()">\n      Comparar precios</button>\n  </div>\n\n  <div class="contenedor-card" *ngIf="proveedorActivo" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-slides autoplay="2000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">\n      <ion-slide *ngFor="let p of proveedorActivo.productos; let i=index">\n        <div id="card-{{i}}" class="card animated lightSpeedIn">\n          <!-- <div class="tacha">\n                        <div class="mini-tacha">\n                            <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                            <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                        </div>\n                      </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n    \n            <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n    \n          <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div> -->\n        </div>\n        <div class="informa">\n          <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n    \n          <div class="ofrece">A tu servicio: </div>\n          <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n    \n          <div class="ofrece">Estamos ubicados en</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n          <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n            {{proveedorActivo.proveedor.direccion.colonia}}</div>\n          <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n        </div>\n    \n        <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n        <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n      </ion-slide>\n    </ion-slides>\n    \n    <div style="    position: absolute;\n    left: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="prev()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-back"></ion-icon>\n    </div>\n    <div style="    position: absolute;\n    right: -5px;\n    padding: 10px;\n    top: 35%;\n    z-index: 9;\n    color: #5d5d5d;\n    font-size: 30px;" (click)="next()" *ngIf="slideProve">\n        <ion-icon name="ios-arrow-forward"></ion-icon>\n    </div>\n    \n    <div *ngIf="!slideProve">\n      <div id="card-{{i}}" class="card animated lightSpeedIn">\n        <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n        <div class="container-card" (click)="viewDetail(proveedorActivo)">\n  \n          <img src="{{env.getImagenIndividual}}{{proveedorActivo.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.nombre}}</div>\n        <div class="description" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.producto.descripcion}}</div>\n        <div class="precio" (click)="viewDetail(proveedorActivo)">{{proveedorActivo.precio | currency}}</div>\n  \n        <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n          <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n          </div>\n          <div class="cantidad" *ngIf="p.cantidad > 0">\n            <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n          </div>\n          <div class="mas" (click)="incrementa(p)">\n            <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n          </div>\n        </div> -->\n      </div>\n      <div class="informa">\n        <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>\n  \n        <div class="ofrece">A tu servicio: </div>\n        <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>\n  \n        <div class="ofrece">Estamos ubicados en</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>\n        <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.\n          {{proveedorActivo.proveedor.direccion.colonia}}</div>\n        <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>\n      </div>\n  \n      <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>\n      <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>\n    </div>\n  </div>\n</ion-content>\n\n<ion-footer class="footer-detalle" *ngIf="proveedorActivo" style="box-shadow: none;background-color: rgba(142, 113, 89, 0.85);">\n  <div class="cont-e">\n    <!-- <div class="suma">\n        <div class="menos" (click)="decrementar(producto)" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" >\n          <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{producto.cantidad}} {{producto.cantidad == 1 ? \'pza\' : \'pzas\'}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(producto)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div> -->\n    <button style="width:100%" (click)="agregarCarrito()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      Agregar a carrito\n    </button>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/mapa-proveedores/mapa-proveedores.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_10__ionic_native_geolocation__["a" /* Geolocation */],
             __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
@@ -4365,7 +4524,7 @@ var MapaProveedoresPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_7__ionic_native_diagnostic__["a" /* Diagnostic */],
             __WEBPACK_IMPORTED_MODULE_8__ionic_native_open_native_settings__["a" /* OpenNativeSettings */],
             __WEBPACK_IMPORTED_MODULE_9__ionic_native_android_permissions__["a" /* AndroidPermissions */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["o" /* Platform */],
             __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["e" /* Events */],
             __WEBPACK_IMPORTED_MODULE_15__services_auth_service__["a" /* AuthService */],
             __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]])
@@ -4383,8 +4542,8 @@ var MapaProveedoresPage = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsProveedorPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_proveedor_home_proveedor__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__home_proveedor_home_proveedor__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -4432,14 +4591,14 @@ var TabsProveedorPage = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListaCarritoComprasPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__carrito_historico_carrito_historico__ = __webpack_require__(590);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__carrito_historico_carrito_historico__ = __webpack_require__(591);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4520,8 +4679,8 @@ var ListaCarritoComprasPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-lista-carrito-compras',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-carrito-compras/lista-carrito-compras.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Colecciones</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="spinner-carrito" *ngIf="renderSlide">\n      <ion-spinner></ion-spinner>\n  </div>\n\n  <ion-list>\n      <ion-item-sliding #item *ngFor="let card of listas">\n        <ion-item class="item-list-card" (click)="view(card)">\n          <ion-avatar slot="start">\n            <img src="assets/imgs/lista-carrito/shopping-cart.png" alt="">\n          </ion-avatar>\n          <div class="datos-tarjetas">\n            <div class="name">{{card.nombre}}</div>\n            <div class="number">{{card.fecha}}</div>\n          </div>\n        </ion-item>\n    \n        <ion-item-options side="right">\n          <button ion-button (click)="borrar(card)" color="danger">\n            <ion-icon name="ios-trash-outline"></ion-icon>\n            Borrar\n          </button>\n        </ion-item-options>\n      </ion-item-sliding>\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-carrito-compras/lista-carrito-compras.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */]])
@@ -4533,7 +4692,50 @@ var ListaCarritoComprasPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 234:
+/***/ 224:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TerminosCondicionesPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var TerminosCondicionesPage = /** @class */ (function () {
+    function TerminosCondicionesPage(navCtrl, navParams, genericService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.genericService = genericService;
+    }
+    TerminosCondicionesPage.prototype.ionViewDidLoad = function () {
+    };
+    TerminosCondicionesPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-terminos-condiciones',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/terminos-condiciones/terminos-condiciones.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Términos y condiciones</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n    <div style="\n    font-size: 14px;\n    text-align: center;\n    font-weight: 400;\n    ">\n      CONTRATO CLIENTE\n    </div>\n    <div style="\n  font-size: 14px;\n  text-align: center;\n  font-weight: 400;\n  ">\n    Condiciones de Uso\n  </div>\n  <div style="    overflow-y: scroll;\n  height: 100%;\n  font-size: 14px;\n  font-family: monospace;\n  text-align: justify;">\n\n\n    Bienvenido a SHARKIT.com.mx. Servicios Comerciales SHARKIT S.A. DE C.V., y/o sus filiales ("SHARKIT ") le ofrecen\n    funciones de sitio web y otros productos y servicios cuando visita o compra en SHARKIT.com.mx, utiliza los\n    productos o servicios de SHARKIT, usa las aplicaciones de SHARKIT para dispositivos móviles o emplea software\n    puesto a disposición por SHARKIT en relación con lo anterior (colectivamente, los "Servicios de SHARKIT "). SHARKIT\n    le presta los Servicios de SHARKIT bajo las siguientes condiciones.\n\n    Al utilizar los Servicios de SHARKIT, usted acepta estas condiciones. Le rogamos que las lea detenidamente.\n    Ofrecemos una amplia gama de Servicios de SHARKIT y en ocasiones pueden aplicarse condiciones adicionales. Cada vez\n    que utilice cualquier Servicio de SHARKIT (por ejemplo, Tu Perfil, Tarjetas de Regalo, o aplicaciones de SHARKIT\n    para móvil) usted estará igualmente sujeto a los lineamientos, términos y condiciones particulares aplicables a\n    dicho Servicio de SHARKIT (las "Condiciones Generales de los Servicios"). Las Condiciones Generales de los\n    Servicios, prevalecerán sobre las Condiciones de Uso en caso de discrepancia de ambas.\n    PRIVACIDAD\n    Le rogamos que revise nuestro Aviso de Privacidad que también rige el uso que realice de los Servicios de SHARKIT,\n    para que conozca nuestras prácticas.\n    COMUNICACIONES ELECTRÓNICAS\n    Cada vez que utilice un Servicio de SHARKIT o nos envíe un correo electrónico, mensaje de texto y otras\n    comunicaciones de cualquier dispositivo, estará comunicándose electrónicamente con nosotros. Usted acepta recibir\n    comunicaciones de nosotros electrónicamente en una variedad de formas, por ejemplo mediante los siguientes tipos de\n    mensajes de datos: correo electrónico, mensajes de texto, notificaciones automáticas de nuestra app o mediante\n    avisos y mensajes colocados en este sitio web o mediante los demás Servicios de SHARKIT, como nuestro Centro de\n    Mensajes. Usted acepta que todos los contratos, avisos, mensajes, y otras notificaciones y comunicaciones que le\n    enviemos por medios electrónicos satisfacen cualquier requisito legal de forma escrita y cuentan con plenos efectos\n    legales y validez.\n\n    DERECHOS DE AUTOR\n    Todo contenido alojado o puesto a disposición a través de cualquiera de los Servicios de SHARKIT, como por ejemplo\n    texto, gráficos, logotipos, iconos de botones, imágenes, clips de audio, descargas digitales, y recopilaciones de\n    datos son propiedad de SHARKIT o de sus proveedores de contenido y está protegido por las leyes internacionales y\n    de los Estados Unidos Mexicanos (México), de propiedad intelectual. El conjunto de todo el contenido albergado o\n    puesto a disposición a través de cualquier Servicio de SHARKIT es propiedad exclusiva de SHARKIT, y está protegido\n    por las leyes internacionales y de los Estados Unidos Mexicanos de propiedad intelectual.\n\n    MARCAS\n    Puede consultar un listado (no exhaustivo) de las marcas de SHARKIT en el siguiente enlace. De forma adicional, los\n    gráficos, logotipos, encabezados de página, iconos de botón, scripts y nombres de servicio que aparecen incluidos o\n    están disponibles a través de los Servicios de SHARKIT son marcas o representan la imagen comercial de SHARKIT en\n    México y otros países. No podrán utilizarse las marcas registradas ni la imagen comercial de SHARKIT en relación\n    con ningún producto o servicio que no pertenezca a SHARKIT, ni en ninguna forma que fuera susceptible de causar\n    confusión entre los usuarios o que pueda menospreciar o desacreditar a SHARKIT. El resto de marcas registradas que\n    no son propiedad de SHARKIT y que aparecen incluidos o están disponibles a través de los Servicios de SHARKIT\n    pertenecen a sus respectivos propietarios SHARKIT, quienes podrán o no estar afiliados o relacionados de cualquier\n    modo con, o patrocinados por SHARKIT.\n\n    PATENTES\n    Diversas patentes pertenecientes a SHARKIT son aplicables a los Servicios de SHARKIT así como a las funciones y\n    servicios accesibles a través de los mismos. Por otro lado, diferentes partes de los Servicios de SHARKIT operan en\n    virtud de distintas licencias de una o varias patentes. Puede consultar un listado (no exhaustivo) de las\n    correspondientes patentes de SHARKIT y demás patentes de tercero licenciadas a favor de SHARKIT.\n\n    LICENCIA Y ACCESO\n    Sujeto al cumplimiento por parte de usted de estas Condiciones de Uso y las Condiciones Generales de los Servicios\n    aplicables así como al pago del precio aplicable, en su caso, SHARKIT o sus proveedores de contenidos le conceden\n    una licencia limitada no exclusiva, no transferible y no sub-licenciable, de acceso y utilización, a los Servicios\n    de SHARKIT para fines personales no comerciales. Esta licencia no incluye derecho alguno de reventa ni de uso\n    comercial de ninguno de los Servicios de SHARKIT ni de sus contenidos; derecho alguno a compilar ni utilizar lista\n    alguna de productos, descripciones o precios; derecho alguno a realizar ningún uso derivado de los Servicios de\n    SHARKIT ni de sus contenidos; a descargar o copiar información de cuenta alguna para el beneficio de otra empresa;\n    ni el uso de herramientas o robots de búsqueda y extracción de datos o similar. SHARKIT y sus licenciantes,\n    proveedores, editores, titulares de derechos u otros proveedores de contenidos se reservan cualquier derecho que no\n    esté expresamente comprendido en estas Condiciones de Uso o en las Condiciones Generales de los Servicios. No está\n    permitida la reproducción, duplicación, copia, venta, reventa o explotación de ningún tipo de los Servicios de\n    SHARKIT ni de parte alguna de los mismos con fines comerciales, en cada caso sin nuestro previo consentimiento por\n    escrito. Tampoco está permitido colocar o utilizar técnicas de colocación para introducir cualquier marca\n    comercial, logotipo u otra información protegida por derechos de autor (incluyendo imágenes, texto, diseños de\n    página o formatos) de SHARKIT sin el consentimiento correspondiente previo por escrito. No está permitido el uso de\n    metaetiquetas (meta tags) ni de ningún otro "texto oculto" que utilice los nombres o marcas de SHARKIT sin nuestro\n    consentimiento previo y por escrito. No podrá usted hacer un uso incorrecto de los Servicios de SHARKIT. Sólo le\n    está permitido utilizar los Servicios de SHARKIT de forma lícita. Cualquier incumplimiento por usted de estas\n    Condiciones de Uso o de las Condiciones Generales de los Servicios supondrá la terminación de las licencias\n    otorgadas por SHARKIT.\n\n    SU CUENTA\n    Es posible que usted requiera crear una cuenta de SHARKIT propia, acceder a la misma y contar con un método de pago\n    válido asociado a su cuenta para utilizar ciertos Servicios de SHARKIT. En caso de que surja un problema con su\n    método de pago seleccionado, podríamos realizar el cargo a cualquier otro método de pago válido asociado a su\n    cuenta. Si desea administrar sus Opciones de Pago presione aquí. Cuando usted utiliza los Servicios de SHARKIT es\n    usted responsable de mantener la confidencialidad de los datos de su cuenta y su contraseña, así como de restringir\n    el acceso a su computadora y demás dispositivos, y usted asume la responsabilidad de cualesquier actividades\n    realizadas desde su cuenta o utilizando su contraseña.\n\n    SHARKIT comercializa productos para menores de edad, pero los vende a mayores de edad, quienes pueden adquirirlos\n    con una tarjeta de crédito u otro método de pago autorizado. Si es usted menor de 18 años de edad, puede usted\n    utilizar los Servicios de SHARKIT únicamente con la participación e involucramiento de uno de sus padres o tutores.\n    Debes ser mayor de 18 años para comprar bebidas alcohólicas o para navegar los listados relacionados con ellas.\n    SHARKIT se reserva el derecho de dar de baja cuentas, remover o editar contenido, cancelar ordenes en caso de\n    violación a las presentes Condiciones de Uso, Condiciones Generales de los Servicios o cualquier política, términos\n    y condiciones de SHARKIT, derechos de terceros o comisión de un delito o cualquier conducta que dañe la reputación\n    de SHARKIT o la experiencia al cliente.\n\n    OPINIONES, COMENTARIOS, COMUNICACIONES Y OTROS CONTENIDOS\n    Los usuarios podrán publicar sus opiniones, comentarios, fotografías, y otros contenidos; enviar comunicaciones; y\n    someter sugerencias, ideas, comentarios, preguntas u otra información, siempre que el contenido de las mismas no\n    resulte ilícito, obsceno, abusivo, constituya un supuesto de amenaza o difamación, o invada la privacidad de\n    terceros, infrinja derechos de propiedad intelectual o de cualquier otra forma resulte ofensivo para terceros o\n    censurable, ni consista en o contenga virus informáticos, propaganda política o contenido publicitario, correos en\n    cadena, envío masivo de correos o constituya cualquier otro tipo de "spam". No está permitido el uso de direcciones\n    de correo falsas, ni suplantar la identidad de otra persona o entidad, ni falsear de cualquier otro modo el origen\n    de cualquier contenido. SHARKIT no revisa regularmente el contenido publicado, pero nos reservamos el derecho\n    eliminar o modificar dicho contenido.\n\n    Al publicar cualquier contenido o presentar cualquier material para su publicación, y excepto que se indique de\n    otra manera, usted otorga a favor de SHARKIT el derecho no exclusivo, gratuito, perpetuo, irrevocable y susceptible\n    de plena sublicencia para utilizar, reproducir, modificar, adaptar, publicar, traducir, crear y explotar\n    cualesquiera obras derivadas y distribuir y exhibir su contenido en todo el mundo y a través de cualquier medio. La\n    posibilidad de utilizar el sitio web de SHARKIT y los Servicios de SHARKIT es la única compensación por los\n    derechos que nos conceda por el contenido y otros materiales que usted envíe o publique. Usted acepta que la única\n    compensación que usted recibirá por los derechos otorgados a SHARKIT con respecto de los materiales y contenido que\n    usted envíe o publique, es el derecho a utilizar el sitio web de SHARKIT y los Servicios de SHARKIT. Se entiende\n    que lo anterior se otorga por el máximo permitido conforme a la legislación aplicable. Usted otorga a favor de\n    SHARKIT y sus sublicenciatarios el derecho a utilizar el nombre facilitado por usted en relación con dicho\n    contenido, si así lo decidieran. Usted declara y garantiza ser titular o de cualquier otra forma controlar la\n    totalidad de los derechos sobre el contenido que pudiera publicar; que el contenido que usted proporcione es\n    exacto; que la utilización de dicho contenido no supondrá incumplimiento alguno con esta política y no supondrá\n    perjuicio alguno a ninguna persona o entidad; y que usted indemnizará a SHARKIT respecto de cualesquiera\n    reclamaciones en relación con el contenido que usted proporcione. SHARKIT tiene el derecho más no la obligación de\n    monitorear y editar o remover cualquier actividad o contenido. SHARKIT no asume responsabilidad alguna respecto de\n    cualquier contenido publicado por usted o cualquier tercero.\n\n    RECLAMACIONES SOBRE PROPIEDAD INTELECTUAL\n    SHARKIT respeta la propiedad intelectual de terceros. Si usted considera que su trabajo ha sido reproducido de\n    manera tal que constituya una infracción a derechos de propiedad intelectual, le rogamos que utilice nuestro Aviso\n    y Procedimiento para Reclamaciones sobre Infracciones de Propiedad Intelectual.\n\n    RIESGO DE PÉRDIDA\n    Todos los productos comprados en SHARKIT se llevan a cabo a través de un contrato de embarque. La propiedad y el\n    riesgo de pérdida de los productos le será transferida a usted en el momento en que entreguemos los productos al\n    transportista correspondiente. Usted consiente expresamente en que le cobremos su compra ya sea al momento en que\n    le son enviados o, si usted selecciona pagar con tarjetas de regalo o con Saldo SHARKIT al momento en que su orden\n    es procesada.\n\n    SHARKIT.com.mx no asume la titularidad del producto devuelto hasta la recepción del mismo en la dirección de\n    devolución. Nos reservamos el derecho, a nuestra discreción, a reembolsar el importe del producto sin exigir su\n    devolución. En tal caso, la titularidad del producto cuyo precio hubiera sido reembolsado no pasará a\n    SHARKIT.com.mx.\n\n    DESCRIPCIONES DE PRODUCTO\n    Toda la información acerca de los productos contenida en nuestro sitio web se proporciona únicamente con fines\n    informativos. Antes de usar los productos siempre lea las etiquetas, advertencias e instrucciones de uso de los\n    productos. SHARKIT intenta ser tan preciso como sea posible. Sin embargo, SHARKIT no garantiza que las\n    descripciones o el contenido de cualquier otro Servicio de SHARKIT sea preciso, completo, confiable, vigente o\n    libre de errores. Si usted considera que un producto ofrecido en SHARKIT no cumple con su descripción, el único\n    recurso del que usted dispone será devolverlo, siempre y cuando sea devuelto sin haberse utilizado y conforme a la\n    Política de Devoluciones.\n\n    PRECIOS\n    Excepto que se indiquen de manera separada, todos los precios mostrados a través de los Servicios de SHARKIT\n    incluyen impuestos.\n    Salvo en la medida en que se indique lo contrario, el Precio de Lista o Precio Sugerido que aparece para productos\n    en cualquier Servicio de SHARKIT representa el precio de venta al público listado en dicho producto, sugerido por\n    el fabricante o proveedor, o estimado de conformidad con prácticas estándar de la industria; o el precio estimado\n    de venta al público respecto de un producto comparable ofrecido en otro lugar. El Precio de Lista o Precio Sugerido\n    es un estimado de precio comparativo y puede o no representar el precio vigente en todos los lugares en una fecha\n    determinada. Para ciertos productos ofrecidos como un set (juego), el Precio de Lista o el Precio Sugerido podría\n    representar precios de “inventario abierto”, lo cual significa la suma del precio de venta sugerido o estimado por\n    el fabricante para cada uno de los productos incluidos en el set (juego). Cuando el producto sea ofrecido para\n    venta por alguno de nuestros comerciantes, el Precio de Lista o Precio Sugerido podrá ser proporcionado por el\n    comerciante.\n\n    DISPONIBILIDAD\n    Toda la información y detalles respecto de la disponibilidad, envío o entrega de un producto se trata únicamente de\n    estimaciones. Cuando usted realice su pedido, le enviaremos un mensaje confirmando la recepción de su orden. En\n    caso de que por cualquier razón, durante el procesamiento de su orden, el producto ordenado por usted ya no se\n    encontrara disponible, no se realizara cargo alguno respecto de aquellos productos excepto en caso de que usted\n    haya seleccionado pagar con tarjetas de regalo o con Saldo SHARKIT, en cuyo caso el cargo de las mensualidades se\n    efectuará cuando se procese su orden.\n    Si el producto que ordenó no está disponible, le permitiremos pedir el mismo sujeto a la confirmación de\n    inventario. Si no podemos obtener el producto deseado, su pedido no podrá ser confirmado. Para pedidos pagados con\n    tarjetas de regalo o con Saldo SHARKIT, le reembolsaremos la cantidad total que hubiese sido pagada.\n    Únicamente permitimos compras de productos en cantidades correspondientes a las necesidades típicas de un hogar\n    medio. Esto se aplica tanto al número de productos solicitados en un mismo pedido como al supuesto en el que el\n    cliente opta por colocar varios pedidos del mismo producto. En el evento de que un cliente coloque un pedido por\n    múltiples unidades de un mismo producto o múltiples órdenes para el mismo producto, nos reservamos el derecho de\n    reducir el número de productos ordenados.\n\n    GARANTÍA DE LOS PRODUCTOS\n    Varios productos disponibles para compra se encuentran cubiertos por una garantía. Si desea más información\n    respecto a las garantías ofrecidas por SHARKIT por favor visite nuestra página Acerca de las Garantías.\n\n    PERMISOS DE LAS APLICACIONES DE SHARKIT\n    Cuando utilice las apps creadas por SHARKIT, tales como la App de SHARKIT, SHARKIT Shopping App, SHARKIT Kindle\n    App, usted nos puede otorgar ciertos permisos desde su dispositivo. La mayoría de los dispositivos le proporcionan\n    la información de dichos permisos. Si desea más información respecto de dichos permisos, presione aquí.\n\n    CONDICIONES GENERALES SOBRE EL SOFTWARE DE SHARKIT\n    Todo software, incluidas las actualizaciones, mejoras y cualquier otra documentación relacionada con dicho\n    software, que ponemos a disposición de usted en cualquier momento en relación con los Servicios de SHARKIT (el\n    "Software de SHARKIT ") está sujeto, además de las presentes Condiciones de Uso y Venta, a las condiciones que\n    usted puede encontrar aquí.\n\n    OTROS NEGOCIOS\n    Otras Partes distintas a SHARKIT operan tiendas, proporcionan Servicios o venden líneas de productos es este sitio.\n    Asimismo, ofrecemos enlaces a los sitios web de sociedades afiliadas y de otras empresas. No somos responsables de\n    examinar o calificar, ni en ningún caso garantizamos, las ofertas de ninguna de tales empresas o personas físicas,\n    ni el contenido alojado en sus respectivos sitios web. SHARKIT no asume responsabilidad alguna por las acciones,\n    productos y contenidos de ninguna de tales empresas o individuos o cualesquiera otros terceros. Usted debe revisar\n    detenidamente las declaraciones de privacidad y demás condiciones de uso de tales terceros.\n\n\n    EL ROL DE SHARKIT\n    SHARKIT permite a terceras partes ofrecer y vender sus productos en SHARKIT.com.mx lo cual se indica en la página\n    de detalles de estos productos. A pesar de que SHARKIT facilita las transacciones a través de SHARKIT Marketplace,\n    SHARKIT no es ni el comprador ni el vendedor de los productos ofrecidos por terceros vendedores. SHARKIT\n    simplemente facilita un espacio donde compradores y vendedores pueden negociar y efectuar sus transacciones. Por lo\n    tanto, el contrato por la compra de cualquier producto vendido por un tercero vendedor, es celebrado única y\n    exclusivamente entre comprador y al vendedor de dicho producto. SHARKIT no es parte de ese contrato y no asume\n    ninguna responsabilidad relacionada con el mismo, ni actúa como representante del vendedor. El vendedor es\n    responsable de la venta de sus productos así como de ofrecer asistencia en cuanto a las reclamaciones del\n    comprador, o con respecto a cualquier asunto relacionado con dicho contrato entre el comprador y vendedor. No\n    obstante, y debido a que SHARKIT desea garantizar al comprador un espacio seguro donde realizar sus compras,\n    SHARKIT ofrece la Garantía, además de cualquier derecho que el consumidor pueda tener por disposición legal o\n    contractual.\n\n    LIBERACIÓN DE GARANTÍAS Y LIMITACIÓN DE RESPONSABILIDAD\n    LOS SERVICIOS DE SHARKIT Y TODA LA INFORMACIÓN, CONTENIDO, MATERIALES, PRODUCTOS (INCLUYENDO SOFTWARE) Y DEMÁS\n    SERVICIOS INCLUIDOS EN O DE OTRA FORMA DISPONIBLES PARA USTED A TRAVÉS DE LOS SERVICIOS DE SHARKIT SON\n    PROPORCIONADOS POR SHARKIT SOBRE UNA BASE “TAL COMO ESTÁ” Y “SEGÚN ESTÉN DISPONIBLES”, A MENOS QUE SE ESPECIFIQUE\n    DE OTRA FORMA POR ESCRITO. SHARKIT NO REALIZA MANIFESTACIÓN O GARANTÍA ALGUNA DE NATURALEZA ALGUNA, EN FORMA\n    EXPRESA O IMPLÍCITA, EN RELACIÓN CON LA OPERACIÓN DE LOS SERVICIOS DE SHARKIT, O LA INFORMACIÓN, CONTENIDO,\n    MATERIALES, PRODUCTOS (INCLUYENDO SOFTWARE) U OTROS SERVICIOS INCLUIDOS EN O DE OTRA FORMA DISPONIBLES PARA USTED A\n    TRAVÉS DE LOS SERVICIOS DE SHARKIT, A MENOS QUE SE ESPECIFIQUE DE OTRA FORMA POR ESCRITO. USTED ACEPTA EXPRESAMENTE\n    QUE LA UTILIZACIÓN QUE USTED HAGA DE LOS SERVICIOS DE SHARKIT ES A SU PROPIO RIESGO.\n    EN LA MEDIDA EN QUE SEA EL MAXIMO PERMITIDO BAJO LA LEY APLICABLE, SHARKIT RENUNCIA A TODAS LAS GARANTÍAS, EXPRESAS\n    O IMPLÍCITAS, INCLUYENDO SIN LIMITACIÓN GARANTÍAS IMPLÍCITAS DE COMERCIABILIDAD E IDONEIDAD PARA UN PROPÓSITO\n    ESPECÍFICO. SHARKIT NO GARANTIZA QUE LOS SERVICIOS DE SHARKIT, INFORMACIÓN, CONTENIDO, MATERIALES, PRODUCTOS\n    (INCLUYENDO SOFTWARE) Y DEMÁS SERVICIOS INCLUIDOS EN O DE OTRA FORMA DISPONIBLES PARA USTED A TRAVÉS DE LOS\n    SERVICIOS DE SHARKIT, SERVIDORES DE SHARKIT O COMUNICACIONES ELECTRÓNICAS ENVIADAS POR SHARKIT SE ENCUENTREN LIBRES\n    DE VIRUSES U OTROS COMPONENTES DAÑINOS. SHARKIT NO SERÁ RESPONSABLE DE CUALESQUIERA DAÑOS DE NINGUNA NATURALEZA QUE\n    RESULTEN DEL USO DE NINGÚN SERVICIO DE SHARKIT, O DE INFORMACIÓN ALGUNA, CONTENIDO, MATERIALES, PRODUCTOS\n    (INCLUYENDO SOFTWARE) O DEMÁS SERVICIOS INCLUIDOS EN O DE OTRA FORMA DISPONIBLES PARA USTED A TRAVÉS DE LOS\n    SERVICIOS DE SHARKIT, INCLUYENDO SIN LIMITACIÓN DAÑOS DIRECTOS, INDIRECTOS, PUNITIVOS, O EMERGENTES, A MENOS QUE SE\n    ESPECIFIQUE DE OTRA FORMA POR ESCRITO.\n    ALGUNAS LEYES NO PERMITEN LA LIMITACIÓN A GARANTÍAS IMPLÍCITAS O LA EXCLUSIÓN O LIMITACIÓN DE CIERTOS DAÑOS. SI\n    ESTAS LEYES APLICAN A USTED, ES POSIBLE QUE ALGUNAS O TODAS LAS LIBERACIONES, EXCLUSIONES O LIMITACIONES ANTERIORES\n    NO LE RESULTEN APLICABLES, Y USTED PUEDE TENER DERECHOS ADICIONALES. LAS LIBERACIONES, EXCLUSIONES Y LIMITACIONES\n    APLICARÁN EN EL MAXIMO PERMITIDO BAJO LA LEY APLICABLE.\n\n    POLÍTICAS, MODIFICACIÓN E INDEPENDENCIA DE DISPOSICIONES\n    Por favor revise nuestras demás políticas publicadas en este sitio web. Estas políticas también rigen el uso por\n    parte de usted de los Servicios de SHARKIT. Nos reservamos el derecho de efectuar cambios a nuestro sitio web,\n    políticas, Condiciones de los Servicios, y estas Condiciones de Uso en cualquier momento y el uso continuo de los\n    Servicios de SHARKIT por parte de usted acreditará su aceptación de dichos cambios. Si cualquiera de estas\n    condiciones se considera inválida, nula, o inexigible por cualquier causa, dicha condición se considerará\n    independiente y no afectará la validez y exigibilidad de ninguna de las condiciones restantes.\n\n    CONTROVERSIAS\n    Cualquier disputa o reclamación relacionada con el uso de los Servicios SHARKIT, los productos o servicios vendidos\n    o distribuidos por SHARKIT o a través de SHARKIT.com.mx o las presentes Condiciones De Servicio será sometida y\n    resuelta a su elección, ya sea a través de la jurisdicción administrativa de la Procuraduría Federal del Consumidor\n    ("PROFECO") o bien a través de un arbitraje obligatorio conducido por la Comisión de Mediación y Arbitraje de la\n    Cámara Nacional de Comercio ("CANACO") por lo que Usted y nosotros renunciamos a cualquier otra jurisdicción que\n    pudiera corresponder por razón de domicilios o por cualquier otra causa. Usted y nosotros acordamos que tanto usted\n    como nosotros podemos iniciar una demanda ante las cortes competentes a fin de impedir violaciones o el uso\n    indebido de derechos de propiedad intelectual.\n    En el procedimiento arbitral no hay juez ni jurado y la revisión que una corte puede hacer de un laudo arbitral es\n    limitada. Sin embargo, un árbitro puede hacer una condena individual a daños y demás prestaciones, en los mismos\n    términos que una corte, y además debe seguir los términos y condiciones de las Tarjetas de Regalo como lo haría una\n    corte.\n    Para iniciar un procedimiento arbitral, usted debe enviar una carta solicitando un arbitraje y describiendo su\n    reclamación, a la atención de: Attn: Departamento Juridico, Carretera Estatal Amomolulco, Ocoyoacac, km. 2, Barrio\n    de Santa María en Ocoyoacac, México. El arbitraje será administrado por la CANACO bajo sus reglas. Las reglas de la\n    CANACO están disponibles en www.arbitrajecanaco.com.mx por teléfono llamando al 36852269, ext. 1309 o 1310. El pago\n    de todas las cuotas de presentación de la solicitud, gastos administrativos y de los árbitros estarán gobernados\n    por las reglas de la CANACO. Nosotros nos comprometemos a reembolsar todas las cuotas por reclamaciones menores a\n    $145,000 (MXN), a menos que el árbitro determine que la reclamación es frívola. Del mismo modo, nos comprometemos a\n    no demandar costas en el arbitraje, a menos que el árbitro determine que la reclamación es frívola. Usted puede\n    escoger que el arbitraje se conduzca exclusivamente por teléfono o que se base únicamente en la presentación de\n    argumentos y pruebas por escrito; sin embargo, en todos los casos, la sede del arbitraje será la ciudad de Toluca\n    de Lerdo, México. El arbitraje será conducido en español por un solo árbitro y las leyes aplicables serán las de\n    México. Acordamos que cualquier procedimiento de solución de controversias se llevará a cabo sólo de manera\n    individual y no en acciones colectivas, de clase, o acción representativa.\n\n    NUESTRO DOMICILIO\n    Carretera Estatal Amomolulco, Ocoyoacac, km. 2, Barrio de Santa María en Ocoyoacac, México.\n    Para contactarnos vía telefónica favor de dar clic aquí y seleccione "Contáctanos".\n    Aviso y Procedimiento para Realizar Reclamaciones de Infracciones de Propiedad Intelectual\n    Si consideras que tus derechos de propiedad intelectual han sido vulnerados y eres elegible para utilizar Brand\n    Registry, te invitamos a iniciar sesión en este servicio y a remitir tu reclamación a través del mismo. En caso\n    contrario, te invitamos a remitir tu reclamación utilizando nuestro formulario online. Este formulario puede\n    utilizarse para notificar cualquier tipo de reclamación de derechos de propiedad intelectual incluyendo, sin\n    limitación, reclamaciones relacionadas con derechos de propiedad intelectual, marcas, diseños y patentes.\n    Una vez recibamos la reclamación, podremos iniciar diversas actuaciones que podrán incluir la eliminación de la\n    información o producto en cuestión y la supresión de infractores reincidentes cuando resulte procedente. Todas\n    estas actuaciones se llevarán a cabo sin admisión alguna de responsabilidad y sin perjuicio de cualquier derecho,\n    acción o defensa que pudiera asistirnos, todos los cuales quedan expresamente reservados. Lo anterior incluye el\n    derecho a nuestro favor a remitir la reclamación a las partes que hubieran facilitado el contenido supuestamente\n    infractor. Te comprometes a exonerar de responsabilidad a SHARKIT respecto de cualesquiera reclamaciones\n    presentadas por terceros frente a SHARKIT derivadas de o relativas a la presentación de una reclamación.\n    Si prefieres enviar un reporte por escrito, por favor incluye la siguiente información:\n    Una firma autógrafa de la persona facultada para actuar en representación del titular del derecho de propiedad\n    intelectual;\n    Una descripción del trabajo protegido por las leyes de propiedad intelectual respecto del cual usted reclama una\n    infracción;\n    Una descripción del lugar del sitio en que se ubica el material respecto del cual usted reclama una infracción;\n    Su domicilio, número telefónico y dirección de correo electrónico;\n    Una manifestación a su cargo en el sentido de que considera usted de buena fe que el uso en disputa no ha sido\n    autorizado por el titular del derecho, su representante o la ley aplicable;\n    Una manifestación a su cargo bajo protesta de decir verdad, de que la información anterior incluida en su aviso es\n    correcta y que usted es el titular de los derechos de propiedad intelectual o está facultado para actuar en\n    representación del titular de dichos derechos.\n    El Representante de SHARKIT para Derechos de Propiedad Intelectual para el envío de avisos de reclamaciones por\n    infracciones en su sitio web se ubica en la siguiente dirección:\n    Carretera Estatal Amomolulco, Ocoyoacac, km. 2, Barrio de Santa María en Ocoyoacac, México. C.P. 05348 México D.F.\n    E-mail:\n    Favor de tomar nota de que este procedimiento es exclusivamente para notificar a SHARKIT infracciones a los\n    derechos de propiedad intelectual que amparan a su material.\n    Condiciones Adicionales del Software de SHARKIT\n    Utilización del Software de SHARKIT. Usted podrá utilizar el Software de SHARKIT exclusivamente para permitirle\n    utilizar y gozar los Servicios de SHARKIT proporcionados por SHARKIT, y en la medida en que los permitan las\n    Condiciones de Uso, estas Condiciones del Software y cualesquiera Condiciones Generales de los Servicios. Usted no\n    podrá incorporar ninguna porción del Software de SHARKIT a sus propios programas o compilar ninguna porción del\n    mismo en combinación con sus propios programas, transferirlo para uso con otro servicio, o vender, rentar,\n    arrendar, prestar, acreditar, distribuir o sub-licenciar el Software de SHARKIT o de otra forma ceder cualesquier\n    derechos al Software de SHARKIT en todo o en parte. Usted no podrá utilizar el Software de SHARKIT para ningún\n    propósito ilegal. Nosotros podremos dejar de proporcionar cualquier Software de SHARKIT y dar por terminado su\n    derecho a utilizar cualquier Software de SHARKIT en cualquier momento. Sus derechos para utilizar el Software de\n    SHARKIT terminarán automáticamente sin notificación de nuestra parte en caso de que usted incumpla con cualquiera\n    de estas Condiciones del Software, las Condiciones de Uso o cualesquiera otras Condiciones Generales de los\n    Servicios. Pueden aplicar al Software de SHARKIT (o al software incorporado en el Software de SHARKIT) condiciones\n    adicionales de terceros incluidas en o distribuidas con cierto Software de SHARKIT que se identifican\n    específicamente en la documentación aplicable que regirán el uso de dicho software en caso de conflicto con estas\n    Condiciones de Uso. Todo el software utilizado en cualquier Servicio de SHARKIT es propiedad de SHARKIT o sus\n    proveedores de software y se encuentra protegido por las leyes de propiedad intelectual de MÉXICO y por las leyes\n    de la materia aplicables internacionalmente.\n    Utilización de Servicios de Terceros. Cuando usted utiliza el Software de SHARKIT, usted puede asimismo estar\n    utilizando los servicios de uno o más terceros, tales como proveedores de conexión inalámbrica o de servicios de\n    plataforma celular. Su utilización de estos servicios de tercero puede estar sujeta a las políticas, condiciones de\n    uso, y costos de dichos terceros.\n    Prohibición de Realizar Actos de Ingeniería de Reversa. Usted no podrá, ni alentará, asistirá o autorizará a\n    ninguna otra persona a, copiar modificar, ni aplicar ingeniería de reversa, descompilar o desensamblar, o de otra\n    forma manipular, el Software de SHARKIT, en todo ni en parte, ni crear cualesquier trabajos derivados desde o del\n    Software de SHARKIT.\n    Actualizaciones. A efecto de mantener actualizado el Software de SHARKIT, nosotros podremos ofrecer actualizaciones\n    automáticas o manuales en cualquier momento y sin necesidad de notificarlo a usted.\n\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/terminos-condiciones/terminos-condiciones.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_0__services_generic_service__["a" /* GenericService */]])
+    ], TerminosCondicionesPage);
+    return TerminosCondicionesPage;
+}());
+
+//# sourceMappingURL=terminos-condiciones.js.map
+
+/***/ }),
+
+/***/ 235:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -4546,11 +4748,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 234;
+webpackEmptyAsyncContext.id = 235;
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -4563,21 +4765,21 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 278;
+webpackEmptyAsyncContext.id = 279;
 
 /***/ }),
 
-/***/ 413:
+/***/ 414:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CambioContraseniaPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4640,8 +4842,8 @@ var CambioContraseniaPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-cambio-contrasenia',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/cambio-contrasenia/cambio-contrasenia.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Cambio contraseña</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="correo">\n    <div [ngStyle]="{\'color\': genericService.getColorHex()}">Contraseña actual</div>\n    <input type="password" placeholder="Ingresa aqui" [(ngModel)]="data.oldContrasenia">\n    <div [ngStyle]="{\'color\': genericService.getColorHex()}">Nueva contraseña</div>\n    <input type="password" placeholder="Ingresa aqui" [(ngModel)]="data.contrasenia">\n    <div [ngStyle]="{\'color\': genericService.getColorHex()}" style="margin-top:10px">Confirmar contraseña</div>\n    <input type="password" placeholder="Confirma" [(ngModel)]="data.confirm">\n  </div>\n  <button class="boton" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cambio()">\n    Cambiar contraseña\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/cambio-contrasenia/cambio-contrasenia.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
@@ -4653,7 +4855,7 @@ var CambioContraseniaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 414:
+/***/ 415:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4662,10 +4864,10 @@ var CambioContraseniaPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngx_translate_core__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__chat_chat__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__chat_chat__ = __webpack_require__(91);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4718,8 +4920,8 @@ var ListaChatPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
             selector: 'page-lista-chat',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-chat/lista-chat.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Chats</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list *ngIf="chats && chats?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let c of chats" (click)="verChat(c)" style="border-bottom: 1px solid #ddd;">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/chat/call.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas" style="vertical-align: top;">\n        <div class="name" style="font-size:14px">Pedido</div>\n        <div class="name" style="font-size:14px"><strong>{{c.folio}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/lista-chat/lista-chat.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_0__services_loading_service__["a" /* LoadingService */],
@@ -4732,12 +4934,12 @@ var ListaChatPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 415:
+/***/ 416:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(688);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
@@ -4746,7 +4948,7 @@ var ListaChatPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_sockjs_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_sockjs_client__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_webstomp_client__ = __webpack_require__(970);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_webstomp_client___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_webstomp_client__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4857,16 +5059,16 @@ var ChatService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 444:
+/***/ 445:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return VerProductosPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4949,8 +5151,8 @@ var VerProductosPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-ver-productos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/ver-productos/ver-productos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Pedido Checklist</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list *ngIf="pedidos && pedidos?.pedidoProveedores.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos.pedidoProveedores[0].pedidoDetalles">\n      <div class="round" style="vertical-align:middle">\n        <input type="checkbox" id="checkbox-{{p.productoProveedor.producto.nombre}}" [(ngModel)]="p.activado"/>\n        <label for="checkbox-{{p.productoProveedor.producto.nombre}}"></label>\n      </div>\n      <div class="datos-tarjetas" style="vertical-align:middle">\n        <div class="name" style="font-size: 15px;">Producto <strong>{{p.productoProveedor.producto.nombre}}</strong></div>\n\n        <div class="number" style="font-size: 13px;">Cantidad <strong>{{p.cantidad}}</strong></div>\n        <div class="number" style="font-size: 13px;">Costo <strong>{{p.total | currency}}</strong></div>\n        \n      </div>\n\n    </ion-item>\n  </ion-list>\n\n  <div class="totals" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n\n      <div>Envio</div>\n      <div>=</div>\n      <div><strong>{{pedidos.pedidoProveedores[0].comisionTransportista | currency}}</strong></div>\n\n      <div>Costo</div>\n      <div>=</div>\n      <div><strong>{{pedidos.pedidoProveedores[0].comisionTransportista + pedidos.total | currency}}</strong></div>\n\n    <div>Total</div>\n    <div>=</div>\n    <div><strong>{{pedidos.total | currency}}</strong></div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class">\n    <button (tap)="solicitar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}" *ngIf="env.perfil.activo == 2">Solicitar cambio</button>\n    <button (tap)="confirmar()" [ngStyle]="{\'background-color\': genericService.getColorHex(),\'width\': env.perfil.activo == 3 ? \'100%\' : \'\'}">{{env.perfil.activo == 2 ? \'Confirmar pedido\' : \'Enviar pedido\'}}</button>\n  </ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/ver-productos/ver-productos.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
     ], VerProductosPage);
@@ -4961,21 +5163,21 @@ var VerProductosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 445:
+/***/ 446:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PedidosDetailPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_calificacion_calificacion__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_calificacion_calificacion__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__qr_qr__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__chat_chat__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__qr_qr__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__chat_chat__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__articulo_proveedores_articulo_proveedores__ = __webpack_require__(123);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5076,12 +5278,23 @@ var PedidosDetailPage = /** @class */ (function () {
     PedidosDetailPage.prototype.calificar = function (pedido) {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__pages_calificacion_calificacion__["a" /* CalificacionPage */], { pedido: pedido });
     };
+    PedidosDetailPage.prototype.queja = function (p) {
+        var _this = this;
+        var body = {
+            pedidoProveedorId: p.id
+        };
+        this.genericService.sendPostRequest("" + __WEBPACK_IMPORTED_MODULE_8__environments_environment_prod__["a" /* environment */].queja, body).subscribe(function (response) {
+            _this.alertaService.successAlertGeneric('Un contact center te atenderá en breve');
+        }, function (error) {
+            _this.alertaService.errorAlertGeneric('No se ha podido contactar al administrador, intenta nuevamente');
+        });
+    };
     PedidosDetailPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-pedidos-detail',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/pedidos-detail/pedidos-detail.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Detalle pedido <strong>{{id | number:\'5.\'}}</strong></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n\n  <ion-list *ngIf="!fromPop">\n    <ion-item-sliding #item *ngFor="let p of detalle">\n      <ion-item class="item-list-card" >\n        <div class="datos-tarjetas" (click)="verProductos(p)">\n          <div class="name">{{p.proveedor?.nombre}}</div>\n          <div class="number">{{p.total | currency}}</div>\n          <div class="number">Costo de envío: <strong>{{p.comisionTransportista | currency}}</strong></div>\n          <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>\n        </div>\n        <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>\n        <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar pedido</button>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button (click)="verChatProveedor(p)" color="primary">\n          <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n          Chat proveedor\n        </button>\n        <button ion-button (click)="verChatTransportista(p)" color="danger">\n          <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n          Chat transportista\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/pedidos-detail/pedidos-detail.html"*/,
+            selector: 'page-pedidos-detail',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/pedidos-detail/pedidos-detail.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Detalle pedido <strong>{{id | number:\'5.\'}}</strong></ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <section>\n      <div style="padding: 15px;\n      font-size: 17px;\n      display: inline-block;\n      width: 85%;">\n        Desliza hacia la izquierda cada pedido para ver mas opciones\n      </div>\n      <div style="padding: 15px;\n      display: inline-block;\n      width: 14%;vertical-align: top;">\n        <img src="assets/imgs/des.png" alt="">\n      </div>\n  </section>\n\n  <ion-list *ngIf="!fromPop">\n    <ion-item-sliding #item *ngFor="let p of detalle">\n      <ion-item class="item-list-card">\n        <div class="datos-tarjetas" (click)="verProductos(p)">\n          <div class="name">{{p.proveedor?.nombre}}</div>\n          <div class="number">{{p.total | currency}}</div>\n          <div class="number">Costo de envío: <strong>{{p.comisionTransportista | currency}}</strong></div>\n          <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>\n        </div>\n        <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>\n        <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar\n          pedido</button>\n      </ion-item>\n\n      <ion-item-options side="right">\n        <button ion-button (click)="queja(p)" color="danger">\n          <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n          <div>Queja</div>\n          <div>Contact center</div>\n        </button>\n        <button ion-button (click)="verChatProveedor(p)" color="primary">\n          <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n          <div>Chat</div>\n          <div>proveedor</div>\n        </button>\n        <button ion-button (click)="verChatTransportista(p)" color="primary3">\n          <ion-icon name="ios-chatbubbles-outline"></ion-icon>\n          <div>Chat</div>\n          <div>transportista</div>\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/pedidos-detail/pedidos-detail.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_5__services_alerta_service__["a" /* AlertaService */],
@@ -5094,7 +5307,7 @@ var PedidosDetailPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 446:
+/***/ 447:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5102,8 +5315,9 @@ var PedidosDetailPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5118,6 +5332,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var ProblemasPedidoPage = /** @class */ (function () {
     function ProblemasPedidoPage(navCtrl, navParams, genericService, localStorageEncryptService, alertaService) {
         this.navCtrl = navCtrl;
@@ -5125,15 +5340,28 @@ var ProblemasPedidoPage = /** @class */ (function () {
         this.genericService = genericService;
         this.localStorageEncryptService = localStorageEncryptService;
         this.alertaService = alertaService;
+        this.pedido = null;
+        this.pedido = navParams.get('pedidoProblem');
     }
     ProblemasPedidoPage.prototype.ionViewDidLoad = function () {
     };
+    ProblemasPedidoPage.prototype.queja = function () {
+        var _this = this;
+        var body = {
+            pedidoProveedorId: this.pedido.pedidoProveedores[0].id
+        };
+        this.genericService.sendPostRequest("" + __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__["a" /* environment */].queja, body).subscribe(function (response) {
+            _this.alertaService.successAlertGeneric('Un contact center te atenderá en breve');
+        }, function (error) {
+            _this.alertaService.errorAlertGeneric('No se ha podido contactar al administrador, intenta nuevamente');
+        });
+    };
     ProblemasPedidoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-problemas-pedido',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/problemas-pedido/problemas-pedido.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Problemas con mi pedido</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n    \n  <div class="contened">\n    <div style="width: 100%;\n    text-align: center;">\n        <img style="width: 36%;" src="{{genericService.imgProblema()}}" alt="">\n    </div>\n    <button [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      Deseo reportar una queja al Contact Center\n    </button>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/problemas-pedido/problemas-pedido.html"*/,
+            selector: 'page-problemas-pedido',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/problemas-pedido/problemas-pedido.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Problemas con mi pedido</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n    \n  <div class="contened">\n    <div style="width: 100%;\n    text-align: center;">\n        <img style="width: 36%;" src="{{genericService.imgProblema()}}" alt="">\n    </div>\n    <button [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="queja()">\n      Deseo reportar una queja al Contact Center\n    </button>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/problemas-pedido/problemas-pedido.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */]])
@@ -5150,11 +5378,11 @@ var ProblemasPedidoPage = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetalleProductoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_photoswipe__ = __webpack_require__(971);
@@ -5452,14 +5680,14 @@ var DetalleProductoPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["_8" /* ViewChild */])('slides2'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["p" /* Slides */])
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["q" /* Slides */])
     ], DetalleProductoPage.prototype, "slider2", void 0);
     DetalleProductoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
             selector: 'page-detalle-producto',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-producto/detalle-producto.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>{{producto.producto.nombre}}</ion-title>\n\n\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="compartir()">\n        <ion-icon name="md-share" style="font-size: 2.4rem;"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div class="slider-io animated bounceInLeft" *ngIf="producto.photos.length > 0">\n    <ion-slides autoplay="5000" zoom="true" loop="true" #slides2 loop="false">\n      <ion-slide *ngFor="let photo of producto.photos; let i=index" (click)="imagesLoaded(i)">\n        <div>\n          <img src="{{photo.img}}" alt="">\n          <div class="div-foto">\n            <ion-icon ios="ios-images-outline" md="ios-images-outline"></ion-icon>\n            <p>{{i+1}}/{{producto.photos.length}}</p>\n          </div>\n        </div>\n      </ion-slide>\n    </ion-slides>\n    <div class="arrows-lateral" *ngIf="1===2">\n      <div (tap)="prev1()">\n        <ion-icon ios="ios-arrow-back" md="ios-arrow-back"></ion-icon>\n      </div>\n      <div (tap)="next1()">\n        <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward"></ion-icon>\n      </div>\n    </div>\n  </div>\n\n  <div class="descripcion" [ngStyle]="{\'color\': color}">\n    {{producto.precio | currency}} MXN\n  </div>\n\n  <div class="space-desc">\n    <ion-icon name="ios-arrow-up-outline" *ngIf="verDescripcion" (click)="verDes()"></ion-icon>\n    <ion-icon name="ios-arrow-down-outline" *ngIf="!verDescripcion" (click)="verDes()"></ion-icon>\n    <h4>Descripción</h4>\n    <div class="descripcion-gral" *ngIf="verDescripcion">{{producto.producto.descripcion}}</div>\n  </div>\n\n\n\n  <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true" style="z-index: 2;">\n\n    <!-- Background of PhotoSwipe. \n         It\'s a separate element, as animating opacity is faster than rgba(). -->\n    <div class="pswp__bg"></div>\n\n    <!-- Slides wrapper with overflow:hidden. -->\n    <div class="pswp__scroll-wrap">\n\n      <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->\n      <!-- don\'t modify these 3 pswp__item elements, data is added later on. -->\n      <div class="pswp__container">\n        <div class="pswp__item"></div>\n        <div class="pswp__item"></div>\n        <div class="pswp__item"></div>\n      </div>\n\n      <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->\n      <div class="pswp__ui pswp__ui--hidden">\n\n        <div class="pswp__top-bar" style="opacity: 1;z-index: 99999999;" [ngStyle]="{\'top\': fixedContentTop == \'56\' ? \'56px\' : \'44px\'}">\n\n          <!--  Controls are self-explanatory. Order can be changed. -->\n\n          <div class="pswp__counter"></div>\n\n          <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>\n\n          <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>\n\n          <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>\n\n          <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->\n          <!-- element will get class pswp__preloader--active when preloader is running -->\n          <div class="pswp__preloader">\n            <div class="pswp__preloader__icn">\n              <div class="pswp__preloader__cut">\n                <div class="pswp__preloader__donut"></div>\n              </div>\n            </div>\n          </div>\n        </div>\n\n        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">\n          <div class="pswp__share-tooltip"></div>\n        </div>\n\n        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">\n        </button>\n\n        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">\n        </button>\n\n        <div class="pswp__caption">\n          <div class="pswp__caption__center"></div>\n        </div>\n\n      </div>\n\n    </div>\n\n  </div>\n</ion-content>\n<ion-footer class="footer-detalle" *ngIf="!fromCarritos">\n  <div class="cont-e">\n    <div class="suma">\n      <div class="menos" (click)="decrementar(producto)" >\n        <div [ngStyle]="{\'color\': color, \'border-color\': color}">-</div>\n      </div>\n      <div class="cantidad" >\n        <div [ngStyle]="{\'color\': color}">{{producto.cantidad}} {{producto.cantidad == 1 ? \'pza\' : \'pzas\'}}</div>\n      </div>\n      <div class="mas" (click)="incrementa(producto)">\n        <div [ngStyle]="{\'color\': color, \'border-color\': color}">+</div>\n      </div>\n    </div>\n    <button (click)="agregarCarrito(producto)" [ngStyle]="{\'background-color\': color}">\n      Agregar a carrito\n    </button>\n  </div>\n</ion-footer>\n<!-- Root element of PhotoSwipe. Must have class pswp. -->'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-producto/detalle-producto.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_9__services_auth_service__["a" /* AuthService */],
@@ -5474,7 +5702,7 @@ var DetalleProductoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 452:
+/***/ 453:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5484,13 +5712,13 @@ var DetalleProductoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_action_sheet__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validation_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_camera__ = __webpack_require__(126);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__home_geo_proveedores_home_geo_proveedores__ = __webpack_require__(72);
@@ -5635,6 +5863,7 @@ var RegistroPage = /** @class */ (function () {
         this.btnHabilitado = true;
         this.user = null;
         this.data = null;
+        this.env = __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */];
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
         var putObj = {};
         switch (__WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo) {
@@ -5728,7 +5957,9 @@ var RegistroPage = /** @class */ (function () {
                 tmp[1].push(__WEBPACK_IMPORTED_MODULE_4__services_validation_service__["a" /* ValidationService */].emailValidator);
             }
             if (item.type == "password") {
-                tmp[1].push(__WEBPACK_IMPORTED_MODULE_4__services_validation_service__["a" /* ValidationService */].passwordValidator);
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_4__services_validation_service__["a" /* ValidationService */].minLengthPassValidator);
+                tmp[1].push(__WEBPACK_IMPORTED_MODULE_4__services_validation_service__["a" /* ValidationService */].maxLengthPassValidator);
+                //tmp[1].push(ValidationService.passwordValidator);
             }
             if (item.type == "select") {
                 tmp[0] = item.opts[0].value;
@@ -5756,10 +5987,15 @@ var RegistroPage = /** @class */ (function () {
     };
     RegistroPage.prototype.registrar = function () {
         var _this = this;
+        console.log(this.objetoRegistro);
+        debugger;
         if (__WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
             this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
         }
-        else if (__WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo == 2 || __WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+        else if (__WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo == 2 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+            this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+        }
+        else if (__WEBPACK_IMPORTED_MODULE_11__environments_environment_prod__["a" /* environment */].perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
             this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
         }
         else {
@@ -5967,10 +6203,10 @@ var RegistroPage = /** @class */ (function () {
     };
     RegistroPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-registro',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/registro/registro.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Registro</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n\n  <div class="contenedor-step-3">\n    <div class="sub-contenedor">\n      <div class="avatar">\n        <div class="imagen" (tap)="opcionesDeImagen()">\n          <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url">\n          <img src="{{photo_url}}" alt="" *ngIf="photo_url">\n        </div>\n      </div>\n\n      <div class="formulario">\n        <form [formGroup]="formGroup">\n          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n            <div style="    width: 100%;\n            font-size: 14px;\n            color: #123;">{{dato.name}}</div>\n            <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"\n              [(ngModel)]="dato.value" [attr.disabled]="dato.disabled ? \'\' : null" placeholder="{{dato.name}}"\n              maxlength="{{dato.length}}" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'">\n\n            <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()" style="display: inline-block;\n              width: 10%;\n              vertical-align: bottom;"><img\n                src="assets/imgs/direcciones/home-run.png" alt=""></div>\n\n            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left\n              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"\n              *ngIf="dato.type == \'date\'" placeholder="01/12/2020"></ion-datetime>\n\n            <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n              </ion-checkbox>\n            </ion-col>\n\n            <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n              <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n                {{op.value}}\n              </ion-option>\n            </ion-select>\n\n            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n            </app-control-messages>\n          </div>\n\n\n\n          <div class="contenedor-boton">\n            <button [disabled]="btnHabilitado" (click)="registrar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Registrarme</button>\n          </div>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/registro/registro.html"*/,
+            selector: 'page-registro',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/registro/registro.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Registro {{env.perfil.activo == 2 ? \'proveedor\' : env.perfil.activo == 3 ? \'transportista\' : \'\'}}</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n\n  <div class="contenedor-step-3">\n    <div class="sub-contenedor">\n      <div class="avatar">\n        <div class="imagen" (tap)="opcionesDeImagen()">\n          <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url">\n          <img src="{{photo_url}}" alt="" *ngIf="photo_url">\n        </div>\n      </div>\n\n      <div class="formulario">\n        <form [formGroup]="formGroup">\n          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n            <div style="    width: 100%;\n            font-size: 14px;\n            color: #123;">{{dato.name}}</div>\n            <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"\n              [(ngModel)]="dato.value" [attr.disabled]="dato.disabled ? \'\' : null" placeholder="{{dato.name}}"\n              maxlength="{{dato.length}}" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'">\n\n            <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()" style="display: inline-block;\n              width: 10%;\n              vertical-align: bottom;"><img\n                src="assets/imgs/direcciones/home-run.png" alt=""></div>\n\n            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left\n              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"\n              *ngIf="dato.type == \'date\'" placeholder="01/12/2020"></ion-datetime>\n\n            <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n              </ion-checkbox>\n            </ion-col>\n\n            <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n              <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n                {{op.value}}\n              </ion-option>\n            </ion-select>\n\n            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n            </app-control-messages>\n          </div>\n\n\n\n          <div class="contenedor-boton">\n            <button [disabled]="btnHabilitado" (click)="registrar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Registrarme</button>\n          </div>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/registro/registro.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_5__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_7__ionic_native_camera__["a" /* Camera */],
@@ -5980,7 +6216,7 @@ var RegistroPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_9__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_10__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]])
     ], RegistroPage);
     return RegistroPage;
@@ -6023,6 +6259,8 @@ var ValidationService = /** @class */ (function () {
             'phone': 'Ingrese un número válido',
             'maxilength': "Longitud m\u00E1xima 10 d\u00EDgitos",
             'minilength': "Longitud m\u00EDnima 10 d\u00EDgitos",
+            'minilengthpass': "Longitud m\u00EDnima requerida 6 caracteres",
+            'maxilengthpass': "Longitud m\u00E1xima requerida 10 caracteres",
             'onlyCharacter': "El campo es de tipo texto",
         };
         return config[validatorName];
@@ -6158,6 +6396,36 @@ var ValidationService = /** @class */ (function () {
             }
         }
     };
+    ValidationService.minLengthPassValidator = function (control) {
+        if (control.value) {
+            if (control._pendingValue.length >= 6) {
+                return null;
+            }
+            else {
+                if (control._pendingValue.length < 6) {
+                    return { 'minilengthpass': true };
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+    };
+    ValidationService.maxLengthPassValidator = function (control) {
+        if (control.value) {
+            if (control._pendingValue.length <= 10) {
+                return null;
+            }
+            else {
+                if (control._pendingValue.length > 10) {
+                    return { 'maxilengthpass': true };
+                }
+                else {
+                    return null;
+                }
+            }
+        }
+    };
     ValidationService.numberValidator = function (control) {
         // {6,100}           - Assert password is between 6 and 100 characters
         // (?=.*[0-9])       - Assert a string has at least one number
@@ -6179,29 +6447,29 @@ var ValidationService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 581:
+/***/ 582:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filtro_producto_filtro_producto__ = __webpack_require__(582);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__filtro_producto_filtro_producto__ = __webpack_require__(583);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__detalle_producto_detalle_producto__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_common_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_action_sheet__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__models_Seccion__ = __webpack_require__(977);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__models_Proveedor__ = __webpack_require__(978);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__models_Categoria__ = __webpack_require__(979);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__carrito_compras_carrito_compras__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__ = __webpack_require__(583);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__opciones_menu_opciones_menu__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__categoria_categoria__ = __webpack_require__(584);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__carrito_compras_carrito_compras__ = __webpack_require__(127);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__ = __webpack_require__(584);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__opciones_menu_opciones_menu__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__categoria_categoria__ = __webpack_require__(585);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__mapa_proveedores_mapa_proveedores__ = __webpack_require__(217);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -6322,7 +6590,21 @@ var HomePage = /** @class */ (function () {
             catch (error) {
             }
         });
+        this.events.subscribe("backHome", function (data) {
+            try {
+                console.log(_this.navCtrl.length());
+                //if(this.navCtrl.length()>1){
+                _this.navCtrl.pop();
+                //}
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
     }
+    HomePage.prototype.ionViewWillLeave = function () {
+        //this.navCtrl.popAll();
+    };
     HomePage.prototype.cargaPromociones = function () {
         var _this = this;
         this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__["a" /* environment */].promociones).subscribe(function (response) {
@@ -6331,6 +6613,11 @@ var HomePage = /** @class */ (function () {
         }, function (error) {
             _this.promociones = null;
         });
+    };
+    HomePage.prototype.ionViewDidEnter = function () {
+        this.events.publish("backProveedor");
+        this.events.publish("backCarrito");
+        this.events.publish("backHistorial");
     };
     HomePage.prototype.getTotalCarrito = function (fromLogin) {
         var _this = this;
@@ -6767,8 +7054,8 @@ var HomePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-home',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home/home.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Productos</ion-title>\n\n\n\n\n    <ion-buttons end>\n      <button ion-button icon-only (click)="verCarrito()" class="carrito" *ngIf="user">\n        <ion-badge *ngIf="totalCarrito > 0" [ngStyle]="{\'color\': genericService.getColorHex()}">{{totalCarrito}}</ion-badge>\n        <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>\n\n      </button>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n  <div class="division" [ngStyle]="{\'background-color\': color}">\n    <label for="search"></label>\n    <div class="input-image" (click)="close()" [style.background-image]="\'url(\'+imgBusqueda+\')\'"></div>\n    <input type="text" placeholder="Buscar" class="input-text" id="search" [(ngModel)]="dataFilter.nombre" (keyup)="buscarPorFiltros()">\n    <ion-icon name="close" style="    position: absolute;\n    right: 14px;\n    /* top: 0px; */\n    padding: 8px;\n    font-size: 19px;" (click)="borraPalabra()"></ion-icon>\n  </div>\n</ion-header>\n\n<div class="filtro" *ngIf="1==2">\n  <button ion-button (click)="openFilters()">\n    <ion-icon ios="ios-options" md="ios-options"></ion-icon>\n  </button>\n</div>\n\n<ion-content>\n\n  <div *ngIf="dataFilter.nombre.length > 0" class="contenedor-busqueda">\n    <div class="resultado" *ngFor="let p of productosBuscados" (click)="viewDetail(p)">\n      <div class="c-i "><img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" alt=""></div>\n      <div class="r">{{ p.producto.nombre }} - {{p.proveedor.nombre}}</div>\n    </div>\n\n    <div *ngIf="productosBuscados.length <= 0" class="no-en">\n      No se encontraron resultados\n    </div>\n  </div>\n\n  <div *ngIf="dataFilter.nombre.length<=0">\n    <div style="margin-top: 8px"></div>\n\n    <div class="scrolling-wrapper-flexbox" style="margin-top:0px">\n      <div class="promociones" [style.background-image]="\'url(\'+env.getImagenIndividual+promo.adjuntoId+\')\'" *ngFor="let promo of promociones">\n        <div class="contenedor-imagen">\n          <!-- <img src="assets/imgs/home/images.jpeg" alt=""> -->\n        </div>\n        <div class="info">\n          <p class="titulo">{{promo.titulo}}</p>\n          <p class="subtitulo">{{promo.descripcion}}</p>\n        </div>\n      </div>\n    </div>\n\n    <div class="scrolling-wrapper" style="margin-top: 15px">\n      <div class="buttons">\n        <button [ngStyle]="{\'background-color\': color}" (click)="ordena(1)">\n          <img src="assets/imgs/home/milk.png" alt="">\n          Artículos\n        </button>\n      </div>\n      <div class="buttons">\n        <button [ngStyle]="{\'background-color\': color}" (click)="ordena(2)">\n          <img src="assets/imgs/home/services.png" alt="">\n          Servicios\n        </button>\n      </div>\n\n    </div>\n\n    <div class="card-super" *ngIf="productosCategorias.length > 0">\n      <div class="cont">\n        <div class="principal" (click)="irToCategoria(productosCategorias[0])">\n          <img src="{{env.getImagenIndividual}}{{productosCategorias[0].categoria.adjuntoId}}" alt="">\n          <div class="seccion-principal" [ngStyle]="{\'color\': color}">{{productosCategorias[0].categoria.nombre}}</div>\n        </div>\n\n        <div class="borde-b"></div>\n\n        <div class="contenedor-tres">\n          <div class="contenedor-int" (click)="irToCategoria(cat)" *ngFor="let cat of productosCategoriasSub">\n            <img src="{{env.getImagenIndividual}}{{cat.categoria.adjuntoId}}" alt="">\n            <div class="seccion-sub-principal" [ngStyle]="{\'color\': color}">{{cat.categoria.nombre}}</div>\n          </div>\n\n        </div>\n      </div>\n    </div>\n  </div>\n\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home/home.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ModalController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */],
             __WEBPACK_IMPORTED_MODULE_6__services_generic_service__["a" /* GenericService */],
@@ -6778,8 +7065,8 @@ var HomePage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_9__ionic_native_action_sheet__["a" /* ActionSheet */],
             __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__["a" /* StringUtilsService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["c" /* App */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["o" /* PopoverController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* MenuController */]])
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* MenuController */]])
     ], HomePage);
     return HomePage;
 }());
@@ -6788,7 +7075,7 @@ var HomePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 582:
+/***/ 583:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6857,9 +7144,9 @@ var FiltroProductoPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-filtro-producto',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/filtro-producto/filtro-producto.html"*/'<ion-header>\n  <ion-toolbar color="{{genericService.getColor()}}">\n    <ion-title>Productos: Filtros</ion-title>\n    <ion-buttons start>\n      <button ion-button (click)="dismiss(false)">\n        <span color="secundary" showWhen="ios">Cancel</span>\n        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <div class="wrapper-frame">\n    <p>Filtra los productos seleccionando lo que más te interese.</p>\n    <div class="block">\n\n      <ion-item>\n        <ion-label floating>Nombre producto</ion-label>\n        <ion-input (keyup)="change()" type="text" [(ngModel)]="filtros.nombre" style="border-bottom: 1px solid #3b64bf;"></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label>Proveedores</ion-label>\n        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idProveedor" okText="Ok" cancelText="Cancelar" interface="action-sheet"\n          [selectOptions]="selectOptions">\n          <ion-option *ngFor="let op of proveedores" [value]="op.id">\n            {{op.nombre}}\n          </ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label>Categorías</ion-label>\n        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idCategoria" okText="Ok" cancelText="Cancelar" interface="action-sheet"\n          [selectOptions]="selectOptions">\n          <ion-option *ngFor="let op of categorias" [value]="op.id">\n            {{op.nombre}}\n          </ion-option>\n        </ion-select>\n      </ion-item>\n      <ion-item>\n        <ion-label>Secciones</ion-label>\n        <ion-select (ionChange)="change()" [(ngModel)]="filtros.idSeccion" okText="Ok" cancelText="Cancelar" interface="action-sheet"\n          [selectOptions]="selectOptions">\n          <ion-option *ngFor="let op of secciones" [value]="op.id">\n            <ion-icon name="md-close"></ion-icon>\n            {{op.nombre}}\n          </ion-option>\n        </ion-select>\n      </ion-item>\n\n    </div>\n  </div>\n\n</ion-content>\n<ion-footer class="footer-button">\n  <div class="btn-full" (tap)="dismiss()">\n    <span>Aceptar</span>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/filtro-producto/filtro-producto.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* ViewController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["r" /* ViewController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */]])
     ], FiltroProductoPage);
     return FiltroProductoPage;
@@ -6869,7 +7156,7 @@ var FiltroProductoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 583:
+/***/ 584:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -6979,19 +7266,19 @@ var StringUtilsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 584:
+/***/ 585:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CategoriaPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__articulo_productos_articulo_productos__ = __webpack_require__(585);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__articulo_productos_articulo_productos__ = __webpack_require__(586);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_producto_service__ = __webpack_require__(586);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_producto_service__ = __webpack_require__(587);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__detalle_producto_detalle_producto__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__mapa_proveedores_mapa_proveedores__ = __webpack_require__(217);
@@ -7130,8 +7417,8 @@ var CategoriaPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
             selector: 'page-categoria',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/categoria/categoria.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>{{categoria.categoria.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <div class="spinner-carrito" *ngIf="articulos == null">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div *ngIf="articulos && articulos?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <div class="texto-ordena">\n      Ordenar por precio\n    </div>\n    <div class="botones">\n        <button ion-button outline style="width: 48%;" (click)="up()"\n        [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n          <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n        </button>\n    </div>\n    <div class="botones">\n        <button ion-button outline style="width: 48%;" (click)="down()"\n        [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n          <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n        </button>\n    </div>\n  </div>\n\n  <div *ngFor="let articulo of articulos">\n    <div class="titulo-wrapper">\n      <div class="seccion" [ngStyle]="{\'color\':color}">\n        {{articulo.tipoArticulo.nombre}}\n      </div>\n\n      <div class="ver-todos" (click)="verTodos(articulo)">\n        Ver todos\n      </div>\n    </div>\n    <div class="scrolling-wrapper" *ngIf="articulo.productos">\n      <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of articulo.productos; let i = index"\n        (click)="viewDetail(p)">\n        <div class="container-card">\n\n          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n        </div>\n        <div class="container-text">{{p.producto.nombre}}</div>\n        <div class="description">{{p.producto.descripcion}}</div>\n        <div class="precio">{{p.precio | currency}}</div>\n\n        <!-- <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n                      <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n                        <div>-</div>\n                      </div>\n                      <div class="cantidad" *ngIf="p.cantidad > 0">\n                        <div>{{p.cantidad}}</div>\n                      </div>\n                      <div class="mas" (click)="incrementa(p)">\n                        <div>+</div>\n                      </div>\n                    </div> -->\n      </div>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/categoria/categoria.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_7__services_producto_service__["a" /* ProductoService */],
             __WEBPACK_IMPORTED_MODULE_8__services_loading_service__["a" /* LoadingService */],
@@ -7146,19 +7433,19 @@ var CategoriaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 585:
+/***/ 586:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticuloProductosPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_common_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__detalle_producto_detalle_producto__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7307,8 +7594,8 @@ var ArticuloProductosPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
             selector: 'page-articulo-productos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-productos/articulo-productos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>{{articulo.tipoArticulo?.nombre}}</ion-title>\n    \n  </ion-navbar>\n  <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n      <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí tu búsqueda" (keyup)="buscarPorPalabra()">\n    </div>\n</ion-header>\n\n<ion-content padding>\n    <div *ngIf="productos && productos?.length>0" class="ordenamiento" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n      </div>\n  <div class="spinner-carrito" *ngIf="!productos || productos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n\n\n  <div *ngIf="productos && productos.length > 0">\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of productos; let i = index" (click)="viewDetail(p)">\n      <!-- <div class="tacha">\n                  <div class="mini-tacha">\n                      <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                      <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                  </div>\n                </div> -->\n      <div class="container-card">\n\n        <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" />\n      </div>\n      <div class="container-text">{{p.nombre}}</div>\n      <div class="description">{{p.descripcion}}</div>\n      <div class="precio">{{p.precio | currency}}</div>\n    </div>\n  </div>\n\n  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="resultadoPost.length % 10 == 0">\n    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando...">\n    </ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/articulo-productos/articulo-productos.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
@@ -7322,21 +7609,21 @@ var ArticuloProductosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 586:
+/***/ 587:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProductoService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_timeout__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_timeout__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_timeout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_timeout__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_detalle_producto_detalle_producto__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__local_storage_encrypt_service__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7435,18 +7722,18 @@ var ProductoService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 587:
+/***/ 588:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComparaPreciosProveedorPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__detalle_producto_detalle_producto__ = __webpack_require__(45);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -7522,8 +7809,8 @@ var ComparaPreciosProveedorPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["m" /* Component */])({
             selector: 'page-compara-precios-proveedor',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/compara-precios-proveedor/compara-precios-proveedor.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Comparativa</ion-title>\n\n  </ion-navbar>\n  <div class="busca" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <input type="text" [(ngModel)]="palabra" placeholder="Escribe aquí el proveedor" (keyup)="buscarPorPalabra()">\n  </div>\n</ion-header>\n\n<ion-content padding>\n    <div *ngIf="proveedoresGeolocate && proveedoresGeolocate?.length>0 && !multiple" class="ordenamiento" \n      [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n        <div class="texto-ordena">\n          Ordenar por precio \n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n        <div class="botones">\n          <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n            <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n          </button>\n        </div>\n      </div>\n\n  <div class="spinner-carrito" *ngIf="!proveedoresGeolocate || proveedoresGeolocate.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n\n\n  <div *ngIf="proveedoresGeolocate && proveedoresGeolocate.length > 0 && !multiple" >\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedoresGeolocate; let i = index"\n      (click)="viewDetail(p)">\n      <!-- <div class="tacha">\n                      <div class="mini-tacha">\n                          <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                          <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                      </div>\n                    </div> -->\n      <div class="container-card">\n\n        <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text">{{p.producto.nombre}}</div>\n      <div class="description">{{p.producto.descripcion}}</div>\n      <div class="precio">{{p.producto.precio | currency}}</div>\n\n      <div style="text-align: center;\n      font-weight: 600;">Proveedor:</div>\n      <div style="text-align: center;text-overflow: ellipsis;\n      white-space: nowrap;\n      overflow: hidden;">{{p.proveedor.nombre}}, {{p.proveedor.empresa.nombre}}</div>\n    </div>\n  </div>\n\n  <div *ngIf="proveedoresGeolocate && proveedoresGeolocate.length > 0 && multiple" >\n      <div *ngFor="let pr of proveedoresGeolocate; let i = index">\n          <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">{{pr.proveedor.nombre}}</div>\n\n          <div class="scrolling-wrapper">\n              <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of pr.productos; let i = index"\n              (click)="viewDetail(p)">\n              <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n              <div class="container-card">\n        \n                <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />\n              </div>\n              <div class="container-text">{{p.producto.nombre}}</div>\n              <div class="description">{{p.producto.descripcion}}</div>\n              <div class="precio">{{p.producto.precio | currency}}</div>\n        \n              <div style="text-align: center;\n              font-weight: 600;">Proveedor:</div>\n              <div style="text-align: center;text-overflow: ellipsis;\n              white-space: nowrap;\n              overflow: hidden;">{{p.proveedor.nombre}}, {{p.proveedor.empresa.nombre}}</div>\n            </div>\n          </div>\n      </div>\n  </div>\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/compara-precios-proveedor/compara-precios-proveedor.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
@@ -7537,22 +7824,22 @@ var ComparaPreciosProveedorPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 588:
+/***/ 589:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HistorialPedidosPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__historial_pedidos_detail_historial_pedidos_detail__ = __webpack_require__(120);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_moment__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__opciones_menu_opciones_menu__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__opciones_menu_opciones_menu__ = __webpack_require__(90);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7593,30 +7880,55 @@ var HistorialPedidosPage = /** @class */ (function () {
             boton3: false
         };
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        this.cargarPedidos();
+        this.cargarPedidos(null);
         this.events.subscribe("cargarPedidos", function (data) {
             try {
-                _this.cargarPedidos();
+                _this.cargarPedidos(null);
             }
             catch (error) {
             }
         });
     }
+    HistorialPedidosPage.prototype.ionViewDidEnter = function () {
+        this.events.publish("backHome");
+        this.events.publish("backCarrito");
+        this.events.publish("backProveedor");
+    };
+    HistorialPedidosPage.prototype.ionViewWillLeave = function () {
+    };
+    /**Método que es lanzado al deslizar hacia arriba
+     * el usuario puede refrescar cada que haya algun problema con
+     * su conexión
+     */
+    HistorialPedidosPage.prototype.doRefresh = function (refresher) {
+        var _this = this;
+        setTimeout(function () {
+            _this.user = _this.localStorageEncryptService.getFromLocalStorage("userSession");
+            _this.cargarPedidos(refresher);
+        }, 2000);
+    };
     HistorialPedidosPage.prototype.ionViewDidLoad = function () {
     };
     HistorialPedidosPage.prototype.verOpciones = function () {
         var popover = this.popoverCtrl.create(__WEBPACK_IMPORTED_MODULE_9__opciones_menu_opciones_menu__["a" /* OpcionesMenuPage */], {}, { cssClass: "clase-Pop" });
         popover.present({});
     };
-    HistorialPedidosPage.prototype.cargarPedidos = function () {
+    HistorialPedidosPage.prototype.cargarPedidos = function (refresher) {
         var _this = this;
+        if (refresher === void 0) { refresher = null; }
         this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos).subscribe(function (response) {
             _this.pedidos = response;
             if (_this.pedidos.length <= 0) {
                 _this.pedidos = null;
             }
             _this.pedidosReplica = _this.pedidos;
+            if (refresher) {
+                refresher.complete();
+            }
         }, function (error) {
+            if (refresher) {
+                refresher.complete();
+            }
             var err = error.error;
             _this.pedidos = null;
             _this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
@@ -7724,15 +8036,15 @@ var HistorialPedidosPage = /** @class */ (function () {
     };
     HistorialPedidosPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["m" /* Component */])({
-            selector: 'page-historial-pedidos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title *ngIf="env.perfil.activo == 2">Mi historial</ion-title>\n\n    <button ion-button menuToggle *ngIf="env.perfil.activo == 1">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mi historial</ion-title>\n\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n        <div style="font-size: 12px;">Fecha solicitud</div>\n        <ion-icon name="ios-calendar"></ion-icon>\n      </button>\n    <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n        <div style="font-size: 12px;">Fecha entrega</div>\n        <ion-icon name="ios-list-box"></ion-icon>\n      </button>\n    <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido Num. <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/,
+            selector: 'page-historial-pedidos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title *ngIf="env.perfil.activo == 2">Mi historial</ion-title>\n\n    <button ion-button menuToggle *ngIf="env.perfil.activo == 1">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Mi historial</ion-title>\n\n\n\n\n    <ion-buttons end>\n\n      <button ion-button icon-only (click)="verOpciones()">\n        <ion-icon name="md-more" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n<ion-content>\n\n  <ion-refresher (ionRefresh)="doRefresh($event)">\n    <ion-refresher-content refreshingSpinner="circles" refreshingText="">\n    </ion-refresher-content>\n  </ion-refresher>\n\n  <div class="spinner-carrito" *ngIf="pedidos && pedidos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div class="filtros" [ngStyle]="{\'background-color\' : genericService.getColorHex()}" *ngIf="pedidos && pedidos?.length > 0">\n    <button (click)="ordenPor(1)" *ngIf="!botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(4)" *ngIf="botones.boton1">\n      <div style="font-size: 12px;">Fecha solicitud</div>\n      <ion-icon name="ios-calendar"></ion-icon>\n    </button>\n    <button (click)="ordenPor(2)" *ngIf="!botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(5)" *ngIf="botones.boton2">\n      <div style="font-size: 12px;">Fecha entrega</div>\n      <ion-icon name="ios-list-box"></ion-icon>\n    </button>\n    <button (click)="ordenPor(3)" *ngIf="!botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox-outline"></ion-icon>\n    </button>\n    <button (click)="ordenPor(6)" *ngIf="botones.boton3">\n      <div style="font-size: 12px;">Estatus</div>\n      <ion-icon name="ios-checkbox"></ion-icon>\n    </button>\n  </div>\n\n  <ion-list *ngIf="pedidos && pedidos?.length > 0">\n    <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">\n      <ion-avatar slot="start">\n        <img src="assets/imgs/pedidos/entrega.png" alt="">\n      </ion-avatar>\n      <div class="datos-tarjetas">\n        <div class="name">Pedido Num. <strong>{{p.folio}}</strong></div>\n        <div class="number">Costo <strong>{{p.total | currency}}</strong></div>\n        <div class="number">Fecha Solicitud <strong>{{p.fechaAlta}}</strong></div>\n        <div class="number" *ngIf="p.fechaEntrega">Fecha Entrega <strong>{{p.fechaEntrega}}</strong></div>\n        <div class="number">Estatus <strong>{{p.estatus.nombre}}</strong></div>\n      </div>\n\n    </ion-item>\n  </ion-list>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/historial-pedidos/historial-pedidos.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_4__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
-            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["o" /* PopoverController */],
+            __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["p" /* PopoverController */],
             __WEBPACK_IMPORTED_MODULE_6_ionic_angular__["e" /* Events */]])
     ], HistorialPedidosPage);
     return HistorialPedidosPage;
@@ -7742,17 +8054,17 @@ var HistorialPedidosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 589:
+/***/ 590:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecuperaContraseniaPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -7796,8 +8108,8 @@ var RecuperaContraseniaPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-recupera-contrasenia',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recupera-contrasenia/recupera-contrasenia.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Recuperar contraseña</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n  <div class="correo">\n    <div [ngStyle]="{\'color\': genericService.getColorHex()}">Correo electrónico</div>\n    <input type="text" placeholder="Ingresa aqui" [(ngModel)]="correo">\n  </div>\n  <button class="boton" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cambio()">\n    Recibir indicaciones\n  </button>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/recupera-contrasenia/recupera-contrasenia.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__["a" /* AlertaService */]])
@@ -7809,19 +8121,19 @@ var RecuperaContraseniaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 590:
+/***/ 591:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CarritoHistoricoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__detalle_producto_detalle_producto__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_forms__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_validation_service__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common__ = __webpack_require__(46);
@@ -8339,7 +8651,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
         if (evt === void 0) { evt = null; }
         if (opc) {
             console.log(evt);
-            if (evt) {
+            if (!evt) {
                 this.objetoRegistro.push({
                     name: "Dirección",
                     required: true,
@@ -8383,7 +8695,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
         else {
             this.btnHabilitado = true;
         }
-        if (validacion == 1 && this.objetoRegistro[3].value == false) {
+        if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
             this.btnHabilitado = false;
         }
     };
@@ -8395,7 +8707,10 @@ var CarritoHistoricoPage = /** @class */ (function () {
             if (data) {
                 if (data != null) {
                     _this.data = data.data;
-                    if (_this.objetoRegistro[3].value == true || _this.objetoRegistro[3].value == false) {
+                    if (_this.objetoRegistro[3].value == 'true' ||
+                        _this.objetoRegistro[3].value == true ||
+                        _this.objetoRegistro[3].value == 'false' ||
+                        _this.objetoRegistro[3].value == false) {
                         _this.objetoRegistro[4].value = _this.data.direccion;
                         _this.objetoRegistro[5].value = _this.data.codigoPostal;
                     }
@@ -8416,23 +8731,42 @@ var CarritoHistoricoPage = /** @class */ (function () {
         this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
         this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
         this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
+        var h = null;
+        console.log(this.totales.listHistoricoProveedores);
+        if (this.totales.listHistoricoProveedores.length > 1) {
+            h = true;
+        }
         var body = {
             nombreContacto: this.objetoRegistroCopy[0].value,
             telefonoContacto: this.objetoRegistroCopy[1].value,
             correoContacto: this.objetoRegistroCopy[2].value,
-            direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
+            direccionContacto: this.objetoRegistro[3].value == 'true' ||
+                this.objetoRegistro[3].value == true ||
+                this.objetoRegistro[3].value == 'false' ||
+                this.objetoRegistro[3].value == false || h ? {
                 id: this.data.id ? this.data.id : null,
                 codigoPostal: this.data.codigoPostal,
                 direccion: this.data.direccion,
                 latitud: this.data.latitud,
                 longitud: this.data.longitud
-            },
+            } : null,
             productos: []
         };
-        this.productosCarrito.forEach(function (item) {
-            body.productos.push({
-                cantidad: item.cantidad,
-                productoProveedorId: item.productoProveedorId
+        if (this.objetoRegistro[3].value == 'true' ||
+            this.objetoRegistro[3].value == true ||
+            this.objetoRegistro[3].value == 'false' ||
+            this.objetoRegistro[3].value == false) {
+            body.picking = this.objetoRegistro[3].value;
+        }
+        else {
+            body.picking = false;
+        }
+        this.agrupado.forEach(function (item) {
+            item.carritoAgrupado.forEach(function (element) {
+                body.productos.push({
+                    cantidad: element.cantidad,
+                    productoProveedorId: element.productoProveedorId
+                });
             });
         });
         var service = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos, body);
@@ -8540,6 +8874,8 @@ var CarritoHistoricoPage = /** @class */ (function () {
                         var service = clase.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */].pedidos + "/pago", body);
                         service.subscribe(function (response) {
                             clase.loadingService.hide();
+                            clase.events.publish("totalCarrito");
+                            clase.events.publish("cargarPedidos");
                             clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
                             clase.cerrar();
                         }, function (error) {
@@ -8552,6 +8888,17 @@ var CarritoHistoricoPage = /** @class */ (function () {
         }
         else {
             this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+        }
+    };
+    CarritoHistoricoPage.prototype.seleccionar = function (card) {
+        if (!card.selected) {
+            this.cards.forEach(function (element) {
+                element.selected = false;
+            });
+            card.selected = true;
+        }
+        else {
+            card.selected = false;
         }
     };
     CarritoHistoricoPage.prototype.up = function () {
@@ -8568,10 +8915,10 @@ var CarritoHistoricoPage = /** @class */ (function () {
     };
     CarritoHistoricoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
-            selector: 'page-carrito-historico',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{listaCarrito.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n        padding: 7px;\n        color: #fff;\n        border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n\n<ion-content padding>\n  <div *ngIf="2==3 && listaCarrito.carritoHistoricoDetalles && listaCarrito.carritoHistoricoDetalles?.length>0" class="ordenamiento"\n    [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <div class="texto-ordena">\n      Ordenar por precio\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <!--<div>\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of listaCarrito.carritoHistoricoDetalles; let i = index">\n     \n      <div class="container-card" (click)="viewDetail(p)">\n\n        <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n      <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n      <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n      <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n        <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" *ngIf="p.cantidad > 0">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div>\n    </div>\n  </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;">\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n\n    <div *ngIf="totales && totales.listHistoricoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>\n      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class" *ngIf="!enCompra">\n  <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/,
+            selector: 'page-carrito-historico',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>{{listaCarrito.nombre}}</ion-title>\n  </ion-navbar>\n</ion-header>\n<div id="myModal" class="modal">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrar()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div class="selecciona" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Selecciona\n      tu tarjeta</div>\n    <ion-list *ngIf="cards && cards?.length > 0">\n      <ion-item class="item-list-card" *ngFor="let card of cards" [ngClass]="{\'seleccionado\':card.selected}" (click)="seleccionar(card)">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/tarjetas/bank.png" alt="">\n        </ion-avatar>\n        <div class="datos-tarjetas">\n          <div class="name">{{card.alias}}</div>\n          <div class="number">{{card.numeroTarjeta}}</div>\n        </div>\n\n      </ion-item>\n    </ion-list>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="cards && cards?.length > 0">Ó\n      ingresa una para hacer el pago</div>\n    <div class="ingresa" [ngStyle]="{\'color\': genericService.getColorHex()}" *ngIf="!cards || cards?.length <= 0">Ingresa\n      una tarjeta para hacer el pago</div>\n\n\n\n    <div class="form-row">\n      <input type="number" placeholder="N. Tarjeta" id="tarj" [(ngModel)]="dataCard.tarj" style="width: 100%">\n\n      <ion-datetime class="dt" text-left pickerFormat="MM/YY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n        placeholder="04/24" min="2016" max="2050" id="dtime" [(ngModel)]="dataCard.dtime"></ion-datetime>\n\n      <input type="number" placeholder="CVC" id="cvc" [(ngModel)]="dataCard.cvc">\n\n\n\n\n    </div>\n    <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;"\n      [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="confirmar()">Pagar</button>\n  </div>\n</div>\n\n<div id="myModal2" class="modal2">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div style="top: 3px;" class="tacha" (click)="closeInfoContact()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n\n    <div style="width: 90%;\n        padding: 7px;\n        color: #fff;\n        border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Llena\n      la información de contacto</div>\n    <div class="formulario" *ngIf="formGroup">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <!-- <span>{{dato.name}}</span> -->\n\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n            type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" [attr.disabled]="dato.disabled ? \'\' : null"\n            *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'" [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}">\n\n          <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()"><img src="assets/imgs/direcciones/home-run.png"\n              alt=""></div>\n\n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="DD/MM/YYYY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="01/12/2020"></ion-datetime>\n\n          <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n            <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n            </ion-checkbox>\n          </ion-col>\n\n          <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"\n            formControlName="{{dato.formName}}">\n            <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n              {{op.value}}\n            </ion-option>\n          </ion-select>\n\n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n      </form>\n\n    </div>\n\n    <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;"\n      [disabled]="btnHabilitado" [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="precompra()">Aceptar</button>\n  </div>\n</div>\n\n<div id="myModal3" class="modal3">\n\n  <div class="modal-content animated lightSpeedIn">\n\n    <div class="tacha" (click)="cerrarModal3()" [ngStyle]="{\'color\': genericService.getColorHex()}">\n      <ion-icon ios="md-close" md="md-close"></ion-icon>\n    </div>\n    <div style="width: 90%;\n      padding: 7px;\n      color: #fff;\n      border-radius: 4px;" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Información\n      de pago</div>\n\n    <div class="resumen">Resumen de la compra</div>\n\n    <div class="resumen-proveedor" *ngIf="pagoActual">\n      <div *ngFor="let p of pagoActual.pedidoProveedores" class="separador">\n        <div class="proveedor">\n          <div class="nombre">{{p.proveedor?.nombre}}</div>\n          <div class="precio">{{p.total | currency}}</div>\n\n          <div class="costo-envio">Costo de envío</div>\n          <div class="precio-envio">{{p.comisionTransportista | currency}}</div>\n\n          <div class="costo-subtotal">Subtotal</div>\n          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>\n        </div>\n\n\n      </div>\n\n      <div class="total-pagar">Total a pagar: <strong>{{pagoActual.total | currency}}</strong></div>\n      <div class="iva">*Costos incluyen iva.</div>\n\n      <ion-item>\n        <ion-label>Acepto términos y condiciones</ion-label>\n        <ion-checkbox color="{{genericService.getColor()}}" [(ngModel)]="check"></ion-checkbox>\n      </ion-item>\n    </div>\n\n    <div style="width:100%">\n      <button ion-button block large style="padding: 10px;\n          height: auto;\n          contain: none;\n          margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="cerrarModal3()">Cancelar</button>\n      <button ion-button block large style="padding: 10px;\n            height: auto;\n            contain: none;\n            margin-top: 15px;font-size: 14px;display: inline-block; width: 49%"\n        [ngStyle]="{\'background-color\': genericService.getColorHex()}" (click)="comprar()">Realizar pago</button>\n    </div>\n  </div>\n</div>\n\n\n<ion-content padding>\n  <div *ngIf="2==3 && listaCarrito.carritoHistoricoDetalles && listaCarrito.carritoHistoricoDetalles?.length>0" class="ordenamiento"\n    [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <div class="texto-ordena">\n      Ordenar por precio\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="up()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-up" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n    <div class="botones">\n      <button ion-button outline style="width: 48%;" (click)="down()" [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n        <ion-icon name="md-trending-down" class="botonFooter"></ion-icon>\n      </button>\n    </div>\n  </div>\n\n  <!--<div>\n    <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of listaCarrito.carritoHistoricoDetalles; let i = index">\n     \n      <div class="container-card" (click)="viewDetail(p)">\n\n        <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n      </div>\n      <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n      <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n      <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n      <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n        <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n        </div>\n        <div class="cantidad" *ngIf="p.cantidad > 0">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n        </div>\n        <div class="mas" (click)="incrementa(p)">\n          <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n        </div>\n      </div>\n    </div>\n  </div> -->\n\n  <div>\n\n\n\n    <div *ngFor="let proveedor of agrupado">\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}" style="color: rgb(240, 124, 27);\n      font-weight: 600;\n      font-size: 17px;\n      text-align: center;">{{proveedor.productoProveedor.proveedor.nombre}}</div>\n\n      <div class="scrolling-wrapper">\n        <div id="card-{{i}}" class="card animated lightSpeedIn" *ngFor="let p of proveedor.carritoAgrupado; let i = index">\n          <!-- <div class="tacha">\n                              <div class="mini-tacha">\n                                  <ion-icon ios="ios-cart-outline" md="ios-cart-outline" style="color: #3b64bf;" *ngIf="!p.carrito" (click)="agregarToCarrito(p)"></ion-icon>\n                                  <ion-icon ios="ios-cart" md="ios-cart" *ngIf="p.carrito" style="color: #3b64bf;" (click)="productoService.deleteFavorito(p)"></ion-icon>\n                              </div>\n                            </div> -->\n          <div class="container-card" (click)="viewDetail(p)">\n\n            <img src="{{env.getImagenIndividual}}{{p.productoProveedor.producto.adjuntoId}}" />\n          </div>\n          <div class="container-text" (click)="viewDetail(p)">{{p.productoProveedor.producto.nombre}}</div>\n          <div class="description" (click)="viewDetail(p)">{{p.productoProveedor.producto.descripcion}}</div>\n          <div class="precio" (click)="viewDetail(p)">{{p.precio | currency}}</div>\n\n          <div class="contenedor-carrito" [ngStyle]="{\'text-align\': !p.cantidad || p.cantidad <= 0 ? \'end\' : \'\'}">\n            <div class="menos" *ngIf="p.cantidad > 0" (click)="decrementar(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">-</div>\n            </div>\n            <div class="cantidad" *ngIf="p.cantidad > 0">\n              <div [ngStyle]="{\'color\': genericService.getColorHex()}">{{p.cantidad}}</div>\n            </div>\n            <div class="mas" (click)="incrementa(p)">\n              <div [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">+</div>\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class="name-pro" [ngStyle]="{\'color\': genericService.getColorHex()}">Información</div>\n      <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;\n      border-style: dashed;">\n          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>\n          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>\n          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>\n          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>\n    \n        </div>\n    </div>\n\n    <div *ngIf="totales && totales.listHistoricoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">\n      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>\n      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>\n      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe}}</strong></div>\n\n      <div class="borde-total"></div>\n\n      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>\n    </div>\n  </div>\n</ion-content>\n<ion-footer class="footer-button-class" *ngIf="!enCompra">\n  <button style="width: 100%;" (tap)="infoContact()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Realizar\n    pedido</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/carrito-historico/carrito-historico.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
@@ -8580,7 +8927,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["b" /* AlertController */],
             __WEBPACK_IMPORTED_MODULE_10__angular_common__["c" /* CurrencyPipe */],
             __WEBPACK_IMPORTED_MODULE_8__angular_forms__["a" /* FormBuilder */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["k" /* ModalController */]])
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* ModalController */]])
     ], CarritoHistoricoPage);
     return CarritoHistoricoPage;
 }());
@@ -8589,7 +8936,7 @@ var CarritoHistoricoPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 591:
+/***/ 592:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8597,8 +8944,8 @@ var CarritoHistoricoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ngx_translate_core__ = __webpack_require__(64);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -8780,8 +9127,8 @@ var DocumentosPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-documentos',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/documentos/documentos.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title>Documentos</ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n  <div class="spinner-carrito" *ngIf="!documentos || documentos.length <= 0">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <ion-list *ngIf="documentos && documentos?.length > 0">\n    <ion-item-sliding #item *ngFor="let d of documentos">\n      <ion-item class="item-list-card" (click)="subirDocumento(d)" style="border-bottom: 1px solid #ddd;">\n        <ion-avatar slot="start">\n          <img src="assets/imgs/menu/file.png" alt="" *ngIf="!d.imagen">\n          <img src="{{d.imagen}}" alt="" *ngIf="d.imagen">\n        </ion-avatar>\n        <div class="datos-tarjetas" style="vertical-align: top;">\n          <div class="name" style="font-size:14px">Documento</div>\n          <div class="name" style="font-size:14px"><strong>{{d.nombre}}</strong></div>\n        </div>\n\n      </ion-item>\n      <ion-item-options side="right">\n        <button ion-button (click)="actualizar(card)" color="primary">\n          <ion-icon name="ios-create-outline"></ion-icon>\n          Editar\n        </button>\n        <button ion-button (click)="borrar(card)" color="danger">\n          <ion-icon name="ios-trash-outline"></ion-icon>\n          Borrar\n        </button>\n      </ion-item-options>\n    </ion-item-sliding>\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages-proveedor/documentos/documentos.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_3__services_alerta_service__["a" /* AlertaService */],
             __WEBPACK_IMPORTED_MODULE_5__ionic_native_camera__["a" /* Camera */],
@@ -8795,7 +9142,7 @@ var DocumentosPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 592:
+/***/ 593:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8803,7 +9150,7 @@ var DocumentosPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_app_version__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_app_version__ = __webpack_require__(594);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -8838,10 +9185,10 @@ var AcercaDePage = /** @class */ (function () {
     };
     AcercaDePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-acerca-de',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/acerca-de/acerca-de.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Acerca de</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="animated fadeIn acerca">\n    <div>\n      <img src="assets/imgs/logo.png" alt="">\n    </div>\n    <strong [ngStyle]="{\'color\':genericService.getColorHex()}">Luegoluego</strong> \n\n    <div>\n      Version\n\n    </div>\n    <strong [ngStyle]="{\'color\':genericService.getColorHex()}">{{version}}</strong>\n\n    <div>Desarrollado por</div>\n    <img src="assets/imgs/Logo-SharkTech.png" alt="">\n\n    <div><strong [ngStyle]="{\'color\':genericService.getColorHex()}">© Copyright {{anio}}</strong></div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/acerca-de/acerca-de.html"*/,
+            selector: 'page-acerca-de',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/acerca-de/acerca-de.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Acerca de</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="animated fadeIn acerca">\n    <div>\n      <img src="assets/imgs/logo.png" alt="">\n    </div>\n    <strong [ngStyle]="{\'color\':genericService.getColorHex()}">Luegoluego</strong> \n\n    <div>\n      Versión\n\n    </div>\n    <strong [ngStyle]="{\'color\':genericService.getColorHex()}">{{version}}</strong>\n\n    <div>Desarrollado por</div>\n    <img src="assets/imgs/Logo-SharkTech.png" alt="">\n\n    <div><strong [ngStyle]="{\'color\':genericService.getColorHex()}">© Copyright {{anio}}</strong></div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/acerca-de/acerca-de.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_0__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_3__ionic_native_app_version__["a" /* AppVersion */]])
     ], AcercaDePage);
@@ -8852,7 +9199,7 @@ var AcercaDePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 594:
+/***/ 595:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8882,10 +9229,10 @@ var AyudaPage = /** @class */ (function () {
     };
     AyudaPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-ayuda',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/ayuda/ayuda.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Ayuda</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="texto">Utiliza nuestros siguientes medios de contacto</div>\n\n  <div class="separado">\n    <div>Telefono: <a href="tel:+527222222222">7222222222</a></div>\n\n    <div>Correo: <a href="mailto:cuenta@deemail.com">cuenta@deemail.com</a></div>\n  </div>\n\n  <div class="separado-icons">\n      <div class="icono"><img src="assets/imgs/ayuda/wats.png" alt=""></div>\n\n      <div class="icono"><img src="assets/imgs/ayuda/logo.png" alt=""></div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/ayuda/ayuda.html"*/,
+            selector: 'page-ayuda',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/ayuda/ayuda.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Ayuda</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="texto">Utiliza nuestros siguientes medios de contacto</div>\n\n  <div class="separado">\n    <div>Telefono: <a href="tel:+527226490730">7226490730</a></div>\n\n    <div>Correo: <a href="mailto:soporte@luegoluego.com.mx">soporte@luegoluego.com.mx</a></div>\n  </div>\n\n  <div class="separado-icons">\n      <div class="icono"><img src="assets/imgs/ayuda/wats.png" alt=""></div>\n\n      <div class="icono"><img src="assets/imgs/ayuda/logo.png" alt=""></div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/ayuda/ayuda.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_0__services_generic_service__["a" /* GenericService */]])
     ], AyudaPage);
     return AyudaPage;
@@ -8895,19 +9242,19 @@ var AyudaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 595:
+/***/ 596:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PerfilPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_camera__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ngx_translate_core__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_validation_service__ = __webpack_require__(56);
@@ -9320,10 +9667,10 @@ var PerfilPage = /** @class */ (function () {
     };
     PerfilPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
-            selector: 'page-perfil',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/perfil/perfil.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Mi perfil</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n\n  <div class="contenedor-step-3">\n    <div class="sub-contenedor">\n      <div class="avatar">\n        <div class="imagen" (tap)="opcionesDeImagen()">\n          <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url">\n          <img src="{{photo_url}}" alt="" *ngIf="photo_url && !userResponse || !userResponse?.adjuntoId">\n          <img src="{{env.getImagenIndividual}}{{p.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId">\n        </div>\n      </div>\n\n      <div class="formulario" *ngIf="formGroup">\n        <form [formGroup]="formGroup">\n          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n            <div style="    width: 100%;\n            font-size: 14px;\n            color: #123;">{{dato.name}}</div>\n            <input class="inp" [attr.disabled]="dato.disabled ? \'\' : null" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n              type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'"\n              [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}" placeholder="{{dato.name}}">\n            <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()" style="display: inline-block;\n                width: 10%;\n                vertical-align: bottom;"><img\n                src="assets/imgs/direcciones/home-run.png" alt=""></div>\n            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left\n              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"\n              *ngIf="dato.type == \'date\'" placeholder="{{dato.name}}"></ion-datetime>\n\n            <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n              </ion-checkbox>\n            </ion-col>\n\n            <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n              <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n                {{op.value}}\n              </ion-option>\n            </ion-select>\n\n            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n            </app-control-messages>\n          </div>\n          <div class="contenedor-boton">\n            <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Aceptar</button>\n          </div>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/perfil/perfil.html"*/,
+            selector: 'page-perfil',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/perfil/perfil.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Mi perfil</ion-title>\n  </ion-navbar>\n</ion-header>\n<ion-content padding>\n\n  <div class="contenedor-step-3">\n    <div class="sub-contenedor">\n      <div class="avatar">\n        <div class="imagen" (tap)="opcionesDeImagen()">\n          <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url && userResponse && !userResponse.adjuntoId">\n          <img src="{{photo_url}}" alt="" *ngIf="photo_url && !userResponse || !userResponse?.adjuntoId">\n          <img src="{{env.getImagenIndividual}}{{userResponse.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId">\n        </div>\n      </div>\n\n      <div class="formulario" *ngIf="formGroup">\n        <form [formGroup]="formGroup">\n          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n            <div style="    width: 100%;\n            font-size: 14px;\n            color: #123;">{{dato.name}}</div>\n            <input class="inp" [attr.disabled]="dato.disabled ? \'\' : null" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}"\n              type="{{dato.type}}" [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'"\n              [ngStyle]="{\'width\': dato.name == \'Dirección\' ? \'88%\' : \'100%\'}" placeholder="{{dato.name}}">\n            <div class="direc" *ngIf="dato.name == \'Dirección\'" (click)="getMapa()" style="display: inline-block;\n                width: 10%;\n                vertical-align: bottom;"><img\n                src="assets/imgs/direcciones/home-run.png" alt=""></div>\n            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left\n              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()"\n              *ngIf="dato.type == \'date\'" placeholder="{{dato.name}}"></ion-datetime>\n\n            <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value" (ionChange)="ejecutaValidator()">\n              </ion-checkbox>\n            </ion-col>\n\n            <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"\n              interface="action-sheet" (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">\n              <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n                {{op.value}}\n              </ion-option>\n            </ion-select>\n\n            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n            </app-control-messages>\n          </div>\n          <div class="contenedor-boton">\n            <button [disabled]="btnHabilitado" (click)="cambiarPerfil()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Aceptar</button>\n          </div>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/perfil/perfil.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_7__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_8__ionic_native_camera__["a" /* Camera */],
@@ -9333,7 +9680,7 @@ var PerfilPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_2__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["k" /* ModalController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* ModalController */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["a" /* ActionSheetController */]])
     ], PerfilPage);
     return PerfilPage;
@@ -9343,19 +9690,19 @@ var PerfilPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 596:
+/***/ 597:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TarjetasFrecuentesPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__detalle_tarjeta_detalle_tarjeta__ = __webpack_require__(597);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__detalle_tarjeta_detalle_tarjeta__ = __webpack_require__(598);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9462,8 +9809,8 @@ var TarjetasFrecuentesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-tarjetas-frecuentes',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/tarjetas-frecuentes/tarjetas-frecuentes.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title>Tarjetas Frecuentes</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n    <div class="spinner-carrito" *ngIf="!cards">\n        <ion-spinner></ion-spinner>\n    </div>\n    <ion-list>\n        <ion-item-sliding #item *ngFor="let card of cards">\n          <ion-item class="item-list-card" (click)="addCard(card)">\n            <ion-avatar slot="start">\n              <img src="assets/imgs/tarjetas/bank.png" alt="">\n            </ion-avatar>\n            <div class="datos-tarjetas">\n              <div class="name">{{card.alias}}</div>\n              <div class="number">{{card.numeroTarjeta}}</div>\n            </div>\n          </ion-item>\n      \n          <ion-item-options side="right">\n            <button ion-button (click)="borrar(card)" color="danger">\n              <ion-icon name="ios-trash-outline"></ion-icon>\n              Borrar\n            </button>\n          </ion-item-options>\n        </ion-item-sliding>\n      </ion-list>\n</ion-content>\n\n<ion-fab bottom right class="fab-cards animated swing">\n  <button ion-fab (click)="addCard()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">\n    <ion-icon name="add"></ion-icon>\n  </button>\n</ion-fab>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/tarjetas-frecuentes/tarjetas-frecuentes.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_6__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
@@ -9478,20 +9825,20 @@ var TarjetasFrecuentesPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 597:
+/***/ 598:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DetalleTarjetaPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_validation_service__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_forms__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9714,8 +10061,8 @@ var DetalleTarjetaPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_4__angular_core__["m" /* Component */])({
             selector: 'page-detalle-tarjeta',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-tarjeta/detalle-tarjeta.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title *ngIf="card">{{card.alias}}</ion-title>\n    <ion-title *ngIf="!card">Nueva Tarjeta</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="contenedori">\n    <div class="formulario" *ngIf="render">\n      <form [formGroup]="formGroup">\n        <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n          <input class="inp" placeholder="{{dato.name}}" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"\n            [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\' && dato.formName != \'ccv\'">\n  \n            <input placeholder="{{dato.name}}"  class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}" type="password"\n            [(ngModel)]="dato.value" maxlength="{{dato.length}}" *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\' && dato.formName == \'ccv\'">\n  \n          <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left pickerFormat="MM/YY"\n            cancelText="Cancelar" doneText="Aceptar" #fechaNac (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'"\n            placeholder="{{dato.name}}" min="2016" max="2050"></ion-datetime>\n  \n          <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n          </app-control-messages>\n        </div>\n        <div class="contenedor-boton">\n          <button [disabled]="btnHabilitado" (click)="guardar()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Guardar</button>\n        </div>\n      </form>\n    </div>\n  </div>\n  \n</ion-content>\n<ion-footer class="footer-button-class">\n  <div style="text-align: end;" ><img src="assets/imgs/tarjetas/visa.jpg" alt="" style="width:60%"></div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/detalle-tarjeta/detalle-tarjeta.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_5_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_7__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_2__services_alerta_service__["a" /* AlertaService */],
@@ -9730,14 +10077,15 @@ var DetalleTarjetaPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 598:
+/***/ 599:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return InfoPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__terminos_condiciones_terminos_condiciones__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_generic_service__ = __webpack_require__(7);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -9747,6 +10095,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -9758,61 +10107,21 @@ var InfoPage = /** @class */ (function () {
     }
     InfoPage.prototype.ionViewDidLoad = function () {
     };
+    InfoPage.prototype.irTerminos = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__terminos_condiciones_terminos_condiciones__["a" /* TerminosCondicionesPage */]);
+    };
     InfoPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-info',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/info/info.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Información</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="title" [ngStyle]="{\'color\':genericService.getColorHex()}">Luegoluego</div>\n\n  <div class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque suscipit quisquam, repellat\n    consequuntur, harum tenetur nostrum ad, dolorem explicabo illo non! Veritatis aperiam quaerat aspernatur repellat,\n    necessitatibus impedit commodi magni.</div>\n\n  <div class="ter" [ngStyle]="{\'color\':genericService.getColorHex()}">Consulta los términos y condiciones</div>\n  <div class="a"><a>Términos y condiciones</a></div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/info/info.html"*/,
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
+            selector: 'page-info',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/info/info.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title style="padding: 0px;">Información</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n  <div class="title" [ngStyle]="{\'color\':genericService.getColorHex()}">Luegoluego</div>\n\n  <div class="texto">Esta aplicación esta diseñada para que los clientes en general puedan realizar sus compras desde la comodidad de su hogar, consultando los articulos de sus proveedores favoritos, garantizando siempre excelencia en el servicio, y con la seguridad que los estaremos acompañando en todo el proceso que dure su compra.</div>\n\n  <div class="ter" (click)="irTerminos()" [ngStyle]="{\'color\':genericService.getColorHex()}">Consulta los términos y condiciones</div>\n</ion-content>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/info/info.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__services_generic_service__["a" /* GenericService */]])
     ], InfoPage);
     return InfoPage;
 }());
 
 //# sourceMappingURL=info.js.map
-
-/***/ }),
-
-/***/ 599:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TerminosCondicionesPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(5);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var TerminosCondicionesPage = /** @class */ (function () {
-    function TerminosCondicionesPage(navCtrl, navParams, genericService) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.genericService = genericService;
-    }
-    TerminosCondicionesPage.prototype.ionViewDidLoad = function () {
-    };
-    TerminosCondicionesPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["m" /* Component */])({
-            selector: 'page-terminos-condiciones',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/terminos-condiciones/terminos-condiciones.html"*/'<ion-header>\n    <ion-navbar color="{{genericService.getColor()}}">\n      <ion-title style="padding: 0px;">Términos y condiciones</ion-title>\n    </ion-navbar>\n  </ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/terminos-condiciones/terminos-condiciones.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["m" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_0__services_generic_service__["a" /* GenericService */]])
-    ], TerminosCondicionesPage);
-    return TerminosCondicionesPage;
-}());
-
-//# sourceMappingURL=terminos-condiciones.js.map
 
 /***/ }),
 
@@ -9838,15 +10147,15 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_change_password_change_password__ = __webpack_require__(608);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_transportista_tabs_tabs__ = __webpack_require__(669);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_proveedor_documentos_documentos__ = __webpack_require__(591);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_acerca_de_acerca_de__ = __webpack_require__(592);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_ayuda_ayuda__ = __webpack_require__(594);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_cambio_contrasenia_cambio_contrasenia__ = __webpack_require__(413);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_perfil_perfil__ = __webpack_require__(595);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_problemas_pedido_problemas_pedido__ = __webpack_require__(446);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_recupera_contrasenia_recupera_contrasenia__ = __webpack_require__(589);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_proveedor_documentos_documentos__ = __webpack_require__(592);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_acerca_de_acerca_de__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_ayuda_ayuda__ = __webpack_require__(595);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_cambio_contrasenia_cambio_contrasenia__ = __webpack_require__(414);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_perfil_perfil__ = __webpack_require__(596);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_problemas_pedido_problemas_pedido__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_recupera_contrasenia_recupera_contrasenia__ = __webpack_require__(590);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_mapa_proveedores_mapa_proveedores__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_categoria_categoria__ = __webpack_require__(584);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_categoria_categoria__ = __webpack_require__(585);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_platform_browser__ = __webpack_require__(65);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_ionic_angular__ = __webpack_require__(5);
@@ -9855,47 +10164,47 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_splash_screen__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_about_about__ = __webpack_require__(987);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_contact_contact__ = __webpack_require__(988);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(581);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_tabs_tabs__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_home_home__ = __webpack_require__(582);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_tabs_tabs__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ngx_translate_core__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ngx_translate_http_loader__ = __webpack_require__(989);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__angular_common_http__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__providers_module__ = __webpack_require__(991);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_login_login__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_registro_registro__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_registro_registro__ = __webpack_require__(453);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_control_messages_control_messages_component__ = __webpack_require__(995);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_gallery_gallery_component__ = __webpack_require__(996);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_recuperar_password_recuperar_password__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_filtro_producto_filtro_producto__ = __webpack_require__(582);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_filtro_producto_filtro_producto__ = __webpack_require__(583);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__pages_detalle_producto_detalle_producto__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_carrito_compras_carrito_compras__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__pages_carrito_compras_carrito_compras__ = __webpack_require__(127);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__pages_alta_direcciones_alta_direcciones__ = __webpack_require__(997);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__directives_scroll_hide_directive__ = __webpack_require__(998);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__pages_lista_carrito_compras_lista_carrito_compras__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_tarjetas_frecuentes_tarjetas_frecuentes__ = __webpack_require__(596);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_detalle_tarjeta_detalle_tarjeta__ = __webpack_require__(597);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_opciones_menu_opciones_menu__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_36__pages_tarjetas_frecuentes_tarjetas_frecuentes__ = __webpack_require__(597);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_37__pages_detalle_tarjeta_detalle_tarjeta__ = __webpack_require__(598);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_38__pages_opciones_menu_opciones_menu__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_39__pages_home_geo_proveedores_home_geo_proveedores__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_chat_chat__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_articulo_productos_articulo_productos__ = __webpack_require__(585);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_carrito_historico_carrito_historico__ = __webpack_require__(590);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_direcciones_direcciones__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_compara_precios_proveedor_compara_precios_proveedor__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_40__pages_chat_chat__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_41__pages_articulo_productos_articulo_productos__ = __webpack_require__(586);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_42__pages_carrito_historico_carrito_historico__ = __webpack_require__(591);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_43__pages_direcciones_direcciones__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_44__pages_compara_precios_proveedor_compara_precios_proveedor__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_45__pages_articulo_proveedores_articulo_proveedores__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_historial_pedidos_historial_pedidos__ = __webpack_require__(588);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_46__pages_historial_pedidos_historial_pedidos__ = __webpack_require__(589);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_47__pages_historial_pedidos_detail_historial_pedidos_detail__ = __webpack_require__(120);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_pedidos_detail_pedidos_detail__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_48__pages_pedidos_detail_pedidos_detail__ = __webpack_require__(446);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_49__pages_termino_servicio_termino_servicio__ = __webpack_require__(999);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_terminos_condiciones_terminos_condiciones__ = __webpack_require__(599);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_50__pages_terminos_condiciones_terminos_condiciones__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_51__pages_recibo_pago_recibo_pago__ = __webpack_require__(1000);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_info_info__ = __webpack_require__(598);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_52__pages_info_info__ = __webpack_require__(599);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_53__pages_proveedor_tabs_tabs__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__pages_proveedor_home_proveedor_home_proveedor__ = __webpack_require__(194);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_proveedor_ver_productos_ver_productos__ = __webpack_require__(444);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_qr_qr__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_54__pages_proveedor_home_proveedor_home_proveedor__ = __webpack_require__(195);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_55__pages_proveedor_ver_productos_ver_productos__ = __webpack_require__(445);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_56__pages_qr_qr__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_57_angularx_qrcode__ = __webpack_require__(1001);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_lista_chat_lista_chat__ = __webpack_require__(414);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_calificacion_calificacion__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_58__pages_lista_chat_lista_chat__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_59__pages_calificacion_calificacion__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_60__components_card_producto_card_producto_component__ = __webpack_require__(1006);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10028,7 +10337,7 @@ var AppModule = /** @class */ (function () {
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_12__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_13_ionic_angular__["h" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* MyApp */], {}, {
+                __WEBPACK_IMPORTED_MODULE_13_ionic_angular__["i" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
                 //EmojiPickerModule,
@@ -10043,7 +10352,7 @@ var AppModule = /** @class */ (function () {
                     }
                 }),
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_13_ionic_angular__["f" /* IonicApp */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_13_ionic_angular__["g" /* IonicApp */]],
             entryComponents: [
                 __WEBPACK_IMPORTED_MODULE_14__app_component__["a" /* MyApp */],
                 __WEBPACK_IMPORTED_MODULE_17__pages_about_about__["a" /* AboutPage */],
@@ -10099,7 +10408,7 @@ var AppModule = /** @class */ (function () {
             providers: [
                 __WEBPACK_IMPORTED_MODULE_15__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_16__ionic_native_splash_screen__["a" /* SplashScreen */],
-                { provide: __WEBPACK_IMPORTED_MODULE_11__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_13_ionic_angular__["g" /* IonicErrorHandler */] }
+                { provide: __WEBPACK_IMPORTED_MODULE_11__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_13_ionic_angular__["h" /* IonicErrorHandler */] }
             ]
         })
     ], AppModule);
@@ -10118,7 +10427,7 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_validation_service__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10247,8 +10556,8 @@ var ChangePasswordPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-change-password',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/change-password/change-password.html"*/'<ion-icon id="icn-3" name="ios-arrow-back" class="arrow-generada" (click)="regresar()"></ion-icon>\n<ion-content>\n  <div class="contenedor-step-3">\n    <div class="sub-contenedor">\n      <div class="title">\n        <h4>Cambio de contraseña</h4>\n      </div>\n      <div class="formulario">\n        <form [formGroup]="formGroup">\n          <div *ngFor="let dato of objetoRegistro;let i = index" class="contenedor-input">\n            <span>{{dato.name}}</span>\n\n            <input class="inp" (keyup)="ejecutaValidator()" formControlName="{{dato.formName}}" type="{{dato.type}}"\n              [(ngModel)]="dato.value" maxlength="{{dato.length}}"\n              *ngIf="dato.type != \'date\' && dato.type != \'checkbox\' && dato.type != \'select\'">\n\n            <ion-datetime class="dt" [(ngModel)]="dato.value" formControlName="{{dato.formName}}" text-left\n              pickerFormat="DD/MM/YYYY" cancelText="Cancelar" doneText="Aceptar" #fechaNac\n              (ionChange)="ejecutaValidator()" *ngIf="dato.type == \'date\'" placeholder="01/12/2020"></ion-datetime>\n\n            <ion-col col-2 class="text-center" *ngIf="dato.type == \'checkbox\'">\n              <ion-checkbox formControlName="{{dato.formName}}" [(ngModel)]="dato.value"\n                (ionChange)="ejecutaValidator()">\n              </ion-checkbox>\n            </ion-col>\n\n            <ion-select *ngIf="dato.type == \'select\'" [(ngModel)]="dato.value" \n              okText="Ok" cancelText="Cancelar" interface="action-sheet"\n              (ionChange)="ejecutaValidator()" [selectOptions]="selectOptions" \n              formControlName="{{dato.formName}}">\n              <ion-option *ngFor="let op of dato.opts" [value]="op.id">\n                {{op.value}}\n              </ion-option>\n            </ion-select>\n\n            <app-control-messages [control]="formGroup.controls[dato.formName]" [clase]="\'validators2\'">\n            </app-control-messages>\n          </div>\n          <div class="contenedor-boton">\n            <button [disabled]="btnHabilitado" (click)="guardar()">Guardar</button>\n          </div>\n        </form>\n\n      </div>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/change-password/change-password.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormBuilder */],
             __WEBPACK_IMPORTED_MODULE_3__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Events */]])
@@ -10265,10 +10574,10 @@ var ChangePasswordPage = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TabsTransportistaPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_proveedor_home_proveedor_home_proveedor__ = __webpack_require__(194);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_proveedor_home_proveedor_home_proveedor__ = __webpack_require__(195);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10309,12 +10618,12 @@ var TabsTransportistaPage = /** @class */ (function () {
 "use strict";
 /* unused harmony export TIME_OUT */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GenericService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common_http__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_timeout__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_timeout__ = __webpack_require__(182);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_timeout___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_timeout__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ionic_angular__ = __webpack_require__(5);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10487,20 +10796,20 @@ var GenericService = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomeGeoProveedoresPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_leaflet__ = __webpack_require__(580);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_leaflet__ = __webpack_require__(581);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_leaflet___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_leaflet__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_common_http__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__direcciones_direcciones__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__direcciones_direcciones__ = __webpack_require__(214);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11083,10 +11392,10 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
     };
     HomeGeoProveedoresPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
-            selector: 'page-home-geo-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title *ngIf="!fromModal">\n      {{!direccion ? \'Alta de dirección\' : \'Actualizar de dirección\'}}\n    </ion-title>\n    <ion-title *ngIf="fromModal">\n      Datos de contacto\n    </ion-title>\n\n    <ion-buttons start *ngIf="fromModal">\n      <button ion-button (click)="dismiss(false)">\n        <span color="secundary" showWhen="ios">Cancel</span>\n        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div id="locationField" class="buscador">\n    <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />\n\n    <div *ngIf="!fromModal">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n\n    <div *ngIf="fromModal" (click)="selectFrecuente()">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n  </div>\n\n  <div id="map_canvas" class="mapita-google"></div>\n\n  <div id="map" style="height: 50%;" *ngIf="1==2"></div>\n\n  <div class="card-proveedor">\n\n  </div>\n</ion-content>\n\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && !fromModal">\n  <button style="width:100%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">{{!direccion\n    ? \'Agregar\' : \'Actualizar\'}} dirección</button>\n</ion-footer>\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">\n  <button style="width:49%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Guardar\n    y aceptar</button>\n  <button style="width:49%" (tap)="backData()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">Aceptar</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/,
+            selector: 'page-home-geo-proveedores',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}">\n    <ion-title *ngIf="!fromModal">\n      {{!direccion ? \'Alta de dirección\' : \'Actualizar de dirección\'}}\n    </ion-title>\n    <ion-title *ngIf="fromModal">\n      Datos de contacto\n    </ion-title>\n\n    <ion-buttons start *ngIf="fromModal">\n      <button ion-button (click)="dismiss(false)">\n        <span color="secundary" showWhen="ios">Cancel</span>\n        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>\n      </button>\n    </ion-buttons>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n\n  <div class="spinner-carrito" *ngIf="!muestraMapa">\n    <ion-spinner></ion-spinner>\n  </div>\n\n  <div id="locationField" class="buscador">\n    <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />\n\n    <div *ngIf="!fromModal">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n\n    <div *ngIf="fromModal" (click)="selectFrecuente()">\n      <img src="assets/imgs/direcciones/home-run.png" alt="">\n    </div>\n  </div>\n\n  <div id="map_canvas" class="mapita-google"></div>\n\n  <div id="map" style="height: 50%;" *ngIf="1==2"></div>\n\n  <div class="card-proveedor">\n\n  </div>\n</ion-content>\n\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && !fromModal">\n  <button style="width:100%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}">{{!direccion\n    ? \'Agregar\' : \'Actualizar\'}} dirección</button>\n</ion-footer>\n<ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">\n  <button style="width:49%" (tap)="addToList()" [ngStyle]="{\'background-color\': genericService.getColorHex()}" *ngIf="!fromRegister">Guardar\n    y aceptar</button>\n  <button style="width:49%" (tap)="backData()" [ngStyle]="{\'background-color\': genericService.getColorHex(), \'width\' : fromRegister ? \'100%\' : \'49%\'}">Aceptar</button>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/home-geo-proveedores/home-geo-proveedores.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_5__ionic_native_geolocation__["a" /* Geolocation */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_1__services_loading_service__["a" /* LoadingService */],
@@ -11095,10 +11404,10 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_10__ionic_native_diagnostic__["a" /* Diagnostic */],
             __WEBPACK_IMPORTED_MODULE_9__ionic_native_open_native_settings__["a" /* OpenNativeSettings */],
             __WEBPACK_IMPORTED_MODULE_11__ionic_native_android_permissions__["a" /* AndroidPermissions */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* Platform */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* Platform */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["q" /* ViewController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["o" /* PopoverController */]])
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["r" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["p" /* PopoverController */]])
     ], HomeGeoProveedoresPage);
     return HomeGeoProveedoresPage;
 }());
@@ -11107,18 +11416,286 @@ var HomeGeoProveedoresPage = /** @class */ (function () {
 
 /***/ }),
 
+/***/ 8:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocalStorageEncryptService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_crypto_js__ = __webpack_require__(645);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_crypto_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_crypto_js__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+/**Clase que guarda información en localstorage pero de forma
+ * encriptada para no dejar a la vista del usuario o de terceros, la
+ * información detallada de lo que se requiere utilizar durante el ciclo de vida
+ * de la aplicación
+ */
+var LocalStorageEncryptService = /** @class */ (function () {
+    function LocalStorageEncryptService() {
+        /**
+         * Llave secreta para encriptar y desencriptar la informacion almacenada
+         */
+        this.secretKey = 'RG5vt457u%$5bj78c452YBBc24432c%#T7&$tv657bu6B&BvH76hvv64';
+    }
+    /**
+     * Almacena encriptado los datos necesarios en el localstorage
+     * @param key Llave a almacenar
+     * @param data Dato a almacenar
+     */
+    LocalStorageEncryptService.prototype.setToLocalStorage = function (key, data) {
+        var encryptedData = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["AES"].encrypt(JSON.stringify(data), this.secretKey).toString();
+        //console.log("encriptado",encryptedData);
+        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](key).toString();
+        encryptedData = JSON.stringify(data);
+        encryptedKey = key;
+        localStorage.setItem(encryptedKey, encryptedData);
+    };
+    LocalStorageEncryptService.prototype.yayirobe = function (data) {
+        return __WEBPACK_IMPORTED_MODULE_1_crypto_js__["AES"].decrypt(data, this.secretKey).toString(__WEBPACK_IMPORTED_MODULE_1_crypto_js__["enc"].Utf8);
+    };
+    /**
+     * Recupera valores del localstorage por medio de la llave
+     * @param key Llave a obtener
+     */
+    LocalStorageEncryptService.prototype.getFromLocalStorage = function (key) {
+        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](key).toString();
+        encryptedKey = key;
+        var item = localStorage.getItem(encryptedKey);
+        if (item === undefined || item === null) {
+            return null;
+        }
+        var dencryptedData; // = CryptoJS.AES.decrypt(item, this.secretKey).toString(CryptoJS.enc.Utf8);
+        dencryptedData = 1;
+        if (dencryptedData == 1) {
+            return JSON.parse(item);
+        }
+        else {
+            if (this.isJson(dencryptedData)) {
+                return JSON.parse(dencryptedData);
+            }
+            else {
+                return dencryptedData;
+            }
+        }
+    };
+    /**
+     * Limpia todo el localstorage
+     */
+    LocalStorageEncryptService.prototype.clear = function () {
+        localStorage.clear();
+    };
+    /**
+     * Remueve una propiedad especifica del local storage
+     * @param property Propiedad a eliminar
+     */
+    LocalStorageEncryptService.prototype.clearProperty = function (property) {
+        var encryptedKey = __WEBPACK_IMPORTED_MODULE_1_crypto_js__["SHA256"](property).toString();
+        //localStorage.removeItem(encryptedKey);
+        localStorage.removeItem(property);
+    };
+    /**
+     * Valida si una cadena cumple el formato JSON
+     * @param str Cadena a validar
+     * @returns True si cumple el formato False no cumple el formato
+     */
+    LocalStorageEncryptService.prototype.isJson = function (str) {
+        try {
+            JSON.parse(str);
+        }
+        catch (e) {
+            return false;
+        }
+        return true;
+    };
+    LocalStorageEncryptService = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [])
+    ], LocalStorageEncryptService);
+    return LocalStorageEncryptService;
+}());
+
+//# sourceMappingURL=local-storage-encrypt.service.js.map
+
+/***/ }),
+
 /***/ 90:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(12);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return OpcionesMenuPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__cambio_contrasenia_cambio_contrasenia__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_chat_service__ = __webpack_require__(415);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__login_login__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__lista_carrito_compras_lista_carrito_compras__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_header_color__ = __webpack_require__(221);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+var OpcionesMenuPage = /** @class */ (function () {
+    function OpcionesMenuPage(navCtrl, navParams, localStorageEncryptService, alertCtrl, app, viewCtrl, events, genericService, headerColor) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.localStorageEncryptService = localStorageEncryptService;
+        this.alertCtrl = alertCtrl;
+        this.app = app;
+        this.viewCtrl = viewCtrl;
+        this.events = events;
+        this.genericService = genericService;
+        this.headerColor = headerColor;
+        this.user = null;
+        this.env = __WEBPACK_IMPORTED_MODULE_7__environments_environment_prod__["a" /* environment */];
+        this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+        this.events.subscribe("reloadUser", function (data) {
+            try {
+                _this.user = _this.localStorageEncryptService.getFromLocalStorage("userSession");
+            }
+            catch (error) {
+            }
+        });
+    }
+    OpcionesMenuPage.prototype.ionViewDidLoad = function () {
+    };
+    OpcionesMenuPage.prototype.logout = function () {
+        var _this = this;
+        var alert = this.alertCtrl.create({
+            title: "Confirmación",
+            message: "¿Estás segur@ de cerrar sesión?",
+            cssClass: this.genericService.getColorClassTWO(),
+            buttons: [
+                {
+                    text: "Cancelar",
+                    role: 'cancel',
+                    handler: function () {
+                    }
+                },
+                {
+                    text: 'Ok',
+                    handler: function () {
+                        _this.confirmar();
+                    }
+                }
+            ]
+        });
+        alert.present();
+    };
+    OpcionesMenuPage.prototype.confirmar = function () {
+        try {
+            this.localStorageEncryptService.clearProperty("userSession");
+            this.viewCtrl.dismiss();
+            var nav = this.app.getRootNav();
+            nav.setRoot(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */]);
+        }
+        catch (error) {
+        }
+    };
+    OpcionesMenuPage.prototype.openListCarrito = function () {
+        var nav = this.app.getRootNav();
+        this.viewCtrl.dismiss();
+        nav.push(__WEBPACK_IMPORTED_MODULE_6__lista_carrito_compras_lista_carrito_compras__["a" /* ListaCarritoComprasPage */]);
+    };
+    OpcionesMenuPage.prototype.change = function (opt) {
+        switch (opt) {
+            case 1:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
+                this.headerColor.tint("#3b64c0");
+                break;
+            case 2:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#be3b3b");
+                this.headerColor.tint("#be3b3b");
+                break;
+            case 3:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#3bb8be");
+                this.headerColor.tint("#3bb8be");
+                break;
+            case 4:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#74be3b");
+                this.headerColor.tint("#74be3b");
+                break;
+            case 5:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#292929");
+                this.headerColor.tint("#292929");
+                break;
+            case 6:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#F07C1B");
+                this.headerColor.tint("#F07C1B");
+                break;
+            default:
+                this.localStorageEncryptService.setToLocalStorage("theme", "#3b64c0");
+                this.headerColor.tint("#3b64c0");
+                break;
+        }
+        this.events.publish("changeColor");
+    };
+    OpcionesMenuPage.prototype.login = function () {
+        this.viewCtrl.dismiss();
+        this.app.getRootNav().push(__WEBPACK_IMPORTED_MODULE_5__login_login__["a" /* LoginPage */]);
+    };
+    OpcionesMenuPage.prototype.cambiarContra = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_0__cambio_contrasenia_cambio_contrasenia__["a" /* CambioContraseniaPage */]);
+    };
+    OpcionesMenuPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
+            selector: 'page-opciones-menu',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/opciones-menu/opciones-menu.html"*/'<div>\n  <ion-list>\n    <ion-list-header style="margin: 0px;">General</ion-list-header>\n\n    <!-- <div style="padding: 10px;text-align: center;">Elige un tema</div>\n    <ion-row class="rowi">\n      <ion-col col-2 class="tema-6">\n        <button (click)="change(6)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-1">\n        <button (click)="change(1)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-2">\n        <button (click)="change(2)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-3">\n        <button (click)="change(3)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-4">\n        <button (click)="change(4)"></button>\n      </ion-col>\n      <ion-col col-2 class="tema-5">\n        <button (click)="change(5)"></button>\n      </ion-col>\n    </ion-row> -->\n\n    <button ion-item (click)="openListCarrito()" *ngIf="user && env.perfil.activo == 1">\n      <ion-icon name="ios-cart-outline" style="font-size: 2.4rem;"></ion-icon>\n      Listas de carrito\n    </button>\n\n    <button ion-item (click)="cambiarContra()" *ngIf="user">\n      <ion-icon name="ios-construct-outline" style="font-size: 2.4rem;"></ion-icon>\n      Cambiar contraseña\n    </button>\n\n    <button ion-item (click)="logout()" *ngIf="user">\n      <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>\n      Cerrar sesión\n    </button>\n\n    <button ion-item (click)="login()" *ngIf="!user">\n      <ion-icon name="ios-log-out-outline" style="font-size: 2.4rem;"></ion-icon>\n      Iniciar sesión\n    </button>\n  </ion-list>\n</div>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/opciones-menu/opciones-menu.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["b" /* AlertController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["c" /* App */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["r" /* ViewController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
+            __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
+            __WEBPACK_IMPORTED_MODULE_8__ionic_native_header_color__["a" /* HeaderColor */]])
+    ], OpcionesMenuPage);
+    return OpcionesMenuPage;
+}());
+
+//# sourceMappingURL=opciones-menu.js.map
+
+/***/ }),
+
+/***/ 91:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_alerta_service__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generic_service__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ionic_angular__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_chat_service__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__ = __webpack_require__(12);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11153,8 +11730,11 @@ var ChatPage = /** @class */ (function () {
         this.toggled = false;
         this.env = __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */];
         this.intervalo = null;
+        this.activoChat = false;
+        this.subscription = null;
         this.chat = navParams.get("chat");
         this.pedido = navParams.get("pedido");
+        this.localStorageEncryptService.setToLocalStorage("pedidoChat", this.pedido.id);
         this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.localStorageEncryptService.getFromLocalStorage("theme")) {
             this.color = this.localStorageEncryptService.getFromLocalStorage("theme");
@@ -11182,6 +11762,7 @@ var ChatPage = /** @class */ (function () {
         claseTabs[0].style.display = "flex";
         clearInterval(this.intervalo);
         this.intervalo = null;
+        this.localStorageEncryptService.clearProperty("pedidoChat");
     };
     ChatPage.prototype.handleSelection = function (event) {
         this.mensaje = this.mensaje + " " + event.char;
@@ -11203,7 +11784,10 @@ var ChatPage = /** @class */ (function () {
         var _this = this;
         switch (__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].perfil.activo) {
             case 1:
-                this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chats + "/" + this.chat.id).subscribe(function (response) {
+                if (this.subscription) {
+                    this.subscription.unsubscribe();
+                }
+                this.subscription = this.genericService.sendGetRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chats + "/" + this.chat.id).subscribe(function (response) {
                     if (_this.chat.chatDetalles.length < response.chatDetalles) {
                         var dimensions = _this.content.getContentDimensions();
                         _this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
@@ -11215,7 +11799,10 @@ var ChatPage = /** @class */ (function () {
                 });
                 break;
             case 2:
-                this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chatsProveedor + this.pedido.pedidoProveedores[0].id + "/tipoChat/1").subscribe(function (response) {
+                if (this.subscription) {
+                    this.subscription.unsubscribe();
+                }
+                this.subscription = this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chatsProveedor + this.pedido.pedidoProveedores[0].id + "/tipoChat/1").subscribe(function (response) {
                     if (_this.chat.chatDetalles.length < response.chatDetalles) {
                         var dimensions = _this.content.getContentDimensions();
                         _this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
@@ -11227,7 +11814,10 @@ var ChatPage = /** @class */ (function () {
                 });
                 break;
             case 3:
-                this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chatsProveedor + this.pedido.pedidoProveedores[0].id + "/tipoChat/2").subscribe(function (response) {
+                if (this.subscription) {
+                    this.subscription.unsubscribe();
+                }
+                this.subscription = this.genericService.sendGetRequest("" + __WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chatsProveedor + this.pedido.pedidoProveedores[0].id + "/tipoChat/2").subscribe(function (response) {
                     if (_this.chat.chatDetalles.length < response.chatDetalles) {
                         var dimensions = _this.content.getContentDimensions();
                         _this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
@@ -11257,14 +11847,22 @@ var ChatPage = /** @class */ (function () {
         else if (__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].perfil.activo == 2) {
             body.to = "" + this.pedido.cliente.login;
         }
-        this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chats + "/messages", body).subscribe(function (response) {
-            _this.chat.chatDetalles.push(response);
-            var dimensions = _this.content.getContentDimensions();
-            _this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
-            _this.mensaje = '';
-        }, function (error) {
-            _this.alertaService.errorAlertGeneric("No se ha podido enviar tu mensaje, intenta nuevamente");
-        });
+        if (!this.activoChat) {
+            if (this.subscription) {
+                this.subscription.unsubscribe();
+            }
+            this.activoChat = true;
+            this.subscription = this.genericService.sendPostRequest(__WEBPACK_IMPORTED_MODULE_6__environments_environment_prod__["a" /* environment */].chats + "/messages", body).subscribe(function (response) {
+                _this.chat.chatDetalles.push(response);
+                var dimensions = _this.content.getContentDimensions();
+                _this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
+                _this.mensaje = '';
+                _this.activoChat = false;
+            }, function (error) {
+                _this.activoChat = false;
+                _this.alertaService.errorAlertGeneric("No se ha podido enviar tu mensaje, intenta nuevamente");
+            });
+        }
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["d" /* Content */]),
@@ -11274,8 +11872,8 @@ var ChatPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_3__angular_core__["m" /* Component */])({
             selector: 'page-chat',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/chat/chat.html"*/'<ion-header>\n  <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{\'background-color\': color}">\n    <ion-title style="text-align:center">Chat</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <div class="contenedor-chat">\n    <div class="cont-msj">\n      <div class="msj" style="margin-bottom: 10px;" [ngClass]="{\'msj\' : user.username == c.usuarioEmisorLogin, \'msj-r\' : user.username != c.usuarioEmisorLogin}"\n        *ngFor="let c of chat.chatDetalles">\n        <div class="{{user.username == c.usuarioEmisorLogin ? genericService.getColorClassChat() : \'m\'}}" [ngStyle]="{\'background-color\': user.username == c.usuarioEmisorLogin ? genericService.getColorHex(): \'\'}">\n          <div>{{c.mensaje}}</div>\n          <div style="font-size:9px">{{c.fecha}}</div>\n        </div>\n      </div>\n    </div>\n    <!-- <div class="uno">\n      <span>\n        <div class="dos">\n          <span class="span1"></span>\n          <span class="span2"></span>\n          <div class="tres">\n              <div class="cuatro">\n                  <div class="cinco">\n                      <div class="seis">\n                        <span>\n                          <span>Hola</span>\n                        </span>\n                      </div>\n                  </div>\n              </div>\n          </div>\n        </div>\n      </span>\n    </div> -->\n  </div>\n\n\n</ion-content>\n<ion-footer class="footer-chat">\n  <div>\n    <!-- <button class="emoji" ion-button clear icon-only (click)="toggled = !toggled" [(emojiPickerIf)]="toggled" [emojiPickerDirection]="\'top\'"\n      (emojiPickerSelect)="handleSelection($event)">\n      <ion-icon name="ios-happy-outline"></ion-icon>\n    </button> -->\n    <input type="text" style="width:89%" placeholder="Escribe un mensaje aquí" [(ngModel)]="mensaje">\n    <div>\n      <button (click)="sendMessage()">\n        <ion-icon name="md-send"></ion-icon>\n      </button>\n    </div>\n  </div>\n</ion-footer>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/chat/chat.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["l" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavParams */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4_ionic_angular__["m" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["n" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */],
             __WEBPACK_IMPORTED_MODULE_4_ionic_angular__["e" /* Events */],
             __WEBPACK_IMPORTED_MODULE_1__services_generic_service__["a" /* GenericService */],
@@ -11293,260 +11891,260 @@ var ChatPage = /** @class */ (function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 453,
-	"./af.js": 453,
-	"./ar": 454,
-	"./ar-dz": 455,
-	"./ar-dz.js": 455,
-	"./ar-kw": 456,
-	"./ar-kw.js": 456,
-	"./ar-ly": 457,
-	"./ar-ly.js": 457,
-	"./ar-ma": 458,
-	"./ar-ma.js": 458,
-	"./ar-sa": 459,
-	"./ar-sa.js": 459,
-	"./ar-tn": 460,
-	"./ar-tn.js": 460,
-	"./ar.js": 454,
-	"./az": 461,
-	"./az.js": 461,
-	"./be": 462,
-	"./be.js": 462,
-	"./bg": 463,
-	"./bg.js": 463,
-	"./bm": 464,
-	"./bm.js": 464,
-	"./bn": 465,
-	"./bn.js": 465,
-	"./bo": 466,
-	"./bo.js": 466,
-	"./br": 467,
-	"./br.js": 467,
-	"./bs": 468,
-	"./bs.js": 468,
-	"./ca": 469,
-	"./ca.js": 469,
-	"./cs": 470,
-	"./cs.js": 470,
-	"./cv": 471,
-	"./cv.js": 471,
-	"./cy": 472,
-	"./cy.js": 472,
-	"./da": 473,
-	"./da.js": 473,
-	"./de": 474,
-	"./de-at": 475,
-	"./de-at.js": 475,
-	"./de-ch": 476,
-	"./de-ch.js": 476,
-	"./de.js": 474,
-	"./dv": 477,
-	"./dv.js": 477,
-	"./el": 478,
-	"./el.js": 478,
-	"./en-SG": 479,
-	"./en-SG.js": 479,
-	"./en-au": 480,
-	"./en-au.js": 480,
-	"./en-ca": 481,
-	"./en-ca.js": 481,
-	"./en-gb": 482,
-	"./en-gb.js": 482,
-	"./en-ie": 483,
-	"./en-ie.js": 483,
-	"./en-il": 484,
-	"./en-il.js": 484,
-	"./en-nz": 485,
-	"./en-nz.js": 485,
-	"./eo": 486,
-	"./eo.js": 486,
-	"./es": 487,
-	"./es-do": 488,
-	"./es-do.js": 488,
-	"./es-us": 489,
-	"./es-us.js": 489,
-	"./es.js": 487,
-	"./et": 490,
-	"./et.js": 490,
-	"./eu": 491,
-	"./eu.js": 491,
-	"./fa": 492,
-	"./fa.js": 492,
-	"./fi": 493,
-	"./fi.js": 493,
-	"./fo": 494,
-	"./fo.js": 494,
-	"./fr": 495,
-	"./fr-ca": 496,
-	"./fr-ca.js": 496,
-	"./fr-ch": 497,
-	"./fr-ch.js": 497,
-	"./fr.js": 495,
-	"./fy": 498,
-	"./fy.js": 498,
-	"./ga": 499,
-	"./ga.js": 499,
-	"./gd": 500,
-	"./gd.js": 500,
-	"./gl": 501,
-	"./gl.js": 501,
-	"./gom-latn": 502,
-	"./gom-latn.js": 502,
-	"./gu": 503,
-	"./gu.js": 503,
-	"./he": 504,
-	"./he.js": 504,
-	"./hi": 505,
-	"./hi.js": 505,
-	"./hr": 506,
-	"./hr.js": 506,
-	"./hu": 507,
-	"./hu.js": 507,
-	"./hy-am": 508,
-	"./hy-am.js": 508,
-	"./id": 509,
-	"./id.js": 509,
-	"./is": 510,
-	"./is.js": 510,
-	"./it": 511,
-	"./it-ch": 512,
-	"./it-ch.js": 512,
-	"./it.js": 511,
-	"./ja": 513,
-	"./ja.js": 513,
-	"./jv": 514,
-	"./jv.js": 514,
-	"./ka": 515,
-	"./ka.js": 515,
-	"./kk": 516,
-	"./kk.js": 516,
-	"./km": 517,
-	"./km.js": 517,
-	"./kn": 518,
-	"./kn.js": 518,
-	"./ko": 519,
-	"./ko.js": 519,
-	"./ku": 520,
-	"./ku.js": 520,
-	"./ky": 521,
-	"./ky.js": 521,
-	"./lb": 522,
-	"./lb.js": 522,
-	"./lo": 523,
-	"./lo.js": 523,
-	"./lt": 524,
-	"./lt.js": 524,
-	"./lv": 525,
-	"./lv.js": 525,
-	"./me": 526,
-	"./me.js": 526,
-	"./mi": 527,
-	"./mi.js": 527,
-	"./mk": 528,
-	"./mk.js": 528,
-	"./ml": 529,
-	"./ml.js": 529,
-	"./mn": 530,
-	"./mn.js": 530,
-	"./mr": 531,
-	"./mr.js": 531,
-	"./ms": 532,
-	"./ms-my": 533,
-	"./ms-my.js": 533,
-	"./ms.js": 532,
-	"./mt": 534,
-	"./mt.js": 534,
-	"./my": 535,
-	"./my.js": 535,
-	"./nb": 536,
-	"./nb.js": 536,
-	"./ne": 537,
-	"./ne.js": 537,
-	"./nl": 538,
-	"./nl-be": 539,
-	"./nl-be.js": 539,
-	"./nl.js": 538,
-	"./nn": 540,
-	"./nn.js": 540,
-	"./pa-in": 541,
-	"./pa-in.js": 541,
-	"./pl": 542,
-	"./pl.js": 542,
-	"./pt": 543,
-	"./pt-br": 544,
-	"./pt-br.js": 544,
-	"./pt.js": 543,
-	"./ro": 545,
-	"./ro.js": 545,
-	"./ru": 546,
-	"./ru.js": 546,
-	"./sd": 547,
-	"./sd.js": 547,
-	"./se": 548,
-	"./se.js": 548,
-	"./si": 549,
-	"./si.js": 549,
-	"./sk": 550,
-	"./sk.js": 550,
-	"./sl": 551,
-	"./sl.js": 551,
-	"./sq": 552,
-	"./sq.js": 552,
-	"./sr": 553,
-	"./sr-cyrl": 554,
-	"./sr-cyrl.js": 554,
-	"./sr.js": 553,
-	"./ss": 555,
-	"./ss.js": 555,
-	"./sv": 556,
-	"./sv.js": 556,
-	"./sw": 557,
-	"./sw.js": 557,
-	"./ta": 558,
-	"./ta.js": 558,
-	"./te": 559,
-	"./te.js": 559,
-	"./tet": 560,
-	"./tet.js": 560,
-	"./tg": 561,
-	"./tg.js": 561,
-	"./th": 562,
-	"./th.js": 562,
-	"./tl-ph": 563,
-	"./tl-ph.js": 563,
-	"./tlh": 564,
-	"./tlh.js": 564,
-	"./tr": 565,
-	"./tr.js": 565,
-	"./tzl": 566,
-	"./tzl.js": 566,
-	"./tzm": 567,
-	"./tzm-latn": 568,
-	"./tzm-latn.js": 568,
-	"./tzm.js": 567,
-	"./ug-cn": 569,
-	"./ug-cn.js": 569,
-	"./uk": 570,
-	"./uk.js": 570,
-	"./ur": 571,
-	"./ur.js": 571,
-	"./uz": 572,
-	"./uz-latn": 573,
-	"./uz-latn.js": 573,
-	"./uz.js": 572,
-	"./vi": 574,
-	"./vi.js": 574,
-	"./x-pseudo": 575,
-	"./x-pseudo.js": 575,
-	"./yo": 576,
-	"./yo.js": 576,
-	"./zh-cn": 577,
-	"./zh-cn.js": 577,
-	"./zh-hk": 578,
-	"./zh-hk.js": 578,
-	"./zh-tw": 579,
-	"./zh-tw.js": 579
+	"./af": 454,
+	"./af.js": 454,
+	"./ar": 455,
+	"./ar-dz": 456,
+	"./ar-dz.js": 456,
+	"./ar-kw": 457,
+	"./ar-kw.js": 457,
+	"./ar-ly": 458,
+	"./ar-ly.js": 458,
+	"./ar-ma": 459,
+	"./ar-ma.js": 459,
+	"./ar-sa": 460,
+	"./ar-sa.js": 460,
+	"./ar-tn": 461,
+	"./ar-tn.js": 461,
+	"./ar.js": 455,
+	"./az": 462,
+	"./az.js": 462,
+	"./be": 463,
+	"./be.js": 463,
+	"./bg": 464,
+	"./bg.js": 464,
+	"./bm": 465,
+	"./bm.js": 465,
+	"./bn": 466,
+	"./bn.js": 466,
+	"./bo": 467,
+	"./bo.js": 467,
+	"./br": 468,
+	"./br.js": 468,
+	"./bs": 469,
+	"./bs.js": 469,
+	"./ca": 470,
+	"./ca.js": 470,
+	"./cs": 471,
+	"./cs.js": 471,
+	"./cv": 472,
+	"./cv.js": 472,
+	"./cy": 473,
+	"./cy.js": 473,
+	"./da": 474,
+	"./da.js": 474,
+	"./de": 475,
+	"./de-at": 476,
+	"./de-at.js": 476,
+	"./de-ch": 477,
+	"./de-ch.js": 477,
+	"./de.js": 475,
+	"./dv": 478,
+	"./dv.js": 478,
+	"./el": 479,
+	"./el.js": 479,
+	"./en-SG": 480,
+	"./en-SG.js": 480,
+	"./en-au": 481,
+	"./en-au.js": 481,
+	"./en-ca": 482,
+	"./en-ca.js": 482,
+	"./en-gb": 483,
+	"./en-gb.js": 483,
+	"./en-ie": 484,
+	"./en-ie.js": 484,
+	"./en-il": 485,
+	"./en-il.js": 485,
+	"./en-nz": 486,
+	"./en-nz.js": 486,
+	"./eo": 487,
+	"./eo.js": 487,
+	"./es": 488,
+	"./es-do": 489,
+	"./es-do.js": 489,
+	"./es-us": 490,
+	"./es-us.js": 490,
+	"./es.js": 488,
+	"./et": 491,
+	"./et.js": 491,
+	"./eu": 492,
+	"./eu.js": 492,
+	"./fa": 493,
+	"./fa.js": 493,
+	"./fi": 494,
+	"./fi.js": 494,
+	"./fo": 495,
+	"./fo.js": 495,
+	"./fr": 496,
+	"./fr-ca": 497,
+	"./fr-ca.js": 497,
+	"./fr-ch": 498,
+	"./fr-ch.js": 498,
+	"./fr.js": 496,
+	"./fy": 499,
+	"./fy.js": 499,
+	"./ga": 500,
+	"./ga.js": 500,
+	"./gd": 501,
+	"./gd.js": 501,
+	"./gl": 502,
+	"./gl.js": 502,
+	"./gom-latn": 503,
+	"./gom-latn.js": 503,
+	"./gu": 504,
+	"./gu.js": 504,
+	"./he": 505,
+	"./he.js": 505,
+	"./hi": 506,
+	"./hi.js": 506,
+	"./hr": 507,
+	"./hr.js": 507,
+	"./hu": 508,
+	"./hu.js": 508,
+	"./hy-am": 509,
+	"./hy-am.js": 509,
+	"./id": 510,
+	"./id.js": 510,
+	"./is": 511,
+	"./is.js": 511,
+	"./it": 512,
+	"./it-ch": 513,
+	"./it-ch.js": 513,
+	"./it.js": 512,
+	"./ja": 514,
+	"./ja.js": 514,
+	"./jv": 515,
+	"./jv.js": 515,
+	"./ka": 516,
+	"./ka.js": 516,
+	"./kk": 517,
+	"./kk.js": 517,
+	"./km": 518,
+	"./km.js": 518,
+	"./kn": 519,
+	"./kn.js": 519,
+	"./ko": 520,
+	"./ko.js": 520,
+	"./ku": 521,
+	"./ku.js": 521,
+	"./ky": 522,
+	"./ky.js": 522,
+	"./lb": 523,
+	"./lb.js": 523,
+	"./lo": 524,
+	"./lo.js": 524,
+	"./lt": 525,
+	"./lt.js": 525,
+	"./lv": 526,
+	"./lv.js": 526,
+	"./me": 527,
+	"./me.js": 527,
+	"./mi": 528,
+	"./mi.js": 528,
+	"./mk": 529,
+	"./mk.js": 529,
+	"./ml": 530,
+	"./ml.js": 530,
+	"./mn": 531,
+	"./mn.js": 531,
+	"./mr": 532,
+	"./mr.js": 532,
+	"./ms": 533,
+	"./ms-my": 534,
+	"./ms-my.js": 534,
+	"./ms.js": 533,
+	"./mt": 535,
+	"./mt.js": 535,
+	"./my": 536,
+	"./my.js": 536,
+	"./nb": 537,
+	"./nb.js": 537,
+	"./ne": 538,
+	"./ne.js": 538,
+	"./nl": 539,
+	"./nl-be": 540,
+	"./nl-be.js": 540,
+	"./nl.js": 539,
+	"./nn": 541,
+	"./nn.js": 541,
+	"./pa-in": 542,
+	"./pa-in.js": 542,
+	"./pl": 543,
+	"./pl.js": 543,
+	"./pt": 544,
+	"./pt-br": 545,
+	"./pt-br.js": 545,
+	"./pt.js": 544,
+	"./ro": 546,
+	"./ro.js": 546,
+	"./ru": 547,
+	"./ru.js": 547,
+	"./sd": 548,
+	"./sd.js": 548,
+	"./se": 549,
+	"./se.js": 549,
+	"./si": 550,
+	"./si.js": 550,
+	"./sk": 551,
+	"./sk.js": 551,
+	"./sl": 552,
+	"./sl.js": 552,
+	"./sq": 553,
+	"./sq.js": 553,
+	"./sr": 554,
+	"./sr-cyrl": 555,
+	"./sr-cyrl.js": 555,
+	"./sr.js": 554,
+	"./ss": 556,
+	"./ss.js": 556,
+	"./sv": 557,
+	"./sv.js": 557,
+	"./sw": 558,
+	"./sw.js": 558,
+	"./ta": 559,
+	"./ta.js": 559,
+	"./te": 560,
+	"./te.js": 560,
+	"./tet": 561,
+	"./tet.js": 561,
+	"./tg": 562,
+	"./tg.js": 562,
+	"./th": 563,
+	"./th.js": 563,
+	"./tl-ph": 564,
+	"./tl-ph.js": 564,
+	"./tlh": 565,
+	"./tlh.js": 565,
+	"./tr": 566,
+	"./tr.js": 566,
+	"./tzl": 567,
+	"./tzl.js": 567,
+	"./tzm": 568,
+	"./tzm-latn": 569,
+	"./tzm-latn.js": 569,
+	"./tzm.js": 568,
+	"./ug-cn": 570,
+	"./ug-cn.js": 570,
+	"./uk": 571,
+	"./uk.js": 571,
+	"./ur": 572,
+	"./ur.js": 572,
+	"./uz": 573,
+	"./uz-latn": 574,
+	"./uz-latn.js": 574,
+	"./uz.js": 573,
+	"./vi": 575,
+	"./vi.js": 575,
+	"./x-pseudo": 576,
+	"./x-pseudo.js": 576,
+	"./yo": 577,
+	"./yo.js": 577,
+	"./zh-cn": 578,
+	"./zh-cn.js": 578,
+	"./zh-hk": 579,
+	"./zh-hk.js": 579,
+	"./zh-tw": 580,
+	"./zh-tw.js": 580
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -11667,33 +12265,33 @@ var Categoria = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_tarjetas_frecuentes_tarjetas_frecuentes__ = __webpack_require__(596);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_ayuda_ayuda__ = __webpack_require__(594);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_acerca_de_acerca_de__ = __webpack_require__(592);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_perfil_perfil__ = __webpack_require__(595);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_tarjetas_frecuentes_tarjetas_frecuentes__ = __webpack_require__(597);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_ayuda_ayuda__ = __webpack_require__(595);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_acerca_de_acerca_de__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_perfil_perfil__ = __webpack_require__(596);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_lista_carrito_compras_lista_carrito_compras__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_tabs_tabs__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_tabs_tabs__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ngx_translate_core__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_login_login__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__models_Menu__ = __webpack_require__(986);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_direcciones_direcciones__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_info_info__ = __webpack_require__(598);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_terminos_condiciones_terminos_condiciones__ = __webpack_require__(599);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__environments_environment_prod__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_direcciones_direcciones__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_info_info__ = __webpack_require__(599);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_terminos_condiciones_terminos_condiciones__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__environments_environment_prod__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_proveedor_tabs_tabs__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_recuperar_password_recuperar_password__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_fcm__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_screen_orientation__ = __webpack_require__(600);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_proveedor_documentos_documentos__ = __webpack_require__(591);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_proveedor_documentos_documentos__ = __webpack_require__(592);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__ionic_native_header_color__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_pushNotifications_service__ = __webpack_require__(201);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__services_pushNotifications_service__ = __webpack_require__(202);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -11789,10 +12387,12 @@ var MyApp = /** @class */ (function () {
                         login: _this.user.username,
                         token: token
                     };
+                    console.log("consumiendo?????");
                     _this.genericService.sendPutRequest(__WEBPACK_IMPORTED_MODULE_19__environments_environment_prod__["a" /* environment */].usuarios, body).subscribe(function (response) {
                         _this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
                         _this.readNotify();
                     }, function (error) {
+                        console.log(error);
                     });
                     console.log("*********************");
                 });
@@ -11832,7 +12432,9 @@ var MyApp = /** @class */ (function () {
                     _this.pages.push(new __WEBPACK_IMPORTED_MODULE_15__models_Menu__["a" /* Menu */]("Términos y condiciones", "assets/imgs/menu/contrato.png", "#7d3a63", __WEBPACK_IMPORTED_MODULE_18__pages_terminos_condiciones_terminos_condiciones__["a" /* TerminosCondicionesPage */]));
                     break;
             }
-            /** */
+            /** LIMPIAR VARIABLES DE NOTIFICACIONES */
+            _this.localStorageEncryptService.clearProperty("pedidoChat");
+            _this.localStorageEncryptService.clearProperty("pedidoPedido");
             switch (__WEBPACK_IMPORTED_MODULE_19__environments_environment_prod__["a" /* environment */].perfil.activo) {
                 case 1:
                     if (_this.user) {
@@ -11969,7 +12571,7 @@ var MyApp = /** @class */ (function () {
     MyApp = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["m" /* Component */])({template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/app.html"*/'<ion-menu [content]="content" *ngIf="user">\n  <ion-header>\n    <ion-item class="item item-thumbnail-left" style="\n                  background-image: url(assets/imgs/menu/market.jpg);\n                  background-size: 100%;\n                  background-position: center center;">\n      <img src="assets/imgs/logo.png" alt="Fry" class="animated myImagen" style="top: 16px !important;left: 16px !important;height: 65px !important;border-radius: 0px !important;width: 67px !important;opacity: -1.6;">\n      <div class="menu-bottom" style="color: rgba(0, 0, 0, 0.99);\n      background-color: rgba(255, 255, 255, 0.74);\n      padding: 7px;\n      font-size: 15px;\n      font-weight: 700;\n      font-family: sans-serif;\n      border-radius: 4px;\n      text-overflow: ellipsis;\n      white-space: nowrap;\n      overflow: hidden;">\n        {{user.nombre}}\n      </div>\n    </ion-item>\n  </ion-header>\n\n  <ion-content>\n    <ion-list>\n\n      <div *ngFor="let p of pages">\n        <ion-item menuClose class="item item-icon-right" (click)="openPage(p)" style="border-top: 1px solid #ddd;box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.07);">\n          <img src="{{p.img}}" alt="logo" style="    /* height: 35%; */\n              width: 11%;\n              /* margin-top: 1px; */\n              position: absolute;" />\n          <h2 style="display: inline-block;\n            margin-left: 44px;\n            margin-top: 8px;\n            font-size: 17px;\n            font-weight: 600;\n            font-family: sans-serif;">{{\n            p.nombre }}</h2>\n        </ion-item>\n      </div>\n    </ion-list>\n  </ion-content>\n  <ion-footer>\n    <ion-toolbar>\n      <div>\n        <button ion-button outline style="width: 48%;" (click)="exitApp()"\n        [ngStyle]="{\'color\': genericService.getColorHex(), \'border-color\': genericService.getColorHex()}">\n          <ion-icon name="close-circle" class="botonFooter"></ion-icon>\n          Salir\n        </button>\n      </div>\n    </ion-toolbar>\n  </ion-footer>\n\n</ion-menu>\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false">\n\n</ion-nav>'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/app.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_8_ionic_angular__["n" /* Platform */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_8_ionic_angular__["o" /* Platform */],
             __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
             __WEBPACK_IMPORTED_MODULE_12__ngx_translate_core__["c" /* TranslateService */],
@@ -12036,7 +12638,7 @@ var AboutPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-about',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/about/about.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      About\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/about/about.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]])
     ], AboutPage);
     return AboutPage;
 }());
@@ -12071,7 +12673,7 @@ var ContactPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-contact',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/contact/contact.html"*/'<ion-header>\n  <ion-navbar>\n    <ion-title>\n      Contact\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n    <ion-item>\n      <ion-icon name="ionic" item-start></ion-icon>\n      @ionicframework\n    </ion-item>\n  </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/contact/contact.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */]])
     ], ContactPage);
     return ContactPage;
 }());
@@ -12089,35 +12691,35 @@ var ContactPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_splash_screen__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(222);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_loading_service__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_validation_service__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_local_storage_encrypt_service__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_camera__ = __webpack_require__(126);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_action_sheet__ = __webpack_require__(125);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__interceptors_request_interceptor_service__ = __webpack_require__(992);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_common_http__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_auth_service__ = __webpack_require__(124);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_producto_service__ = __webpack_require__(586);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__ = __webpack_require__(583);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_producto_service__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_string_utils_service__ = __webpack_require__(584);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__ionic_native_google_maps__ = __webpack_require__(993);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_geolocation__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_geolocation__ = __webpack_require__(210);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_fcm__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_stripe__ = __webpack_require__(994);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_open_native_settings__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_diagnostic__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_android_permissions__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_qr_scanner__ = __webpack_require__(447);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_open_native_settings__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_diagnostic__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_android_permissions__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__ionic_native_qr_scanner__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__services_chat_service__ = __webpack_require__(416);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__angular_common__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_app_version__ = __webpack_require__(593);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__ionic_native_app_version__ = __webpack_require__(594);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__ionic_native_screen_orientation__ = __webpack_require__(600);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__ionic_native_header_color__ = __webpack_require__(221);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__ionic_native_in_app_browser__ = __webpack_require__(449);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__services_pushNotifications_service__ = __webpack_require__(201);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__ionic_native_file_opener__ = __webpack_require__(451);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ionic_native_file__ = __webpack_require__(450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__ionic_native_in_app_browser__ = __webpack_require__(450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__services_pushNotifications_service__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__ionic_native_file_opener__ = __webpack_require__(452);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__ionic_native_file__ = __webpack_require__(451);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12165,7 +12767,7 @@ var ProvidersModule = /** @class */ (function () {
             providers: [
                 __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
                 __WEBPACK_IMPORTED_MODULE_1__ionic_native_splash_screen__["a" /* SplashScreen */],
-                { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["g" /* IonicErrorHandler */] },
+                { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["u" /* ErrorHandler */], useClass: __WEBPACK_IMPORTED_MODULE_3_ionic_angular__["h" /* IonicErrorHandler */] },
                 __WEBPACK_IMPORTED_MODULE_4__services_alerta_service__["a" /* AlertaService */],
                 __WEBPACK_IMPORTED_MODULE_5__services_loading_service__["a" /* LoadingService */],
                 __WEBPACK_IMPORTED_MODULE_6__services_validation_service__["a" /* ValidationService */],
@@ -12214,13 +12816,13 @@ var ProvidersModule = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequestInterceptorService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_throw__ = __webpack_require__(418);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_throw__ = __webpack_require__(419);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_throw___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_rxjs_add_observable_throw__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__ = __webpack_require__(421);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__ = __webpack_require__(422);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_catch__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators__ = __webpack_require__(183);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_operators___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_operators__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_auth_service__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular__ = __webpack_require__(5);
@@ -12376,7 +12978,7 @@ var ControlMessagesComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_generic_service__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_loading_service__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__ = __webpack_require__(8);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -12486,14 +13088,14 @@ var GalleryComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], GalleryComponent.prototype, "retornarImagen", void 0);
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */]),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Slides */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["q" /* Slides */])
     ], GalleryComponent.prototype, "slider", void 0);
     GalleryComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'cmpt-gallery',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/components/gallery/gallery.html"*/'<div *ngIf="showSpinner && cards?.length == 0" class="divSpinner animated fadeIn">\n  <ion-spinner></ion-spinner>\n</div>\n<div style="box-shadow: 1px 1px 6px 1px #646467;" class="animated fadeIn">\n  <img src="{{imagen}}" alt="" style="width: 100%;">\n</div>\n<div class="slider-io">\n  <ion-slides class="ionSlidesAndroid animated fadeIn" autoplay="5000" loop="false" speed="500" pager\n  (ionSlideDidChange)="didChange($event)">\n    <ion-slide *ngFor="let slide of cards; let i = index" [ngClass]="{\'adjustEntertaiment\' : isEntertaiment}">\n      <img src="{{slide.url}}" alt="" (click)="changeImage(i)">\n      <div class="textoGana" [ngStyle]="{\'margin-top\': titleUp ? \'0%\' :  !showButton ? \'0%\' : \'\'}" *ngIf="!isEntertaiment">\n      </div>\n      <div *ngIf="isEntertaiment" class="titlesAlign">\n      </div>\n    </ion-slide>\n  </ion-slides>\n  <div class="arrows-lateral">\n    <div (tap)="prev()">\n      <ion-icon ios="ios-arrow-back" md="ios-arrow-back" [ngStyle]="{\'display\': !leftArrow ? \'none\' : \'block\', \'text-shadow\': !leftArrow ? \'none\' : \'\'}"></ion-icon>\n    </div>\n    <div (tap)="next()" *ngIf="cards?.length > 0">\n      <ion-icon ios="ios-arrow-forward" md="ios-arrow-forward" [ngStyle]="{\'display\': !rigthArrow ? \'none\' : \'block\', \'text-shadow\': !rigthArrow ? \'none\' : \'\'}"></ion-icon>\n    </div>\n  </div>\n</div>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/components/gallery/gallery.html"*/
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */],
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_3__services_loading_service__["a" /* LoadingService */],
             __WEBPACK_IMPORTED_MODULE_2__services_generic_service__["a" /* GenericService */],
             __WEBPACK_IMPORTED_MODULE_4__services_local_storage_encrypt_service__["a" /* LocalStorageEncryptService */]])
@@ -12534,7 +13136,7 @@ var AltaDireccionesPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-alta-direcciones',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/alta-direcciones/alta-direcciones.html"*/'<!--\n  Generated template for the AltaDireccionesPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>alta-direcciones</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/alta-direcciones/alta-direcciones.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
     ], AltaDireccionesPage);
     return AltaDireccionesPage;
 }());
@@ -12675,7 +13277,7 @@ var TerminoServicioPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-termino-servicio',template:/*ion-inline-start:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/termino-servicio/termino-servicio.html"*/'<!--\n  Generated template for the TerminoServicioPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar>\n    <ion-title>termino-servicio</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n</ion-content>\n'/*ion-inline-end:"/Users/macpro/Documents/javas/ionic/central-abastos/src/app/pages/termino-servicio/termino-servicio.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavParams */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */]])
     ], TerminoServicioPage);
     return TerminoServicioPage;
 }());

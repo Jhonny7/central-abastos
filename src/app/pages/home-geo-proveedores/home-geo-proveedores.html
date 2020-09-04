@@ -48,7 +48,7 @@
     ? 'Agregar' : 'Actualizar'}} dirección</button>
 </ion-footer>
 <ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">
-  <button style="width:49%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">Guardar
+  <button style="width:49%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}" *ngIf="!fromRegister">Guardar
     y aceptar</button>
-  <button style="width:49%" (tap)="backData()" [ngStyle]="{'background-color': genericService.getColorHex()}">Aceptar</button>
+  <button style="width:49%" (tap)="backData()" [ngStyle]="{'background-color': genericService.getColorHex(), 'width' : fromRegister ? '100%' : '49%'}">Aceptar</button>
 </ion-footer>

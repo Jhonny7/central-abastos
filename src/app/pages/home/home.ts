@@ -64,7 +64,7 @@ export class HomePage implements OnDestroy, OnInit {
 
   public color: any = "#3b64c0";
 
-  public subscribe:any = null;
+  public subscribe: any = null;
 
   constructor(
     public navCtrl: NavController,
@@ -127,6 +127,22 @@ export class HomePage implements OnDestroy, OnInit {
       } catch (error) {
       }
     });
+
+    this.events.subscribe("backHome", data => {
+      try {
+        console.log(this.navCtrl.length());
+        
+        //if(this.navCtrl.length()>1){
+          this.navCtrl.pop();
+        //}
+      } catch (error) {
+        console.log(error);
+        
+      }
+    });
+  }
+  ionViewWillLeave() {
+    //this.navCtrl.popAll();
   }
 
   cargaPromociones() {
@@ -137,6 +153,13 @@ export class HomePage implements OnDestroy, OnInit {
       this.promociones = null;
     });
   }
+
+  ionViewDidEnter(){
+    this.events.publish("backProveedor");
+    this.events.publish("backCarrito");
+    this.events.publish("backHistorial");
+  }
+
 
   getTotalCarrito(fromLogin: boolean = false) {
     console.log("-----------------------------------");
@@ -183,9 +206,9 @@ export class HomePage implements OnDestroy, OnInit {
       nav.push(CarritoComprasPage);
     }, (error: HttpErrorResponse) => {
       this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
-    }); 
+    });
 
-    
+
   }
 
   buscando() {
@@ -203,7 +226,7 @@ export class HomePage implements OnDestroy, OnInit {
     }
   }
 
-  borraPalabra(){
+  borraPalabra() {
     this.dataFilter.nombre = "";
     this.buscarPorFiltros();
   }
@@ -212,7 +235,7 @@ export class HomePage implements OnDestroy, OnInit {
     if (this.user) {
       let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
       console.log(productosStorage);
-      
+
       if (productosStorage) {
         productosStorage.forEach(item => {
           this.productos.forEach(element => {
@@ -441,10 +464,10 @@ export class HomePage implements OnDestroy, OnInit {
     }
 
 
-    if(this.subscribe){
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
       console.log("<--");
-    }else{
+    } else {
       console.log("-->");
     }
     this.productosBuscados = [];
@@ -530,8 +553,8 @@ export class HomePage implements OnDestroy, OnInit {
   verCarrito() {
     //if (this.genericService.getTotalCarrito() > 0) {
 
-      //nav.pop();
-      this.cargarProductosCarrito();
+    //nav.pop();
+    this.cargarProductosCarrito();
 
     //}
   }
@@ -556,7 +579,7 @@ export class HomePage implements OnDestroy, OnInit {
     };
     if (this.user && this.user.parametros.pantalla_proveedores == "S") {
 
-console.log(this.productosBuscados);
+      console.log(this.productosBuscados);
 
 
       let unique = this.productosBuscados.filter((valorActual, indiceActual, arreglo) => {
@@ -567,17 +590,17 @@ console.log(this.productosBuscados);
       unique.forEach(prov => {
         prov.productos = [];
         this.productosBuscados.forEach(element => {
-          if(element.proveedorId == prov.proveedorId){
+          if (element.proveedorId == prov.proveedorId) {
             prov.productos.push(element);
           }
         });
         proveedoresGroup.push(prov);
       });
-      
+
 
       console.log(proveedoresGroup);
 
-      this.navCtrl.push(MapaProveedoresPage, { proveedores: proveedoresGroup, producto: productoNew, slideProve:true });
+      this.navCtrl.push(MapaProveedoresPage, { proveedores: proveedoresGroup, producto: productoNew, slideProve: true });
     } else {
       //consumir servicio de imagenes completas
       this.loadingService.show().then(() => {

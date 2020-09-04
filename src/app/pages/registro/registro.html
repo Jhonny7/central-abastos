@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}">
-    <ion-title style="padding: 0px;">Registro</ion-title>
+    <ion-title style="padding: 0px;">Registro {{env.perfil.activo == 2 ? 'proveedor' : env.perfil.activo == 3 ? 'transportista' : ''}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>

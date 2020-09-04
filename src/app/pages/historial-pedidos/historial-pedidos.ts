@@ -38,13 +38,39 @@ export class HistorialPedidosPage {
     private popoverCtrl: PopoverController,
     private events: Events) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-    this.cargarPedidos();
+    this.cargarPedidos(null);
     this.events.subscribe("cargarPedidos", data => {
       try {
-        this.cargarPedidos();
+        this.cargarPedidos(null);
       } catch (error) {
       }
     });
+   
+  }
+
+  ionViewDidEnter(){
+    this.events.publish("backHome");
+    this.events.publish("backCarrito");
+    this.events.publish("backProveedor");
+  }
+
+  ionViewWillLeave() {
+    
+  }
+
+  /**Método que es lanzado al deslizar hacia arriba
+   * el usuario puede refrescar cada que haya algun problema con 
+   * su conexión
+   */
+  doRefresh(refresher) {
+    setTimeout(() => {
+
+
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      this.cargarPedidos(refresher);
+
+
+    }, 2000);
   }
 
   ionViewDidLoad() {
@@ -57,7 +83,7 @@ export class HistorialPedidosPage {
     });
   }
 
-  cargarPedidos() {
+  cargarPedidos(refresher:any = null) {
     this.genericService.sendGetRequest(`${environment.pedidos}`).subscribe((response: any) => {
 
       this.pedidos = response;
@@ -65,7 +91,13 @@ export class HistorialPedidosPage {
         this.pedidos = null;
       }
       this.pedidosReplica = this.pedidos;
+      if (refresher) {
+        refresher.complete();
+      }
     }, (error: HttpErrorResponse) => {
+      if (refresher) {
+        refresher.complete();
+      }
       let err: any = error.error;
       this.pedidos = null;
       this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");

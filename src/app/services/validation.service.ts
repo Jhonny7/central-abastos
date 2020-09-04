@@ -17,6 +17,8 @@ export class ValidationService {
       'phone': 'Ingrese un número válido',
       'maxilength': `Longitud máxima 10 dígitos`,
       'minilength': `Longitud mínima 10 dígitos`,
+      'minilengthpass': `Longitud mínima requerida 6 caracteres`,
+      'maxilengthpass': `Longitud máxima requerida 10 caracteres`,
       'onlyCharacter': `El campo es de tipo texto`,
     };
     return config[validatorName];
@@ -156,6 +158,38 @@ export class ValidationService {
 
         if (control._pendingValue.length < 10) {
           return { 'minilength': true };
+        } else {
+          return null;
+        }
+
+      }
+    }
+  }
+
+  static minLengthPassValidator(control) {
+    if (control.value) {
+      if (control._pendingValue.length >= 6) {
+        return null;
+      } else {
+
+        if (control._pendingValue.length < 6) {
+          return { 'minilengthpass': true };
+        } else {
+          return null;
+        }
+
+      }
+    }
+  }
+
+  static maxLengthPassValidator(control) {
+    if (control.value) {
+      if (control._pendingValue.length <= 10) {
+        return null;
+      } else {
+
+        if (control._pendingValue.length > 10) {
+          return { 'maxilengthpass': true };
         } else {
           return null;
         }

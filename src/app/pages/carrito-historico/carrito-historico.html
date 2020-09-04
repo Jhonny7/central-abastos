@@ -86,7 +86,8 @@
           </ion-col>
 
           <ion-select *ngIf="dato.type == 'select'" [(ngModel)]="dato.value" okText="Ok" cancelText="Cancelar"
-            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions" formControlName="{{dato.formName}}">
+            interface="action-sheet" (ionChange)="ejecutaValidator(true,$event)" [selectOptions]="selectOptions"
+            formControlName="{{dato.formName}}">
             <ion-option *ngFor="let op of dato.opts" [value]="op.id">
               {{op.value}}
             </ion-option>
@@ -260,8 +261,7 @@
     <div *ngIf="totales && totales.listHistoricoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">
       <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
       <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
-      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>
-      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>
+      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe}}</strong></div>
 
       <div class="borde-total"></div>
 

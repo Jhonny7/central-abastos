@@ -31,7 +31,7 @@ export class CarritoHistoricoPage implements OnDestroy {
 
   public productosCarrito: any = [];
   public listaCarritoReplica: any = [];
-  public enCompra:boolean = false;
+  public enCompra: boolean = false;
   public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
@@ -121,14 +121,14 @@ export class CarritoHistoricoPage implements OnDestroy {
     private modalController: ModalController) {
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
-    if(this.user){
+    if (this.user) {
       this.listaCarrito = navParams.get("lista");
 
       console.log(this.listaCarrito);
-  
+
       this.listaCarritoReplica = this.listaCarrito;
       this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-  
+
       this.getCards();
       this.agruparTotales();
     }
@@ -153,6 +153,8 @@ export class CarritoHistoricoPage implements OnDestroy {
     console.log(this.agrupado);
     this.getTotales();
   }
+
+
   armaObjRegistro() {
     this.objetoRegistro = [
       {
@@ -250,13 +252,13 @@ export class CarritoHistoricoPage implements OnDestroy {
       console.log(response);
       this.totales = response;
       this.agrupado.forEach(element => {
-        if(element.totalAgrupado){
+        if (element.totalAgrupado) {
           delete element.totalAgrupado;
         }
       });
       this.totales.listHistoricoProveedores.forEach(item => {
         this.agrupado.forEach(element => {
-          if(!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id){
+          if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
             element.totalAgrupado = {
               comisionTransporte: item.comisionTransporte,
               tiempoEntrega: item.tiempoEntrega,
@@ -479,10 +481,10 @@ export class CarritoHistoricoPage implements OnDestroy {
       if (bandera) {
         this.agregarToCarrito(producto);
         this.verificarCarritoModificarCantidad(producto);
-      }else{
+      } else {
         this.verificarCarritoModificarCantidad(producto);
       }
-      
+
     }, (error: HttpErrorResponse) => {
       if (producto.cantidad == 1) {
         producto.cantidad = 1;
@@ -538,7 +540,7 @@ export class CarritoHistoricoPage implements OnDestroy {
     modal.style.display = "block";
   }
 
-  closeInfoContact(aun:boolean = true) {
+  closeInfoContact(aun: boolean = true) {
     let modal: any = document.getElementById("myModal2");
     modal.style.display = "none";
 
@@ -551,10 +553,10 @@ export class CarritoHistoricoPage implements OnDestroy {
     this.enCompra = false;
   }
 
-  cerrarModal3(aun:boolean = true) {
+  cerrarModal3(aun: boolean = true) {
     let modal: any = document.getElementById("myModal3");
     modal.style.display = "none";
-    if(aun){
+    if (aun) {
       this.enCompra = false;
     }
   }
@@ -568,7 +570,7 @@ export class CarritoHistoricoPage implements OnDestroy {
   ejecutaValidator(opc: boolean = false, evt: any = null) {
     if (opc) {
       console.log(evt);
-      if (evt) {
+      if (!evt) {
         this.objetoRegistro.push({
           name: "Dirección",
           required: true,
@@ -615,7 +617,7 @@ export class CarritoHistoricoPage implements OnDestroy {
       this.btnHabilitado = true;
     }
 
-    if (validacion == 1 && this.objetoRegistro[3].value == false) {
+    if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
       this.btnHabilitado = false;
     }
   }
@@ -628,10 +630,15 @@ export class CarritoHistoricoPage implements OnDestroy {
       if (data) {
         if (data != null) {
           this.data = data.data;
-          if(this.objetoRegistro[3].value == true || this.objetoRegistro[3].value == false ){
+          if (
+            this.objetoRegistro[3].value == 'true' ||
+            this.objetoRegistro[3].value == true ||
+            this.objetoRegistro[3].value == 'false' ||
+            this.objetoRegistro[3].value == false
+          ) {
             this.objetoRegistro[4].value = this.data.direccion;
             this.objetoRegistro[5].value = this.data.codigoPostal;
-          }else{
+          } else {
             this.objetoRegistro[3].value = this.data.direccion;
             this.objetoRegistro[4].value = this.data.codigoPostal;
           }
@@ -650,27 +657,53 @@ export class CarritoHistoricoPage implements OnDestroy {
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
 
+    let h:any = null;
+    console.log(this.totales.listHistoricoProveedores);
+    
+    if(this.totales.listHistoricoProveedores.length > 1){
+      h = true;
+    }
+
     let body: any = {
       nombreContacto: this.objetoRegistroCopy[0].value,
       telefonoContacto: this.objetoRegistroCopy[1].value,
       correoContacto: this.objetoRegistroCopy[2].value,
-      direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
-        id: this.data.id ? this.data.id : null,
-        codigoPostal: this.data.codigoPostal,
-        direccion: this.data.direccion,
-        latitud: this.data.latitud,
-        longitud: this.data.longitud
-      },
+      direccionContacto: this.objetoRegistro[3].value == 'true' ||
+        this.objetoRegistro[3].value == true ||
+        this.objetoRegistro[3].value == 'false' ||
+        this.objetoRegistro[3].value == false || h ? {
+          id: this.data.id ? this.data.id : null,
+          codigoPostal: this.data.codigoPostal,
+          direccion: this.data.direccion,
+          latitud: this.data.latitud,
+          longitud: this.data.longitud
+        } : null,
       productos: []
     };
 
+    if (
+      this.objetoRegistro[3].value == 'true' ||
+      this.objetoRegistro[3].value == true ||
+      this.objetoRegistro[3].value == 'false' ||
+      this.objetoRegistro[3].value == false
+    ) {
+      body.picking = this.objetoRegistro[3].value;
+    } else {
+      body.picking = false;
+    }
 
-    this.productosCarrito.forEach(item => {
-      body.productos.push({
-        cantidad: item.cantidad,
-        productoProveedorId: item.productoProveedorId
+    this.agrupado.forEach(item => {
+
+      item.carritoAgrupado.forEach(element => {
+        body.productos.push({
+          cantidad: element.cantidad,
+          productoProveedorId: element.productoProveedorId
+        });
       });
+
     });
+
+
 
     let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
 
@@ -784,6 +817,8 @@ export class CarritoHistoricoPage implements OnDestroy {
 
             service.subscribe((response: any) => {
               clase.loadingService.hide();
+              clase.events.publish("totalCarrito");
+              clase.events.publish("cargarPedidos");
               clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
               clase.cerrar();
             }, (error: HttpErrorResponse) => {
@@ -796,6 +831,17 @@ export class CarritoHistoricoPage implements OnDestroy {
       });
     } else {
       this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+    }
+  }
+
+  seleccionar(card: any) {
+    if (!card.selected) {
+      this.cards.forEach(element => {
+        element.selected = false;
+      });
+      card.selected = true;
+    } else {
+      card.selected = false;
     }
   }
 

@@ -4,3 +4,14 @@ contraseña: luegoluegocliente
 datos: todo es Sharkit y código de país MX
 alias: luegoluegocliente
 
+/*LLAVE DE LA APP PROVEEDOR*/
+keyFile: luegoluegoproveedor.jks
+contraseña: luegoluegoproveedor
+datos: todo es Sharkit y código de país MX
+alias: luegoluegoproveedor
+
+/*LLAVE DE LA APP TRANSPORTISTA*/
+keyFile: luegoluegotransportista.jks
+contraseña: luegoluegotransportista
+datos: todo es Sharkit y código de país MX
+alias: luegoluegotransportista

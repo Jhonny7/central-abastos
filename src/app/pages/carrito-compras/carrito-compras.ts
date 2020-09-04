@@ -2,8 +2,8 @@ import { HomeGeoProveedoresPage } from './../home-geo-proveedores/home-geo-prove
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, AlertController, ModalController } from 'ionic-angular';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Events, AlertController, ModalController, FabContainer } from 'ionic-angular';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
 import { User } from '../../models/User';
 import { ProductoService } from '../../services/producto.service';
@@ -19,7 +19,7 @@ declare var Stripe;
   selector: 'page-carrito-compras',
   templateUrl: 'carrito-compras.html',
 })
-export class CarritoComprasPage implements OnDestroy{
+export class CarritoComprasPage implements OnDestroy {
 
   public selectOptions: any = {
     cssClass: 'action-sheet-class'
@@ -30,6 +30,8 @@ export class CarritoComprasPage implements OnDestroy{
   public productosCarritoReplica: any = [];
 
   public env: any = environment;
+
+  public first: boolean = true;
 
   public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
@@ -78,7 +80,7 @@ export class CarritoComprasPage implements OnDestroy{
 
   ];
 
-  public enCompra:boolean = false;
+  public enCompra: boolean = false;
 
   public objetoRegistroOriginal: any[] = [];
 
@@ -95,6 +97,9 @@ export class CarritoComprasPage implements OnDestroy{
   public agrupado: any[] = [];
 
   public totales: any = null;
+
+  @ViewChild('fab') fab: FabContainer;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -125,6 +130,18 @@ export class CarritoComprasPage implements OnDestroy{
 
       this.agruparTotales();
     }
+
+  }
+
+  ionViewDidEnter() {
+    this.events.publish("backHome");
+    this.events.publish("backHistorial");
+    this.events.publish("backProveedor");
+
+  }
+
+  ionViewWillLeave() {
+
   }
 
   agruparTotales() {
@@ -144,7 +161,7 @@ export class CarritoComprasPage implements OnDestroy{
       this.agrupado.push(prov);
     });
 
-    
+
     console.log(this.agrupado);
     this.getTotales();
   }
@@ -239,6 +256,11 @@ export class CarritoComprasPage implements OnDestroy{
         disabled: false
       });
     }
+    if (!this.enCompra) {
+      setTimeout(() => {
+        this.fab.toggleList();
+      }, 500);
+    }
   }
 
   getTotales() {
@@ -248,13 +270,13 @@ export class CarritoComprasPage implements OnDestroy{
       console.log(response);
       this.totales = response;
       this.agrupado.forEach(element => {
-        if(element.totalAgrupado){
+        if (element.totalAgrupado) {
           delete element.totalAgrupado;
         }
       });
       this.totales.listCarritoProveedores.forEach(item => {
         this.agrupado.forEach(element => {
-          if(!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id){
+          if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
             element.totalAgrupado = {
               comisionTransporte: item.comisionTransporte,
               tiempoEntrega: item.tiempoEntrega,
@@ -265,15 +287,13 @@ export class CarritoComprasPage implements OnDestroy{
         });
       });
 
-      console.log(this.agrupado);
-      
       this.armaObjRegistro();
     }, (error: HttpErrorResponse) => {
       //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
     });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.events.publish("carritoTab");
   }
 
@@ -403,6 +423,8 @@ export class CarritoComprasPage implements OnDestroy{
 
             service.subscribe((response: any) => {
               clase.loadingService.hide();
+              clase.events.publish("totalCarrito");
+              clase.events.publish("cargarPedidos");
               clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
               clase.cerrar();
             }, (error: HttpErrorResponse) => {
@@ -633,6 +655,7 @@ export class CarritoComprasPage implements OnDestroy{
   }
 
   infoContact() {
+    //debugger;
     let modal: any = document.getElementById("myModal2");
     //
     this.enCompra = true;
@@ -675,32 +698,40 @@ export class CarritoComprasPage implements OnDestroy{
       putObj
     );
     //
-    if (modal) {
+    //if (modal) {
+    try {
       modal.style.display = "block";
+    } catch (error) {
+
     }
+    //}
   }
 
-  closeInfoContact(aun:boolean = true) {
-    let modal: any = document.getElementById("myModal2");
+  closeInfoContact(aun: boolean = true) {
+    let modal: any = document.getElementById('myModal2');
     if (modal) {
-      modal.style.display = "none";
+      modal.style.display = 'none';
     }
 
     this.objetoRegistro.forEach(item => {
-      item.value = null;
+      if (item.name == 'Picking') {
+        item.value = false;
+      } else {
+        item.value = null;
+      }
     });
-
+    this.armaObjRegistro();
     this.formGroup = null;
     this.btnHabilitado = true;
-    if(aun){
+    if (aun) {
       this.enCompra = false;
     }
   }
 
-  cerrarModal3(aun:boolean = true) {
+  cerrarModal3(aun: boolean = true) {
     let modal: any = document.getElementById("myModal3");
     modal.style.display = "none";
-    if(aun){
+    if (aun) {
       this.enCompra = false;
     }
   }
@@ -714,7 +745,7 @@ export class CarritoComprasPage implements OnDestroy{
   ejecutaValidator(opc: boolean = false, evt: any = null) {
     if (opc) {
       console.log(evt);
-      if (evt) {
+      if (!evt) {
         this.objetoRegistro.push({
           name: "Dirección",
           required: true,
@@ -761,7 +792,7 @@ export class CarritoComprasPage implements OnDestroy{
       this.btnHabilitado = true;
     }
 
-    if (validacion == 1 && this.objetoRegistro[3].value == false) {
+    if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
       this.btnHabilitado = false;
     }
   }
@@ -774,10 +805,15 @@ export class CarritoComprasPage implements OnDestroy{
       if (data) {
         if (data != null) {
           this.data = data.data;
-          if(this.objetoRegistro[3].value == true || this.objetoRegistro[3].value == false ){
+          if (
+            this.objetoRegistro[3].value == 'true' ||
+            this.objetoRegistro[3].value == true ||
+            this.objetoRegistro[3].value == 'false' ||
+            this.objetoRegistro[3].value == false
+          ) {
             this.objetoRegistro[4].value = this.data.direccion;
             this.objetoRegistro[5].value = this.data.codigoPostal;
-          }else{
+          } else {
             this.objetoRegistro[3].value = this.data.direccion;
             this.objetoRegistro[4].value = this.data.codigoPostal;
           }
@@ -796,19 +832,40 @@ export class CarritoComprasPage implements OnDestroy{
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
 
+    let h: any = null;
+    console.log(this.totales.listCarritoProveedores);
+
+    if (this.totales.listCarritoProveedores.length > 1) {
+      h = true;
+    }
+
     let body: any = {
       nombreContacto: this.objetoRegistroCopy[0].value,
       telefonoContacto: this.objetoRegistroCopy[1].value,
       correoContacto: this.objetoRegistroCopy[2].value,
-      direccionContacto: this.objetoRegistro[3].value === false || this.objetoRegistro[3].value === true ? null : {
-        id: this.data.id ? this.data.id : null,
-        codigoPostal: this.data.codigoPostal,
-        direccion: this.data.direccion,
-        latitud: this.data.latitud,
-        longitud: this.data.longitud
-      },
+      direccionContacto: this.objetoRegistro[3].value == 'true' ||
+        this.objetoRegistro[3].value == true ||
+        this.objetoRegistro[3].value == 'false' ||
+        this.objetoRegistro[3].value == false || h ? {
+          id: this.data.id ? this.data.id : null,
+          codigoPostal: this.data.codigoPostal,
+          direccion: this.data.direccion,
+          latitud: this.data.latitud,
+          longitud: this.data.longitud
+        } : null,
       productos: []
     };
+
+    if (
+      this.objetoRegistro[3].value == 'true' ||
+      this.objetoRegistro[3].value == true ||
+      this.objetoRegistro[3].value == 'false' ||
+      this.objetoRegistro[3].value == false
+    ) {
+      body.picking = this.objetoRegistro[3].value;
+    } else {
+      body.picking = false;
+    }
 
     if (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == true) {
       body.picking = this.objetoRegistro[3].value;
@@ -816,6 +873,7 @@ export class CarritoComprasPage implements OnDestroy{
       body.picking = false;
     }
 
+    console.log(this.productosCarrito);
 
     this.productosCarrito.forEach(item => {
       body.productos.push({

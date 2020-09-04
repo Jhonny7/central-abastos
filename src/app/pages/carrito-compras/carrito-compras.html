@@ -243,8 +243,7 @@
     <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">
       <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
       <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
-      <div class="tot">Comisión por costo: <strong>{{totales.comisionStripe}}</strong></div>
-      <div class="tot">Sin comisión por costo: <strong>{{totales.totalSinComisionStripe}}</strong></div>
+      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe}}</strong></div>
 
       <div class="borde-total"></div>
 
@@ -255,8 +254,8 @@
 
 </ion-content>
 
-<ion-fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">
-  <button ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}">
+<ion-fab #fab right bottom *ngIf="totales && totales.listCarritoProveedores?.length > 0 && recarga && !enCompra" style="    bottom: 64px;">
+  <button id="botonsin" ion-fab style="color: #fff;" [ngStyle]="{'background-color': genericService.getColorHex()}">
     <ion-icon name="arrow-dropleft"></ion-icon>
   </button>
   <ion-fab-list side="left">

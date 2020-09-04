@@ -1,6 +1,11 @@
 //export const pathPrincipal = "http://localhost:8080/api/";
-export const pathPrincipal = "https://dev-cabasto.sharktech.com.mx/api/";
-export const pathChat = "https://dev-cabasto.sharktech.com.mx/";
+//export const pathPrincipal = "https://dev-cabasto.sharktech.com.mx/api/";
+//export const pathChat = "https://dev-cabasto.sharktech.com.mx/";
+
+/**PATH PRODUCTIVO */
+export const pathPrincipal = "https://app.luegoluego.com.mx/api/";
+export const pathChat = "https://app.luegoluego.com.mx/";
+
 //export const pathChat = "http://localhost:8080/";
 
 export const appCliente = 1;
@@ -19,6 +24,7 @@ export const environment = {
 
   proveedoresFull: `${pathPrincipal}proveedores`,
   proveedor: `${pathPrincipal}proveedor`,
+  transportista: `${pathPrincipal}transportista`,
   proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
 
   registro: `${pathPrincipal}register`,
@@ -41,6 +47,9 @@ export const environment = {
   calificacionServicio: `${pathPrincipal}pedido-proveedores/calificacion-servicio`,
 
   usuarios: `${pathPrincipal}usuarios`,
+
+  llegada: `${pathPrincipal}transportista/pedido-proveedores/notificacion-llegada`,
+  queja: `${pathPrincipal}quejas`,
 
   usuarioDocumentos: `${pathPrincipal}usuario-documentos`,
 
@@ -79,7 +88,7 @@ export const environment = {
   keyGoogle: "AIzaSyDpg-WwghYJCwSq1Q8nM_5ZW5IY5tLNFmQ",
 
   //Fines de pruebas
-  emulado: false,
+  emulado: false,//true,
 
   //Aqui "cambiamos" la app en ejecución
   perfil:{
@@ -89,7 +98,7 @@ export const environment = {
   },
 
   st:{
-    keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
-    //keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
+    //keyPublic: 'U2FsdGVkX19CQc0Np+So9tyR3R9dAm7lOeyk2UQ+FoHcjsmxFAcZES1Hix101zBa1gljuF7xoHmJQVXb6oP6Mg=='
+    keyPublic: 'U2FsdGVkX1/ADpxluaklCuGOBDdLHN6q44K8U8mHKBbCF95IBvllQPUxmSiAyj9hqImPuFlYzLS2MUFJU9ZOdg==',
   }
 };

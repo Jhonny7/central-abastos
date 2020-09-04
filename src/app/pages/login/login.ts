@@ -69,6 +69,25 @@ export class LoginPage {
     nav.setRoot(TabsPage);
   }
 
+  actualizarToken(response){
+    this.fcm.getToken().then(token => {
+      console.log("*********************");
+      console.log(token);
+      //localStorage.setItem("token", token);
+      let body: any = {
+        login: response.username,
+        token: token
+      };
+      this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
+        this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
+        this.readNotify();
+      }, (error: HttpErrorResponse) => {
+
+      });
+      console.log("*********************");
+    });
+  }
+
   login() {
     this.loadingService.show().then(() => {
       let body: any = {
@@ -106,22 +125,7 @@ export class LoginPage {
               break;
           }
 
-            this.fcm.getToken().then(token => {
-              console.log("*********************");
-              console.log(token);
-              //localStorage.setItem("token", token);
-              let body: any = {
-                login: response.username,
-                token: token
-              };
-              this.genericService.sendPutRequest(environment.usuarios, body).subscribe((response: any) => {
-                this.localStorageEncryptService.setToLocalStorage("phoneToken", token);
-                this.readNotify();
-              }, (error: HttpErrorResponse) => {
-
-              });
-              console.log("*********************");
-            });
+            this.actualizarToken(response);
 
           
         } else {

@@ -40,14 +40,29 @@ export class HomeProveedorPage implements OnDestroy{
     this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
 
-    this.cargarPedidos();
+    this.cargarPedidos(null);
 
     this.events.subscribe("cargarPedidos", data => {
       try {
-        this.cargarPedidos();
+        this.cargarPedidos(null);
       } catch (error) {
       }
     });
+  }
+
+  /**Método que es lanzado al deslizar hacia arriba
+   * el usuario puede refrescar cada que haya algun problema con 
+   * su conexión
+   */
+  doRefresh(refresher) {
+    setTimeout(() => {
+
+
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      this.cargarPedidos(refresher);
+
+
+    }, 2000);
   }
 
   ngOnDestroy(){
@@ -64,7 +79,7 @@ export class HomeProveedorPage implements OnDestroy{
     });
   }
 
-  cargarPedidos() {
+  cargarPedidos(refresher:any = null) {
 
     let path: string = `${environment.pedidosProveedor}`;
     if (environment.perfil.activo == 3) {
@@ -78,8 +93,14 @@ export class HomeProveedorPage implements OnDestroy{
         this.pedidos = null;
       }
       this.pedidosReplica = this.pedidos;
+      if (refresher) {
+        refresher.complete();
+      }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
+      if (refresher) {
+        refresher.complete();
+      }
       this.pedidos = null;
       this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
     });

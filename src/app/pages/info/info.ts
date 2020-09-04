@@ -1,3 +1,4 @@
+import { TerminosCondicionesPage } from './../terminos-condiciones/terminos-condiciones';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
@@ -17,4 +18,7 @@ export class InfoPage {
   ionViewDidLoad() {
   }
 
+  irTerminos(){
+    this.navCtrl.push(TerminosCondicionesPage);
+  }
 }

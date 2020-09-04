@@ -7,10 +7,7 @@
 <ion-content padding>
   <div class="title" [ngStyle]="{'color':genericService.getColorHex()}">Luegoluego</div>
 
-  <div class="texto">Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque suscipit quisquam, repellat
-    consequuntur, harum tenetur nostrum ad, dolorem explicabo illo non! Veritatis aperiam quaerat aspernatur repellat,
-    necessitatibus impedit commodi magni.</div>
+  <div class="texto">Esta aplicación esta diseñada para que los clientes en general puedan realizar sus compras desde la comodidad de su hogar, consultando los articulos de sus proveedores favoritos, garantizando siempre excelencia en el servicio, y con la seguridad que los estaremos acompañando en todo el proceso que dure su compra.</div>
 
-  <div class="ter" [ngStyle]="{'color':genericService.getColorHex()}">Consulta los términos y condiciones</div>
-  <div class="a"><a>Términos y condiciones</a></div>
+  <div class="ter" (click)="irTerminos()" [ngStyle]="{'color':genericService.getColorHex()}">Consulta los términos y condiciones</div>
 </ion-content>
