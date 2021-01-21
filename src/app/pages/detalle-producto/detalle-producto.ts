@@ -43,7 +43,8 @@ export class DetalleProductoPage {
     private loadingService: LoadingService,
     private alertaService: AlertaService) {
     this.producto = navParams.get("producto");
-
+      console.log(this.producto);
+      
     this.fromCarritos = navParams.get("fromCarritos");
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");

@@ -14,14 +14,6 @@
       </button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-
-  <div class="spinner-carrito" *ngIf="!muestraMapa">
-    <ion-spinner></ion-spinner>
-  </div>
-
   <div id="locationField" class="buscador">
     <input id="autocomplete" placeholder="Buscar" (ionFocus)="geolocate()" type="text" />
 
@@ -32,6 +24,13 @@
     <div *ngIf="fromModal" (click)="selectFrecuente()">
       <img src="assets/imgs/direcciones/home-run.png" alt="">
     </div>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <div class="spinner-carrito" *ngIf="!muestraMapa">
+    <ion-spinner></ion-spinner>
   </div>
 
   <div id="map_canvas" class="mapita-google"></div>

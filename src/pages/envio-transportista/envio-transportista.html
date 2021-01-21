@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title>
+      Seleccion de transportista
+    </ion-title>
+
+    <ion-buttons start>
+      <button ion-button (click)="dismiss(false)">
+        <span color="secundary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <section>
+    <ion-list *ngIf="transportistas && transportistas?.length > 0">
+      <ion-item class="item-list-card" *ngFor="let t of transportistas" style="border-bottom: 1px solid #cccccc;">
+        <ion-avatar slot="start" style="vertical-align: middle;">
+          <img src="assets/imgs/transportista/chofer.png" alt="" *ngIf="!t.adjunto_id">
+          <img src="{{env.getImagenIndividual}}{{t.adjunto_id}}" *ngIf="t.adjunto_id" />
+        </ion-avatar>
+        <div class="datos-tarjetas" style="    width: 75%;
+        vertical-align: middle;">
+          <div class="name"><strong>{{t.nombre}}</strong></div>
+          <div class="number"><a (click)="verMaps(t)">{{t.direccion}} {{t.colonia}} {{t.codigo_postal}}</a></div>
+        </div>
+        <div style="    display: inline-block;
+        width: 5%;
+        vertical-align: middle;">
+          <input type="checkbox" id="cbox2" [(ngModel)]="t.seleccionado" (change)="selecciona(t)">
+        </div>
+      </ion-item>
+    </ion-list>
+  </section>
+</ion-content>
+
+<ion-footer class="footer-button-class">
+  <button style="width:100%" (click)="retornarTransportista()" [ngStyle]="{'background-color': genericService.getColorHex()}">
+    Aceptar</button>
+</ion-footer>

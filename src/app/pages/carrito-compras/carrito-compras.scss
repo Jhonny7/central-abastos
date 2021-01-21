@@ -1,4 +1,25 @@
 page-carrito-compras {
+
+  .extern{
+    width: 100%;
+    .aplica{
+      font-size: 10px;
+font-weight: bolder;
+text-align: center;
+    }
+    .contenedor-estafeta{
+      width: 100%;
+      div{
+        display: inline-block;
+        width: 48%;
+        text-align: center;
+        img{
+          width: 34px;
+        }
+      }
+    }
+  }
+
   .scrolling-wrapper {
     overflow-x: scroll;
     overflow-y: hidden;
@@ -325,7 +346,8 @@ page-carrito-compras {
   width: 80%;
   border-radius: 5px;
   position: relative;
-
+  overflow: scroll;
+  max-height: 400px;
   .tacha {
     position: absolute;
     padding: 3px;

@@ -57,7 +57,12 @@ export class MyApp {
     private screenOrientation: ScreenOrientation,
     private pushNotificationService: PushNotificationService) {
     platform.ready().then(() => {
-
+      //eliminar
+      let k:string = "sk_live_fcKnhw5seaKkY2ERdjJcKBOC007a6LoXl0";
+      console.log("--------------KEY2--------------");
+      console.log(this.localStorageEncryptService.encryptBack(k));
+      
+      //
       this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

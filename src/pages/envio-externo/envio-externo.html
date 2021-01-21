@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="{{genericService.getColor()}}">
+    <ion-title >
+      Envío externo
+    </ion-title>
+
+    <ion-buttons start>
+      <button ion-button (click)="dismiss(false)">
+        <span color="secundary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android, windows" style="font-size: 2.4rem;"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="spinner-carrito" *ngIf="!carga">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <section *ngIf="carga">
+    <ion-list *ngIf="envios && envios?.length > 0">
+      <ion-item class="item-list-card" *ngFor="let t of envios" style="border-bottom: 1px solid #cccccc;"
+      [ngStyle]="{'display': t.costoTotal>0 ? 'block' : 'none'}">
+        <ion-avatar slot="start" style="vertical-align: middle;">
+          <img src="assets/imgs/servicios-envio/camionEstafeta.png" alt="" *ngIf="!t.isDHL" style="border-radius: 0px;
+          width: auto;"/>
+          <img src="assets/imgs/servicios-envio/camionDHL.png" *ngIf="t.isDHL" style="border-radius: 0px;
+          width: auto;"/>
+        </ion-avatar>
+        <div class="datos-tarjetas" style="    width: 75%;
+        vertical-align: middle;">
+          <div class="name" style="text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          width: 100%;
+          font-size: 15px;">$<strong>{{t.costoTotal}}</strong></div>
+          <div class="number"><strong>{{t.producto}}</strong></div>
+        </div>
+        <div style="    display: inline-block;
+        width: 5%;
+        vertical-align: middle;">
+          <input type="checkbox" id="cbox2" [(ngModel)]="t.seleccionado" (change)="selecciona(t)">
+        </div>
+      </ion-item>
+    </ion-list>
+  </section>
+</ion-content>
+
+<ion-footer class="footer-button-class">
+  <button style="width:100%" (click)="retornarEnvio()" [ngStyle]="{'background-color': genericService.getColorHex()}">
+    Aceptar</button>
+</ion-footer>

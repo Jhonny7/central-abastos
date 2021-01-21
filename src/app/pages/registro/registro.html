@@ -49,14 +49,17 @@
             </app-control-messages>
           </div>
 
-
-
-          <div class="contenedor-boton">
-            <button [disabled]="btnHabilitado" (click)="registrar()" [ngStyle]="{'background-color': genericService.getColorHex()}">Registrarme</button>
-          </div>
         </form>
 
       </div>
     </div>
   </div>
 </ion-content>
+<ion-footer id="el-footer2" class="animated fadeIn" >
+  <ion-toolbar>
+    <div>
+      <button ion-button style="width: 100%;"
+        (click)="registrar()" [disabled]="btnHabilitado">Registrarme</button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

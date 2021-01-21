@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "183752745939",
-    "firebase_url": "https://shark-abasto-275623.firebaseio.com",
-    "project_id": "shark-abasto-275623",
-    "storage_bucket": "shark-abasto-275623.appspot.com"
+    "project_number": "727247632385",
+    "firebase_url": "https://luego-luego-transportista.firebaseio.com",
+    "project_id": "luego-luego-transportista",
+    "storage_bucket": "luego-luego-transportista.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:183752745939:android:670842f7156a71340c8526",
+        "mobilesdk_app_id": "1:727247632385:android:706faf49d079bf229fe800",
         "android_client_info": {
-          "package_name": "mx.com.sharkit.luegoluego.cliente"
+          "package_name": "mx.com.sharkit.luegoluego.transportista"
         }
       },
       "oauth_client": [
         {
-          "client_id": "183752745939-ploujrka6suti4h6e75lg4pio98h3v6q.apps.googleusercontent.com",
+          "client_id": "727247632385-puuc52a6056kasp4ho2o5e00pcdg60q0.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCA4iHXRLkp6uYcguXjdCyLkamJ6RgD9P4"
+          "current_key": "AIzaSyB7Sr7KtiCGtjkmKl_PLQEUN2MDUeDwYFE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "183752745939-ploujrka6suti4h6e75lg4pio98h3v6q.apps.googleusercontent.com",
+              "client_id": "727247632385-puuc52a6056kasp4ho2o5e00pcdg60q0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

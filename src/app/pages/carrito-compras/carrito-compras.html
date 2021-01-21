@@ -119,8 +119,7 @@
     <div style="width: 90%;
     padding: 7px;
     color: #fff;
-    border-radius: 4px;" [ngStyle]="{'background-color': genericService.getColorHex()}">Información
-      de pago</div>
+    border-radius: 4px;" [ngStyle]="{'background-color': genericService.getColorHex()}">Información de pago</div>
 
     <div class="resumen">Resumen de la compra</div>
 
@@ -134,7 +133,20 @@
           <div class="precio-envio">{{p.comisionTransportista | currency}}</div>
 
           <div class="costo-subtotal">Subtotal</div>
-          <div class="precio-subtotal">{{p.total + p.comisionTransportista | currency}}</div>
+          <div class="precio-subtotal">{{suma(p.total,p.comisionTransportista) | currency}}</div>
+
+          <div class="extern" *ngIf="p.envioExterno" (click)="seleccionaExterno(p)">
+            <div class="aplica">*Aplica envío externo</div>
+            <div class="contenedor-estafeta">
+              <div>
+                <img src="assets/imgs/servicios-envio/estafeta.png" alt="">
+              </div>
+              <div>
+                <img src="assets/imgs/servicios-envio/dhl.png" alt="">
+              </div>
+            </div>
+          </div>
+
         </div>
 
 
@@ -149,7 +161,9 @@
       </ion-item>
     </div>
 
-    <div style="width:100%">
+    <div style="width:100%;position: sticky;
+    bottom: -6px;
+    background-color: #fff;">
       <button ion-button block large style="padding: 10px;
         height: auto;
         contain: none;
@@ -226,13 +240,13 @@
 
       <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">Información</div>
       <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;
-      border-style: dashed;" >
-          <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>
-          <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>
-          <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>
-          <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>
-    
-        </div>
+      border-style: dashed;">
+        <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>
+        <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>
+        <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>
+        <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>
+
+      </div>
     </div>
     <div *ngIf="totales && totales.listCarritoProveedores?.length <= 0">
       <div><img style="    border-radius: 4px;

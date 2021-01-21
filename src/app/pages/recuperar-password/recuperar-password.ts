@@ -122,6 +122,8 @@ export class ProveedorPage {
     this.genericService.sendGetRequest(`${environment.proveedoresFull}`).subscribe((response: any) => {
      
       this.proveedores = response;
+      console.log(this.proveedores);
+      
       this.proveedoresReplica = response;
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
@@ -158,6 +160,7 @@ export class ProveedorPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.proveedorProductos}/proveedor/${proveedor.id}`).subscribe((response: any) => {
+        console.log(response);
         
         this.loadingService.hide();
         this.navCtrl.push(ArticuloProveedoresPage, { productos: response, proveedor });

@@ -12,7 +12,40 @@ export class LocalStorageEncryptService {
   /**
    * Llave secreta para encriptar y desencriptar la informacion almacenada
    */
+  //private secretKey = 'luegoluegoShark';
   private secretKey = 'RG5vt457u%$5bj78c452YBBc24432c%#T7&$tv657bu6B&BvH76hvv64';
+  /**
+   * Llave secreta para encriptar y desencriptar la informacion almacenada
+   */
+  //private secretKey = '23dejulio08F!';
+
+  private CryptoJSAesJson = {
+    stringify: function (cipherParams) {
+      var j: any = { ct: cipherParams.ciphertext.toString(CryptoJS.enc.Base64) };
+      if (cipherParams.iv) j.iv = cipherParams.iv.toString();
+      if (cipherParams.salt) j.s = cipherParams.salt.toString();
+      return JSON.stringify(j);
+    },
+    parse: function (jsonStr) {
+      var j: any = JSON.parse(jsonStr);
+      var cipherParams = CryptoJS.lib.CipherParams.create({ ciphertext: CryptoJS.enc.Base64.parse(j.ct) });
+      if (j.iv) cipherParams.iv = CryptoJS.enc.Hex.parse(j.iv)
+      if (j.s) cipherParams.salt = CryptoJS.enc.Hex.parse(j.s)
+      return cipherParams;
+    }
+  };
+
+  encryptBack(data: any) {
+    let encryptedData: any = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey, { format: this.CryptoJSAesJson }).toString();
+    //console.log(encryptedData);
+    
+    return encryptedData;
+  }
+
+  decryptBack(data: any) {
+    //let encryptedData: any = CryptoJS.AES.encrypt(JSON.stringify(data), this.secretKey).toString();
+    return JSON.parse(CryptoJS.AES.decrypt(JSON.stringify(data), this.secretKey, { format: this.CryptoJSAesJson }).toString(CryptoJS.enc.Utf8));
+  }
 
   constructor() { }
 

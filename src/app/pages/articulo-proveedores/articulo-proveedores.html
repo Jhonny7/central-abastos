@@ -40,7 +40,8 @@
                   </div> -->
         <div class="container-card">
   
-          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" />
+          <img src="{{env.getImagenIndividual}}{{p.producto.adjunto_id}}" *ngIf="p.producto.adjunto_id"/>
+          <img src="{{env.getImagenIndividual}}{{p.producto.adjuntoId}}" *ngIf="!p.producto.adjunto_id"/>
         </div>
         <div class="container-text">{{p.producto.nombre}}</div>
         <div class="description">{{p.producto.descripcion}}</div>

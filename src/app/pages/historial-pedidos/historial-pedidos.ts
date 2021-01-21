@@ -1,23 +1,28 @@
-import { HistorialPedidosDetailPage } from './../historial-pedidos-detail/historial-pedidos-detail';
-import { LoadingService } from './../../services/loading.service';
-import { AlertaService } from './../../services/alerta.service';
-import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
-import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, PopoverController, Events } from 'ionic-angular';
-import { environment } from '../../../environments/environment.prod';
-import { User } from '../../models/User';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HistorialPedidosDetailPage } from "./../historial-pedidos-detail/historial-pedidos-detail";
+import { LoadingService } from "./../../services/loading.service";
+import { AlertaService } from "./../../services/alerta.service";
+import { LocalStorageEncryptService } from "./../../services/local-storage-encrypt.service";
+import { GenericService } from "./../../services/generic.service";
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  PopoverController,
+  Events
+} from "ionic-angular";
+import { environment } from "../../../environments/environment.prod";
+import { User } from "../../models/User";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
 import * as moment from "moment";
-import { OpcionesMenuPage } from '../opciones-menu/opciones-menu';
+import { OpcionesMenuPage } from "../opciones-menu/opciones-menu";
 
 @Component({
-  selector: 'page-historial-pedidos',
-  templateUrl: 'historial-pedidos.html',
+  selector: "page-historial-pedidos",
+  templateUrl: "historial-pedidos.html"
 })
 export class HistorialPedidosPage {
-
-  public user: User = null;
+  public user: any = null;
   public pedidos: any = [];
   public pedidosReplica: any = [];
 
@@ -36,85 +41,103 @@ export class HistorialPedidosPage {
     private alertaService: AlertaService,
     private loadingService: LoadingService,
     private popoverCtrl: PopoverController,
-    private events: Events) {
-    this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+    private events: Events
+  ) {
+    this.user = this.localStorageEncryptService.getFromLocalStorage(
+      "userSession"
+    );
     this.cargarPedidos(null);
     this.events.subscribe("cargarPedidos", data => {
       try {
         this.cargarPedidos(null);
-      } catch (error) {
-      }
+      } catch (error) {}
     });
-   
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.events.publish("backHome");
     this.events.publish("backCarrito");
     this.events.publish("backProveedor");
   }
 
-  ionViewWillLeave() {
-    
-  }
+  ionViewWillLeave() {}
 
   /**Método que es lanzado al deslizar hacia arriba
-   * el usuario puede refrescar cada que haya algun problema con 
+   * el usuario puede refrescar cada que haya algun problema con
    * su conexión
    */
   doRefresh(refresher) {
     setTimeout(() => {
-
-
-      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
+      this.user = this.localStorageEncryptService.getFromLocalStorage(
+        "userSession"
+      );
       this.cargarPedidos(refresher);
-
-
     }, 2000);
   }
 
-  ionViewDidLoad() {
-
-  }
+  ionViewDidLoad() {}
 
   verOpciones() {
-    let popover = this.popoverCtrl.create(OpcionesMenuPage, {}, { cssClass: "clase-Pop" });
-    popover.present({
-    });
+    let popover = this.popoverCtrl.create(
+      OpcionesMenuPage,
+      {},
+      { cssClass: "clase-Pop" }
+    );
+    popover.present({});
   }
 
-  cargarPedidos(refresher:any = null) {
-    this.genericService.sendGetRequest(`${environment.pedidos}`).subscribe((response: any) => {
-
-      this.pedidos = response;
-      if (this.pedidos.length <= 0) {
-        this.pedidos = null;
-      }
-      this.pedidosReplica = this.pedidos;
-      if (refresher) {
-        refresher.complete();
-      }
-    }, (error: HttpErrorResponse) => {
-      if (refresher) {
-        refresher.complete();
-      }
-      let err: any = error.error;
-      this.pedidos = null;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-    });
+  cargarPedidos(refresher: any = null) {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    console.log(params);
+    
+    this.genericService
+      .sendGetParams(`${environment.pedidos}`, params)
+      .subscribe(
+        (response: any) => {
+          this.pedidos = response;
+          if (this.pedidos.length <= 0) {
+            this.pedidos = null;
+          }
+          this.pedidosReplica = this.pedidos;
+          if (refresher) {
+            refresher.complete();
+          }
+        },
+        (error: HttpErrorResponse) => {
+          if (refresher) {
+            refresher.complete();
+          }
+          let err: any = error.error;
+          this.pedidos = null;
+          this.alertaService.errorAlertGeneric(
+            err.message
+              ? err.message
+              : "Ocurrió un error en el servicio, intenta nuevamente"
+          );
+        }
+      );
   }
 
   viewDetail(pedido: any) {
     this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.pedidos}/${pedido.id}`).subscribe((response: any) => {
-
-        this.loadingService.hide();
-        this.navCtrl.push(HistorialPedidosDetailPage, { pedido: response });
-      }, (error: HttpErrorResponse) => {
-        let err: any = error.error;
-        this.loadingService.hide();
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
+      this.genericService
+        .sendGetRequest(`${environment.pedidos}/${pedido.id}`)
+        .subscribe(
+          (response: any) => {
+            this.loadingService.hide();
+            this.navCtrl.push(HistorialPedidosDetailPage, { pedido: response });
+          },
+          (error: HttpErrorResponse) => {
+            let err: any = error.error;
+            this.loadingService.hide();
+            this.alertaService.errorAlertGeneric(
+              err.message
+                ? err.message
+                : "Ocurrió un error en el servicio, intenta nuevamente"
+            );
+          }
+        );
     });
   }
 
@@ -128,8 +151,14 @@ export class HistorialPedidosPage {
       case 1:
         //fecha solicitud
         this.pedidos.sort((mayor, menor) => {
-          let dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
-          let dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateA: any = moment(
+            mayor.fechaAlta,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
+          let dateB: any = moment(
+            menor.fechaAlta,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
           console.log(dateA);
           console.log(dateB);
 
@@ -141,8 +170,14 @@ export class HistorialPedidosPage {
       case 2:
         //fecha entrega
         this.pedidos.sort((mayor, menor) => {
-          let dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
-          let dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateA: any = moment(
+            mayor.fechaEntrega,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
+          let dateB: any = moment(
+            menor.fechaEntrega,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
           return dateB - dateA;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });
@@ -166,12 +201,17 @@ export class HistorialPedidosPage {
         this.botones.boton3 = !this.botones.boton3;
         break;
 
-
       case 4:
         //fecha solicitud
         this.pedidos.sort((mayor, menor) => {
-          let dateA: any = moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
-          let dateB: any = moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateA: any = moment(
+            mayor.fechaAlta,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
+          let dateB: any = moment(
+            menor.fechaAlta,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
           console.log(dateA);
           console.log(dateB);
 
@@ -183,8 +223,14 @@ export class HistorialPedidosPage {
       case 5:
         //fecha entrega
         this.pedidos.sort((mayor, menor) => {
-          let dateA: any = moment(mayor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
-          let dateB: any = moment(menor.fechaEntrega, 'DD-MM-YYYY HH:mm:ss').toDate();
+          let dateA: any = moment(
+            mayor.fechaEntrega,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
+          let dateB: any = moment(
+            menor.fechaEntrega,
+            "DD-MM-YYYY HH:mm:ss"
+          ).toDate();
           return dateA - dateB;
           //return Math.abs(moment(mayor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime() - moment(menor.fechaAlta, 'DD-MM-YYYY HH:mm:ss').toDate().getTime());
         });

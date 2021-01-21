@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}" [ngStyle]="{'background-color': color}">
-    <ion-title>{{producto.producto.nombre}}</ion-title>
+    <ion-title>{{producto.proveedor.nombre}}</ion-title>
 
 
 
@@ -16,7 +16,14 @@
 </ion-header>
 
 <ion-content>
-
+  <div style="text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: #555656;">
+    {{producto.producto.nombre}}
+  </div>
   <div class="slider-io animated bounceInLeft" *ngIf="producto.photos.length > 0">
     <ion-slides autoplay="5000" zoom="true" loop="true" #slides2 loop="false">
       <ion-slide *ngFor="let photo of producto.photos; let i=index" (click)="imagesLoaded(i)">

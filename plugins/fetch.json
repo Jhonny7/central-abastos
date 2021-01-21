@@ -237,5 +237,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-telerik-imagepicker": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-telerik-imagepicker@2.3.5"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

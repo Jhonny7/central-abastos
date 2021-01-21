@@ -1,7 +1,7 @@
 import { ArticuloProductosPage } from './../articulo-productos/articulo-productos';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { AlertaService } from './../../services/alerta.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
@@ -25,10 +25,10 @@ export class CategoriaPage {
 
   public env: any = environment;
 
-  public user: User = null;
+  public user: any = null;
 
   public color: any = "#3b64c0";
-  
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -68,31 +68,35 @@ export class CategoriaPage {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
       //this.user.parametros.pantalla_proveedores = "N";
-      if(this.user && this.user.parametros.pantalla_proveedores == "S"){
-        this.genericService.sendGetRequest(`${environment.proveedorProductos}/producto/${producto.id}`).subscribe((response: any) => {
-          
+      if (this.user && this.user.parametros.pantalla_proveedores == "S") {
+        let params = new HttpParams()
+        params = params.set('email', this.user.email);
+        this.genericService.sendGetRequestParams(`${environment.proveedorProductos}/producto/${producto.id}`,params).subscribe((response: any) => {
+
           this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });
           this.loadingService.hide();
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
           this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
         });
-      }else{
-        this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.id}`).subscribe((response: any) => {
-         
+      } else {
+        let params = new HttpParams()
+        params = params.set('email', null);
+        this.genericService.sendGetRequestParams(`${environment.proveedorProductos}/${producto.id}`,params).subscribe((response: any) => {
+
           //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
           //let nav = this.app.getRootNav();
           //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
           if (this.user) {
             let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-            
-            if(carritos){
+
+            if (carritos) {
               let position: any = carritos.findIndex(
                 (carrito) => {
                   return carrito.id == response.id;
                 }
               );
-    
+
               if (position >= 0) {
                 response.cantidad = carritos[position].cantidad;
               }
@@ -111,8 +115,8 @@ export class CategoriaPage {
 
   }
 
-  verTodos(articulo:any){
-    this.navCtrl.push(ArticuloProductosPage,{articulo});
+  verTodos(articulo: any) {
+    this.navCtrl.push(ArticuloProductosPage, { articulo });
   }
 
   cargarArticulos() {
@@ -125,19 +129,19 @@ export class CategoriaPage {
       });
   }
 
-  up(){
+  up() {
     this.articulos = this.articulosReplica;
     this.articulos.forEach(item1 => {
-      item1.productos.sort((mayor,menor)=>{
+      item1.productos.sort((mayor, menor) => {
         return mayor.precio - menor.precio;
       });
     });
   }
 
-  down(){
+  down() {
     this.articulos = this.articulosReplica;
     this.articulos.forEach(item1 => {
-      item1.productos.sort((mayor,menor)=>{
+      item1.productos.sort((mayor, menor) => {
         return menor.precio - mayor.precio;
       });
     });

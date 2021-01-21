@@ -1,10 +1,12 @@
+import { EnvioTransportistaPage } from './../../../pages/envio-transportista/envio-transportista';
+import { SqlGenericService } from './../../services/sqlGenericService';
 import { ListaChatPage } from './../../pages/lista-chat/lista-chat';
 import { QrPage } from './../qr/qr';
 import { ChatPage } from './../chat/chat';
 import { LoadingService } from './../../services/loading.service';
 import { VerProductosPage } from './../../pages-proveedor/ver-productos/ver-productos';
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, ModalController } from 'ionic-angular';
 import { User } from '../../models/User';
 import { GenericService } from '../../services/generic.service';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
@@ -19,6 +21,8 @@ import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
 import { File } from '@ionic-native/file';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { FileOpener } from '@ionic-native/file-opener';
+import { ParamSQL } from '../../services/sqlGenericService';
+import { FCMData, FCMJson, Notification } from '../../services/pushNotifications.service';
 
 declare var google;
 
@@ -27,7 +31,7 @@ declare var google;
   templateUrl: 'historial-pedidos-detail.html',
 })
 export class HistorialPedidosDetailPage implements OnDestroy {
-  public user: User = null;
+  public user: any = null;
   public pedido: any = null;
   public map: any;
 
@@ -35,7 +39,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
   public ref: any;
 
-  public idGenerado:number = 1;
+  public idGenerado: number = 1;
 
   constructor(
     public navCtrl: NavController,
@@ -51,11 +55,13 @@ export class HistorialPedidosDetailPage implements OnDestroy {
     private httpClient: HttpClient,
     private platform: Platform,
     private file: File,
-    private fileOpener: FileOpener) {
+    private fileOpener: FileOpener,
+    private sqlGenericService: SqlGenericService,
+    private modalController: ModalController) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.pedido = navParams.get("pedido");
     console.log(this.pedido);
-      this.idGenerado = Math.floor(new Date().getTime() / 1000.0);
+    this.idGenerado = Math.floor(new Date().getTime() / 1000.0);
   }
 
   ngOnDestroy() {
@@ -73,10 +79,10 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
     // create a new map by passing HTMLElement
     console.log(this.idGenerado);
-    
+
     let mapEle: HTMLElement = document.getElementById(`${this.idGenerado}-map`);
     console.log(mapEle);
-    
+
     // create LatLng object
 
     let myLatLng = { lat: Number(latitude), lng: Number(longitude) };
@@ -88,7 +94,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
     });
 
     console.log(this.map);
-    
+
     google.maps.event.addListenerOnce(this.map, 'idle', () => {
 
       let info: any = `<div>Ejemplo de window</div>`;
@@ -163,6 +169,111 @@ export class HistorialPedidosDetailPage implements OnDestroy {
       this.alertaService.successAlertGeneric(`El pedido se ha enviado al transportista`);
     }, (error: HttpErrorResponse) => {
       this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");
+    });
+  }
+
+  enviarPedidoMultiple() {
+    this.loadingService.show();
+    //this.pedido.pedidoProveedores[0].proveedorId
+    //console.log(this.pedido);
+    /* let objSQL: ParamSQL = {
+      table: "proveedor_transportista",
+      //selectables: ["id", "json"],
+      conditions: {
+        id_proveedor: {
+          value: this.pedido.pedidoProveedores[0].proveedorId,
+        }
+      },
+      typeSQL: 3
+    }; */
+
+    let sql: string = `
+    SELECT pt.*, t.*, ju.*, d.*, t.id as idT FROM proveedor_transportista pt
+    LEFT JOIN transportista t
+    ON (pt.id_transportista = t.id) 
+    LEFT JOIN jhi_user ju
+    ON (ju.id = t.usuario_id)
+    LEFT JOIN direccion d
+    ON (d.id = t.direccion_id)
+    WHERE pt.id_proveedor = ${this.pedido.pedidoProveedores[0].proveedorId}`;
+    console.log(sql);
+    //console.log(sql);
+
+    let queryEncrypt: any = this.localStorageEncryptService.encryptBack(sql);
+    ////console.log(params);
+    let request: any = {
+      query: queryEncrypt,
+      retorna: 1,
+      push: null,
+      token: null
+    }
+    this.genericService.sendPostRequest(environment.genericQuerie, request).subscribe((response: any) => {
+      //console.log(response);
+      this.loadingService.hide();
+      if (response.parameters.length > 0) {
+        console.log(response.parameters);
+        //this.navCtrl.push(EnvioTransportistaPage, );
+        let modal = this.modalController.create(EnvioTransportistaPage,
+          { transportistas: response.parameters });
+        modal.present();
+        modal.onDidDismiss((data) => {
+          if (data && data.transportista) {
+            console.log(data.transportista);
+            let transportista:any = data.transportista;
+            ////Notification data
+
+            let notification: Notification = {
+              body: `Tienes un nuevo pedido por entregar - PEDIDO ${this.pedido.pedidoProveedores[0].folio}`,
+              title: `Pedido ${this.pedido.pedidoProveedores[0].folio}`,
+              click_action: "FCM_PLUGIN_ACTIVITY",
+              image: null,
+              color: "#F07C1B",
+              "content-available": true
+            };
+
+            let dataFCM: FCMData = {
+              body: data.msj,
+              title: data.titulo,
+              view: 1,
+              otherData: null
+            };
+
+            let fcmd: FCMJson = {
+              to: `${transportista.token}`,
+              notification: notification,
+              data: dataFCM,
+              priority: "high"
+            };
+
+            
+            //////////////////
+            let body: any = {
+              pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
+              estatusId: 18, //antes 14
+              email: this.user.email,
+              transportistaId: data.transportista.idT,
+              fcmData: fcmd
+            };
+            this.loadingService.show();
+            this.genericService.sendPutRequest(environment.pedidosProveedores, body).subscribe((response1: any) => {
+              this.loadingService.hide();
+              this.alertaService.successAlertGeneric(response1.description);
+              
+            }, (error: HttpErrorResponse) => {
+              this.loadingService.hide();
+              this.alertaService.errorAlertGeneric(error.error.description);
+            });
+
+          }
+        });
+      } else {
+        this.alertaService.warnAlertGeneric("No tienes transportistas asignados");
+      }
+      //this.getMenus();
+    }, (error: HttpErrorResponse) => {
+      //console.log(error);
+      this.loadingService.hide();
+      this.alertaService.errorAlertGeneric(error.error.description);
     });
   }
 

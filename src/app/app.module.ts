@@ -63,7 +63,9 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { ListaChatPage } from './pages/lista-chat/lista-chat';
 import { CalificacionPage } from './pages/calificacion/calificacion';
 import { CardProductoComponent } from './components/card-producto/card-producto.component';
-
+import { ImagePicker } from '@ionic-native/image-picker';
+import { EnvioTransportistaPage } from '../pages/envio-transportista/envio-transportista';
+import { EnvioExternoPage } from '../pages/envio-externo/envio-externo';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -102,7 +104,7 @@ export function createTranslateLoader(http: HttpClient) {
     HistorialPedidosPage,
     HistorialPedidosDetailPage,
     PedidosDetailPage,
-
+    EnvioTransportistaPage,
     RecuperaContraseniaPage,
     TerminoServicioPage,
     TerminosCondicionesPage,
@@ -122,7 +124,8 @@ export function createTranslateLoader(http: HttpClient) {
     CalificacionPage,
     TabsTransportistaPage,
     CardProductoComponent,
-    ChangePasswordPage
+    ChangePasswordPage,
+    EnvioExternoPage
   ],
   imports: [
     BrowserModule,
@@ -172,7 +175,7 @@ export function createTranslateLoader(http: HttpClient) {
     HistorialPedidosPage,
     HistorialPedidosDetailPage,
     PedidosDetailPage,
-
+    EnvioTransportistaPage,
     RecuperaContraseniaPage,
     TerminoServicioPage,
     TerminosCondicionesPage,
@@ -184,7 +187,7 @@ export function createTranslateLoader(http: HttpClient) {
     AyudaPage,
     AcercaDePage,
     ListaChatPage,
-
+    EnvioExternoPage,
     TabsProveedorPage,
     HomeProveedorPage,
     VerProductosPage,

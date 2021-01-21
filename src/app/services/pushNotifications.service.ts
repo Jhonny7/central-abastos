@@ -11,6 +11,29 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChatPage } from '../pages/chat/chat';
 import { ListaChatPage } from '../pages/lista-chat/lista-chat';
 
+export interface FCMJson {
+    to: string,
+    notification: Notification,
+    data: FCMData,
+    priority: string
+}
+
+export interface Notification {
+    body: string,
+    title: string,
+    click_action: string,
+    image: string,
+    color: string,
+    "content-available": boolean
+}
+
+export interface FCMData {
+    body: string,
+    title: string,
+    view: number,
+    otherData?: any
+}
+
 @Injectable()
 export class PushNotificationService {
 

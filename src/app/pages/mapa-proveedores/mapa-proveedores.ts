@@ -244,9 +244,13 @@ export class MapaProveedoresPage implements OnDestroy{
 
     this.geolocation.getCurrentPosition()
       .then(response => {
+        console.log(response);
+        
         this.loadMap(response);
       })
       .catch(error => {
+        console.log(error);
+        
       })
   }
 

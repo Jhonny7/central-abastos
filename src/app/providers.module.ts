@@ -1,3 +1,4 @@
+import { SqlGenericService } from './services/sqlGenericService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,6 +32,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { PushNotificationService } from './services/pushNotifications.service';
 import { FileOpener } from '@ionic-native/file-opener';
 import { File } from '@ionic-native/file';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @NgModule({
     providers: [
@@ -68,7 +70,9 @@ import { File } from '@ionic-native/file';
         InAppBrowser,
         PushNotificationService,
         File,
-        FileOpener
+        FileOpener,
+        ImagePicker,
+        SqlGenericService
     ]
 })
 export class ProvidersModule { }

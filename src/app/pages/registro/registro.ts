@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
 import * as moment from "moment";
 import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveedores';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
 
 @Component({
   selector: 'page-registro',
@@ -144,7 +145,8 @@ export class RegistroPage {
     private loadingService: LoadingService,
     private events: Events,
     private modalController: ModalController,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private imagePicker: ImagePicker) {
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     let putObj: any = {};
@@ -324,6 +326,7 @@ export class RegistroPage {
               fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
               size: 0
             },
+            
           };
           break;
 
@@ -423,6 +426,148 @@ export class RegistroPage {
 
   }
 
+  registrarNew() {
+    console.log(this.objetoRegistro);
+    if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
+      this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    } else if (environment.perfil.activo == 2 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+      this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    } else if (environment.perfil.activo == 3 && this.objetoRegistro[9].value != this.objetoRegistro[10].value) {
+      this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
+    } else {
+
+
+      let body: any = null;
+
+      switch (environment.perfil.activo) {
+        case 1:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("YYYY-MM-DD HH:mm:ss"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[7].value,
+
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            },
+
+            tipoUsuario: 2
+          };
+          break;
+
+        case 2:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("YYYY-MM-DD HH:mm:ss"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[9].value,
+
+            tipoPersona: this.objetoRegistro[7].value,
+            razonSocial: this.objetoRegistro[8].value,
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            },
+
+            direccion: {
+              codigoPostal: this.data.codigoPostal,
+              direccion: this.data.direccion,
+              latitud: this.data.latitud,
+              longitud: this.data.longitud
+            },
+
+            tipoUsuario: 3
+          };
+          break;
+        case 3:
+          body = {
+            login: this.objetoRegistro[6].value,
+            email: this.objetoRegistro[6].value,
+            firstName: this.objetoRegistro[0].value,
+            lastName: this.objetoRegistro[1].value,
+            motherLastName: this.objetoRegistro[2].value,
+
+            telefono: this.objetoRegistro[4].value,
+            fechaNacimiento: moment(this.objetoRegistro[3].value, "YYYY-MM-DD").format("YYYY-MM-DD HH:mm:ss"),
+
+            genero: this.objetoRegistro[5].value,
+            password: this.objetoRegistro[9].value,
+
+            tipoPersona: this.objetoRegistro[7].value,
+            razonSocial: this.objetoRegistro[8].value,
+
+            activated: true,// por default en la app
+
+            adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
+              contentType: "image/jpeg",
+              file: this.photo_url,
+              fileName: Math.floor(new Date().getTime() / 1000.0).toString(),
+              size: 0
+            },
+
+            tipoUsuario: 4
+          };
+          break;
+      }
+
+      let path: string = environment.registro;
+
+      /* if (environment.perfil.activo == 2) {
+        body.tipoPersona = 2;
+        path = `${environment.registro}/proveedor`;
+      }
+      if (environment.perfil.activo == 3) {
+        body.tipoPersona = 3;
+        path = `${environment.registro}/transportista`;
+      } */
+
+      if (environment.perfil.activo == 2 && this.objetoRegistro[this.objetoRegistro.length - 1].value.length <= 0) {
+        this.alertaService.warnAlertGeneric("Es necesario que ingreses tu dirección");
+      } else {
+        this.loadingService.show().then(() => {
+
+
+          this.genericService.sendPostRequest(path, body).subscribe((response: any) => {
+
+            this.loadingService.hide();
+            this.alertaService.successAlertGeneric("Registro exitoso");
+            this.navCtrl.pop();
+          }, (error: HttpErrorResponse) => {
+            this.loadingService.hide();
+            let err: any = error.error;
+            this.alertaService.errorAlertGeneric(err.message ? err.message : err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
+          });
+        });
+      }
+    }
+
+  }
+
   /**Verifica validaciones */
   ejecutaValidator() {
     let validacion: number = 0;
@@ -489,24 +634,43 @@ export class RegistroPage {
   }
 
   takeFoto() {
-    this.options.sourceType = this.camera.PictureSourceType.CAMERA;
-    this.camera.getPicture(this.options).then((imageData) => {
+
+    let options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL
+      , mediaType: this.camera.MediaType.PICTURE // Try this
+      , sourceType: this.camera.PictureSourceType.CAMERA,
+      allowEdit: false
+    }
+    this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.photo_url = 'data:image/jpeg;base64,' + imageData;
+      this.photo_url = `data:image/jpeg;base64,${imageData}`;
+      //this.gotPhoto(imageData, opc);
     }, (err) => {
       // Handle error
     });
   }
 
   seleccionaImagen() {
-    this.options.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-    this.camera.getPicture(this.options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
-      this.photo_url = 'data:image/jpeg;base64,' + imageData;
+    let options: ImagePickerOptions = {
+      maximumImagesCount: 1,
+      outputType: 1,
+      quality: 15
+    };
+    this.imagePicker.getPictures(options).then((results) => {
+      let i: number = 1;
+      try {
+        if (results) {
+          results.forEach(imageData => {
+            this.photo_url = `data:image/jpeg;base64,${imageData}`;
+          });
+        }
+      } catch (error) {
+        this.alertaService.errorAlertGeneric("Ocurrió un error, intenta nuevamente");
+      }
     }, (err) => {
-      // Handle error
+      this.alertaService.errorAlertGeneric("Ocurrió un error, intenta nuevamente");
     });
   }
 

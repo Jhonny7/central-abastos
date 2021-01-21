@@ -55,8 +55,8 @@
         <ion-icon name="ios-chatbubbles-outline"></ion-icon>
         Chat
       </button>
-      <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="enviarPedido()"
-        style="font-size: 11px;">
+      <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="enviarPedidoMultiple()"
+        style="font-size: 11px;" [disabled]="pedido.pedidoProveedores[0]?.estatusId == 18">
         <ion-icon name="ios-send-outline"></ion-icon>Enviar a transportista
       </button>
       <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{'background-color' : genericService.getColorHex()}"

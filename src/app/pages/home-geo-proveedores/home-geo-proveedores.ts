@@ -20,7 +20,7 @@ declare var google;
   selector: 'page-home-geo-proveedores',
   templateUrl: 'home-geo-proveedores.html',
 })
-export class HomeGeoProveedoresPage implements OnDestroy{
+export class HomeGeoProveedoresPage implements OnDestroy {
 
   public map: any;
 
@@ -54,7 +54,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
   public fromModal: any = null;
 
   public fromRegister: any = null;
-  
+
   public listaDirecciones: any = [];
 
   constructor(
@@ -148,7 +148,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
 
   ionViewDidLoad() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    if(claseTabs[0]){
+    if (claseTabs[0]) {
       claseTabs[0].style.display = "none";
     }
     this.obtenerLocalizacion();
@@ -261,7 +261,8 @@ export class HomeGeoProveedoresPage implements OnDestroy{
 
 
     } else {
-      this.getPosition();
+      //this.getPositionEmulate();
+      this.getPosition();  
     }
     //});
 
@@ -288,17 +289,36 @@ export class HomeGeoProveedoresPage implements OnDestroy{
 
   ngOnDestroy() {
     let claseTabs: any = document.getElementsByClassName("tabbar");
-    if(claseTabs[0]){
+    if (claseTabs[0]) {
       claseTabs[0].style.display = "flex";
     }
   }
 
+  getPositionEmulate(){
+    console.log("emulado");
+    
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log(position);
+      
+    },function(err){
+      console.log(err);
+      
+    },{timeout:10000});
+  }
+
   getPosition(): any {
+    console.log("---position---");
+    console.log(this.geolocation);
+    
     this.geolocation.getCurrentPosition()
       .then(response => {
+        console.log(response);
+        
         this.loadMap(response);
       })
       .catch(error => {
+        console.log(error);
+
       })
   }
 
@@ -350,7 +370,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
 
 
       this.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
-       
+
         this.loadingService.hide();
         this.map.setCenter(this.marker.position);
         this.marker.setMap(this.map);
@@ -363,8 +383,10 @@ export class HomeGeoProveedoresPage implements OnDestroy{
           latitud: "22.9221196"
           longitud: "-98.0690771"
           */
-          this.data.direccion = results[0].formatted_address;
-          this.data.codigoPostal = "";
+          if (results[0]) {
+            this.data.direccion = results[0].formatted_address;
+            this.data.codigoPostal = "";
+          }
         }
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
@@ -383,7 +405,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
       });
 
       google.maps.event.addListener(component.marker, 'dragend', function (evt) {
-       
+
         component.data.latitud = evt.latLng.lat().toString();
         component.data.longitud = evt.latLng.lng().toString();
 
@@ -394,7 +416,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
           params = params.set('key', environment.keyGoogle);
 
           component.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
-           
+
             component.loadingService.hide();
             component.map.setCenter(component.marker.position);
             component.marker.setMap(component.map);
@@ -407,8 +429,10 @@ export class HomeGeoProveedoresPage implements OnDestroy{
               latitud: "22.9221196"
               longitud: "-98.0690771"
               */
-              component.data.direccion = results[0].formatted_address;
-              component.data.codigoPostal = "";
+              if (results[0]) {
+                component.data.direccion = results[0].formatted_address;
+                component.data.codigoPostal = "";
+              }
             }
           }, (error: HttpErrorResponse) => {
             component.loadingService.hide();
@@ -434,7 +458,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
   }
 
   changeInfoCard() {
-    
+
   }
 
   loadMapLeaflet() {
@@ -508,7 +532,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
   }
 
   backData() {
-    
+
     this.viewCtrl.dismiss({ data: this.data });
   }
 
@@ -586,7 +610,7 @@ export class HomeGeoProveedoresPage implements OnDestroy{
     if (place) {
       for (var i = 0; i < place.address_components.length; i++) {
         var addressType = place.address_components[i].types[0];
-        
+
         if (componente.componentForm[addressType]) {
           var val = place.address_components[i][componente.componentForm[addressType]];
 

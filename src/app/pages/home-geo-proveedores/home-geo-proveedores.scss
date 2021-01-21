@@ -1,25 +1,11 @@
 page-home-geo-proveedores {
   .mapita-google {
     display: block;
-    height: 80%;
+    height: 100%;
     width: 100%;
   }
 
-  @media only screen and (max-width: 320px) and (min-width: 0px) {
-    .mapita-google {
-      height: 80.7%;
-    }
-  }
-  @media only screen and (max-width: 374px) and (min-width: 321px) {
-    .mapita-google {
-      height: 90.1%;
-    }
-  }
-  @media only screen and (max-width: 413px) and (min-width: 375px) {
-    .mapita-google {
-      height: 83.9%;
-    }
-  }
+  
 
   .buscador {
     width: 100%;

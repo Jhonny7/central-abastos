@@ -1,3 +1,4 @@
+import { EnvioExternoPage } from './../../../pages/envio-externo/envio-externo';
 import { HomeGeoProveedoresPage } from './../home-geo-proveedores/home-geo-proveedores';
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
@@ -24,7 +25,7 @@ export class CarritoComprasPage implements OnDestroy {
   public selectOptions: any = {
     cssClass: 'action-sheet-class'
   };
-  public user: User = null;
+  public user: any = null;
 
   public productosCarrito: any = [];
   public productosCarritoReplica: any = [];
@@ -211,7 +212,7 @@ export class CarritoComprasPage implements OnDestroy {
       });
       this.objetoRegistro.push({
         name: "Código postal",
-        required: false,
+        required: true,
         length: 6,
         type: "text",
         formName: "cp",
@@ -417,7 +418,9 @@ export class CarritoComprasPage implements OnDestroy {
             var token = response.id;
             let body: any = {
               pedidoId: clase.pagoActual.id,
-              token: token
+              token: token,
+              email: clase.user.email,
+              emailStripe: clase.objetoRegistro[2].value
             };
             let service: any = clase.genericService.sendPutRequest(`${environment.pedidos}/pago`, body);
 
@@ -825,12 +828,26 @@ export class CarritoComprasPage implements OnDestroy {
     });
   }
 
+  seleccionaExterno(pedidoProveedor:any) {
+    console.log(this.objetoRegistroCopy);
+    let modal = this.modalController.create(EnvioExternoPage,
+      { pedidoProveedor, cp: this.objetoRegistroCopy[3].value});
+    modal.present();
+    modal.onDidDismiss((data) => {
+      if (data) {
+        console.log(data);
+        
+      }
+    });
+  }
+
   precompra() {
 
     this.objetoRegistroCopy = [];
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
+    this.objetoRegistroCopy.push({ value: this.formGroup.controls["cp"].value });
 
     let h: any = null;
     console.log(this.totales.listCarritoProveedores);
@@ -881,6 +898,8 @@ export class CarritoComprasPage implements OnDestroy {
         productoProveedorId: item.productoProveedorId
       });
     });
+
+    body.email = this.user.email;
 
     let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
 
@@ -999,5 +1018,9 @@ export class CarritoComprasPage implements OnDestroy {
     this.productosCarrito.sort((mayor, menor) => {
       return menor.precio - mayor.precio;
     });
+  }
+
+  suma(v1, v2) {
+    return Number(v1) + Number(v2);
   }
 }
