@@ -26,8 +26,8 @@ export const environment = {
   production: true,
   productos: `${pathPrincipal}productos`,
   productosCategoria: `${pathPrincipal}productos/home`,
-  proveedorProductos: `${pathPrincipal}proveedor-productos`,
-  //proveedorProductos: `${pathLuegoluegoNew}proveedor-productos`,
+  //proveedorProductos: `${pathPrincipal}proveedor-productos`,
+  proveedorProductos: `${pathLuegoluegoNew}proveedor-productos`,
   cotizaciones: `${pathLuegoluegoNew}cotizaciones`,
   categoria: `${pathPrincipal}proveedor-productos/categoria/`,
   secciones: `${pathPrincipal}seccions`,
@@ -40,18 +40,18 @@ export const environment = {
   transportista: `${pathPrincipal}transportista`,
   proveedoresProducto: `${pathPrincipal}proveedores/producto/`,
 
-  //registro: `${pathLuegoluegoNew}register`,
-  registro: `${pathPrincipal}register`,
-  //login: `${pathLuegoluegoNew}authenticate`,
-  login: `${pathPrincipal}authenticate`,
+  registro: `${pathLuegoluegoNew}register`,
+  //registro: `${pathPrincipal}register`,
+  login: `${pathLuegoluegoNew}authenticate`,
+  //login: `${pathPrincipal}authenticate`,
   
-  carritoCompras: `${pathPrincipal}carrito-compras`,
-  //carritoCompras: `${pathLuegoluegoNew}carrito-compras`,
+  //carritoCompras: `${pathPrincipal}carrito-compras`,
+  carritoCompras: `${pathLuegoluegoNew}carrito-compras`,
 
   carritoHistorico: `${pathPrincipal}carrito-historicos`,
   carritoHistoricoDetalle: `${pathPrincipal}carrito-historico-detalles`,
-  getImagenIndividual: `${pathPrincipal}adjuntos/download/`,
-  //getImagenIndividual: `${pathLuegoluegoNew}adjuntos/download/`,
+  //getImagenIndividual: `${pathPrincipal}adjuntos/download/`,
+  getImagenIndividual: `${pathLuegoluegoNew}adjuntos/download/`,
   promociones: `${pathLuegoluegoNew}promociones`,
   tarjetas: `${pathPrincipal}tarjetas`,
   direcciones: `${pathPrincipal}usuario-direcciones`,
@@ -85,8 +85,8 @@ export const environment = {
   cambioContraseña: `${pathPrincipal}account/change-password`,
 
 
-  carritoComprasProveedor: `${pathPrincipal}carrito-compras-proveedor`,
-  //carritoComprasProveedor: `${pathLuegoluegoNew}carrito-compras-proveedor`,
+  //carritoComprasProveedor: `${pathPrincipal}carrito-compras-proveedor`,
+  carritoComprasProveedor: `${pathLuegoluegoNew}carrito-compras-proveedor`,
 
   carritoHistoricosProveedor: `${pathPrincipal}carrito-historicos-proveedores`,
 

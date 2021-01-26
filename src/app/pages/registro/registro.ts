@@ -289,7 +289,7 @@ export class RegistroPage {
     this.navCtrl.pop();
   }
 
-  registrar() {
+  registrarOld() {
     console.log(this.objetoRegistro);
     if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
@@ -426,7 +426,7 @@ export class RegistroPage {
 
   }
 
-  registrarNew() {
+  registrar() {
     console.log(this.objetoRegistro);
     if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
