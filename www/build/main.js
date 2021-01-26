@@ -12401,6 +12401,7 @@ var pathChat = "https://dev-cabasto.sharktech.com.mx/";
 export const pathChat = "https://app.luegoluego.com.mx/";
  */
 //export const pathChat = "http://localhost:8080/";
+//mod ubuntu
 //DEV
 //export const pathLuegoluegoNew = "http://localhost:8888/luegoluego/luegoluego/";
 //PRO
