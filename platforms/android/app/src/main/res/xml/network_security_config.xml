@@ -8,6 +8,10 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">localhost</domain>
         <domain includeSubdomains="true">http://www.olam-systems.com.mx</domain>
+        <domain includeSubdomains="true">https://dev-custom.luegoluego.com.mx</domain>
+        <domain includeSubdomains="true">http://dev-custom.luegoluego.com.mx</domain>
+        <domain includeSubdomains="true">https://custom.luegoluego.com.mx</domain>
+        <domain includeSubdomains="true">http://custom.luegoluego.com.mx</domain>
         <domain includeSubdomains="true">https://pay.stripe.com</domain>
     </domain-config>
 </network-security-config>

@@ -4,10 +4,10 @@ import { EnvioTransportistaPage } from './envio-transportista';
 
 @NgModule({
   declarations: [
-    EnvioTransportistaPage,
+    //EnvioTransportistaPage,
   ],
   imports: [
-    IonicPageModule.forChild(EnvioTransportistaPage),
+    //IonicPageModule.forChild(EnvioTransportistaPage),
   ],
 })
 export class EnvioTransportistaPageModule {}

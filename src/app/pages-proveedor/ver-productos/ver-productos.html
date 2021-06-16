@@ -30,7 +30,7 @@
 
       <div>Costo</div>
       <div>=</div>
-      <div><strong>{{pedidos.pedidoProveedores[0].comisionTransportista + pedidos.total | currency}}</strong></div>
+      <div><strong>{{retornarVal(pedidos.pedidoProveedores[0].comisionTransportista,pedidos.total) | currency}}</strong></div>
 
     <div>Total</div>
     <div>=</div>

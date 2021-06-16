@@ -289,7 +289,7 @@ export class RegistroPage {
     this.navCtrl.pop();
   }
 
-  registrar() {
+  registrarOld() {
     console.log(this.objetoRegistro);
     if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
@@ -418,7 +418,7 @@ export class RegistroPage {
           }, (error: HttpErrorResponse) => {
             this.loadingService.hide();
             let err: any = error.error;
-            this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+            this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
           });
         });
       }
@@ -426,7 +426,7 @@ export class RegistroPage {
 
   }
 
-  registrarNew() {
+  registrar() {
     console.log(this.objetoRegistro);
     if (environment.perfil.activo == 1 && this.objetoRegistro[7].value != this.objetoRegistro[8].value) {
       this.alertaService.warnAlertGeneric("Las contraseñas no coinciden");
@@ -560,7 +560,7 @@ export class RegistroPage {
           }, (error: HttpErrorResponse) => {
             this.loadingService.hide();
             let err: any = error.error;
-            this.alertaService.errorAlertGeneric(err.message ? err.message : err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
+            this.alertaService.errorAlertGeneric(err.description ? err.description : err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
           });
         });
       }

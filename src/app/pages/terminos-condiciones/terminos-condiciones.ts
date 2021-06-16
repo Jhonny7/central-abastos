@@ -1,12 +1,12 @@
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-terminos-condiciones',
   templateUrl: 'terminos-condiciones.html',
 })
-export class TerminosCondicionesPage {
+export class TerminosCondicionesPage implements OnDestroy{
 
   constructor(
     public navCtrl: NavController, 
@@ -15,6 +15,13 @@ export class TerminosCondicionesPage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
+  }
+
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
 }

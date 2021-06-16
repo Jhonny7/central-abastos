@@ -1,23 +1,25 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { HomeGeoProveedoresPage } from './../home-geo-proveedores/home-geo-proveedores';
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ViewController } from 'ionic-angular';
-import { HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'page-direcciones',
   templateUrl: 'direcciones.html',
 })
-export class DireccionesPage {
+export class DireccionesPage implements OnDestroy{
 
   public listaDirecciones: any = [];
 
   public render: boolean = false;
   public fromPop: boolean = false;
 
+  public user:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -25,8 +27,10 @@ export class DireccionesPage {
     private alertaService: AlertaService,
     private loadingService: LoadingService,
     private events: Events,
-    private viewCtrl: ViewController) {
+    private viewCtrl: ViewController,
+    private localStorageEncryptService: LocalStorageEncryptService) {
 
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.fromPop = navParams.get("fromPop");
     this.cargarDireccionesLista();
 
@@ -48,19 +52,31 @@ export class DireccionesPage {
       } else {
         this.listaDirecciones.push(data.body);
       }
-      //this.cards = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-cards`);
+      //this.cards = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}-cards`);
     });
 
     this.events.subscribe('actualizarTarjetas', data => {
       this.cargarDireccionesLista(data.fromLogin);
     });
   }
-
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
+  }
+  
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
   }
 
   cargarDireccionesLista(fromLogin:boolean = false) {
-    this.genericService.sendGetRequest(environment.direcciones).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(`${environment.direcciones}`);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.direcciones}`, params);
+    }
+    sus.subscribe((response: any) => {
      
       //quitar
       this.listaDirecciones = response;
@@ -68,13 +84,14 @@ export class DireccionesPage {
       if (this.listaDirecciones.length <= 0) {
         if(!fromLogin){
           this.alertaService.warnAlertGeneric("Aún no cuentas con direcciones frecuentes");
+          
         }
       }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.listaDirecciones = [];
       this.render = true;
-      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 

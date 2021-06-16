@@ -1,3 +1,4 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { AlertaService } from './../../services/alerta.service';
 import { LoadingService } from './../../services/loading.service';
 import { GenericService } from './../../services/generic.service';
@@ -23,12 +24,16 @@ export class CalificacionPage {
   public pedido:any = null;
 
   public env:any = environment;
+
+  public user: any =  null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
     private loadingService: LoadingService,
-    private alertaService: AlertaService) {
+    private alertaService: AlertaService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
       this.pedido = navParams.get("pedido");
     this.stars.push({
       selected: true,
@@ -98,7 +103,8 @@ export class CalificacionPage {
       let body:any = {
         pedidoProveedorId: this.pedido.id,
         calificacionServicio: cal,
-        comentarios: this.queja
+        comentarios: this.queja,
+        email: this.user.email
       };
       this.genericService.sendPutRequest(environment.calificacionServicio, body).subscribe((response: any) => {
         this.loadingService.hide();

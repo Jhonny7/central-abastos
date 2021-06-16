@@ -205,12 +205,13 @@ export class AlertaService implements OnDestroy {
   }
 
   /**Alerta genérica de error */
-  errorAlertGeneric(error: any) {
+  errorAlertGeneric(error: any, array:any = null) {
     if (!this.basica) {
       this.alert = this.alertCtrl.create({
         title: `<div class='notificacionError'>
         <div><img class='headerImg' src='assets/imgs/alerts/error.png'/></div>
         <div class='textoTitle'>${error}</div>
+        <div class="push-error"></div>
         <div>`,
         cssClass: this.genericService.getColorClass(),
         message: null,
@@ -224,7 +225,17 @@ export class AlertaService implements OnDestroy {
       });
       this.basica = true;
       this.alert.present().then((result: any) => {
-        
+        if(array){
+          
+          let str:string = "";
+          array.forEach(item => {
+            str+=`<p>${item.descripcion}</p>`;
+          });
+          setTimeout(() => {
+            let id:any = document.getElementsByClassName("push-error");
+            id[0].innerHTML = str;
+          }, 500);
+        }
       });
       this.alert.onDidDismiss(() => {
         this.basica = false;

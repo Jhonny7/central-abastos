@@ -1,7 +1,7 @@
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { LoadingService } from './../../services/loading.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, ModalController, ActionSheetController } from 'ionic-angular';
 import { environment } from '../../../environments/environment.prod';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -18,7 +18,7 @@ import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveed
   selector: 'page-perfil',
   templateUrl: 'perfil.html',
 })
-export class PerfilPage {
+export class PerfilPage implements OnDestroy{
   public photo_url: string = null;
 
   public selectOptions: any = {
@@ -135,17 +135,27 @@ export class PerfilPage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
     moment.locale("ES");
+  }
+
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   getDataUsuario() {
     this.loadingService.show().then(() => {
       this.genericService.sendGetRequest(`${environment.users}/${this.user.username}`).subscribe((response: any) => {
-
+        let fecha:any = response.fechaNacimiento.split(" ")[0];
+        console.log(response);
+        
+        
         this.objetoRegistro[0].value = response.firstName;
         this.objetoRegistro[1].value = response.lastName;
         this.objetoRegistro[2].value = response.motherLastName;
-        this.objetoRegistro[3].value = moment(response.fechaNacimiento, "DD/MM/YYYY").toDate().toISOString();
+        this.objetoRegistro[3].value = moment(fecha, "YYYY-MM-DD").toDate().toISOString();
         this.objetoRegistro[4].value = response.telefono;
         this.objetoRegistro[5].value = response.genero;
 
@@ -271,7 +281,7 @@ export class PerfilPage {
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
         let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
   }
@@ -294,7 +304,7 @@ export class PerfilPage {
         motherLastName: this.objetoRegistro[2].value,
         telefono: this.objetoRegistro[4].value,
         genero: this.objetoRegistro[5].value,
-        fechaNacimiento: moment(this.objetoRegistro[3].value.split("T")[0], "YYYY-MM-DD").format("DD/MM/YYYY"),
+        fechaNacimiento: moment(this.objetoRegistro[3].value.split("T")[0], "YYYY-MM-DD").format("YYYY-MM-DD HH:mm:ss"),
         adjunto: this.photo_url == null || this.photo_url == "null" ? null : {
           contentType: "image/jpeg",
           file: this.photo_url.split("data:image/jpeg;base64,")[1],
@@ -346,6 +356,11 @@ export class PerfilPage {
         fields += `${this.translatePipe.instant(String(name).toUpperCase())}, `;
       } */
     }
+
+    console.log(validacion);
+    console.log(this.formGroup.controls);
+    
+    
     if (validacion <= 0) {
       this.btnHabilitado = false;
     } else {

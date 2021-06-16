@@ -104,7 +104,7 @@ export class GenericService {
 
     getTotalCarrito() {
         if (this.user) {
-            let productosCarrito: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            let productosCarrito: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
             if (productosCarrito) {
                 return productosCarrito.length;
             } else {

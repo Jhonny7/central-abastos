@@ -135,14 +135,14 @@
           <div class="costo-subtotal">Subtotal</div>
           <div class="precio-subtotal">{{suma(p.total,p.comisionTransportista) | currency}}</div>
 
-          <div class="extern" *ngIf="p.envioExterno" (click)="seleccionaExterno(p)">
+          <div class="extern" *ngIf="p.envioExterno && aplicaExterno" >
             <div class="aplica">*Aplica envío externo</div>
             <div class="contenedor-estafeta">
-              <div>
-                <img src="assets/imgs/servicios-envio/estafeta.png" alt="">
+              <div (click)="seleccionaExterno(p, 2)">
+                <img src="assets/imgs/servicios-envio/estafeta.png" alt="" [ngClass]="{'cr-act' : p.estafeta}">
               </div>
-              <div>
-                <img src="assets/imgs/servicios-envio/dhl.png" alt="">
+              <div (click)="seleccionaExterno(p, 1)">
+                <img src="assets/imgs/servicios-envio/dhl.png" alt="" [ngClass]="{'cr-act' : p.dhl}">
               </div>
             </div>
           </div>
@@ -241,10 +241,10 @@
       <div class="name-pro" [ngStyle]="{'color': genericService.getColorHex()}">Información</div>
       <div *ngIf="proveedor.totalAgrupado" class="totales" style="    border: 1px solid #b7b7b7;
       border-style: dashed;">
-        <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos}}</strong></div>
-        <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte}}</strong></div>
-        <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega}}</strong></div>
-        <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total}}</strong></div>
+        <div class="tot">Total por productos: <strong>{{proveedor.totalAgrupado.totalProductos | number: "1.0-2"}}</strong></div>
+        <div class="tot">Comisión de transporte: <strong>{{proveedor.totalAgrupado.comisionTransporte | number: "1.0-2"}}</strong></div>
+        <div class="tot" *ngIf="proveedor.totalAgrupado.tiempoEntrega">Tiempo de entrega: <strong>{{proveedor.totalAgrupado.tiempoEntrega | number: "1.0-2"}}</strong></div>
+        <div class="tot">Total: <strong>{{proveedor.totalAgrupado.total | number: "1.0-2"}}</strong></div>
 
       </div>
     </div>
@@ -255,13 +255,13 @@
       <div>Sin articulos en carrito, agrega algunos y aparecerán en esta sección</div>
     </div>
     <div *ngIf="totales && totales.listCarritoProveedores?.length > 0" class="totales" style="margin-bottom: 50px;">
-      <div class="tot">Total por productos: <strong>{{totales.totalProductos}}</strong></div>
-      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte}}</strong></div>
-      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe}}</strong></div>
+      <div class="tot">Total por productos: <strong>{{totales.totalProductos | number: "1.0-2"}}</strong></div>
+      <div class="tot">Comisión de transporte: <strong>{{totales.totalComisionTransporte | number: "1.0-2"}}</strong></div>
+      <div class="tot">Comisión por pago con tarjeta: <strong>{{totales.comisionStripe | number: "1.0-2"}}</strong></div>
 
       <div class="borde-total"></div>
 
-      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total}}</strong></div>
+      <div class="tot" style="font-size: 17px;">Total: <strong>{{totales.total | number: "1.0-2"}}</strong></div>
     </div>
   </div>
 

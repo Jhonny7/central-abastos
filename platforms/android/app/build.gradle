@@ -104,6 +104,8 @@ apply from: "../cordova-plugin-googlemaps/cliente-pgm-custom.gradle"
 apply from: "../cordova-plugin-qrscanner/cliente-qrscanner.gradle"
 apply from: "../cordova-android-support-gradle-release/cliente-cordova-android-support-gradle-release.gradle"
 apply from: "../cordova-plugin-ignore-lint-translation/cliente-build-extras.gradle"
+apply from: "../cordova-plugin-telerik-imagepicker/transportista-ignorelinterrors.gradle"
+apply from: "../cordova-plugin-telerik-imagepicker/transportista-androidtarget.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()

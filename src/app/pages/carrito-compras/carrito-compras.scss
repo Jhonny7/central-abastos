@@ -1,5 +1,10 @@
 page-carrito-compras {
 
+  .cr-act{
+    border: 2px solid blue;
+    border-radius: 50%;
+  }
+
   .extern{
     width: 100%;
     .aplica{
@@ -140,6 +145,17 @@ text-align: center;
     }
   }
 }
+
+.push-error{
+  max-height: 80px;
+  overflow-y: scroll;
+  p{
+    text-align: initial;
+    font-size: 9px;
+    font-weight: initial;
+  }
+}
+
 .seleccionado {
   background-color: #d0d0d0;
   border-radius: 4px;

@@ -6,25 +6,26 @@
 
 <ion-content padding>
 
-  <section class="estatus">
+  <img src="assets/imgs/qr/barcode.png" alt="" *ngIf="escaneando" class="escanner">
+
+  <section class="estatus" *ngIf="!escaneando">
     <div class="number">Costo <strong>{{pedido.total | currency}}</strong></div>
     <div class="number">Fecha Solicitud <strong>{{pedido.fechaAlta}}</strong></div>
-    <div class="number" *ngIf="pedido.fechaEntrega">Fecha Entrega <strong>{{pedido.fechaEntrega}}</strong></div>
+    <div class="number" *ngIf="pedido?.fechaEntrega">Fecha Entrega <strong>{{pedido?.fechaEntrega}}</strong></div>
     <div class="number">Estatus <strong>{{pedido.estatus.nombre}}</strong></div>
   </section>
 
-  <section class="mapa">
+  <section class="mapa" *ngIf="!escaneando">
 
     <div class="direccion" [ngStyle]="{'color' : genericService.getColorHex()}" *ngIf="tipoUsuario == 3">Proveedor</div>
-    <div class="direct" *ngIf="tipoUsuario == 3">{{pedido.cliente.firstName}}
-      {{pedido.cliente.lastName}}</div>
+    <div class="direct" *ngIf="tipoUsuario == 3">{{pedido?.pedidoProveedores[0].proveedor.nombre}}</div>
 
     <div class="direccion" [ngStyle]="{'color' : genericService.getColorHex()}" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">Cliente</div>
     <div class="direct" *ngIf="tipoUsuario == 2 || tipoUsuario == 3">{{pedido.cliente.firstName}}
       {{pedido.cliente.lastName}}</div>
 
     <div class="direccion" [ngStyle]="{'color' : genericService.getColorHex()}">Dirección de entrega</div>
-    <div class="direct">{{pedido.direccionContacto.direccion}}</div>
+    <div class="direct">{{pedido.direccionContacto?.direccion}}</div>
 
 
 
@@ -55,10 +56,17 @@
         <ion-icon name="ios-chatbubbles-outline"></ion-icon>
         Chat
       </button>
+
       <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="enviarPedidoMultiple()"
-        style="font-size: 11px;" [disabled]="pedido.pedidoProveedores[0]?.estatusId == 18">
+        style="font-size: 11px;" [disabled]="pedido?.pedidoProveedores[0]?.estatusId == 18" *ngIf="pedido?.pedidoProveedores[0]?.transportistaId">
         <ion-icon name="ios-send-outline"></ion-icon>Enviar a transportista
       </button>
+
+      <button class="boton-recibo" [ngStyle]="{'background-color' : genericService.getColorHex()}" (click)="envioPedidoExterno(pedido.pedidoProveedores[0])"
+        style="font-size: 11px;" [disabled]="pedido?.pedidoProveedores[0]?.estatusId == 18" *ngIf="!pedido?.pedidoProveedores[0]?.transportistaId">
+        <ion-icon name="ios-send-outline"></ion-icon>Enviar
+      </button>
+
       <button class="boton-problemas2" style="font-size: 10px;" [ngStyle]="{'background-color' : genericService.getColorHex()}"
         (click)="problemasPedido()">
         <ion-icon name="ios-flash-outline"></ion-icon>Problemas con pedido

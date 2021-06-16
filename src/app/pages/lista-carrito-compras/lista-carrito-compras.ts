@@ -1,10 +1,11 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HttpErrorResponse } from '@angular/common/http';
-import { environment } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
 import * as moment from "moment";
 import { CarritoHistoricoPage } from '../carrito-historico/carrito-historico';
 
@@ -12,17 +13,20 @@ import { CarritoHistoricoPage } from '../carrito-historico/carrito-historico';
   selector: 'page-lista-carrito-compras',
   templateUrl: 'lista-carrito-compras.html',
 })
-export class ListaCarritoComprasPage {
+export class ListaCarritoComprasPage implements OnDestroy{
 
   public listas: any[] = [];
   public renderSlide: boolean = true;
+  public user:any = null;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
     private alertaService: AlertaService,
-    private loadingService: LoadingService) {
+    private loadingService: LoadingService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.cargarListas();
   }
 
@@ -31,9 +35,21 @@ export class ListaCarritoComprasPage {
     //claseTabs[0].style.display = "flex";
   }
 
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
+  }
+
   /**Método para cargar productos en base a especificaciones */
   cargarListas() {
-    this.genericService.sendGetRequest(environment.carritoHistorico).subscribe((response: any) => {
+
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.carritoHistorico);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.carritoHistorico}`, params);
+    }
+    sus.subscribe((response: any) => {
       
       //quitar
       this.listas = response;
@@ -54,11 +70,13 @@ export class ListaCarritoComprasPage {
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.renderSlide = false;
-      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
   }
 
   borrar(item:any){

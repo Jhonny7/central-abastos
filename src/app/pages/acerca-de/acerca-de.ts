@@ -1,5 +1,5 @@
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AppVersion } from '@ionic-native/app-version';
 
@@ -7,7 +7,7 @@ import { AppVersion } from '@ionic-native/app-version';
   selector: 'page-acerca-de',
   templateUrl: 'acerca-de.html',
 })
-export class AcercaDePage {
+export class AcercaDePage implements OnDestroy{
 
   public version:any = "1.0.0";
   public anio:any = "2020";
@@ -19,6 +19,8 @@ export class AcercaDePage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
     this.appVersion.getAppName();
     this.appVersion.getPackageName();
     this.appVersion.getVersionCode();
@@ -27,6 +29,11 @@ export class AcercaDePage {
     });
 
     this.anio = new Date().getFullYear();
+  }
+
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
 }

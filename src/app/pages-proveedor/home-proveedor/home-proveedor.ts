@@ -6,8 +6,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, PopoverController, MenuController, Events } from 'ionic-angular';
 import { OpcionesMenuPage } from '../../pages/opciones-menu/opciones-menu';
 import { User } from '../../models/User';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import * as moment from "moment";
 import { HistorialPedidosDetailPage } from '../../pages/historial-pedidos-detail/historial-pedidos-detail';
 
@@ -17,7 +17,7 @@ import { HistorialPedidosDetailPage } from '../../pages/historial-pedidos-detail
 })
 export class HomeProveedorPage implements OnDestroy{
 
-  public user: User = null;
+  public user: any = null;
   public pedidos: any = [];
   public pedidosReplica: any = [];
 
@@ -72,6 +72,12 @@ export class HomeProveedorPage implements OnDestroy{
 
   ionViewDidLoad() {
   }
+  
+  ionViewDidEnter(){
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
+  }
+  
 
   verOpciones() {
     let popover = this.popoverCtrl.create(OpcionesMenuPage, {}, { cssClass: "clase-Pop" });
@@ -86,7 +92,13 @@ export class HomeProveedorPage implements OnDestroy{
       path = `${environment.pedidosTransportista}`;
     }
 
-    this.genericService.sendGetRequest(path).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(path);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${path}`, params);
+    }
+    sus.subscribe((response: any) => {
 
       this.pedidos = response;
       if (this.pedidos.length <= 0) {
@@ -102,12 +114,42 @@ export class HomeProveedorPage implements OnDestroy{
         refresher.complete();
       }
       this.pedidos = null;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
   viewDetail(pedido: any) {
-    this.navCtrl.push(HistorialPedidosDetailPage, { pedido });
+
+      let path: any = `${environment.proveedor}/pedidos/`;
+
+      if(this.user.tipo_usuario == 4){
+        path = `${environment.transportista}/pedidos/`;
+      }
+      let params = new HttpParams();
+      params = params.set("email", this.user.email);
+      let sus: any = this.genericService.sendGetRequest(`${path}${pedido.id}`);
+      if (nuevoBackHabilitado) {
+        sus = this.genericService.sendGetParams(`${path}${pedido.id}`, params);
+      }
+      this.loadingService.show();
+      sus.subscribe(
+        (response: any) => {
+          this.loadingService.hide();
+          this.navCtrl.push(HistorialPedidosDetailPage, { pedido:response });
+
+        },
+        (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          let err: any = error.error;
+          this.alertaService.errorAlertGeneric(
+            err.description
+              ? err.description
+              : "Ocurrió un error en el servicio, intenta nuevamente"
+          );
+        }
+      );
+
+    ;
   }
 
   ordenPor(opc) {

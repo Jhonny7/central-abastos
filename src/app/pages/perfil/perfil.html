@@ -10,8 +10,8 @@
       <div class="avatar">
         <div class="imagen" (tap)="opcionesDeImagen()">
           <img src="assets/imgs/perfil/social-media.png" alt="" *ngIf="!photo_url && userResponse && !userResponse.adjuntoId">
-          <img src="{{photo_url}}" alt="" *ngIf="photo_url && !userResponse || !userResponse?.adjuntoId">
-          <img src="{{env.getImagenIndividual}}{{userResponse.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId">
+          <img src="{{photo_url}}" alt="" *ngIf="photo_url">
+          <img src="{{env.getImagenIndividual}}{{userResponse.adjuntoId}}" alt="" *ngIf="userResponse && userResponse.adjuntoId && !photo_url">
         </div>
       </div>
 

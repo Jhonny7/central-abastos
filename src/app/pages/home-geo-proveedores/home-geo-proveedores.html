@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="{{genericService.getColor()}}">
     <ion-title *ngIf="!fromModal">
-      {{!direccion ? 'Alta de dirección' : 'Actualizar de dirección'}}
+      {{!direccion ? 'Alta de dirección' : 'Actualizar dirección'}}
     </ion-title>
     <ion-title *ngIf="fromModal">
       Datos de contacto
@@ -43,11 +43,11 @@
 </ion-content>
 
 <ion-footer class="footer-button-class" *ngIf="muestraMapa && !fromModal">
-  <button style="width:100%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{!direccion
+  <button style="width:100%" (click)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}">{{!direccion
     ? 'Agregar' : 'Actualizar'}} dirección</button>
 </ion-footer>
 <ion-footer class="footer-button-class" *ngIf="muestraMapa && fromModal">
-  <button style="width:49%" (tap)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}" *ngIf="!fromRegister">Guardar
+  <button style="width:49%" (click)="addToList()" [ngStyle]="{'background-color': genericService.getColorHex()}" *ngIf="!fromRegister">Guardar
     y aceptar</button>
-  <button style="width:49%" (tap)="backData()" [ngStyle]="{'background-color': genericService.getColorHex(), 'width' : fromRegister ? '100%' : '49%'}">Aceptar</button>
+  <button style="width:49%" (click)="backData()" [ngStyle]="{'background-color': genericService.getColorHex(), 'width' : fromRegister ? '100%' : '49%'}">Aceptar</button>
 </ion-footer>

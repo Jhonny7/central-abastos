@@ -20,7 +20,7 @@ export class ChatService {
   alreadyConnectedOnce = false;
   private subscription: Subscription;
 
-  public user: User = null;
+  public user: any = null;
   constructor(
     private location: Location,
     private localStorageEncryptService: LocalStorageEncryptService
@@ -38,7 +38,7 @@ export class ChatService {
     let url = 'websocket/chat';
     
     let urlComplete:any = `${pathChat}${url}`;
-    const authToken = this.user.id_token;
+    const authToken = this.user.email;
     if (authToken) {
       url += '?access_token=' + authToken;
     }

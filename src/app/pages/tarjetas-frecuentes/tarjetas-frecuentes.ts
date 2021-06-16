@@ -5,8 +5,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, App } from 'ionic-angular';
 import { DetalleTarjetaPage } from '../detalle-tarjeta/detalle-tarjeta';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'page-tarjetas-frecuentes',
@@ -46,7 +46,7 @@ export class TarjetasFrecuentesPage implements OnDestroy {
       } else {
         this.cards.push(data.response);
       }
-      //this.cards = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-cards`);
+      //this.cards = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}-cards`);
     });
 
     this.events.subscribe('actualizarTarjetas', data => {
@@ -55,7 +55,13 @@ export class TarjetasFrecuentesPage implements OnDestroy {
   }
 
   getCards() {
-    this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.tarjetas);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.tarjetas}-all`, params);
+    }
+    sus.subscribe((response: any) => {
       
       //quitar
       this.cards = response;
@@ -65,15 +71,20 @@ export class TarjetasFrecuentesPage implements OnDestroy {
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.cards = null;
-      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
   ngOnDestroy() {
     this.events.unsubscribe("card");
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
+    
     this.getCards();
   }
 

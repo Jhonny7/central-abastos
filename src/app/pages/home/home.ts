@@ -1,11 +1,11 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, Events, App, PopoverController, MenuController } from 'ionic-angular';
+import { NavController, ModalController, AlertController, Events, App, PopoverController, MenuController, NavParams } from 'ionic-angular';
 import { FiltroProductoPage } from '../filtro-producto/filtro-producto';
 import { LoadingService } from '../../services/loading.service';
 import { LoginPage } from '../login/login';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
-import { environment } from '../../../environments/environment.prod';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
 import { GenericService } from '../../services/generic.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { AlertaService } from '../../services/alerta.service';
@@ -58,13 +58,15 @@ export class HomePage implements OnDestroy, OnInit {
 
   public env: any = environment;
 
-  public user: User = null;
+  public user: any = null;
 
   public totalCarrito: any = 0;
 
   public color: any = "#3b64c0";
 
   public subscribe: any = null;
+
+  public fromMenu:any = null;
 
   constructor(
     public navCtrl: NavController,
@@ -79,7 +81,9 @@ export class HomePage implements OnDestroy, OnInit {
     private stringUtilsService: StringUtilsService,
     private app: App,
     public popoverCtrl: PopoverController,
-    public menuCtrl: MenuController) {
+    public menuCtrl: MenuController,
+    private navParams: NavParams) {
+      this.fromMenu = navParams.get("fromMenu");
     /**Obtenci{on de usuario en sesión */
     this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
@@ -144,6 +148,14 @@ export class HomePage implements OnDestroy, OnInit {
   ionViewWillLeave() {
     //this.navCtrl.popAll();
   }
+  
+
+  ionViewDidLoad(){
+    if(this.fromMenu){
+      let tabbar:any = document.getElementsByClassName("tabbar");
+      tabbar[0].style.display = "none";
+    }
+  }
 
   cargaPromociones() {
     this.genericService.sendGetRequest(environment.promociones).subscribe((response: any) => {
@@ -164,9 +176,15 @@ export class HomePage implements OnDestroy, OnInit {
   getTotalCarrito(fromLogin: boolean = false) {
     console.log("-----------------------------------");
 
-    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.carritoCompras);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.carritoCompras}`, params);
+    }
+    sus.subscribe((response: any) => {
 
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, response);
       this.totalCarrito = response.length;
     }, (error: HttpErrorResponse) => {
     });
@@ -176,6 +194,9 @@ export class HomePage implements OnDestroy, OnInit {
     this.events.unsubscribe("updateProductos");
     this.events.unsubscribe("totalCarrito2");
     this.events.unsubscribe("totalCarrito");
+
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   ngOnInit() {
@@ -199,10 +220,16 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   cargarProductosCarrito() {
-    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.carritoCompras);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.carritoCompras}`, params);
+    }
+    sus.subscribe((response: any) => {
 
       let nav = this.app.getRootNav();
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, response);
       nav.push(CarritoComprasPage);
     }, (error: HttpErrorResponse) => {
       this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
@@ -233,7 +260,7 @@ export class HomePage implements OnDestroy, OnInit {
 
   verificarCarrito() {
     if (this.user) {
-      let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
       console.log(productosStorage);
 
       if (productosStorage) {
@@ -250,7 +277,7 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   verificarCarritoModificarCantidad(element: any) {
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
     if (productosStorage) {
       productosStorage.forEach(item => {
         if (item.id == element.id) {
@@ -258,45 +285,10 @@ export class HomePage implements OnDestroy, OnInit {
         }
       });
     }
-    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+    this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, productosStorage);
   }
 
-  cargarSecciones() {
-    this.genericService.sendGetRequest(environment.secciones, Seccion)
-      .subscribe((response: any) => {
-        this.secciones = response;
-        this.objCombos.secciones = this.secciones;
-        //quitar
-      }, (error: HttpErrorResponse) => {
-        let err: any = error.error;
-        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
-  }
 
-  cargarProveedores() {
-    this.genericService.sendGetRequest(environment.proveedores, Proveedor)
-      .subscribe((response: any) => {
-        this.proveedores = response;
-        this.objCombos.proveedores = this.proveedores;
-
-        //quitar
-      }, (error: HttpErrorResponse) => {
-        let err: any = error.error;
-        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
-  }
-
-  cargarCategorias() {
-    this.genericService.sendGetRequest(environment.categorias, Categoria)
-      .subscribe((response: any) => {
-        this.categorias = response;
-        this.objCombos.categorias = this.categorias;
-        //quitar
-      }, (error: HttpErrorResponse) => {
-        let err: any = error.error;
-        //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
-  }
 
   incrementa(p: any) {
     let bandera: boolean = false;
@@ -315,7 +307,8 @@ export class HomePage implements OnDestroy, OnInit {
   agregarToCarritoBack(bandera: boolean, producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoId: producto.id
+      productoId: producto.id,
+      email: this.user.email
     }
     let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
 
@@ -330,11 +323,18 @@ export class HomePage implements OnDestroy, OnInit {
       }
       this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
-      if (producto.cantidad == 1) {
-        producto.cantidad = 1;
-      } else {
-        producto.cantidad--;
+      if(error.error.status == 3){
+        this.alertaService.errorAlertGeneric(error.error.description);
+        producto.cantidad = error.error.parameters;
+      }else{
+        if (producto.cantidad == 1) {
+          producto.cantidad = 1;
+        } else {
+          producto.cantidad--;
+        }
       }
+
+      
     });
   }
 
@@ -353,7 +353,7 @@ export class HomePage implements OnDestroy, OnInit {
       this.genericService.sendDeleteRequest(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
         if (producto.cantidad == 0) {
           this.productoService.deleteFavorito(producto);
-          //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+          //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
         }
         this.verificarCarritoModificarCantidad(producto);
       }, (error: HttpErrorResponse) => {
@@ -374,26 +374,6 @@ export class HomePage implements OnDestroy, OnInit {
     });
   } */
 
-
-
-  /**Método para cargar productos en base a especificaciones */
-  cargarProductos() {
-
-    this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(environment.productos).subscribe((response: any) => {
-
-        //quitar
-        this.productos = response;
-        this.verificarCarrito();
-        this.loadingService.hide();
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
-    });
-  }
-
   /**Método para cargar productos en base a especificaciones */
   cargarProductosPorCategoria(opc: number) {
     this.productosCategorias = [];
@@ -412,7 +392,7 @@ export class HomePage implements OnDestroy, OnInit {
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
         let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
   }
@@ -478,13 +458,13 @@ export class HomePage implements OnDestroy, OnInit {
     }, (error: HttpErrorResponse) => {
       this.loadingService.hide();
       let err: any = error.error;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
 
   agregarColeccion() {
-    let colecciones: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-colecciones`);
+    let colecciones: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}-colecciones`);
     let buttonLabels = [];
     buttonLabels.push("Nueva colección");
     colecciones.forEach(coleccion => {
@@ -508,7 +488,7 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   agregarToCarrito(producto: any) {
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
     let productos: any = [];
     productos.push(producto);
     if (productosStorage) {
@@ -518,7 +498,7 @@ export class HomePage implements OnDestroy, OnInit {
     }
     producto.carrito = true;
     try {
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productos);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, productos);
     } catch (error) {
       producto.carrito = false;
     }
@@ -571,14 +551,16 @@ export class HomePage implements OnDestroy, OnInit {
   }
 
   viewDetail(producto: any) {
-
+    console.log("view detail proveedores");
+    
     let productoNew: any = {
       producto: {
         nombre: "Proveedores"
       }
     };
     if (this.user && this.user.parametros.pantalla_proveedores == "S") {
-
+      console.log("buscados");
+      
       console.log(this.productosBuscados);
 
 
@@ -586,6 +568,9 @@ export class HomePage implements OnDestroy, OnInit {
         //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
         return arreglo.findIndex(valorDelArreglo => valorDelArreglo.proveedorId === valorActual.proveedorId) === indiceActual
       });
+      console.log("unique");
+      console.log(unique);
+      
       let proveedoresGroup: any[] = [];
       unique.forEach(prov => {
         prov.productos = [];
@@ -610,7 +595,7 @@ export class HomePage implements OnDestroy, OnInit {
           //let nav = this.app.getRootNav();
           //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
           if (this.user) {
-            let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
 
             if (carritos) {
               let position: any = carritos.findIndex(
@@ -629,7 +614,7 @@ export class HomePage implements OnDestroy, OnInit {
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       });
       //

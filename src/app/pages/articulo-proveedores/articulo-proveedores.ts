@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment.prod';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
 import { AlertaService } from '../../services/alerta.service';
@@ -12,7 +12,7 @@ import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
   selector: 'page-articulo-proveedores',
   templateUrl: 'articulo-proveedores.html',
 })
-export class ArticuloProveedoresPage {
+export class ArticuloProveedoresPage implements OnDestroy{
   public productos: any[] = [];
 
   public replicaProductos: any[] = [];
@@ -41,8 +41,15 @@ export class ArticuloProveedoresPage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
   }
 
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
+  }
+  
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     if(!this.fromCliente){
@@ -54,7 +61,7 @@ export class ArticuloProveedoresPage {
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       });
     }

@@ -7,9 +7,9 @@
 <ion-content>
   <div class="contenedor-chat">
     <div class="cont-msj">
-      <div class="msj" style="margin-bottom: 10px;" [ngClass]="{'msj' : user.username == c.usuarioEmisorLogin, 'msj-r' : user.username != c.usuarioEmisorLogin}"
+      <div class="msj" style="margin-bottom: 10px;" [ngClass]="{'msj' : user.username == c.usuario_emisor, 'msj-r' : user.username != c.usuario_emisor}"
         *ngFor="let c of chat.chatDetalles">
-        <div class="{{user.username == c.usuarioEmisorLogin ? genericService.getColorClassChat() : 'm'}}" [ngStyle]="{'background-color': user.username == c.usuarioEmisorLogin ? genericService.getColorHex(): ''}">
+        <div class="{{user.username == c.usuario_emisor ? genericService.getColorClassChat() : 'm'}}" [ngStyle]="{'background-color': user.username == c.usuario_emisor ? genericService.getColorHex(): ''}">
           <div>{{c.mensaje}}</div>
           <div style="font-size:9px">{{c.fecha}}</div>
         </div>

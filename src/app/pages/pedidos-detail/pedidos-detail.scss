@@ -1,45 +1,52 @@
 page-pedidos-detail {
-    .separador {
-        border-bottom: 1px solid #dedede;
-        padding-bottom: 8px;
-        .proveedor {
-          width: 75%;
-          display: inline-block;
-          .nombre {
-            display: inline-block;
-            font-size: 15px;
-            width: 49%;
-          }
-          .precio {
-            display: inline-block;
-            font-size: 15px;
-            width: 35%;
-            font-weight: 600;
-          }
-
-          .costo-envio {
-            display: inline-block;
-            font-size: 15px;
-            width: 49%;
-          }
-          .precio-envio {
-            display: inline-block;
-            font-size: 15px;
-            width: 35%;
-            font-weight: 600;
-          }
-
-          .costo-subtotal {
-            display: inline-block;
-            font-size: 15px;
-            width: 49%;
-          }
-          .precio-subtotal {
-            display: inline-block;
-            font-size: 15px;
-            width: 35%;
-            font-weight: 600;
-          }
-        }
+  .datos-tarjetas {
+    .name {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+  .separador {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 8px;
+    .proveedor {
+      width: 75%;
+      display: inline-block;
+      .nombre {
+        display: inline-block;
+        font-size: 15px;
+        width: 49%;
       }
+      .precio {
+        display: inline-block;
+        font-size: 15px;
+        width: 35%;
+        font-weight: 600;
+      }
+
+      .costo-envio {
+        display: inline-block;
+        font-size: 15px;
+        width: 49%;
+      }
+      .precio-envio {
+        display: inline-block;
+        font-size: 15px;
+        width: 35%;
+        font-weight: 600;
+      }
+
+      .costo-subtotal {
+        display: inline-block;
+        font-size: 15px;
+        width: 49%;
+      }
+      .precio-subtotal {
+        display: inline-block;
+        font-size: 15px;
+        width: 35%;
+        font-weight: 600;
+      }
+    }
+  }
 }

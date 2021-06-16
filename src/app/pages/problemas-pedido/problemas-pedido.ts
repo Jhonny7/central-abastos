@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment.prod';
 export class ProblemasPedidoPage {
 
   public pedido:any = null;
+  public user:any = null;
 
   constructor(
     public navCtrl: NavController, 
@@ -21,6 +22,7 @@ export class ProblemasPedidoPage {
     private localStorageEncryptService: LocalStorageEncryptService,
     private alertaService: AlertaService) {
       this.pedido = navParams.get('pedidoProblem');
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
   }
 
   ionViewDidLoad() {
@@ -28,7 +30,9 @@ export class ProblemasPedidoPage {
 
   queja() {
     let body: any = {
-      pedidoProveedorId: this.pedido.pedidoProveedores[0].id
+      pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
+      email: this.user.email,
+      tipoUsuario: this.user.tipo_usuario
     };
 
     this.genericService.sendPostRequest(`${environment.queja}`, body).subscribe(

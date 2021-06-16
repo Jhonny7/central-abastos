@@ -1,5 +1,5 @@
 import { TerminosCondicionesPage } from './../terminos-condiciones/terminos-condiciones';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
 
@@ -7,7 +7,7 @@ import { GenericService } from '../../services/generic.service';
   selector: 'page-info',
   templateUrl: 'info.html',
 })
-export class InfoPage {
+export class InfoPage implements OnDestroy{
 
   constructor(
     public navCtrl: NavController, 
@@ -16,6 +16,13 @@ export class InfoPage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
+  }
+
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   irTerminos(){

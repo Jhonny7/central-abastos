@@ -4,10 +4,10 @@ import { EnvioExternoPage } from './envio-externo';
 
 @NgModule({
   declarations: [
-    EnvioExternoPage,
+    //EnvioExternoPage,
   ],
   imports: [
-    IonicPageModule.forChild(EnvioExternoPage),
+    //IonicPageModule.forChild(EnvioExternoPage),
   ],
 })
 export class EnvioExternoPageModule {}

@@ -1,29 +1,39 @@
-import { EnvioExternoPage } from './../../../pages/envio-externo/envio-externo';
-import { HomeGeoProveedoresPage } from './../home-geo-proveedores/home-geo-proveedores';
-import { LoadingService } from './../../services/loading.service';
-import { AlertaService } from './../../services/alerta.service';
-import { GenericService } from './../../services/generic.service';
-import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Events, AlertController, ModalController, FabContainer } from 'ionic-angular';
-import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
-import { User } from '../../models/User';
-import { ProductoService } from '../../services/producto.service';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse } from '@angular/common/http';
-import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
-import { ValidationService } from '../../services/validation.service';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { CurrencyPipe } from '@angular/common';
+import { EnvioExternoPage } from "./../../../pages/envio-externo/envio-externo";
+import { HomeGeoProveedoresPage } from "./../home-geo-proveedores/home-geo-proveedores";
+import { LoadingService } from "./../../services/loading.service";
+import { AlertaService } from "./../../services/alerta.service";
+import { GenericService } from "./../../services/generic.service";
+import { Component, OnDestroy, ViewChild } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  Events,
+  AlertController,
+  ModalController,
+  FabContainer
+} from "ionic-angular";
+import { LocalStorageEncryptService } from "../../services/local-storage-encrypt.service";
+import { User } from "../../models/User";
+import { ProductoService } from "../../services/producto.service";
+import {
+  environment,
+  nuevoBackHabilitado
+} from "../../../environments/environment.prod";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { DetalleProductoPage } from "../detalle-producto/detalle-producto";
+import { ValidationService } from "../../services/validation.service";
+import { Validators, FormBuilder, FormGroup } from "@angular/forms";
+import { CurrencyPipe } from "@angular/common";
 declare var Stripe;
 
 @Component({
-  selector: 'page-carrito-compras',
-  templateUrl: 'carrito-compras.html',
+  selector: "page-carrito-compras",
+  templateUrl: "carrito-compras.html"
 })
 export class CarritoComprasPage implements OnDestroy {
-
   public selectOptions: any = {
-    cssClass: 'action-sheet-class'
+    cssClass: "action-sheet-class"
   };
   public user: any = null;
 
@@ -34,7 +44,11 @@ export class CarritoComprasPage implements OnDestroy {
 
   public first: boolean = true;
 
-  public stripe = Stripe(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
+  public stripe = Stripe(
+    JSON.parse(
+      this.localStorageEncryptService.yayirobe(environment.st.keyPublic)
+    )
+  );
   //public stripe = Stripe('pk_live_4f4ddGQitsEeJ0I1zg84xkRZ00mUNujYXd');
   public card: any;
 
@@ -48,7 +62,11 @@ export class CarritoComprasPage implements OnDestroy {
     dtime: ""
   };
 
+  public aplicaExterno: boolean = true;
+
   public pagoActual: any = null;
+
+  public alerta: boolean = false;
 
   public objetoRegistro: any[] = [
     {
@@ -77,8 +95,7 @@ export class CarritoComprasPage implements OnDestroy {
       formName: "email",
       value: null,
       disabled: false
-    },
-
+    }
   ];
 
   public enCompra: boolean = false;
@@ -99,7 +116,7 @@ export class CarritoComprasPage implements OnDestroy {
 
   public totales: any = null;
 
-  @ViewChild('fab') fab: FabContainer;
+  @ViewChild("fab") fab: FabContainer;
 
   constructor(
     public navCtrl: NavController,
@@ -113,55 +130,71 @@ export class CarritoComprasPage implements OnDestroy {
     private alertaService: AlertaService,
     private loadingService: LoadingService,
     public formBuilder: FormBuilder,
-    private currencyPipe: CurrencyPipe) {
-    this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
+    private currencyPipe: CurrencyPipe
+  ) {
+    this.user = this.localStorageEncryptService.getFromLocalStorage(
+      `userSession`
+    );
+    this.objetoRegistro[0].value = this.user.nombre;
+    this.objetoRegistro[2].value = this.user.email;
+    console.log(this.user);
     if (this.user) {
-      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(
+        `${this.user.email}`
+      );
+      console.log(this.productosCarrito);
+
       this.productosCarritoReplica = this.productosCarrito;
       this.objetoRegistro.forEach(element => {
         this.objetoRegistroOriginal.push(element);
       });
       console.log(this.objetoRegistroOriginal);
 
-
       this.recarga = navParams.get("recarga");
       console.log(this.recarga);
 
       this.getCards();
-
+      this.verCarrito();
       this.agruparTotales();
     }
-
   }
 
   ionViewDidEnter() {
     this.events.publish("backHome");
     this.events.publish("backHistorial");
     this.events.publish("backProveedor");
-
   }
 
-  ionViewWillLeave() {
-
-  }
+  ionViewWillLeave() {}
 
   agruparTotales() {
     this.agrupado = [];
-    let unique = this.productosCarrito.filter((valorActual, indiceActual, arreglo) => {
-      //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
-      return arreglo.findIndex(valorDelArreglo => valorDelArreglo.productoProveedor.proveedorId === valorActual.productoProveedor.proveedorId) === indiceActual
-    });
+    let unique = this.productosCarrito.filter(
+      (valorActual, indiceActual, arreglo) => {
+        //Podríamos omitir el return y hacerlo en una línea, pero se vería menos legible
+        return (
+          arreglo.findIndex(
+            valorDelArreglo =>
+              valorDelArreglo.productoProveedor.proveedorId ===
+              valorActual.productoProveedor.proveedorId
+          ) === indiceActual
+        );
+      }
+    );
 
     unique.forEach(prov => {
       prov.carritoAgrupado = [];
       this.productosCarrito.forEach(element => {
-        if (element.productoProveedor.proveedorId == prov.productoProveedor.proveedorId) {
+        if (
+          element.productoProveedor.proveedorId ==
+          prov.productoProveedor.proveedorId
+        ) {
           prov.carritoAgrupado.push(element);
         }
       });
       this.agrupado.push(prov);
     });
-
+    console.log("AGRUPADO");
 
     console.log(this.agrupado);
     this.getTotales();
@@ -175,7 +208,7 @@ export class CarritoComprasPage implements OnDestroy {
         length: 50,
         type: "text",
         formName: "name",
-        value: null,
+        value: this.user.nombre,
         disabled: false
       },
       {
@@ -193,14 +226,12 @@ export class CarritoComprasPage implements OnDestroy {
         length: 100,
         type: "email",
         formName: "email",
-        value: null,
+        value: this.user.email,
         disabled: false
-      },
-
+      }
     ];
 
     if (this.totales.listCarritoProveedores.length > 1) {
-
       this.objetoRegistro.push({
         name: "Dirección",
         required: true,
@@ -267,31 +298,48 @@ export class CarritoComprasPage implements OnDestroy {
   getTotales() {
     //debugger;
 
-    this.genericService.sendGetRequest(environment.carritoComprasProveedor).subscribe((response: any) => {
-      console.log(response);
-      this.totales = response;
-      this.agrupado.forEach(element => {
-        if (element.totalAgrupado) {
-          delete element.totalAgrupado;
-        }
-      });
-      this.totales.listCarritoProveedores.forEach(item => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(
+      environment.carritoComprasProveedor
+    );
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(
+        `${environment.carritoComprasProveedor}`,
+        params
+      );
+    }
+    sus.subscribe(
+      (response: any) => {
+        console.log(response);
+        this.totales = response;
         this.agrupado.forEach(element => {
-          if (!element.totalAgrupado && item.proveedor.id == element.productoProveedor.proveedor.id) {
-            element.totalAgrupado = {
-              comisionTransporte: item.comisionTransporte,
-              tiempoEntrega: item.tiempoEntrega,
-              total: item.total,
-              totalProductos: item.totalProductos
-            };
+          if (element.totalAgrupado) {
+            delete element.totalAgrupado;
           }
         });
-      });
+        this.totales.listCarritoProveedores.forEach(item => {
+          this.agrupado.forEach(element => {
+            if (
+              !element.totalAgrupado &&
+              item.proveedor.id == element.productoProveedor.proveedor.id
+            ) {
+              element.totalAgrupado = {
+                comisionTransporte: item.comisionTransporte,
+                tiempoEntrega: item.tiempoEntrega,
+                total: item.total,
+                totalProductos: item.totalProductos
+              };
+            }
+          });
+        });
 
-      this.armaObjRegistro();
-    }, (error: HttpErrorResponse) => {
-      //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
-    });
+        this.armaObjRegistro();
+      },
+      (error: HttpErrorResponse) => {
+        //this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -307,31 +355,45 @@ export class CarritoComprasPage implements OnDestroy {
       //this.verCarrito();
     }
 
-    this.events.subscribe('carritoTab', (data) => {
+    this.events.subscribe("carritoTab", data => {
       this.verCarrito();
     });
-    this.events.subscribe('carritoTab2', (data) => {
+    this.events.subscribe("carritoTab2", data => {
       this.verCarrito();
     });
   }
 
-
-  verCarrito() {
+  verCarrito(carga: boolean = false) {
     //nav.pop();
-    this.cargarProductosCarrito();
-
-
+    this.cargarProductosCarrito(carga);
   }
 
-  cargarProductosCarrito() {
-    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
-
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
-      this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
-      this.productosCarritoReplica = this.productosCarrito;
-      this.agruparTotales();
-    }, (error: HttpErrorResponse) => {
-    });
+  cargarProductosCarrito(carga: boolean = false) {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(
+      environment.carritoCompras
+    );
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(
+        `${environment.carritoCompras}`,
+        params
+      );
+    }
+    sus.subscribe(
+      (response: any) => {
+        this.localStorageEncryptService.setToLocalStorage(
+          `${this.user.email}`,
+          response
+        );
+        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(
+          `${this.user.email}`
+        );
+        this.productosCarritoReplica = this.productosCarrito;
+        this.agruparTotales();
+      },
+      (error: HttpErrorResponse) => {}
+    );
   }
 
   seleccionar(card: any) {
@@ -346,35 +408,43 @@ export class CarritoComprasPage implements OnDestroy {
   }
 
   getCards() {
-    this.genericService.sendGetRequest(environment.tarjetas).subscribe((response: any) => {
-
-      this.cards = response;
-      this.cards.forEach(element => {
-        element.selected = false;
-      });
-      if (this.cards.length <= 0) {
-        //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.tarjetas);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(
+        `${environment.tarjetas}-all`,
+        params
+      );
+    }
+    sus.subscribe(
+      (response: any) => {
+        this.cards = response;
+        this.cards.forEach(element => {
+          element.selected = false;
+        });
+        if (this.cards.length <= 0) {
+          //this.alertaService.warnAlertGeneric("Aún no cuentas con tarjetas frecuentes");
+        }
+      },
+      (error: HttpErrorResponse) => {
+        let err: any = error.error;
+        this.cards = null;
+        //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       }
-    }, (error: HttpErrorResponse) => {
-      let err: any = error.error;
-      this.cards = null;
-      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-    });
+    );
   }
 
   setupStripe() {
-
-    let position: any = this.cards.findIndex(
-      (carrito) => {
-        return carrito.selected;
-      }
-    );
+    let position: any = this.cards.findIndex(carrito => {
+      return carrito.selected;
+    });
     let c: any = {
       number: "4242424242424242",
       cvc: "123",
       exp_month: 12,
       exp_year: 2025
-    }
+    };
 
     let bandera: boolean = false;
     if (this.cards[position]) {
@@ -387,7 +457,11 @@ export class CarritoComprasPage implements OnDestroy {
       c.cvc = item.numeroSeguridad;
       c.exp_month = item.expMont;
       c.exp_year = item.expYear;
-    } else if (this.dataCard.dtime.length == 0 || this.dataCard.tarj.length == 0 || this.dataCard.cvc.length == 0) {
+    } else if (
+      this.dataCard.dtime.length == 0 ||
+      this.dataCard.tarj.length == 0 ||
+      this.dataCard.cvc.length == 0
+    ) {
       bandera = true;
     } else {
       c.number = this.dataCard.tarj;
@@ -401,45 +475,87 @@ export class CarritoComprasPage implements OnDestroy {
       c.exp_year = expYear;
     }
     if (!bandera) {
-      Stripe.setPublishableKey(JSON.parse(this.localStorageEncryptService.yayirobe(environment.st.keyPublic)));
+      Stripe.setPublishableKey(
+        JSON.parse(
+          this.localStorageEncryptService.yayirobe(environment.st.keyPublic)
+        )
+      );
       this.loadingService.show().then(() => {
         let clase: any = this;
         Stripe.card.createToken(c, (status, response) => {
-
-          if (response.error) { // Problem!
+          if (response.error) {
+            // Problem!
             clase.loadingService.hide();
-            clase.alertaService.errorAlertGeneric("Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta");
-          } else { // Token was created!
+            clase.alertaService.errorAlertGeneric(
+              "Lo sentimos! No es posible efectuar el cobro, verifica que la información de tu tarjeta es correcta"
+            );
+          } else {
+            // Token was created!
 
             // Get the token ID:
+            console.log("ID STRIPE");
+
             console.log(response);
 
+            //Nuevo armado para saber si es dhl o estafeta
+            let arr: any = [];
+            this.pagoActual.pedidoProveedores.forEach(p => {
+              arr.push({
+                id: p.id,
+                dhl: p.dhl ? 1 : 0,
+                estafeta: p.estafeta ? 1 : 0,
+                envio: p.estafeta ? p.estafeta : p.dhl
+              });
+            });
+            //
             //clase.loadingService.hide();
             var token = response.id;
             let body: any = {
               pedidoId: clase.pagoActual.id,
               token: token,
               email: clase.user.email,
-              emailStripe: clase.objetoRegistro[2].value
+              emailStripe: clase.objetoRegistro[2].value,
+              pedidosProv: arr
             };
-            let service: any = clase.genericService.sendPutRequest(`${environment.pedidos}/pago`, body);
+            let service: any = clase.genericService.sendPutRequest(
+              `${environment.pedidos}/pago`,
+              body
+            );
 
-            service.subscribe((response: any) => {
-              clase.loadingService.hide();
-              clase.events.publish("totalCarrito");
-              clase.events.publish("cargarPedidos");
-              clase.alertaService.successAlertGeneric("El pago se ha efectuado con éxito");
-              clase.cerrar();
-            }, (error: HttpErrorResponse) => {
-
-              clase.loadingService.hide();
-              clase.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
-            });
+            service.subscribe(
+              (response: any) => {
+                clase.loadingService.hide();
+                clase.events.publish("totalCarrito");
+                clase.events.publish("cargarPedidos");
+                clase.alertaService.successAlertGeneric(
+                  "El pago se ha efectuado con éxito"
+                );
+                clase.cerrar();
+              },
+              (error: HttpErrorResponse) => {
+                clase.loadingService.hide();
+                if (
+                  error.error.parameters &&
+                  error.error.parameters.length > 0
+                ) {
+                  clase.alertaService.errorAlertGeneric(
+                    "Ocurrió un error al procesar tu pago, intenta nuevamente",
+                    error.error.parameters
+                  );
+                } else {
+                  clase.alertaService.errorAlertGeneric(
+                    "Ocurrió un error al procesar tu pago, intenta nuevamente"
+                  );
+                }
+              }
+            );
           }
         });
       });
     } else {
-      this.alertaService.warnAlertGeneric("Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente");
+      this.alertaService.warnAlertGeneric(
+        "Llena todos los campos de tarjeta o selecciona alguna que hayas ingresado anteriormente"
+      );
     }
   }
 
@@ -471,10 +587,13 @@ export class CarritoComprasPage implements OnDestroy {
       }
     });
     this.productosCarrito = nuevoArrarCarrito;
-    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, this.productosCarrito);
+    this.localStorageEncryptService.setToLocalStorage(
+      `${this.user.email}`,
+      this.productosCarrito
+    );
 
     //Llamar a events
-    this.events.publish('updateProductos', { productoDelete });
+    this.events.publish("updateProductos", { productoDelete });
 
     if (this.productosCarrito.length <= 0) {
       this.navCtrl.pop();
@@ -500,7 +619,9 @@ export class CarritoComprasPage implements OnDestroy {
 
   agregarToCarrito(producto: any) {
     //debugger;
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(
+      `${this.user.email}`
+    );
     let productos: any = [];
     productos.push(producto);
     if (productosStorage) {
@@ -510,7 +631,10 @@ export class CarritoComprasPage implements OnDestroy {
     }
     producto.carrito = true;
     try {
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productos);
+      this.localStorageEncryptService.setToLocalStorage(
+        `${this.user.email}`,
+        productos
+      );
     } catch (error) {
       producto.carrito = false;
     }
@@ -520,65 +644,91 @@ export class CarritoComprasPage implements OnDestroy {
     //debugger;
     let body: any = {
       precio: producto.precio,
-      productoProveedorId: producto.productoProveedor.id
-    }
-    let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
+      productoProveedorId: producto.productoProveedor.id,
+      email: this.user.email
+    };
+    let service: any = this.genericService.sendPostRequest(
+      environment.carritoCompras,
+      body
+    );
 
     if (producto.cantidad > 1) {
       body.cantidad = producto.cantidad;
-      service = this.genericService.sendPutRequest(environment.carritoCompras, body);
+      service = this.genericService.sendPutRequest(
+        environment.carritoCompras,
+        body
+      );
     }
 
-    service.subscribe((response: any) => {
-      if (bandera) {
-        this.agregarToCarrito(producto);
-        this.verificarCarritoModificarCantidad(producto);
-      } else {
-        this.verificarCarritoModificarCantidad(producto);
+    service.subscribe(
+      (response: any) => {
+        if (bandera) {
+          this.agregarToCarrito(producto);
+          this.verificarCarritoModificarCantidad(producto);
+        } else {
+          this.verificarCarritoModificarCantidad(producto);
+        }
+      },
+      (error: HttpErrorResponse) => {
+        if (error.error.status == 3) {
+          this.alertaService.errorAlertGeneric(error.error.description);
+          producto.cantidad = error.error.parameters;
+        } else {
+          if (producto.cantidad == 1) {
+            producto.cantidad = 1;
+          } else {
+            producto.cantidad--;
+          }
+        }
       }
-
-    }, (error: HttpErrorResponse) => {
-      if (producto.cantidad == 1) {
-        producto.cantidad = 1;
-      } else {
-        producto.cantidad--;
-      }
-    });
+    );
   }
 
   viewDetail(producto: any) {
     //consumir servicio de imagenes completas
     this.loadingService.show().then(() => {
-      this.genericService.sendGetRequest(`${environment.proveedorProductos}/${producto.productoProveedor.id}`).subscribe((response: any) => {
+      this.genericService
+        .sendGetRequest(
+          `${environment.proveedorProductos}/${producto.productoProveedor.id}`
+        )
+        .subscribe(
+          (response: any) => {
+            //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
+            //let nav = this.app.getRootNav();
+            //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
+            if (this.user) {
+              let carritos = this.localStorageEncryptService.getFromLocalStorage(
+                `${this.user.email}`
+              );
 
-        //ERROR SERVICIO NO ACTUALIZA CANTIDAD EN CARRITO
-        //let nav = this.app.getRootNav();
-        //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
-        if (this.user) {
-          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+              if (carritos) {
+                let position: any = carritos.findIndex(carrito => {
+                  return carrito.id == response.id;
+                });
 
-          if (carritos) {
-            let position: any = carritos.findIndex(
-              (carrito) => {
-                return carrito.id == response.id;
+                if (position >= 0) {
+                  response.cantidad = carritos[position].cantidad;
+                }
               }
-            );
-
-            if (position >= 0) {
-              response.cantidad = carritos[position].cantidad;
             }
+            this.navCtrl.push(DetalleProductoPage, {
+              producto: response,
+              fromCarritos: true
+            });
+            this.loadingService.hide();
+          },
+          (error: HttpErrorResponse) => {
+            this.loadingService.hide();
+            let err: any = error.error;
+            this.alertaService.errorAlertGeneric(
+              err.description
+                ? err.description
+                : "Ocurrió un error en el servicio, intenta nuevamente"
+            );
           }
-        }
-        this.navCtrl.push(DetalleProductoPage, { producto: response, fromCarritos: true });
-        this.loadingService.hide();
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-      });
+        );
     });
     //
-
   }
 
   decrementar(p: any) {
@@ -589,38 +739,113 @@ export class CarritoComprasPage implements OnDestroy {
   borrarToCarritoBack(producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoProveedorId: producto.productoProveedor.id
-    }
+      productoProveedorId: producto.productoProveedor.id,
+      email: this.user.email,
+      decremento: 1
+    };
     body.cantidad = producto.cantidad;
 
-    this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
-
-      if (producto.cantidad == 0) {
-        this.genericService.sendDelete(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
-
+    this.genericService
+      .sendPutRequest(environment.carritoCompras, body)
+      .subscribe(
+        (response1: any) => {
           if (producto.cantidad == 0) {
-            this.events.publish("totalCarrito");
-            this.deleteFavoritoService(producto);
-            //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            this.confirmarDelete(producto);
+          } else {
+            this.verificarCarritoModificarCantidad(producto);
           }
-          this.verificarCarritoModificarCantidad(producto);
-        }, (error: HttpErrorResponse) => {
-          producto.cantidad++;
-        });
-      } else {
-        this.verificarCarritoModificarCantidad(producto);
-      }
-    }, (error: HttpErrorResponse) => {
-      producto.cantidad++;
-    });
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.error.description);
+
+          if (error.error.status == 3) {
+            this.alertaService.errorAlertGeneric(error.error.description);
+            producto.cantidad = error.error.parameters;
+          } else {
+            producto.cantidad++;
+          }
+        }
+      );
+  }
+
+  confirmarDelete(producto: any) {
+    if (!this.alerta) {
+      this.alerta = true;
+      let alert = this.alertCtrl.create({
+        title: "Confirmación", //this.translatePipe.instant("CONFIRM"),
+        message: `Se eliminará el producto del carrito, ¿Estás de acuerdo?`, //this.translatePipe.instant("CONFIRM-LOGOUT"),
+        cssClass: this.genericService.getColorClassTWO(),
+        enableBackdropDismiss: false,
+        buttons: [
+          {
+            text: "No", //this.translatePipe.instant("CANCEL"),
+            role: "cancel",
+            handler: () => {
+              producto.cantidad = 1;
+              this.alerta = false;
+            }
+          },
+          {
+            text: "Si",
+            handler: () => {
+              this.alerta = false;
+              this.genericService
+                .sendDelete(`${environment.carritoCompras}/${producto.id}`)
+                .subscribe(
+                  (response2: any) => {
+                    if (producto.cantidad == 0) {
+                      console.log("El producto");
+
+                      console.log(producto);
+                      let posiciones: any = {};
+                      this.agrupado.forEach((agrupado, index1) => {
+                        agrupado.carritoAgrupado.forEach((grup, index2) => {
+                          if (grup.id == producto.id) {
+                            posiciones.index1 = index1;
+                            posiciones.index2 = index2;
+                          }
+                        });
+                      });
+
+                      this.agrupado[posiciones.index1].carritoAgrupado.splice(
+                        posiciones.index2,
+                        1
+                      );
+
+                      this.events.publish("totalCarrito");
+                      this.deleteFavoritoService(producto);
+                      this.verCarrito();
+                      this.agruparTotales();
+                      //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
+                    }
+                    this.verificarCarritoModificarCantidad(producto);
+                  },
+                  (error: HttpErrorResponse) => {
+                    producto.cantidad++;
+                  }
+                );
+            }
+          }
+        ]
+      });
+      alert.present();
+      alert.onDidDismiss(() => {
+        this.alerta = false;
+      });
+    }
   }
 
   deleteFavoritoService(producto) {
-    this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(
+      `${this.user.email}`
+    );
     let nuevoArrarCarrito: any[] = [];
     let productoDelete: any = null;
     this.productosCarrito.forEach(element => {
-      if (producto.productoProveedor.producto.id != element.productoProveedor.producto.id) {
+      if (
+        producto.productoProveedor.producto.id !=
+        element.productoProveedor.producto.id
+      ) {
         nuevoArrarCarrito.push(element);
       } else {
         productoDelete = element;
@@ -629,10 +854,13 @@ export class CarritoComprasPage implements OnDestroy {
       }
     });
     this.productosCarrito = nuevoArrarCarrito;
-    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, this.productosCarrito);
+    this.localStorageEncryptService.setToLocalStorage(
+      `${this.user.email}`,
+      this.productosCarrito
+    );
 
     //Llamar a events
-    this.events.publish('updateProductos', { productoDelete });
+    this.events.publish("updateProductos", { productoDelete });
 
     if (this.productosCarrito.length <= 0) {
       this.navCtrl.pop();
@@ -641,7 +869,9 @@ export class CarritoComprasPage implements OnDestroy {
 
   verificarCarritoModificarCantidad(element: any) {
     //debugger;
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(
+      `${this.user.email}`
+    );
     if (productosStorage) {
       productosStorage.forEach(item => {
         if (item.id == element.id) {
@@ -651,7 +881,10 @@ export class CarritoComprasPage implements OnDestroy {
     }
     console.log(productosStorage);
 
-    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+    this.localStorageEncryptService.setToLocalStorage(
+      `${this.user.email}`,
+      productosStorage
+    );
     this.getTotales();
     //this.agruparTotales();
     //this.events.publish("carritoTab");
@@ -664,7 +897,6 @@ export class CarritoComprasPage implements OnDestroy {
     this.enCompra = true;
     let putObj: any = {};
     this.objetoRegistro.forEach(item => {
-
       let tmp: any[] = [];
       tmp[0] = null;
       tmp[1] = [];
@@ -691,33 +923,28 @@ export class CarritoComprasPage implements OnDestroy {
       }
 
       if (this.user) {
-
       }
 
       putObj[item.formName] = tmp;
     });
 
-    this.formGroup = this.formBuilder.group(
-      putObj
-    );
+    this.formGroup = this.formBuilder.group(putObj);
     //
     //if (modal) {
     try {
       modal.style.display = "block";
-    } catch (error) {
-
-    }
+    } catch (error) {}
     //}
   }
 
   closeInfoContact(aun: boolean = true) {
-    let modal: any = document.getElementById('myModal2');
+    let modal: any = document.getElementById("myModal2");
     if (modal) {
-      modal.style.display = 'none';
+      modal.style.display = "none";
     }
 
     this.objetoRegistro.forEach(item => {
-      if (item.name == 'Picking') {
+      if (item.name == "Picking") {
         item.value = false;
       } else {
         item.value = null;
@@ -768,18 +995,22 @@ export class CarritoComprasPage implements OnDestroy {
           disabled: false
         });
       } else {
-        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
-        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
+        this.objetoRegistro = [
+          ...this.objetoRegistro.slice(0, 4),
+          ...this.objetoRegistro.slice(4 + 1)
+        ];
+        this.objetoRegistro = [
+          ...this.objetoRegistro.slice(0, 4),
+          ...this.objetoRegistro.slice(4 + 1)
+        ];
       }
     }
     let validacion: number = 0;
     for (const name in this.formGroup.controls) {
-
       let n: any = this.formGroup.controls[name];
 
       if (n.invalid) {
         validacion++;
-
       }
       /*
       if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
@@ -789,29 +1020,38 @@ export class CarritoComprasPage implements OnDestroy {
     }
     console.log(validacion);
 
-    if (validacion <= 0) {
+    /* if (validacion <= 0 && this.formGroup.controls["sex"] && !this.formGroup.controls["sex"].value) {
+      this.btnHabilitado = false;
+    } else if (validacion <= 1 && this.formGroup.controls["sex"] && this.formGroup.controls["sex"].value) {
       this.btnHabilitado = false;
     } else {
+      this.aplicaExterno = !this.formGroup.controls["sex"].value;
       this.btnHabilitado = true;
-    }
+    } */
+    this.btnHabilitado = false;
 
-    if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
+    if (
+      validacion == 1 &&
+      (this.objetoRegistro[3].value == false ||
+        this.objetoRegistro[3].value == "false")
+    ) {
       this.btnHabilitado = false;
     }
   }
 
   getMapa() {
-    let modal = this.modalController.create(HomeGeoProveedoresPage,
-      { fromModal: true });
+    let modal = this.modalController.create(HomeGeoProveedoresPage, {
+      fromModal: true
+    });
     modal.present();
-    modal.onDidDismiss((data) => {
+    modal.onDidDismiss(data => {
       if (data) {
         if (data != null) {
           this.data = data.data;
           if (
-            this.objetoRegistro[3].value == 'true' ||
+            this.objetoRegistro[3].value == "true" ||
             this.objetoRegistro[3].value == true ||
-            this.objetoRegistro[3].value == 'false' ||
+            this.objetoRegistro[3].value == "false" ||
             this.objetoRegistro[3].value == false
           ) {
             this.objetoRegistro[4].value = this.data.direccion;
@@ -828,26 +1068,50 @@ export class CarritoComprasPage implements OnDestroy {
     });
   }
 
-  seleccionaExterno(pedidoProveedor:any) {
+  seleccionaExterno(pedidoProveedor: any, opc: number) {
     console.log(this.objetoRegistroCopy);
-    let modal = this.modalController.create(EnvioExternoPage,
-      { pedidoProveedor, cp: this.objetoRegistroCopy[3].value});
+    let modal = this.modalController.create(EnvioExternoPage, {
+      pedidoProveedor,
+      cp: this.objetoRegistroCopy[3].value,
+      opc
+    });
+
     modal.present();
-    modal.onDidDismiss((data) => {
+    modal.onDidDismiss(data => {
       if (data) {
+        console.log("seleccionado");
+
         console.log(data);
-        
+
+        if (data.envio.proveedor == "Estafeta") {
+          pedidoProveedor.estafeta = data.envio;
+        } else {
+          pedidoProveedor.dhl = data.envio;
+        }
+        pedidoProveedor.comisionTransportista = data.envio.costoTotal;
+        let total = 0;
+        this.pagoActual.pedidoProveedores.forEach(element => {
+           total += element.comisionTransportista;
+        });
+        this.pagoActual.total = Number(this.pagoActual.total) + Number(total);
       }
     });
   }
 
   precompra() {
-
     this.objetoRegistroCopy = [];
-    this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
-    this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
-    this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
-    this.objetoRegistroCopy.push({ value: this.formGroup.controls["cp"].value });
+    this.objetoRegistroCopy.push({
+      value: this.formGroup.controls["name"].value
+    });
+    this.objetoRegistroCopy.push({
+      value: this.formGroup.controls["tel"].value
+    });
+    this.objetoRegistroCopy.push({
+      value: this.formGroup.controls["email"].value
+    });
+    this.objetoRegistroCopy.push({
+      value: this.formGroup.controls["cp"].value
+    });
 
     let h: any = null;
     console.log(this.totales.listCarritoProveedores);
@@ -856,35 +1120,44 @@ export class CarritoComprasPage implements OnDestroy {
       h = true;
     }
 
+    let gen:any = null;
+    try {
+      gen = this.formGroup.controls["sex"];
+    } catch (error) {
+      gen = null;
+    }
+
     let body: any = {
       nombreContacto: this.objetoRegistroCopy[0].value,
       telefonoContacto: this.objetoRegistroCopy[1].value,
       correoContacto: this.objetoRegistroCopy[2].value,
-      direccionContacto: this.objetoRegistro[3].value == 'true' ||
-        this.objetoRegistro[3].value == true ||
-        this.objetoRegistro[3].value == 'false' ||
-        this.objetoRegistro[3].value == false || h ? {
-          id: this.data.id ? this.data.id : null,
-          codigoPostal: this.data.codigoPostal,
-          direccion: this.data.direccion,
-          latitud: this.data.latitud,
-          longitud: this.data.longitud
-        } : null,
+      direccionContacto: gen &&
+        (this.objetoRegistro[3].value == "true" ||
+          this.objetoRegistro[3].value == true ||
+          this.objetoRegistro[3].value == "false" ||
+          this.objetoRegistro[3].value == false ||
+          h)
+          ? {
+              id: this.data.id ? this.data.id : null,
+              codigoPostal: this.data.codigoPostal,
+              direccion: this.data.direccion,
+              latitud: this.data.latitud,
+              longitud: this.data.longitud
+            }
+          : null,
       productos: []
     };
 
-    if (
-      this.objetoRegistro[3].value == 'true' ||
-      this.objetoRegistro[3].value == true ||
-      this.objetoRegistro[3].value == 'false' ||
-      this.objetoRegistro[3].value == false
-    ) {
-      body.picking = this.objetoRegistro[3].value;
+    if (gen && gen.value) {
+      body.picking = true;
     } else {
       body.picking = false;
     }
 
-    if (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == true) {
+    if (
+      this.objetoRegistro[3].value == false ||
+      this.objetoRegistro[3].value == true
+    ) {
       body.picking = this.objetoRegistro[3].value;
     } else {
       body.picking = false;
@@ -901,21 +1174,31 @@ export class CarritoComprasPage implements OnDestroy {
 
     body.email = this.user.email;
 
-    let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
+    let service: any = this.genericService.sendPostRequest(
+      environment.pedidos,
+      body
+    );
 
     this.loadingService.show().then(() => {
-      service.subscribe((response: any) => {
-        this.pagoActual = response;
-        this.loadingService.hide();
-        //this.comprar();
-        this.closeInfoContact(false);
-        setTimeout(() => {
-          this.openModal3();
-        }, 300);
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        this.alertaService.errorAlertGeneric("Ocurrió un error al procesar tu pago, intenta nuevamente");
-      });
+      service.subscribe(
+        (response: any) => {
+          this.pagoActual = response;
+          console.log("pago actual");
+          console.log(this.pagoActual);
+          this.loadingService.hide();
+          //this.comprar();
+          this.closeInfoContact(false);
+          setTimeout(() => {
+            this.openModal3();
+          }, 300);
+        },
+        (error: HttpErrorResponse) => {
+          this.loadingService.hide();
+          this.alertaService.errorAlertGeneric(
+            "Ocurrió un error al procesar tu pago, intenta nuevamente"
+          );
+        }
+      );
     });
   }
 
@@ -926,24 +1209,27 @@ export class CarritoComprasPage implements OnDestroy {
       modal.style.display = "block";
       this.check = false;
     } else {
-      this.alertaService.warnAlertGeneric("Por favor, acepta los términos y condiciones");
+      this.alertaService.warnAlertGeneric(
+        "Por favor, acepta los términos y condiciones"
+      );
     }
   }
 
   confirmar() {
     let alert = this.alertCtrl.create({
-      title: "Confirmación",//this.translatePipe.instant("CONFIRM"),
-      message: `Se realizará un cargo a su tarjeta por ${this.currencyPipe.transform(this.pagoActual.total)} ¿Estás de acuerdo?`,//this.translatePipe.instant("CONFIRM-LOGOUT"),
+      title: "Confirmación", //this.translatePipe.instant("CONFIRM"),
+      message: `Se realizará un cargo a su tarjeta por ${this.currencyPipe.transform(
+        this.pagoActual.total
+      )} ¿Estás de acuerdo?`, //this.translatePipe.instant("CONFIRM-LOGOUT"),
       cssClass: this.genericService.getColorClassTWO(),
       buttons: [
         {
-          text: "No",//this.translatePipe.instant("CANCEL"),
-          role: 'cancel',
-          handler: () => {
-          }
+          text: "No", //this.translatePipe.instant("CANCEL"),
+          role: "cancel",
+          handler: () => {}
         },
         {
-          text: 'Si',
+          text: "Si",
           handler: () => {
             //this.confirmar();
             this.setupStripe();
@@ -957,9 +1243,9 @@ export class CarritoComprasPage implements OnDestroy {
   addToList() {
     let inputs: any = [
       {
-        name: 'nombre',
-        placeholder: 'Nombre de mi lista',
-        type: 'text',
+        name: "nombre",
+        placeholder: "Nombre de mi lista",
+        type: "text",
         id: "i-1-name"
       }
     ];
@@ -969,30 +1255,40 @@ export class CarritoComprasPage implements OnDestroy {
         text: "Agregar",
         handler: (data: any) => {
           let body: any = {
-            nombre: data.nombre
+            nombre: data.nombre,
+            email: this.user.email
           };
-          let service: any = this.genericService.sendPostRequest(environment.carritoHistorico, body);
+          let service: any = this.genericService.sendPostRequest(
+            environment.carritoHistorico,
+            body
+          );
 
           this.loadingService.show().then(() => {
-            service.subscribe((response: any) => {
-              this.alertaService.successAlertGeneric("Lista frecuente agregada con éxito");
-              this.loadingService.hide();
-              return true;
-            }, (error: HttpErrorResponse) => {
-              this.loadingService.hide();
-              this.alertaService.errorAlertGeneric("No se ha podido agregar tu lista frecuente, intenta nuevamente");
-              return true;
-            });
+            service.subscribe(
+              (response: any) => {
+                this.alertaService.successAlertGeneric(
+                  "Lista frecuente agregada con éxito"
+                );
+                this.loadingService.hide();
+                return true;
+              },
+              (error: HttpErrorResponse) => {
+                this.loadingService.hide();
+                this.alertaService.errorAlertGeneric(
+                  "No se ha podido agregar tu lista frecuente, intenta nuevamente"
+                );
+                return true;
+              }
+            );
           });
-
         }
       }
     ];
     let data: any = {
       title: "Mi lista frecuente",
       message: `Ingresa el nombre de tu lista frecuente, ésta aparecerá en tu menú de listas de carrito frecuentes`,
-      inputs: inputs,
-    }
+      inputs: inputs
+    };
 
     let alert = this.alertCtrl.create({
       title: data.title,

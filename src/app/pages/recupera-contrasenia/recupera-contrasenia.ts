@@ -33,7 +33,7 @@ export class RecuperaContraseniaPage {
         this.loadingService.hide();
       }, (error: HttpErrorResponse) => {
 
-        this.alertaService.errorAlertGeneric(error.error.title);
+        this.alertaService.errorAlertGeneric(error.error.description);
         this.loadingService.hide();
       });
     });

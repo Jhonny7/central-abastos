@@ -23,8 +23,8 @@
   </div>
 
   <div class="contenedor-card" *ngIf="proveedorActivo" [ngStyle]="{'background-color': genericService.getColorHex()}">
-    <ion-slides autoplay="2000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">
-      <ion-slide *ngFor="let p of proveedorActivo.productos; let i=index">
+    <ion-slides autoplay="5000" zoom="true" loop="true" #slides pager="true" *ngIf="slideProve">
+      <ion-slide *ngFor="let p of proveedoresTotal; let i=index">
         <div id="card-{{i}}" class="card animated lightSpeedIn">
           <!-- <div class="tacha">
                         <div class="mini-tacha">
@@ -53,19 +53,19 @@
           </div> -->
         </div>
         <div class="informa">
-          <div class="nombre">{{proveedorActivo.proveedor.nombre}}</div>
+          <div class="nombre">{{p.proveedor.nombre}}</div>
     
           <div class="ofrece">A tu servicio: </div>
-          <div class="nombre">{{proveedorActivo.proveedor.empresa.nombre}}</div>
+          <div class="nombre">{{p.proveedor.empresa.nombre}}</div>
     
           <div class="ofrece">Estamos ubicados en</div>
-          <div class="nombre">{{proveedorActivo.proveedor.direccion.direccion}}</div>
-          <div class="nombre" *ngIf="proveedorActivo.proveedor.direccion.colonia">col.
-            {{proveedorActivo.proveedor.direccion.colonia}}</div>
-          <div class="nombre">{{proveedorActivo.proveedor.direccion.codigoPostal}}</div>
+          <div class="nombre">{{p.proveedor.direccion.direccion}}</div>
+          <div class="nombre" *ngIf="p.proveedor.direccion.colonia">col.
+            {{p.proveedor.direccion.colonia}}</div>
+          <div class="nombre">{{p.proveedor.direccion.codigoPostal}}</div>
         </div>
     
-        <div class="todos" (click)="viewDetailAll(proveedorActivo)">Ver todos</div>
+        <div class="todos" (click)="viewDetailAll(p)">Ver todos</div>
         <div class="logo"><img src="assets/imgs/logo.png" alt=""></div>
       </ion-slide>
     </ion-slides>

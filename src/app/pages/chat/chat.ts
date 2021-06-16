@@ -6,6 +6,7 @@ import { IonicPage, NavController, NavParams, Events, Content } from 'ionic-angu
 import { ChatService } from '../../services/chat.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment.prod';
+import { FCMData, FCMJson, Notification } from '../../services/pushNotifications.service';
 
 @Component({
   selector: 'page-chat',
@@ -46,6 +47,10 @@ export class ChatPage implements OnDestroy {
     private chatService: ChatService,
     private alertaService: AlertaService) {
     this.chat = navParams.get("chat");
+    console.log("chat chat chat chta");
+    
+    console.log(this.chat);
+    
     this.pedido = navParams.get("pedido");
     this.localStorageEncryptService.setToLocalStorage("pedidoChat", this.pedido.id);
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
@@ -73,8 +78,7 @@ export class ChatPage implements OnDestroy {
 
   ngOnDestroy() {
     this.events.unsubscribe("updateChat");
-    let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "flex";
+    
     clearInterval(this.intervalo);
     this.intervalo = null;
     this.localStorageEncryptService.clearProperty("pedidoChat");
@@ -97,7 +101,7 @@ export class ChatPage implements OnDestroy {
 
     this.intervalo = setInterval(() => {
       this.verChat();
-    }, 2000);
+    }, 5000);
   }
 
 
@@ -108,15 +112,15 @@ export class ChatPage implements OnDestroy {
           this.subscription.unsubscribe();
         }
         this.subscription = this.genericService.sendGetRequest(`${environment.chats}/${this.chat.id}`).subscribe((response: any) => {
-          if (this.chat.chatDetalles.length < response.chatDetalles) {
+          if (this.chat.chatDetalles.length < response[0].chatDetalles) {
             let dimensions = this.content.getContentDimensions();
             this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
           }
-          this.chat = response;
+          this.chat = response[0];
 
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
-          //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
         break;
 
@@ -132,7 +136,7 @@ export class ChatPage implements OnDestroy {
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
-          //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
         break;
       case 3:
@@ -147,13 +151,16 @@ export class ChatPage implements OnDestroy {
           this.chat = response;
         }, (error: HttpErrorResponse) => {
           let err: any = error.error;
-          //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
         break;
     }
   }
 
   sendMessage() {
+    console.log("entrandi",this.mensaje);
+    console.log(this.chat);
+    
     if (this.mensaje.length === 0) {
       return;
     }
@@ -167,27 +174,38 @@ export class ChatPage implements OnDestroy {
     };
 
     if (environment.perfil.activo == 1) {
-      body.to = `${this.chat.chatDetalles[0].usuarioEmisorLogin}`;
+      body.to = `${this.chat.chatDetalles[0].usuario_emisor}`;
     } else if (environment.perfil.activo == 2) {
       body.to = `${this.pedido.cliente.login}`;
     }
+    console.log(this.pedido);
+    
 
-   if(!this.activoChat){
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-    this.activoChat = true;
-    this.subscription = this.genericService.sendPostRequest(`${environment.chats}/messages`, body).subscribe((response: any) => {
-      this.chat.chatDetalles.push(response);
-      let dimensions = this.content.getContentDimensions();
-      this.content.scrollTo(0, dimensions.scrollHeight + 100, 100);
-      this.mensaje = '';
-      this.activoChat = false;
-    }, (error: HttpErrorResponse) => {
-      this.activoChat = false;
-      this.alertaService.errorAlertGeneric("No se ha podido enviar tu mensaje, intenta nuevamente");
-    });
-   }
+    body.tipoUsuario = this.user.tipo_usuario
+    body.email = this.user.email
+
+    if(!this.activoChat){
+      if (this.subscription) {
+        this.subscription.unsubscribe();
+        this.activoChat = false;
+      }
+      this.activoChat = true;
+      this.subscription = this.genericService.sendPostRequest(`${environment.chats}/messages`, body).subscribe((response: any) => {
+        
+
+        let dimensions:any = this.content.getContentDimensions();
+this.content.scrollTo(0, dimensions.scrollBottom, 0);
+
+        this.mensaje = '';
+        this.activoChat = false;
+        setTimeout(() => {
+          this.chat.chatDetalles.push(response);
+        }, 500);
+      }, (error: HttpErrorResponse) => {
+        this.activoChat = false;
+        this.alertaService.errorAlertGeneric("No se ha podido enviar tu mensaje, intenta nuevamente");
+      });
+     }
 
   }
 

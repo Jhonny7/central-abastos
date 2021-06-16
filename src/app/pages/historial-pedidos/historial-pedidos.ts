@@ -111,8 +111,8 @@ export class HistorialPedidosPage {
           let err: any = error.error;
           this.pedidos = null;
           this.alertaService.errorAlertGeneric(
-            err.message
-              ? err.message
+            err.description
+              ? err.description
               : "Ocurrió un error en el servicio, intenta nuevamente"
           );
         }
@@ -132,8 +132,8 @@ export class HistorialPedidosPage {
             let err: any = error.error;
             this.loadingService.hide();
             this.alertaService.errorAlertGeneric(
-              err.message
-                ? err.message
+              err.description
+                ? err.description
                 : "Ocurrió un error en el servicio, intenta nuevamente"
             );
           }

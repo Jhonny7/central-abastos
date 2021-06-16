@@ -1,27 +1,38 @@
-import { AlertaService } from './../../services/alerta.service';
-import { LoadingService } from './../../services/loading.service';
-import { GenericService } from './../../services/generic.service';
-import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform, Events, ViewController, PopoverController } from 'ionic-angular';
+import { LocalStorageEncryptService } from "./../../services/local-storage-encrypt.service";
+import { AlertaService } from "./../../services/alerta.service";
+import { LoadingService } from "./../../services/loading.service";
+import { GenericService } from "./../../services/generic.service";
+import { Component, OnDestroy } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController,
+  Platform,
+  Events,
+  ViewController,
+  PopoverController
+} from "ionic-angular";
 
-import { Geolocation, Geoposition } from '@ionic-native/geolocation';
+import { Geolocation, Geoposition } from "@ionic-native/geolocation";
 
-import leaflet from 'leaflet';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { OpenNativeSettings } from '@ionic-native/open-native-settings';
-import { Diagnostic } from '@ionic-native/diagnostic';
-import { AndroidPermissions } from '@ionic-native/android-permissions';
-import { DireccionesPage } from '../direcciones/direcciones';
-
+import leaflet from "leaflet";
+import {
+  environment,
+  nuevoBackHabilitado
+} from "../../../environments/environment.prod";
+import { HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { OpenNativeSettings } from "@ionic-native/open-native-settings";
+import { Diagnostic } from "@ionic-native/diagnostic";
+import { AndroidPermissions } from "@ionic-native/android-permissions";
+import { DireccionesPage } from "../direcciones/direcciones";
 
 declare var google;
 @Component({
-  selector: 'page-home-geo-proveedores',
-  templateUrl: 'home-geo-proveedores.html',
+  selector: "page-home-geo-proveedores",
+  templateUrl: "home-geo-proveedores.html"
 })
 export class HomeGeoProveedoresPage implements OnDestroy {
-
   public map: any;
 
   public marker: any;
@@ -33,12 +44,12 @@ export class HomeGeoProveedoresPage implements OnDestroy {
   public emulado: boolean = environment.emulado;
 
   public componentForm: any = {
-    street_number: 'short_name',
-    route: 'long_name',
-    locality: 'long_name',
-    administrative_area_level_1: 'short_name',
-    country: 'long_name',
-    postal_code: 'short_name'
+    street_number: "short_name",
+    route: "long_name",
+    locality: "long_name",
+    administrative_area_level_1: "short_name",
+    country: "long_name",
+    postal_code: "short_name"
   };
 
   public data: any = {};
@@ -57,6 +68,8 @@ export class HomeGeoProveedoresPage implements OnDestroy {
 
   public listaDirecciones: any = [];
 
+  public user: any = null;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -71,10 +84,15 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     private platform: Platform,
     private events: Events,
     private viewCtrl: ViewController,
-    private popoverCtrl: PopoverController) {
+    private popoverCtrl: PopoverController,
+    private localStorageEncryptService: LocalStorageEncryptService
+  ) {
     this.direccion = navParams.get("direccion");
     this.fromModal = navParams.get("fromModal");
     this.fromRegister = navParams.get("fromRegister");
+    this.user = this.localStorageEncryptService.getFromLocalStorage(
+      "userSession"
+    );
     if (this.direccion) {
       this.edit = true;
       /*
@@ -87,7 +105,6 @@ export class HomeGeoProveedoresPage implements OnDestroy {
       this.data.direccion = this.direccion.direccion.direccion;
       this.data.latitud = this.direccion.direccion.latitud;
       this.data.longitud = this.direccion.direccion.longitud;
-
     }
 
     this.cargarTipoDirecciones();
@@ -105,20 +122,37 @@ export class HomeGeoProveedoresPage implements OnDestroy {
   }
 
   cargarDireccionesLista() {
-    this.genericService.sendGetRequest(environment.direcciones).subscribe((response: any) => {
-      this.listaDirecciones = response;
-    }, (error: HttpErrorResponse) => {
-      let err: any = error.error;
-      this.listaDirecciones = [];
-      //this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
-    });
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(
+      `${environment.direcciones}`
+    );
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(
+        `${environment.direcciones}`,
+        params
+      );
+    }
+    sus.subscribe(
+      (response: any) => {
+        this.listaDirecciones = response;
+      },
+      (error: HttpErrorResponse) => {
+        let err: any = error.error;
+        this.listaDirecciones = [];
+        //this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
+      }
+    );
   }
 
   selectFrecuente() {
-    let popover = this.popoverCtrl.create(DireccionesPage, { fromPop: true }, { cssClass: "clase-Pop-direcciones" });
-    popover.present({
-    });
-    popover.onDidDismiss((data) => {
+    let popover = this.popoverCtrl.create(
+      DireccionesPage,
+      { fromPop: true },
+      { cssClass: "clase-Pop-direcciones" }
+    );
+    popover.present({});
+    popover.onDidDismiss(data => {
       if (data) {
         if (data != null) {
           /*
@@ -139,11 +173,12 @@ export class HomeGeoProveedoresPage implements OnDestroy {
   }
 
   cargarTipoDirecciones() {
-    this.genericService.sendGetRequest(environment.tipoDirecciones).subscribe((response: any) => {
-      this.tipoDirecciones = response;
-
-    }, (error: HttpErrorResponse) => {
-    });
+    this.genericService.sendGetRequest(environment.tipoDirecciones).subscribe(
+      (response: any) => {
+        this.tipoDirecciones = response;
+      },
+      (error: HttpErrorResponse) => {}
+    );
   }
 
   ionViewDidLoad() {
@@ -152,23 +187,22 @@ export class HomeGeoProveedoresPage implements OnDestroy {
       claseTabs[0].style.display = "none";
     }
     this.obtenerLocalizacion();
-    let as: any = document.getElementById('autocomplete');
+    let as: any = document.getElementById("autocomplete");
 
-
-    this.autocomplete = new google.maps.places.Autocomplete(
-      as, { types: ['geocode'] });
+    this.autocomplete = new google.maps.places.Autocomplete(as, {
+      types: ["geocode"]
+    });
 
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
-    this.autocomplete.setFields(['address_component', 'geometry', 'name']);
+    this.autocomplete.setFields(["address_component", "geometry", "name"]);
 
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
     let componente: any = this;
-    this.autocomplete.addListener('place_changed', function () {
+    this.autocomplete.addListener("place_changed", function() {
       componente.fillInAddress(componente);
     });
-
   }
 
   /**Método que obtiene la geolocalización del usuario
@@ -179,47 +213,56 @@ export class HomeGeoProveedoresPage implements OnDestroy {
 
     if (this.platform.is("android") && !this.emulado) {
       //debugger;
-      this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then(
-        result => {
-          //debugger;
-          if (!result.hasPermission) {
-            this.navCtrl.pop();
-            this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION).then((resReq) => {
-              this.loadingService.hide();
-            });
-          } else {
-            this.diagnostic.isLocationAvailable().then((res: any) => {
-              //debugger;
-              if (!res) {
-                this.loadingService.hide();
-                //debugger;
-                this.openNativeSettings.open("location").then((res2) => {
-                  //debugger;
+      this.androidPermissions
+        .checkPermission(
+          this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+        )
+        .then(
+          result => {
+            //debugger;
+            if (!result.hasPermission) {
+              this.navCtrl.pop();
+              this.androidPermissions
+                .requestPermission(
+                  this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+                )
+                .then(resReq => {
                   this.loadingService.hide();
-                  this.diagnostic.isLocationAvailable().then((res: any) => {
-                    //debugger;
-                    if (!res) {
-                      this.loadingService.hide();
-                      //aqui apagar geolocation
-                      //this.selecciones.cercaDeMi = false;
-                    } else {
-                      //debugger;
-                      this.getPosition();
-                    }
-                  });
                 });
-              } else {
-                this.getPosition();
-              }
-            });
+            } else {
+              this.diagnostic.isLocationAvailable().then((res: any) => {
+                //debugger;
+                if (!res) {
+                  this.loadingService.hide();
+                  //debugger;
+                  this.openNativeSettings.open("location").then(res2 => {
+                    //debugger;
+                    this.loadingService.hide();
+                    this.diagnostic.isLocationAvailable().then((res: any) => {
+                      //debugger;
+                      if (!res) {
+                        this.loadingService.hide();
+                        //aqui apagar geolocation
+                        //this.selecciones.cercaDeMi = false;
+                      } else {
+                        //debugger;
+                        this.getPosition();
+                      }
+                    });
+                  });
+                } else {
+                  this.getPosition();
+                }
+              });
+            }
+          },
+          err => {
+            this.loadingService.hide();
+            this.androidPermissions.requestPermission(
+              this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION
+            );
           }
-        },
-        err => {
-          this.loadingService.hide();
-          this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.ACCESS_FINE_LOCATION)
-
-        }
-      );
+        );
     } else if (this.platform.is("ios") && !this.emulado) {
       this.diagnostic.isLocationEnabled().then((resIOS: any) => {
         this.loadingService.hide();
@@ -235,15 +278,12 @@ export class HomeGeoProveedoresPage implements OnDestroy {
             message: null,
             cssClass: this.genericService.getColorClass(),
             buttons: [
-
               {
-                text: 'Cancelar',
-                handler: () => {
-
-                }
+                text: "Cancelar",
+                handler: () => {}
               },
               {
-                text: 'Aceptar',
+                text: "Aceptar",
                 handler: () => {
                   this.openLocate();
                 }
@@ -251,28 +291,23 @@ export class HomeGeoProveedoresPage implements OnDestroy {
             ]
           });
           alert.present();
-          alert.onDidDismiss(res => {
-
-          });
+          alert.onDidDismiss(res => {});
         } else {
           this.getPosition();
         }
       });
-
-
     } else {
       //this.getPositionEmulate();
-      this.getPosition();  
+      this.getPosition();
     }
     //});
-
   }
 
   /**Metodo que se ejecuta solo en ios para pedir abrir localizacion*/
   openLocate() {
     this.loadingService.hide();
     //debugger;
-    this.openNativeSettings.open("locations").then((res2) => {
+    this.openNativeSettings.open("locations").then(res2 => {
       //debugger;
       this.diagnostic.isLocationEnabled().then((res: any) => {
         //debugger;
@@ -294,32 +329,34 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     }
   }
 
-  getPositionEmulate(){
+  getPositionEmulate() {
     console.log("emulado");
-    
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log(position);
-      
-    },function(err){
-      console.log(err);
-      
-    },{timeout:10000});
+
+    navigator.geolocation.getCurrentPosition(
+      function(position) {
+        console.log(position);
+      },
+      function(err) {
+        console.log(err);
+      },
+      { timeout: 10000 }
+    );
   }
 
   getPosition(): any {
     console.log("---position---");
     console.log(this.geolocation);
-    
-    this.geolocation.getCurrentPosition()
+
+    this.geolocation
+      .getCurrentPosition()
       .then(response => {
         console.log(response);
-        
+
         this.loadMap(response);
       })
       .catch(error => {
         console.log(error);
-
-      })
+      });
   }
 
   loadMap(position: Geoposition) {
@@ -327,11 +364,10 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     let longitude = position.coords.longitude;
 
     // create a new map by passing HTMLElement
-    let mapEle: HTMLElement = document.getElementById('map_canvas');
+    let mapEle: HTMLElement = document.getElementById("map_canvas");
 
     // create LatLng object
     if (this.edit) {
-
       latitude = Number(this.direccion.direccion.latitud);
       longitude = Number(this.direccion.direccion.longitud);
     }
@@ -344,8 +380,7 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     });
 
     this.muestraMapa = true;
-    google.maps.event.addListenerOnce(this.map, 'idle', () => {
-
+    google.maps.event.addListenerOnce(this.map, "idle", () => {
       let info: any = `<div>Ejemplo de window</div>`;
 
       let infowindow: any = new google.maps.InfoWindow({
@@ -354,96 +389,109 @@ export class HomeGeoProveedoresPage implements OnDestroy {
       let component: any = this;
 
       component.marker = new google.maps.Marker({
-        position: myLatLng,//{ lat: -0.179041, lng: -78.499211 },
+        position: myLatLng, //{ lat: -0.179041, lng: -78.499211 },
         map: this.map,
-        title: 'Hello World!',
+        title: "Hello World!",
         id: "marcador-1",
         draggable: true,
-        icon: environment.icons['casa'].icon
+        icon: environment.icons["casa"].icon
       });
 
       this.data.latitud = latitude;
       this.data.longitud = longitude;
-      let params = new HttpParams()
-      params = params.set('latlng', `${this.data.latitud},${this.data.longitud}`);
-      params = params.set('key', environment.keyGoogle);
+      let params = new HttpParams();
+      params = params.set(
+        "latlng",
+        `${this.data.latitud},${this.data.longitud}`
+      );
+      params = params.set("key", environment.keyGoogle);
 
+      this.genericService
+        .sendGetParams(`${environment.geocodeGoogle}`, params)
+        .subscribe(
+          (response: any) => {
+            this.loadingService.hide();
+            this.map.setCenter(this.marker.position);
+            this.marker.setMap(this.map);
 
-      this.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
-
-        this.loadingService.hide();
-        this.map.setCenter(this.marker.position);
-        this.marker.setMap(this.map);
-
-        let results: any = response.results;
-        if (results) {
-          /*
+            let results: any = response.results;
+            if (results) {
+              /*
           codigoPostal: "89670"
           direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
           latitud: "22.9221196"
           longitud: "-98.0690771"
           */
-          if (results[0]) {
-            this.data.direccion = results[0].formatted_address;
-            this.data.codigoPostal = "";
+              if (results[0]) {
+                this.data.direccion = results[0].formatted_address;
+                this.data.codigoPostal = "";
+              }
+            }
+          },
+          (error: HttpErrorResponse) => {
+            this.loadingService.hide();
+            this.marker.setPosition(myLatLng);
+
+            this.map.setCenter(myLatLng);
+            this.marker.setMap(this.map);
+
+            this.alertaService.errorAlertGeneric(
+              "No se obtuvo información del marcador, intenta nuevamente"
+            );
           }
-        }
-      }, (error: HttpErrorResponse) => {
-        this.loadingService.hide();
-        this.marker.setPosition(myLatLng);
+        );
 
-        this.map.setCenter(myLatLng);
-        this.marker.setMap(this.map);
-
-
-        this.alertaService.errorAlertGeneric("No se obtuvo información del marcador, intenta nuevamente");
-      });
-
-      component.marker.addListener('click', () => {
+      component.marker.addListener("click", () => {
         //infowindow.open(this.map, this.marker);
         //component.changeInfoCard();
       });
 
-      google.maps.event.addListener(component.marker, 'dragend', function (evt) {
-
+      google.maps.event.addListener(component.marker, "dragend", function(evt) {
         component.data.latitud = evt.latLng.lat().toString();
         component.data.longitud = evt.latLng.lng().toString();
 
-
         component.loadingService.show().then(() => {
-          let params = new HttpParams()
-          params = params.set('latlng', `${component.data.latitud},${component.data.longitud}`);
-          params = params.set('key', environment.keyGoogle);
+          let params = new HttpParams();
+          params = params.set(
+            "latlng",
+            `${component.data.latitud},${component.data.longitud}`
+          );
+          params = params.set("key", environment.keyGoogle);
 
-          component.genericService.sendGetParams(`${environment.geocodeGoogle}`, params).subscribe((response: any) => {
+          component.genericService
+            .sendGetParams(`${environment.geocodeGoogle}`, params)
+            .subscribe(
+              (response: any) => {
+                component.loadingService.hide();
+                component.map.setCenter(component.marker.position);
+                component.marker.setMap(component.map);
 
-            component.loadingService.hide();
-            component.map.setCenter(component.marker.position);
-            component.marker.setMap(component.map);
-
-            let results: any = response.results;
-            if (results) {
-              /*
+                let results: any = response.results;
+                if (results) {
+                  /*
               codigoPostal: "89670"
               direccion: "Ocampo 508, Zona Centro, Aldama, Tamaulipas, México"
               latitud: "22.9221196"
               longitud: "-98.0690771"
               */
-              if (results[0]) {
-                component.data.direccion = results[0].formatted_address;
-                component.data.codigoPostal = "";
+                  if (results[0]) {
+                    component.data.direccion = results[0].formatted_address;
+                    component.data.codigoPostal = "";
+                  }
+                }
+              },
+              (error: HttpErrorResponse) => {
+                component.loadingService.hide();
+                component.marker.setPosition(myLatLng);
+
+                component.map.setCenter(myLatLng);
+                component.marker.setMap(component.map);
+
+                component.alertaService.errorAlertGeneric(
+                  "No se obtuvo información del marcador, intenta nuevamente"
+                );
               }
-            }
-          }, (error: HttpErrorResponse) => {
-            component.loadingService.hide();
-            component.marker.setPosition(myLatLng);
-
-            component.map.setCenter(myLatLng);
-            component.marker.setMap(component.map);
-
-
-            component.alertaService.errorAlertGeneric("No se obtuvo información del marcador, intenta nuevamente");
-          });
+            );
         });
 
         //'<p>Marker dropped: Current Lat: ' + evt.latLng.lat().toFixed(3) + ' Current Lng: ' + evt.latLng.lng().toFixed(3) + '</p>';
@@ -453,13 +501,11 @@ export class HomeGeoProveedoresPage implements OnDestroy {
         
       }); */
 
-      mapEle.classList.add('show-map');
+      mapEle.classList.add("show-map");
     });
   }
 
-  changeInfoCard() {
-
-  }
+  changeInfoCard() {}
 
   loadMapLeaflet() {
     this.mapa = leaflet.map(`map`).setView([40.7127837, -74.0059413], 18);
@@ -467,57 +513,71 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     //let contributions
     // set map tiles source
     //leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    leaflet.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-      attribution: 'Central de Abastos &copy; <a href="https://www.sharkit.com/">Shark IT</a>',
-      maxZoom: 20,
-      zoom: 14
-    }).addTo(this.mapa);
+    leaflet
+      .tileLayer(
+        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+        {
+          attribution:
+            'Central de Abastos &copy; <a href="https://www.sharkit.com/">Shark IT</a>',
+          maxZoom: 20,
+          zoom: 14
+        }
+      )
+      .addTo(this.mapa);
 
-    let contributions: any = document.getElementsByClassName("leaflet-control-attribution");
+    let contributions: any = document.getElementsByClassName(
+      "leaflet-control-attribution"
+    );
     contributions[0].removeChild(contributions[0].childNodes[0]);
 
-    this.mapa.locate({
-      setView: true,
-      maxZoom: 20,
-      zoom: 14
-    }).on('locationfound', (e) => {
-      // add marker to the map
-      var greenIcon = leaflet.icon({
-        iconUrl: 'assets/images/marker.png',
-        //shadowUrl: 'assets/images/marker.png',
+    this.mapa
+      .locate({
+        setView: true,
+        maxZoom: 20,
+        zoom: 14
+      })
+      .on("locationfound", e => {
+        // add marker to the map
+        var greenIcon = leaflet.icon({
+          iconUrl: "assets/images/marker.png",
+          //shadowUrl: 'assets/images/marker.png',
 
-        iconSize: [38, 38], // size of the icon
-        shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-        shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-      });
+          iconSize: [38, 38], // size of the icon
+          shadowSize: [50, 64], // size of the shadow
+          iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+          shadowAnchor: [4, 62], // the same for the shadow
+          popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
 
-      let marker = leaflet.marker([40.7127837, -74.0059413], { icon: greenIcon }).addTo(this.mapa);
-      // add popup to the marker  
-      var infoWindowContent = `<div class="contenedor">
+        let marker = leaflet
+          .marker([40.7127837, -74.0059413], { icon: greenIcon })
+          .addTo(this.mapa);
+        // add popup to the marker
+        var infoWindowContent = `<div class="contenedor">
                                   <div class="img">
                                     <img src="assets/imgs/home/basket.png" alt="">
                                   </div>
                                   <div class="titulo">Titulo de proveedor</div>
                                 </div>`;
-      marker.bindPopup(infoWindowContent).openPopup();
-    }).on('locationerror', (err) => {
-      //this.alertaService.errorAlert(this.alertaService.mensajeError, this.translatePipe.instant("ENABLED-GEOLOCATION"), null);
-    })
+        marker.bindPopup(infoWindowContent).openPopup();
+      })
+      .on("locationerror", err => {
+        //this.alertaService.errorAlert(this.alertaService.mensajeError, this.translatePipe.instant("ENABLED-GEOLOCATION"), null);
+      });
   }
 
   geolocate() {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
         var geolocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
 
-
-        var circle = new google.maps.Circle(
-          { center: geolocation, radius: position.coords.accuracy });
+        var circle = new google.maps.Circle({
+          center: geolocation,
+          radius: position.coords.accuracy
+        });
         this.autocomplete.setBounds(circle.getBounds());
       });
     }
@@ -532,45 +592,62 @@ export class HomeGeoProveedoresPage implements OnDestroy {
   }
 
   backData() {
-
     this.viewCtrl.dismiss({ data: this.data });
   }
 
   guardar(body: any) {
     if (!this.edit) {
       this.loadingService.show().then(() => {
-        this.genericService.sendPostRequest(environment.direcciones, body).subscribe((response: any) => {
-
-          this.loadingService.hide();
-          this.events.publish("direction", { body, create: true });
-          if (!this.fromModal) {
-            this.alertaService.successAlertGeneric("Dirección agregada con éxito");
-            this.navCtrl.pop();
-          } else {
-            this.viewCtrl.dismiss({ data: this.data });
-          }
-        }, (error: HttpErrorResponse) => {
-          this.loadingService.hide();
-          this.alertaService.errorAlertGeneric("No se ha podido agregar tu dirección frecuente, intenta nuevamente");
-        });
+        this.genericService
+          .sendPostRequest(environment.direcciones, body)
+          .subscribe(
+            (response: any) => {
+              this.loadingService.hide();
+              body.id = response.id;
+              body.direccionId = response.idDireccion;
+              this.events.publish("direction", { body, create: true });
+              if (!this.fromModal) {
+                this.alertaService.successAlertGeneric(
+                  "Dirección agregada con éxito"
+                );
+                this.navCtrl.pop();
+              } else {
+                this.viewCtrl.dismiss({ data: this.data });
+              }
+            },
+            (error: HttpErrorResponse) => {
+              this.loadingService.hide();
+              this.alertaService.errorAlertGeneric(
+                "No se ha podido agregar tu dirección frecuente, intenta nuevamente"
+              );
+            }
+          );
       });
     } else {
       this.loadingService.show().then(() => {
-        this.genericService.sendPutRequest(environment.direcciones, body).subscribe((response: any) => {
-          this.alertaService.successAlertGeneric("Dirección modificada con éxito");
-          this.loadingService.hide();
-          this.events.publish("direction", { body, create: false });
-          this.navCtrl.pop();
-        }, (error: HttpErrorResponse) => {
-          this.loadingService.hide();
-          this.alertaService.errorAlertGeneric("No se ha podido modificar tu dirección frecuente, intenta nuevamente");
-        });
+        this.genericService
+          .sendPutRequest(environment.direcciones, body)
+          .subscribe(
+            (response: any) => {
+              this.alertaService.successAlertGeneric(
+                "Dirección modificada con éxito"
+              );
+              this.loadingService.hide();
+              this.events.publish("direction", { body, create: false });
+              this.navCtrl.pop();
+            },
+            (error: HttpErrorResponse) => {
+              this.loadingService.hide();
+              this.alertaService.errorAlertGeneric(
+                "No se ha podido modificar tu dirección frecuente, intenta nuevamente"
+              );
+            }
+          );
       });
     }
   }
 
   fillInAddress(componente: any) {
-
     // Get the place details from the autocomplete object.
     var place = componente.autocomplete.getPlace();
 
@@ -582,7 +659,6 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     var latlng = new google.maps.LatLng(lat, lng);
     componente.marker.setPosition(latlng);
 
-
     componente.map.setCenter(place.geometry.location);
 
     componente.marker.setMap(componente.map);
@@ -590,14 +666,13 @@ export class HomeGeoProveedoresPage implements OnDestroy {
     componente.getData().latitud = lat ? lat.toString() : "";
     componente.getData().longitud = lng ? lng.toString() : "";
 
-
     let completa: any = document.getElementById("autocomplete");
     componente.getData().direccion = completa ? completa.value.toString() : "";
 
     for (var component in componente.componentForm) {
       let a: any = document.getElementById(component);
       if (a) {
-        a.value = '';
+        a.value = "";
       }
       let b: any = document.getElementById(component);
       if (b) {
@@ -612,7 +687,8 @@ export class HomeGeoProveedoresPage implements OnDestroy {
         var addressType = place.address_components[i].types[0];
 
         if (componente.componentForm[addressType]) {
-          var val = place.address_components[i][componente.componentForm[addressType]];
+          var val =
+            place.address_components[i][componente.componentForm[addressType]];
 
           switch (addressType) {
             case "postal_code":
@@ -629,19 +705,24 @@ export class HomeGeoProveedoresPage implements OnDestroy {
         }
       }
     }
-
   }
 
   addToList() {
+    console.log("add to list");
+    
     let buttons: any = [
       {
         text: "Agregar",
         handler: (data: any) => {
           let input: any = document.getElementById("input-name");
-          let selectDireccion: any = document.getElementById("select-direccion");
+          let selectDireccion: any = document.getElementById(
+            "select-direccion"
+          );
 
           if (input.value.length <= 0) {
-            this.alertaService.warnAlertGeneric("Por favor ingresa un nombre a tu dirección");
+            this.alertaService.warnAlertGeneric(
+              "Por favor ingresa un nombre a tu dirección"
+            );
           } else {
             let body: any = {
               alias: input.value,
@@ -651,12 +732,15 @@ export class HomeGeoProveedoresPage implements OnDestroy {
                 latitud: "",
                 longitud: ""
               },
-              tipodireccionId: selectDireccion.value
+              tipoDireccionId: selectDireccion.value
             };
 
             if (this.edit) {
+              console.log("editando",body);
+              
               body.direccionId = this.direccion.direccionId;
               body.id = this.direccion.id;
+              selectDireccion.value = body.tipodireccionId;
             }
             /*
             codigoPostal: "89670"
@@ -664,22 +748,29 @@ export class HomeGeoProveedoresPage implements OnDestroy {
             latitud: "22.9221196"
             longitud: "-98.0690771"
             */
-            body.direccion.codigoPostal = this.data.codigoPostal ? this.data.codigoPostal : "";
-            body.direccion.direccion = this.data.direccion ? this.data.direccion : "";
+            body.direccion.codigoPostal = this.data.codigoPostal
+              ? this.data.codigoPostal
+              : "";
+            body.direccion.direccion = this.data.direccion
+              ? this.data.direccion
+              : "";
             body.direccion.latitud = this.data.latitud ? this.data.latitud : "";
-            body.direccion.longitud = this.data.longitud ? this.data.longitud : "";
+            body.direccion.longitud = this.data.longitud
+              ? this.data.longitud
+              : "";
+
+            body.email = this.user.email;
+            console.log(body);
 
             this.guardar(body);
-
           }
         }
       }
     ];
     let data: any = {
       title: "Mi dirección frecuente",
-      message: `Ingresa un alias y selecciona el tipo de dirección`,
-
-    }
+      message: `Ingresa un alias y selecciona el tipo de dirección`
+    };
 
     let alert = this.alertCtrl.create({
       title: data.title,
@@ -688,9 +779,10 @@ export class HomeGeoProveedoresPage implements OnDestroy {
       inputs: data.inputs,
       buttons: buttons
     });
-    alert.present().then((res) => {
+    console.log("alerton");
+    
+    alert.present().then(res => {
       let a: any = document.getElementsByClassName("alert-message");
-
 
       let div2 = document.createElement("div");
       div2.id = `div-name-2`;
@@ -709,7 +801,7 @@ export class HomeGeoProveedoresPage implements OnDestroy {
       this.tipoDirecciones.forEach(element => {
         select += `<option value="${element.id}">${element.nombre}</option>`;
       });
-      select += "</select>"
+      select += "</select>";
       div.innerHTML = select;
 
       div.setAttribute("class", "clase-select animated fadeIn");
@@ -720,10 +812,11 @@ export class HomeGeoProveedoresPage implements OnDestroy {
         let input: any = document.getElementById("input-name");
         let selectDireccion: any = document.getElementById("select-direccion");
         input.value = this.direccion.alias;
-        selectDireccion.value = this.direccion.tipodireccionId;
+        console.log("editando");
+        console.log(this.direccion);
+        
+        selectDireccion.value = this.direccion.tipoDireccionId;
       }
-
-
     });
   }
 }

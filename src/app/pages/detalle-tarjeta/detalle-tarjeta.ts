@@ -169,7 +169,7 @@ export class DetalleTarjetaPage {
   }
 
   guardar() {
-    //let cards: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}-cards`);
+    //let cards: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}-cards`);
 
     /**Evaluar si hay tarjeta con mismo numero y nombre */
     let banderaRepetido: boolean = false;
@@ -190,7 +190,8 @@ export class DetalleTarjetaPage {
           numeroTarjeta: this.objetoRegistro[1].value,
           fechaCaducidad: this.objetoRegistro[2].value,
           numeroSeguridad: this.objetoRegistro[3].value,
-          id: this.card.id
+          id: this.card.id,
+          
         }
         this.loadingService.show().then(() => {
           this.genericService.sendPutRequest(environment.tarjetas, tarjeta).subscribe((response: any) => {
@@ -215,7 +216,8 @@ export class DetalleTarjetaPage {
             alias: this.objetoRegistro[0].value,
             numeroTarjeta: this.objetoRegistro[1].value,
             fechaCaducidad: this.objetoRegistro[2].value,
-            numeroSeguridad: this.objetoRegistro[3].value
+            numeroSeguridad: this.objetoRegistro[3].value,
+            email: this.user.email
           }
           //
           this.loadingService.show().then(() => {
@@ -234,7 +236,7 @@ export class DetalleTarjetaPage {
             cards = [];
           }
           cards.push(tarjeta);
-          this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}-cards`, cards); */
+          this.localStorageEncryptService.setToLocalStorage(`${this.user.email}-cards`, cards); */
 
         }
       }

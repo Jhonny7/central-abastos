@@ -28,7 +28,7 @@ export class ArticuloProductosPage {
 
   public palabra: string = "";
 
-  public user: User = null;
+  public user: any = null;
 
   public color: any = "#3b64c0";
 
@@ -98,7 +98,7 @@ export class ArticuloProductosPage {
       }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
@@ -111,7 +111,7 @@ export class ArticuloProductosPage {
         //let nav = this.app.getRootNav();
         //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
         if (this.user) {
-          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+          let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
          
           if (carritos) {
             let position: any = carritos.findIndex(
@@ -130,7 +130,7 @@ export class ArticuloProductosPage {
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
         let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
     //

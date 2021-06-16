@@ -5,7 +5,7 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { GenericService } from './../../services/generic.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
-import { environment } from '../../../environments/environment.prod';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
 import { ProductoService } from '../../services/producto.service';
 import { LoadingService } from '../../services/loading.service';
 import { DetalleProductoPage } from '../detalle-producto/detalle-producto';
@@ -62,6 +62,13 @@ export class CategoriaPage {
   }
 
   ionViewDidLoad() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
+  }
+
+  ionViewDidLeave(){
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   viewDetail(producto: any) {
@@ -72,12 +79,19 @@ export class CategoriaPage {
         let params = new HttpParams()
         params = params.set('email', this.user.email);
         this.genericService.sendGetRequestParams(`${environment.proveedorProductos}/producto/${producto.id}`,params).subscribe((response: any) => {
-
+          console.log("from cat");
+          console.log(response);
+          if(nuevoBackHabilitado){
+            producto = {
+              producto : producto
+            }
+          }
           this.navCtrl.push(MapaProveedoresPage, { proveedores: response, producto });
           this.loadingService.hide();
         }, (error: HttpErrorResponse) => {
+          this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       } else {
         let params = new HttpParams()
@@ -88,7 +102,7 @@ export class CategoriaPage {
           //let nav = this.app.getRootNav();
           //let user: any = this.localStorageEncryptService.getFromLocalStorage("userSession");
           if (this.user) {
-            let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
 
             if (carritos) {
               let position: any = carritos.findIndex(
@@ -107,7 +121,7 @@ export class CategoriaPage {
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       }
     });
@@ -122,7 +136,9 @@ export class CategoriaPage {
   cargarArticulos() {
     this.genericService.sendGetRequest(`${environment.categoria}${this.categoria.categoria.id}`).
       subscribe((res: any) => {
-        this.articulos = res.productosTipoArticulo;
+        console.log(res);
+        
+        this.articulos = res;
         this.articulosReplica = this.articulos;
       }, (err: HttpErrorResponse) => {
 

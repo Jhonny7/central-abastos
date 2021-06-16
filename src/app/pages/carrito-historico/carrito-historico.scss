@@ -1,4 +1,30 @@
 page-carrito-historico {
+
+  .cr-act{
+    border: 2px solid blue;
+    border-radius: 50%;
+  }
+
+  .extern{
+    width: 100%;
+    .aplica{
+      font-size: 10px;
+font-weight: bolder;
+text-align: center;
+    }
+    .contenedor-estafeta{
+      width: 100%;
+      div{
+        display: inline-block;
+        width: 48%;
+        text-align: center;
+        img{
+          width: 34px;
+        }
+      }
+    }
+  }
+  
     .card {
         display: inline-block;
         position: relative;

@@ -3,7 +3,7 @@ import { LoadingService } from './../../services/loading.service';
 import { User } from './../../models/User';
 import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { GenericService } from './../../services/generic.service';
-import { environment } from './../../../environments/environment.prod';
+import { environment, nuevoBackHabilitado } from './../../../environments/environment.prod';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides, Events } from 'ionic-angular';
 import PhotoSwipe from 'photoswipe';
@@ -29,7 +29,7 @@ export class DetalleProductoPage {
   @ViewChild('slides2')
   slider2: Slides;
 
-  public user: User = null;
+  public user: any = null;
 
   public color: any = "#3b64c0";
 
@@ -48,7 +48,8 @@ export class DetalleProductoPage {
     this.fromCarritos = navParams.get("fromCarritos");
 
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
-
+      console.log(this.user);
+      
     this.producto.photos = [];
     if (this.producto.imagenes) {
       this.producto.imagenes.forEach(element => {
@@ -92,7 +93,7 @@ export class DetalleProductoPage {
   }
 
   actualizarCantidad(fromLogin:boolean = false) {
-    let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
     
     let position: any = carritos.findIndex(
       (carrito) => {
@@ -178,7 +179,8 @@ export class DetalleProductoPage {
   agregarToCarritoBack(bandera: boolean, producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoId: producto.id
+      productoId: producto.id,
+      email: this.user.email
     }
     let service: any = this.genericService.sendPostRequest(environment.carritoCompras, body);
 
@@ -193,12 +195,20 @@ export class DetalleProductoPage {
       }
       //this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
-      //producto.cantidad--;
-      if(producto.cantidad == 1){
-        producto.cantidad = 1;
+      if(error.error.status == 3){
+        console.log("111");
+        
+        this.alertaService.errorAlertGeneric(error.error.description);
+        producto.cantidad = error.error.parameters;
       }else{
-        producto.cantidad--;
+        if(producto.cantidad == 1){
+          producto.cantidad = 1;
+        }else{
+          producto.cantidad--;
+        }
       }
+      //producto.cantidad--;
+      
     });
   }
 
@@ -212,7 +222,9 @@ export class DetalleProductoPage {
   borrarToCarritoBack(producto: any) {
     let body: any = {
       precio: producto.precio,
-      productoProveedorId: producto.id
+      productoProveedorId: producto.id,
+      email: this.user.email,
+      decremento:1
     }
     body.cantidad = producto.cantidad;
     this.genericService.sendPutRequest(environment.carritoCompras, body).subscribe((response1: any) => {
@@ -221,7 +233,7 @@ export class DetalleProductoPage {
         this.genericService.sendDeleteRequest(`${environment.carritoCompras}/${producto.id}`).subscribe((response2: any) => {
           if (producto.cantidad == 0) {
             this.producto = 1;
-            //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            //this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
           }
           this.verificarCarritoModificarCantidad(producto);
         }, (error: HttpErrorResponse) => {
@@ -231,7 +243,14 @@ export class DetalleProductoPage {
         this.verificarCarritoModificarCantidad(producto);
       }
     }, (error: HttpErrorResponse) => {
-      producto.cantidad++;
+      if(error.error.status == 3){
+        console.log("222");
+        this.alertaService.errorAlertGeneric(error.error.description);
+        producto.cantidad = error.error.parameters;
+      }else{
+        producto.cantidad++;
+      }
+      
     });
   }
 
@@ -241,7 +260,7 @@ export class DetalleProductoPage {
       //this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
 
       if (this.user) {
-        let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        let carritos = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
         let body: any = {
           precio: producto.precio,
           productoProveedorId: producto.id
@@ -261,19 +280,27 @@ export class DetalleProductoPage {
         if (position >= 0) {
           this.updateCarrito(producto, body);
         } else {
-          
+          if(nuevoBackHabilitado){
+            body.email = this.user.email;
+          }
           this.genericService.sendPostRequest(environment.carritoCompras, body).subscribe((response: any) => {
             body.cantidad = producto.cantidad;
-            this.alertaService.successAlertGeneric("Tu articulo se agregó al carrito con éxito");
+            console.log("en detalle");
+            
+            this.alertaService.successAlertGeneric("Tu artículo se agregó al carrito con éxito");
             this.updateCarrito(producto, body);
             //this.verificarCarritoModificarCantidad(producto);
           }, (error: HttpErrorResponse) => {
           
-            this.alertaService.errorAlertGeneric(error.error.title);
-            if(producto.cantidad == 1){
-              producto.cantidad = 1;
+            if(error.error.status == 3){
+              producto.cantidad = error.error.parameters;
+              this.alertaService.errorAlertGeneric(error.error.description);
             }else{
-              producto.cantidad--;
+              if(producto.cantidad == 1){
+                producto.cantidad = 1;
+              }else{
+                producto.cantidad--;
+              }
             }
             this.loadingService.hide();
           });
@@ -290,16 +317,23 @@ export class DetalleProductoPage {
       this.verificarCarritoModificarCantidad(producto);
     }, (error: HttpErrorResponse) => {
       this.loadingService.hide();
-      if(producto.cantidad == 1){
-        producto.cantidad = 1;
+      if(error.error.status == 3){
+        console.log("333");
+        this.alertaService.errorAlertGeneric(error.error.description);
+        producto.cantidad = error.error.parameters;
       }else{
-        producto.cantidad--;
+        if(producto.cantidad == 1){
+          producto.cantidad = 1;
+        }else{
+          producto.cantidad--;
+        }
       }
+      
     });
   }
 
   verificarCarritoModificarCantidad(element: any) {
-    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+    let productosStorage: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
     if (!productosStorage) {
       productosStorage = [];
       productosStorage.push(element);
@@ -316,7 +350,7 @@ export class DetalleProductoPage {
         productosStorage.push(element);
       }
     }
-    this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, productosStorage);
+    this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, productosStorage);
     this.events.publish("totalCarrito");
     this.events.publish("carritoTab");
   }

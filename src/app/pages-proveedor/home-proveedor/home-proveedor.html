@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Bienvenid@</ion-title>
+    <ion-title>Bienvenid@ {{user.nombre}}</ion-title>
     <ion-buttons end>
 
       <button ion-button icon-only (click)="verOpciones()">
@@ -50,7 +50,7 @@
     </button>
   </div>
 
-  <ion-list *ngIf="pedidos && pedidos?.length > 0">
+  <ion-list *ngIf="pedidos && pedidos?.length > 0" style="    margin-bottom: 100px;">
     <ion-item class="item-list-card" *ngFor="let p of pedidos" (click)="viewDetail(p)">
       <ion-avatar slot="start">
         <img src="assets/imgs/pedidos/entrega.png" alt="">

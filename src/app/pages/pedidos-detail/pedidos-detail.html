@@ -9,7 +9,7 @@
       <div style="padding: 15px;
       font-size: 17px;
       display: inline-block;
-      width: 85%;">
+      width: 84%;">
         Desliza hacia la izquierda cada pedido para ver mas opciones
       </div>
       <div style="padding: 15px;
@@ -26,7 +26,7 @@
           <div class="name">{{p.proveedor?.nombre}}</div>
           <div class="number">{{p.total | currency}}</div>
           <div class="number">Costo de envío: <strong>{{p.comisionTransportista | currency}}</strong></div>
-          <div class="number">Subtotal: <strong>{{p.total + p.comisionTransportista | currency}}</strong></div>
+          <div class="number">Subtotal: <strong>{{retornaVal(p.total,p.comisionTransportista) | currency}}</strong></div>
         </div>
         <button ion-button outline item-end (click)="terminarServicio(p)">Terminar pedido</button>
         <button ion-button outline item-end (click)="calificar(p)" *ngIf="!p.calificacionServicio && p.estatusId == 15">Calificar

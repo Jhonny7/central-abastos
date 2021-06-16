@@ -30,7 +30,7 @@ export class ProductoService {
         private events: Events) {
         this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
         if(this.user){
-            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+            this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
         }
     }
 
@@ -53,7 +53,7 @@ export class ProductoService {
     }
 
     getTotalCarrito() {
-        let productosCarrito: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        let productosCarrito: any = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
         if (productosCarrito) {
             return productosCarrito.length;
         } else {
@@ -62,7 +62,7 @@ export class ProductoService {
     }
 
     deleteFavorito(producto) {
-        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.id_token}`);
+        this.productosCarrito = this.localStorageEncryptService.getFromLocalStorage(`${this.user.email}`);
         let nuevoArrarCarrito: any[] = [];
         let productoDelete: any = null;
         this.productosCarrito.forEach(element => {
@@ -76,7 +76,7 @@ export class ProductoService {
         });
 
         this.productosCarrito = nuevoArrarCarrito;
-        this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, this.productosCarrito);
+        this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, this.productosCarrito);
 
         //Llamar a events
         this.events.publish('updateProductos', { productoDelete });

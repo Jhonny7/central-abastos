@@ -21,7 +21,7 @@ export class PedidosDetailPage {
 
   public detalle: any = null;
   public id: any = null;
-
+  public user:any = null;
 
   constructor(
     public navCtrl: NavController,
@@ -35,6 +35,7 @@ export class PedidosDetailPage {
     console.log(this.detalle);
 
     this.id = navParams.get("id");
+    this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
   }
 
   ionViewDidLoad() {
@@ -46,19 +47,21 @@ export class PedidosDetailPage {
 
   verChatProveedor(pedido: any) {
     console.log(this.detalle);
-
-    if (!pedido.chatProveedorid) {
+    console.log(pedido);
+    
+    if (!pedido.chatProveedorId) {
       this.alertaService.warnAlertGeneric("El proveedor aun no inicia el chat, espera a que él se comunique contigo");
     } else {
       this.loadingService.show().then(() => {
-        this.genericService.sendGetRequest(`${environment.chats}/${pedido.chatProveedorid}`).subscribe((response: any) => {
-
-          this.navCtrl.push(ChatPage, { chat: response, pedido: this.detalle });
+        this.genericService.sendGetRequest(`${environment.chats}/${pedido.chatProveedorId}`).subscribe((response: any) => {
+          console.log(response);
+          
+          this.navCtrl.push(ChatPage, { chat: response[0], pedido: this.detalle });
           this.loadingService.hide();
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       });
     }
@@ -76,7 +79,7 @@ export class PedidosDetailPage {
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       });
     }
@@ -92,7 +95,7 @@ export class PedidosDetailPage {
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
         let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     }); */
     let productos: any[] = [];
@@ -110,7 +113,9 @@ export class PedidosDetailPage {
 
   queja(p) {
     let body: any = {
-      pedidoProveedorId: p.id
+      pedidoProveedorId: p.id,
+      email: this.user.email,
+      tipoUsuario: this.user.tipo_usuario
     };
 
     this.genericService.sendPostRequest(`${environment.queja}`, body).subscribe(
@@ -121,5 +126,9 @@ export class PedidosDetailPage {
         this.alertaService.errorAlertGeneric('No se ha podido contactar al administrador, intenta nuevamente');
       }
     );
+  }
+
+  retornaVal(a:any,b:any){
+    return Number(a)+Number(b);
   }
 }

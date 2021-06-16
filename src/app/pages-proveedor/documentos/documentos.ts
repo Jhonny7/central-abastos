@@ -1,9 +1,10 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { GenericService } from '../../services/generic.service';
 import { AlertaService } from '../../services/alerta.service';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +24,9 @@ export class DocumentosPage {
     destinationType: this.camera.DestinationType.DATA_URL,
     encodingType: this.camera.EncodingType.JPEG,
     mediaType: this.camera.MediaType.PICTURE
-  }
+  };
+
+  public user:any = null;
   
   constructor(
     public navCtrl: NavController,
@@ -32,7 +35,8 @@ export class DocumentosPage {
     private alertaService: AlertaService,
     private camera: Camera,
     private actionSheetCtrl: ActionSheetController,
-    private translatePipe: TranslateService) {
+    private translatePipe: TranslateService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
     this.documentosTmp.push({
       documentoId: 1,
       nombre: "IFE",
@@ -61,6 +65,8 @@ export class DocumentosPage {
       usuarioDocumentoId: null,
       imagen: null
     });
+
+    this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
   }
 
   ionViewDidLoad() {
@@ -68,7 +74,14 @@ export class DocumentosPage {
   }
 
   cargarDocs() {
-    this.genericService.sendGetRequest(`${environment.usuarioDocumentos}`).subscribe((response: any) => {
+
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.usuarioDocumentos);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.usuarioDocumentos}`, params);
+    }
+    sus.subscribe((response: any) => {
       console.log(response);
       this.documentos = response;
       if (this.documentos.length <= 0) {
@@ -88,7 +101,7 @@ export class DocumentosPage {
       }
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
 
@@ -166,7 +179,8 @@ export class DocumentosPage {
         contentType: "jpg",
         size: null,
         file: documento.imagen.split("data:image/jpeg;base64,")[1]
-      }
+      },
+      email: this.user.email
     }
 
     this.genericService.sendPostRequest(`${environment.usuarioDocumentos}`, body).subscribe((response: any) => {

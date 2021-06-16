@@ -21,7 +21,7 @@ export class User {
       }
   
       let temp: User = new User(
-        data.id_token,
+        data.email,
         data.username,
         data.tipo_usuario,
         data.parametros);

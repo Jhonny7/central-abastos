@@ -98,9 +98,9 @@ export class LoginPage {
 
         //quitar
         this.loadingService.hide();
-        if (response.tipo_usuario == 3 && environment.perfil.activo == 2 ||
-          response.tipo_usuario == 2 && environment.perfil.activo == 1 ||
-          response.tipo_usuario == 4 && environment.perfil.activo == 3) {
+        if (Number(response.tipo_usuario) == 3 && environment.perfil.activo == 2 ||
+          Number(response.tipo_usuario) == 2 && environment.perfil.activo == 1 ||
+          Number(response.tipo_usuario) == 4 && environment.perfil.activo == 3) {
           this.localStorageEncryptService.setToLocalStorage("userSession", response);
 
           //let nav:any = this.app.getRootNav();
@@ -120,8 +120,6 @@ export class LoginPage {
               break;
             case 3:
               this.navCtrl.setRoot(TabsProveedorPage);
-              break;
-            default:
               break;
           }
 

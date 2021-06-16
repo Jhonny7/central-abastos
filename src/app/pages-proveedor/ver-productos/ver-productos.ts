@@ -1,3 +1,4 @@
+import { LocalStorageEncryptService } from './../../services/local-storage-encrypt.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
 import { Component, OnDestroy } from '@angular/core';
@@ -14,12 +15,15 @@ export class VerProductosPage implements OnDestroy{
   public pedidos: any = null;
 
   public env:any = environment;
+
+  public user:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private genericService: GenericService,
-    private alertaService: AlertaService) {
-
+    private alertaService: AlertaService,
+    private localStorageEncryptService: LocalStorageEncryptService) {
+      this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.pedidos = navParams.get("pedidos");
     this.pedidos.pedidoProveedores[0].pedidoDetalles.forEach(element => {
       element.activado = false;
@@ -35,12 +39,15 @@ export class VerProductosPage implements OnDestroy{
   }
 
   ngOnDestroy() {
-    let claseTabs: any = document.getElementsByClassName("tabbar");
-    claseTabs[0].style.display = "flex";
+    
   }
 
   solicitar() {
 
+  }
+
+  retornarVal(a:any,b:any){
+    return Number(a)+Number(b);
   }
 
   confirmar() {
@@ -57,7 +64,9 @@ export class VerProductosPage implements OnDestroy{
         case 2:
           let body: any = {
             pedidoProveedorId: this.pedidos.pedidoProveedores[0].id,
-            estatusId: 13
+            estatusId: 13,
+            email: this.user.email,
+            notificar: true
           };
 
           this.genericService.sendPutRequest(environment.pedidosProveedores, body).subscribe((response1: any) => {
@@ -71,7 +80,8 @@ export class VerProductosPage implements OnDestroy{
         case 3:
           let body2: any = {
             pedidoProveedorId: this.pedidos.pedidoProveedores[0].id,
-            estatusId: 14
+            estatusId: 14,
+            email: this.user.email
           };
 
           this.genericService.sendPutRequest(environment.pedidosProveedores, body2).subscribe((response1: any) => {

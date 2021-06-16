@@ -6,7 +6,7 @@ import { ChatPage } from './../chat/chat';
 import { LoadingService } from './../../services/loading.service';
 import { VerProductosPage } from './../../pages-proveedor/ver-productos/ver-productos';
 import { Component, OnDestroy } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ActionSheetController, Platform, ModalController, ToastController } from 'ionic-angular';
 import { User } from '../../models/User';
 import { GenericService } from '../../services/generic.service';
 import { LocalStorageEncryptService } from '../../services/local-storage-encrypt.service';
@@ -41,6 +41,8 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
   public idGenerado: number = 1;
 
+  public escaneando: boolean = false;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,7 +59,8 @@ export class HistorialPedidosDetailPage implements OnDestroy {
     private file: File,
     private fileOpener: FileOpener,
     private sqlGenericService: SqlGenericService,
-    private modalController: ModalController) {
+    private modalController: ModalController,
+    private toastCtrl: ToastController,) {
     this.user = this.localStorageEncryptService.getFromLocalStorage("userSession");
     this.pedido = navParams.get("pedido");
     console.log(this.pedido);
@@ -66,11 +69,22 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
   ngOnDestroy() {
     this.localStorageEncryptService.clearProperty("pedidoPedido");
+
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "flex";
   }
 
   ionViewDidLoad() {
+
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    tabbar[0].style.display = "none";
+
     this.loadMap();
     this.localStorageEncryptService.setToLocalStorage("pedidoPedido", this.pedido.id);
+  }
+
+  ionViewDidLeave(){
+    
   }
 
   loadMap() {
@@ -128,6 +142,9 @@ export class HistorialPedidosDetailPage implements OnDestroy {
   }
 
   verDetalle() {
+    //Agregar pedidoProveedores al pedido en back
+    console.log(this.pedido);
+    
     this.navCtrl.push(PedidosDetailPage, { detalle: this.pedido.pedidoProveedores, id: this.pedido.id });
   }
 
@@ -137,7 +154,8 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
   terminarPedido() {
     let body: any = {
-      pedidoProveedorId: this.pedido.pedidoProveedores[0].id
+      pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
+      email: this.user.email
     };
 
     this.genericService.sendPutRequest(environment.llegada, body).subscribe(
@@ -161,7 +179,8 @@ export class HistorialPedidosDetailPage implements OnDestroy {
   enviarPedido() {
     let body: any = {
       pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
-      estatusId: 18 //antes 14
+      estatusId: 18, //antes 14
+      email: this.user.email
     };
 
     this.genericService.sendPutRequest(environment.pedidosProveedores, body).subscribe((response1: any) => {
@@ -170,6 +189,13 @@ export class HistorialPedidosDetailPage implements OnDestroy {
     }, (error: HttpErrorResponse) => {
       this.alertaService.errorAlertGeneric("Ocurrió un error, por favor intenta nuevamente.");
     });
+  }
+
+  envioPedidoExterno(p){
+
+    //Cambiar modo de envio de alerta para que el proveedor sepa el costo del envio seleccionado por el usuario
+    p.servicioExterno = p.servicioExterno.replace("costo de ","costo de $");
+    this.alertaService.alertaNormal(p.servicioExterno);
   }
 
   enviarPedidoMultiple() {
@@ -373,9 +399,11 @@ export class HistorialPedidosDetailPage implements OnDestroy {
   }
 
   completarServicio(tokenEntrada: any) {
+
     let body: any = {
       pedidoProveedorId: this.pedido.pedidoProveedores[0].id,
-      token: tokenEntrada
+      token: tokenEntrada,
+      email: this.user.email
     }
     this.loadingService.show().then(() => {
       this.genericService.sendPutRequest(`${environment.pedidosTransportistas}/terminar-servicio`, body).subscribe((response: any) => {
@@ -388,6 +416,15 @@ export class HistorialPedidosDetailPage implements OnDestroy {
     });
   }
 
+  quitarEscaneo() {
+    let all: any = document.getElementById("all2");
+
+    (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
+    all.style.backgroundColor = "#ffffff";
+    //tab[0].style.display = "flex";
+    this.escaneando = !this.escaneando;
+  }
+
   presentActionSheet() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Selecciona',
@@ -396,12 +433,29 @@ export class HistorialPedidosDetailPage implements OnDestroy {
           text: 'Escanear',
           icon: 'ios-barcode-outline',
           handler: () => {
+
+            (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
+            let all: any = document.getElementById("all2");
+            //console.log(tab.style);
+            
+
+            all.style.backgroundColor = "transparent";
+            this.escaneando = true;
             this.qrScanner.prepare()
               .then((status: QRScannerStatus) => {
+                console.log("ESTATUS");
+                console.log(status);
+                
                 if (status.authorized) {
                   // camera permission was granted
-
-
+                  let toast = this.toastCtrl.create({
+                    message: "Coloca la camara directo al código QR",
+                    position: 'bottom',
+                    duration: 3000,
+                    closeButtonText: 'OK'
+                  });
+                  toast.present();
+                  this.qrScanner.show();
                   // start scanning
                   let scanSub = this.qrScanner.scan().subscribe((text: string) => {
                     console.log('Scanned something', text);
@@ -409,21 +463,34 @@ export class HistorialPedidosDetailPage implements OnDestroy {
 
                     this.completarServicio(text);
                     ///
+                    (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
                     this.qrScanner.hide(); // hide camera preview
+                    this.qrScanner.destroy();
                     scanSub.unsubscribe(); // stop scanning
+                    this.escaneando = false;
                   });
 
                 } else if (status.denied) {
+                  this.escaneando = false;
                   // camera permission was permanently denied
                   // you must use QRScanner.openSettings() method to guide the user to the settings page
                   // then they can grant the permission from there
+                  all.style.backgroundColor = "#fff";
+                  (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
                   this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
                 } else {
+                  this.escaneando = false;
                   // permission was denied, but not permanently. You can ask for permission again at a later time.
+                  all.style.backgroundColor = "#fff";
+                  (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
                   this.alertaService.warnAlertGeneric("Activa los permisos de cámara en la aplicación para poder escanear el código");
                 }
               })
-              .catch((e: any) => console.log('Error is', e));
+              .catch((e: any) => {
+                all.style.backgroundColor = "#fff";
+                this.alertaService.errorAlertGeneric("Ocurrió un error contacta al administrador");
+                (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
+              });
           }
         },
         {
@@ -483,7 +550,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
   verChat() {
     switch (environment.perfil.activo) {
       case 1:
-        if (!this.pedido.pedidoProveedores[0].chatProveedorid) {
+        if (!this.pedido.pedidoProveedores[0].chatProveedorId ) {
           this.alertaService.warnAlertGeneric("El proveedor aun no inicia el chat, espera a que él se comunique contigo");
         } else {
           /* this.loadingService.show().then(() => {
@@ -494,7 +561,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
         }, (error: HttpErrorResponse) => {
           this.loadingService.hide();
           let err: any = error.error;
-          this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+          this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
         });
       }); */
         }
@@ -509,7 +576,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
           }, (error: HttpErrorResponse) => {
             this.loadingService.hide();
             let err: any = error.error;
-            this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+            this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
           });
         });
         break;
@@ -522,7 +589,7 @@ export class HistorialPedidosDetailPage implements OnDestroy {
           }, (error: HttpErrorResponse) => {
             this.loadingService.hide();
             let err: any = error.error;
-            this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+            this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
           });
         });
         break;

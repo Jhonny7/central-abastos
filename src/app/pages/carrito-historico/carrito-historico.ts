@@ -12,6 +12,7 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ValidationService } from '../../services/validation.service';
 import { CurrencyPipe } from '@angular/common';
 import { HomeGeoProveedoresPage } from '../home-geo-proveedores/home-geo-proveedores';
+import { EnvioExternoPage } from '../../../pages/envio-externo/envio-externo';
 declare var Stripe;
 
 @Component({
@@ -23,7 +24,7 @@ export class CarritoHistoricoPage implements OnDestroy {
     cssClass: 'action-sheet-class'
   };
 
-  public user: User = null;
+  public user: any = null;
 
   public env: any = environment;
 
@@ -43,6 +44,8 @@ export class CarritoHistoricoPage implements OnDestroy {
     cvc: "",
     dtime: ""
   };
+
+  public aplicaExterno:boolean = true;
 
   public pagoActual: any = null;
 
@@ -163,7 +166,7 @@ export class CarritoHistoricoPage implements OnDestroy {
         length: 50,
         type: "text",
         formName: "name",
-        value: null,
+        value: this.user.nombre,
         disabled: false
       },
       {
@@ -181,7 +184,7 @@ export class CarritoHistoricoPage implements OnDestroy {
         length: 100,
         type: "email",
         formName: "email",
-        value: null,
+        value: this.user.email,
         disabled: false
       },
 
@@ -542,15 +545,23 @@ export class CarritoHistoricoPage implements OnDestroy {
 
   closeInfoContact(aun: boolean = true) {
     let modal: any = document.getElementById("myModal2");
-    modal.style.display = "none";
+    if (modal) {
+      modal.style.display = "none";
+    }
 
     this.objetoRegistro.forEach(item => {
-      item.value = null;
+      if (item.name == "Picking") {
+        item.value = false;
+      } else {
+        item.value = null;
+      }
     });
-
+    this.armaObjRegistro();
     this.formGroup = null;
     this.btnHabilitado = true;
-    this.enCompra = false;
+    if (aun) {
+      this.enCompra = false;
+    }
   }
 
   cerrarModal3(aun: boolean = true) {
@@ -568,6 +579,7 @@ export class CarritoHistoricoPage implements OnDestroy {
 
   /**Verifica validaciones */
   ejecutaValidator(opc: boolean = false, evt: any = null) {
+    console.log(this.formGroup.controls);
     if (opc) {
       console.log(evt);
       if (!evt) {
@@ -590,18 +602,22 @@ export class CarritoHistoricoPage implements OnDestroy {
           disabled: false
         });
       } else {
-        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
-        this.objetoRegistro = [...this.objetoRegistro.slice(0, 4), ...this.objetoRegistro.slice(4 + 1)];
+        this.objetoRegistro = [
+          ...this.objetoRegistro.slice(0, 4),
+          ...this.objetoRegistro.slice(4 + 1)
+        ];
+        this.objetoRegistro = [
+          ...this.objetoRegistro.slice(0, 4),
+          ...this.objetoRegistro.slice(4 + 1)
+        ];
       }
     }
     let validacion: number = 0;
     for (const name in this.formGroup.controls) {
-
       let n: any = this.formGroup.controls[name];
 
       if (n.invalid) {
         validacion++;
-
       }
       /*
       if (n.value && (n.value === 0 || n.value.length === 0) && n.invalid) {
@@ -611,13 +627,20 @@ export class CarritoHistoricoPage implements OnDestroy {
     }
     console.log(validacion);
 
-    if (validacion <= 0) {
+    if (validacion <= 0 && !this.formGroup.controls["sex"].value) {
+      this.btnHabilitado = false;
+    }else if (validacion <= 1 && this.formGroup.controls["sex"].value) {
       this.btnHabilitado = false;
     } else {
+      this.aplicaExterno = !this.formGroup.controls["sex"].value;
       this.btnHabilitado = true;
     }
 
-    if (validacion == 1 && (this.objetoRegistro[3].value == false || this.objetoRegistro[3].value == 'false')) {
+    if (
+      validacion == 1 &&
+      (this.objetoRegistro[3].value == false ||
+        this.objetoRegistro[3].value == "false")
+    ) {
       this.btnHabilitado = false;
     }
   }
@@ -627,6 +650,12 @@ export class CarritoHistoricoPage implements OnDestroy {
       { fromModal: true });
     modal.present();
     modal.onDidDismiss((data) => {
+      setTimeout(() => {
+        let claseTabs: any = document.getElementsByClassName("tabbar");
+      console.log(claseTabs);
+
+      claseTabs[0].style.display = "none";
+      }, 500);
       if (data) {
         if (data != null) {
           this.data = data.data;
@@ -650,13 +679,48 @@ export class CarritoHistoricoPage implements OnDestroy {
     });
   }
 
-  precompra() {
+  seleccionaExterno(pedidoProveedor: any,opc:number) {
+    console.log(this.objetoRegistroCopy);
 
+    console.log(this.objetoRegistro);
+    
+    let modal = this.modalController.create(EnvioExternoPage, {
+      pedidoProveedor,
+      cp: this.objetoRegistroCopy[3].value,
+      opc
+    });
+    modal.present();
+    modal.onDidDismiss(data => {
+      if (data) {
+        console.log("seleccionado");
+        
+        console.log(data);
+
+        if(data.envio.proveedor == "Estafeta"){
+          pedidoProveedor.estafeta = data.envio;
+        }else{
+          pedidoProveedor.dhl = data.envio;
+        }
+        pedidoProveedor.comisionTransportista = data.envio.costoTotal;
+        let total = 0;
+        this.pagoActual.pedidoProveedores.forEach(element => {
+           total += element.comisionTransportista;
+        });
+        this.pagoActual.total = Number(this.pagoActual.total) + Number(total);
+      }
+    });
+  }
+
+  precompra() {
+    
+    
     this.objetoRegistroCopy = [];
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["name"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["tel"].value });
     this.objetoRegistroCopy.push({ value: this.formGroup.controls["email"].value });
-
+    this.objetoRegistroCopy.push({
+      value: this.formGroup.controls["cp"].value
+    });
     let h:any = null;
     console.log(this.totales.listHistoricoProveedores);
     
@@ -664,14 +728,17 @@ export class CarritoHistoricoPage implements OnDestroy {
       h = true;
     }
 
+    console.log(this.data);
+    console.log(this.formGroup.controls);
+
     let body: any = {
       nombreContacto: this.objetoRegistroCopy[0].value,
       telefonoContacto: this.objetoRegistroCopy[1].value,
       correoContacto: this.objetoRegistroCopy[2].value,
-      direccionContacto: this.objetoRegistro[3].value == 'true' ||
+      direccionContacto: !this.formGroup.controls["sex"].value && (this.objetoRegistro[3].value == 'true' ||
         this.objetoRegistro[3].value == true ||
         this.objetoRegistro[3].value == 'false' ||
-        this.objetoRegistro[3].value == false || h ? {
+        this.objetoRegistro[3].value == false || h) ? {
           id: this.data.id ? this.data.id : null,
           codigoPostal: this.data.codigoPostal,
           direccion: this.data.direccion,
@@ -682,12 +749,9 @@ export class CarritoHistoricoPage implements OnDestroy {
     };
 
     if (
-      this.objetoRegistro[3].value == 'true' ||
-      this.objetoRegistro[3].value == true ||
-      this.objetoRegistro[3].value == 'false' ||
-      this.objetoRegistro[3].value == false
+      this.formGroup.controls["sex"].value
     ) {
-      body.picking = this.objetoRegistro[3].value;
+      body.picking = true;
     } else {
       body.picking = false;
     }
@@ -703,8 +767,7 @@ export class CarritoHistoricoPage implements OnDestroy {
 
     });
 
-
-
+    body.email = this.user.email;
     let service: any = this.genericService.sendPostRequest(environment.pedidos, body);
 
     this.loadingService.show().then(() => {
@@ -808,10 +871,25 @@ export class CarritoHistoricoPage implements OnDestroy {
 
             // Get the token ID:
             //clase.loadingService.hide();
+            //Nuevo armado para saber si es dhl o estafeta
+            let arr:any = [];
+            this.pagoActual.pedidoProveedores.forEach(p => {
+              arr.push({
+                id: p.id,
+                dhl: p.dhl ? 1 : 0,
+                estafeta: p.estafeta ? 1 : 0,
+                envio: p.estafeta ? p.estafeta : p.dhl
+              });
+            });
+            //
+            //clase.loadingService.hide();
             var token = response.id;
             let body: any = {
               pedidoId: clase.pagoActual.id,
-              token: token
+              token: token,
+              email: clase.user.email,
+              emailStripe: clase.objetoRegistro[2].value,
+              pedidosProv : arr
             };
             let service: any = clase.genericService.sendPutRequest(`${environment.pedidos}/pago`, body);
 
@@ -857,5 +935,9 @@ export class CarritoHistoricoPage implements OnDestroy {
     this.listaCarrito.carritoHistoricoDetalles.sort((mayor, menor) => {
       return menor.precio - mayor.precio;
     });
+  }
+
+  suma(v1, v2) {
+    return Number(v1) + Number(v2);
   }
 }

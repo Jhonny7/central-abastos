@@ -2,10 +2,10 @@ import { LocalStorageEncryptService } from './../../services/local-storage-encry
 import { LoadingService } from './../../services/loading.service';
 import { AlertaService } from './../../services/alerta.service';
 import { GenericService } from './../../services/generic.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IonicPage, NavController, NavParams, Events, PopoverController, MenuController, App } from 'ionic-angular';
-import { environment } from '../../../environments/environment.prod';
-import { HttpErrorResponse } from '@angular/common/http';
+import { environment, nuevoBackHabilitado } from '../../../environments/environment.prod';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ArticuloProveedoresPage } from '../articulo-proveedores/articulo-proveedores';
 import { OpcionesMenuPage } from '../opciones-menu/opciones-menu';
 import { CarritoComprasPage } from '../carrito-compras/carrito-compras';
@@ -14,7 +14,7 @@ import { CarritoComprasPage } from '../carrito-compras/carrito-compras';
   selector: 'page-recuperar-password',
   templateUrl: 'recuperar-password.html',
 })
-export class ProveedorPage {
+export class ProveedorPage implements OnDestroy{
 
   public proveedores: any[] = [];
   public proveedoresReplica: any[] = [];
@@ -22,6 +22,8 @@ export class ProveedorPage {
   public totalCarrito: any = 0;
   public env: any = environment;
   public user: any = null;
+
+  public fromMenu:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,6 +35,8 @@ export class ProveedorPage {
     public menuCtrl: MenuController,
     private localStorageEncryptService: LocalStorageEncryptService,
     private app: App) {
+
+      this.fromMenu = navParams.get("fromMenu");
     this.cargarProveedores();
     this.menuCtrl.enable(true);
     this.user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
@@ -83,10 +87,16 @@ export class ProveedorPage {
   }
 
   cargarProductosCarrito() {
-    this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
+    let params = new HttpParams();
+    params = params.set("email", this.user.email);
+    let sus: any = this.genericService.sendGetRequest(environment.carritoCompras);
+    if (nuevoBackHabilitado) {
+      sus = this.genericService.sendGetParams(`${environment.carritoCompras}`, params);
+    }
+    sus.subscribe((response: any) => {
 
       let nav = this.app.getRootNav();
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, response);
       nav.push(CarritoComprasPage);
     }, (error: HttpErrorResponse) => {
       this.alertaService.warnAlertGeneric("Agrega artículos al carrito");
@@ -100,7 +110,7 @@ export class ProveedorPage {
 
     this.genericService.sendGetRequest(environment.carritoCompras).subscribe((response: any) => {
 
-      this.localStorageEncryptService.setToLocalStorage(`${this.user.id_token}`, response);
+      this.localStorageEncryptService.setToLocalStorage(`${this.user.email}`, response);
       this.totalCarrito = response.length;
       console.log(this.totalCarrito);
       
@@ -128,10 +138,16 @@ export class ProveedorPage {
     }, (error: HttpErrorResponse) => {
       let err: any = error.error;
       this.proveedores = null;
-      this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+      this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
     });
   }
-
+  ngOnDestroy() {
+    let tabbar:any = document.getElementsByClassName("tabbar");
+    if(tabbar[0]){
+      tabbar[0].style.display = "flex";
+    }
+  }
+  
   ionViewDidLoad() {
     console.log("--->");
     
@@ -141,6 +157,11 @@ export class ProveedorPage {
 
     if (this.user) {
       this.getTotalCarrito();
+    }
+
+    if(this.fromMenu){
+      let tabbar:any = document.getElementsByClassName("tabbar");
+      tabbar[0].style.display = "none";
     }
   }
 
@@ -167,7 +188,7 @@ export class ProveedorPage {
       }, (error: HttpErrorResponse) => {
         this.loadingService.hide();
         let err: any = error.error;
-        this.alertaService.errorAlertGeneric(err.message ? err.message : "Ocurrió un error en el servicio, intenta nuevamente");
+        this.alertaService.errorAlertGeneric(err.description ? err.description : "Ocurrió un error en el servicio, intenta nuevamente");
       });
     });
     //

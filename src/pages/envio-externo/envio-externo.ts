@@ -16,6 +16,8 @@ export class EnvioExternoPage {
   private carga: boolean = false;
   private envios:any = [];
   private envio:any = null;
+
+  private opc:any = null;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -24,6 +26,7 @@ export class EnvioExternoPage {
     private viewCtrl: ViewController) {
       this.pedidoProveedor = navParams.get("pedidoProveedor");
       this.cp = navParams.get("cp");
+      this.opc = navParams.get("opc");
     console.log(this.pedidoProveedor);
 
   }
@@ -32,12 +35,24 @@ export class EnvioExternoPage {
     if (this.pedidoProveedor.pedidoDetalles) {
       let pesoMayor: number = 0;
       let inventario: any = null;
+      console.log(this.pedidoProveedor.pedidoDetalles);
+      
       this.pedidoProveedor.pedidoDetalles.forEach(element => {
         if (element.inventario) {
           if (Number(element.inventario.peso) > pesoMayor) {
             pesoMayor = Number(element.inventario.peso);
 
             inventario = element.inventario;
+          }else if(!element.inventario.peso){ 
+            element.inventario.peso = 10;
+            element.inventario.alto = 10;
+            element.inventario.ancho = 10;
+            element.inventario.largo = 10;
+            if (Number(element.inventario.peso) > pesoMayor) {
+              pesoMayor = Number(element.inventario.peso);
+  
+              inventario = element.inventario;
+            }
           }
         }
       });
@@ -52,6 +67,7 @@ export class EnvioExternoPage {
       params = params.set('largo', inventario.largo);
       params = params.set('origen', this.pedidoProveedor.proveedor.direccion.codigoPostal);
       params = params.set('destino', this.cp);
+      params = params.set('servicio', this.opc);
       //params = params.set('servicio', 2);
       console.log(params);
       

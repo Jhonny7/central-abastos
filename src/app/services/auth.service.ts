@@ -22,7 +22,7 @@ export class AuthService {
     /**Método que retorna si el usuario esta logueado */
     isAuthenticated() {
         let user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-        return user.id_token != null;
+        return user.email != null;
     }
 
     /**Método de logout, cierra sesión */
@@ -33,7 +33,7 @@ export class AuthService {
     getToken(){
         let user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
         
-        return user === null ? null : user.id_token;
+        return user === null ? null : user.email;
     }
 
     /**Return gatway auth key */
@@ -50,6 +50,6 @@ export class AuthService {
     /**Return session key */
     getSessionToken() {
         let user = this.localStorageEncryptService.getFromLocalStorage(`userSession`);
-        return user.id_token;
+        return user.email;
     }
 }

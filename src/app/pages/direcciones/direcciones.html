@@ -22,7 +22,10 @@
         </ion-avatar>
         <div class="datos-tarjetas">
           <div class="name">{{card.alias}}</div>
-          <div class="number">{{card.direccion.direccion}}</div>
+          <div class="number" style="white-space: nowrap;
+          width: 240px;
+          overflow: hidden;
+          text-overflow: ellipsis;">{{card.direccion.direccion}}</div>
         </div>
       </ion-item>
 
@@ -47,7 +50,7 @@
     </ion-item>
   </ion-list>
 </ion-content>
-<ion-fab bottom right class="fab-cards animated swing" *ngIf="!fromPop">
+<ion-fab bottom right class="fab-cards animated swing" *ngIf="!fromPop" style="bottom: 10px !important">
   <button ion-fab (click)="nuevaLista()" [ngStyle]="{'background-color': genericService.getColorHex()}">
     <ion-icon name="add"></ion-icon>
   </button>
